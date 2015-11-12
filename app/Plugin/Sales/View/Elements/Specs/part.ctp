@@ -11,6 +11,24 @@
         <i class="fa fa-pencil fa-lg"></i> Edit Material</button>
     </div>
 </div>
+<div class="form-group">
+    <label class="col-lg-2 control-label"><span style="color:red">*</span>Name</label>
+    <div class=" col-lg-6 input-group materialName<?php echo $plusCounter ;?>" style="padding-left:8px;">
+        <span class="input-group-addon">
+        <?php 
+            if (!empty($formatDataSpecs['ProductSpecificationPart']['name'])) {
+                echo "<input type='checkbox' class='click-multiple editMe' checked disabled>";
+            }else{
+                echo "<input type='checkbox' class='click-multiple'>";
+            }
+        ?>
+            
+        </span>
+        <input type="hidden" class="getname" value="<?php echo !empty($formatDataSpecs['ProductSpecificationPart']['name']) ? $formatDataSpecs['ProductSpecificationPart']['name'] : $formatDataSpecs['ProductSpecificationPart']['material'] ?>">
+        <input type="text" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['name'] ?>" placeholder="Click checkbox for multiple part" name="data[ProductSpecificationPart][<?php echo $counter ;?>][name]" class="show-multiple form-control part_multiple<?php echo $plusCounter ;?> editMe" disabled>
+    </div>
+    
+</div>
 <section class="parentSection allFieldPart<?php echo $plusCounter ;?>" >
     <div class="form-group">
         <label class="col-lg-2 control-label">Part</label>
@@ -153,3 +171,4 @@
         </div>
     </div>
 </div>
+

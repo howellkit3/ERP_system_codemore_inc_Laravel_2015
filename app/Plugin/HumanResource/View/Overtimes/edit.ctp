@@ -78,21 +78,21 @@ echo $this->Html->script(array(
                                 <div class="form-horizontal">
                                     <div class="form-group">
                                         <div class="col-lg-6">
-                                            <div class="form-group">
+                                        <div class="form-group">
                                                <div class="col-lg-12">
                                                     <div class="form-group">
-                                                        <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span>  <b> Department </b> </label>
-                                                        <div class="col-lg-9">
+                                                        <!-- <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span>  <b> Department </b> </label>
+                                                       -->  <div class="col-lg-9">
                                                             <?php 
                                                             echo $this->Form->input('Overtime.id');
 
-                                                            echo $this->Form->input('Overtime.department_id', array(
-                                                                'class' => 'col-lg-6 required autocomplete',
-                                                                'options' => $departments,
-                                                                'empty' => '--- Select Department ---',
-                                                                'onchange' => 'checkDepartmentEmployee(this)',
-                                                                'label' => false,
-                                                                'disabled' => true));
+                                                            // echo $this->Form->input('Overtime.department_id', array(
+                                                            //     'class' => 'col-lg-6 required autocomplete',
+                                                            //     'options' => $departments,
+                                                            //     'empty' => '--- Select Department ---',
+                                                            //     'onchange' => 'checkDepartmentEmployee(this)',
+                                                            //     'label' => false,
+                                                            //     'disabled' => true));
 
                                                             // echo $this->Form->input('Overtime.department_id', array(
                                                             //     'class' => 'col-lg-6 required autocomplete',
@@ -105,7 +105,37 @@ echo $this->Html->script(array(
                                                         </div>
                                                      </div>
                                                 </div>
-                                            </div>
+                                            </div> 
+
+
+                                              <div class="form-group">
+                                                  <div class="col-lg-2 text-right">
+                                                    <label for="exampleRadio"> <span style="color:red">*</span>  <b>Search Employee</b> </label>
+                                                  </div>
+                                                <div class="col-lg-9">
+                                                      
+                                                            <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                    <i class="fa fa-search"></i>
+                                                            </span>
+                                                            <input type="text" id="SearchEmployee" class="form-control">
+                                                    </div>
+                                                    </div>
+                                                </div>  
+
+                                                       <div class="clearfix"></div>
+                                         <div class="form-group">
+                                               <label for="inputEmail1" class="col-lg-2 control-label"></label>
+                                                  <div class="col-lg-9"  id="selection" >
+                                                   
+                                                    <ul style="margin:0;padding:0" id="result-tale-employee">
+                                                 
+                                                      </ul>  
+                                                </div>
+
+                                                </div>
+
+                                                  <div class="clearfix"></div>
 
                                              <div class="form-group">
                                                <div class="col-lg-12">
@@ -193,114 +223,42 @@ echo $this->Html->script(array(
                                                 </div>
                                             </div>
 
-                                                <div class="form-group">
-                                                    <div class="col-lg-12">
-                                                        <label class="large-label"><span style="color:red;">*</span> <b>Breaktimes </b> </label>
-                                                        <div class="clearfix"></div>
-                                                        <div class="selected_breaks" >
-                                                            <ul>
-                                                                <?php foreach ($breaktimes as $key => $time) { ?>
-                                                                    <li>
-                                                                   
-                                                                <!--     <div class="checkbox-nice">
-                                                                    <input type="checkbox" 
-                                                                    <?php echo (in_array($time['BreakTime']['id'], $workshiftBreaks)) ? 'checked' : ''; ?>
-                                                                    id="checkbox-<?php echo $time['BreakTime']['id']?>" name="data[Workshift][breakids][]" value="<?php echo $time['BreakTime']['id']?>">
-                                                                    <label for="checkbox-<?php echo $time['BreakTime']['id']?>">
-                                                                    <?php echo date('H:i: a',strtotime($time['BreakTime']['from'])); ?>~<?php echo date('H:i: a',strtotime($time['BreakTime']['to'])); ?>
-                                                                    </label>
-                                                                    </div>
- -->
 
-
-                                                                    <div class="radio">
-                                                                    <input type="radio" id="checkbox-<?php echo $time['BreakTime']['id']?>" value="<?php echo $time['BreakTime']['id']?>" name="data[Workshift][breakids][]" <?php echo (in_array($time['BreakTime']['id'], $workshiftBreaks)) ? 'checked' : ''; ?>>
-                                                                      <label for="checkbox-<?php echo $time['BreakTime']['id']?>">
-                                                                    <?php echo date('H:i: a',strtotime($time['BreakTime']['from'])); ?>~<?php echo date('H:i: a',strtotime($time['BreakTime']['to'])); ?>
-                                                                    </label>
-                                                                    </div>
-
-
-
-                                                                            </li>
-                                                                <?php } ?>
-                                                            </ul>    
-                                                        </div>
-                                                    </div>
-                                            </div>
                                         </div>
                                          <div class="col-lg-6">
                                          
 
                                              <div class="form-group">
                                                     <div class="col-lg-12">
-                                                        <label class="large-label"><span style="color:red;">*</span> <b> Employees </b> </label>
+                                                        <label class="large-label"><span style="color:red;">*</span> <b>Employees </b> </label>
                                                         <label class="selected-text"></label>
-
-
-                                                        <div class="pull-right">
-                                                        <label class="large-label"><b>Select ALL </b> </label>
-                                                                 <div class="onoffswitch onoffswitch-success select-all">
-                                                                            <input type="checkbox" value="all"  id="myonoffswitch-all" class="onoffswitch-checkbox" name="all-employee">
-                                                                            <label for="myonoffswitch-all" class="onoffswitch-label">
-                                                                            <div class="onoffswitch-inner"></div>
-                                                                            <div class="onoffswitch-switch"></div>
-                                                                            </label>
-                                                                    </div>
-                                                        </div>
                                                         <div class="clearfix"></div>
-                                                        <div class="employees result">
-                                                            <ul class="widget-users row">
-                                                            <?php foreach ($employees as $key => $employee) : ?>
-                                                                <li class="col-md-6">
-                                                                    <?php
-                                                                        $style = '';
+                                                        <div id="resultList">
+                                                                <?php $keys = 0; foreach ($employees as $KeyId => $value) { ?>
+    <div class="alert alert-success"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="fa fa-check-circle fa-fw fa-lg"></i>
+     
+            <input type="hidden" name="data[Employee][id][<?php echo $keys; ?>]" class="select_employee" value="<?php echo  $value['Employee']['id']; ?>" >
 
-                                                                        if (!empty($employee['Employee']['image'])) {
+            <input type="hidden" name="data[Attendance][id][<?php echo $keys; ?>]" class="select_employee" value="<?php echo $value['Attendance']['in'] ?>" >
 
-                                                                        $serverPath = $this->Html->url('/',true);   
-                                                                        $background =  $serverPath.'img/uploads/employee/'.$employee['Employee']['image'];  
-                                                                          $style = 'background:url('.$background.')';
-                                                                    } 
+            <span class="time-in"> <?php echo !empty( $value['Attendance']['in']) ? 'Time in ( '.date('h:i a',strtotime($value['Attendance']['in'])).' )' : ''; ?>  </span>
 
-                                                                    ?>
-                                                                        <div class="image_profile" style="<?php echo $style; ?>"></div>
-                                                                    
-                                                                <div class="details">
-                                                                    <div class="name">
-                                                                       <?php
-                                                                        $name =  $this->CustomText->getFullname($employee['Employee'],'first_name',null,'last_name'); 
+            <label for="checkbox-<?php echo $KeyId; ?>">
+                <?php 
+                $name = $value['Employee']['first_name'];
 
-                                                                         echo $this->Html->link(ucwords($name),array('controller' => 'employees','action' => 'view',$employee['Employee']['id']),array('target' => '_blank'));
+                $name .= !empty($value['Employee']['middle_name']) ? ' '.$value['Employee']['middle_name'][0] : '';
+                $name .= !empty($value['Employee']['last_name']) ? ' '.$value['Employee']['last_name'] : '';
+                $name .= !empty($value['Employee']['suffix']) ? ' '.$value['Employee']['suffix'] : '';
 
-                                                                        ?>
-                                                                        <input type="hidden" name="data[Idholder][id][]" value="<?php echo $employee['Attendance']['id']?>">
-                                                                    </div>
-                                                                <div class="time">
-                                                                
-                                                                <?php if($employee['Employee']['position_id']) : ?>
-                                                                    <!-- <i class="fa fa-check-circle"></i> Position: <span style="color:#000;"> -->
-                                                                    <b><?php //echo $positionList[$employee['Employee']['position_id']]; ?></b></span>
-                                                                <?php endif; ?> 
-                                                                    <i class="fa fa-clock-o"></i> Time In : <?php echo $employee['Attendance']['in']?>
-                                                                    
-                                                                </div>
-                                                                
-                                                                <div class="pull-left">
-                                                                    <div class="onoffswitch onoffswitch-success">
-                                                                            <input type="checkbox" <?php echo in_array($employee['Employee']['id'], $selectedEmployee) ? 'checked' : ''?> value="<?php echo $employee['Employee']['id']; ?>-<?php echo $employee['Attendance']['id']?>"  id="myonoffswitch-<?php echo $employee['Employee']['id']; ?>" class="onoffswitch-checkbox" name="data[Employee][id][]">
-                                                                            <label for="myonoffswitch-<?php echo $employee['Employee']['id']; ?>" class="onoffswitch-label">
-                                                                            <div class="onoffswitch-inner"></div>
-                                                                            <div class="onoffswitch-switch"></div>
-                                                                            </label>
-                                                                    </div>
-                                                                </div>
+                echo ucwords($name); ?>  
+            </label>
+    </div>
 
-                                                                </div>
-                                                                </li>
-                                                            <?php endforeach; ?>    
-                                                            </ul>
+<?php $keys++; } ?>
                                                         </div>
+
+                                                        <div class="clearfix"></div>
                                                     </div>
                                             </div>
                                          </div>

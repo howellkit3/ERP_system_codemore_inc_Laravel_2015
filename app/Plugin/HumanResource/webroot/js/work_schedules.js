@@ -1,4 +1,20 @@
  $(document).ready(function(){
+  $('.employee-department input').attr('disabled',true);
+
+  $('.category').click(function(){
+
+    $this = $(this);
+
+    $('.category-section').hide();
+
+    $('.category-'+$this.val()).show().find('input').attr('disabled',false)
+
+  });
+
+  $('#checkbox-check').click(function(){
+
+     $('.select_employee:checkbox').not(this).prop('checked', this.checked);
+  });
     
     $body = $('body');
     
@@ -34,8 +50,7 @@
 
       if ($(this).val() != '') {
 
-
-         $append_cont.html('<img src="'+serverPath+'/img/loader.gif"/>');
+      $append_cont.html('<img src="'+serverPath+'/img/loader.gif"/>');
 
         $id = $(this).val();
 
@@ -52,7 +67,7 @@
                 }
           });
       }
-    });
+    }).trigger('change');
 
 
     $body.on('submit','#search_schedules',function(e){
@@ -78,6 +93,39 @@
       e.preventDefault();
 
     });
+
+
+  $body.on('change','#SearchDepartment',function(e){
+
+      $container = $('#result_employee');
+
+      $container.html('<img src="'+serverPath+'/img/loader.gif"/>');
+
+        $.ajax({
+                type: "GET",
+                url: serverPath + "human_resource/employees/searchEmployee" ,
+                dataType: "html",
+                data: {'departmentId' : $('#SearchDepartment').val() },
+                success: function(data) {
+                   
+                   try {
+
+                      $container.html(data);
+
+                   } catch(e) {
+
+                        $container.html('<span class="error-appended" style="color:red">Error Loading Page</span>');
+                   } 
+                 //$append_cont.html(data)
+
+                },
+                error: function(){
+                }
+          });
+
+      e.preventDefault();
+
+    })
 
 
 });

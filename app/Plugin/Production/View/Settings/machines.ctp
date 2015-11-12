@@ -1,12 +1,11 @@
-<?php $this->Html->addCrumb('Production', array('controller' => 'dashboards', 'action' => 'index')); ?>
-<?php $this->Html->addCrumb('Settings', array('controller' => 'settings', 'action' => 'machines')); ?>
-<?php $this->Html->addCrumb('Machine', array('controller' => 'settings', 'action' => 'machines')); 
-	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
-?>
-
 <?php 
+	$this->Html->addCrumb('Production', array('controller' => 'dashboards', 'action' => 'index')); 
+	$this->Html->addCrumb('Settings', array('controller' => 'settings', 'action' => 'machines'));
+	$this->Html->addCrumb('Machine', array('controller' => 'settings', 'action' => 'machines')); 
 	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
- 	echo $this->element('tab/jobs',array('active_tab' => $active_tab)); 
+	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
+ 	echo $this->element('tab/jobs',array('active_tab' => $active_tab));
+
  ?>
 
 <div class="row">
@@ -106,14 +105,24 @@
 																		</span> ', array('controller' => 'machines', 'action' => 'edit',$machineList['Machine']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
 
 
-																		echo $this->Form->postLink('<span class="fa-stack">
+																		// echo $this->Form->postLink('<span class="fa-stack">
+																		// <i class="fa fa-square fa-stack-2x"></i>
+																		// <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
+																		// </span> ', array('controller' => 'machines', 'action' => 'delete',$machineList['Machine']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'),
+																		// 	 array('escape' => false), 
+														    //                             __('Are you sure you want to delete %s?', 
+														    //                             $machineList['Machine']['id'])
+																		// );
+
+																		echo $this->Html->link('<span class="fa-stack">
 																		<i class="fa fa-square fa-stack-2x"></i>
 																		<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
-																		</span> ', array('controller' => 'machines', 'action' => 'delete',$machineList['Machine']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'),
-																			 array('escape' => false), 
-														                                __('Are you sure you want to delete %s?', 
-														                                $machineList['Machine']['name'])
-																		);
+																		</span> ', array('controller' => 'machines', 'action' => 'delete',$machineList['Machine']['id']),
+																		array('class' =>' table-link',
+																			   'escape' => false,
+																			   'title'=>'Edit Information',
+																			   'confirm' => 'Are you sure you want to Delete '.$machineList['Machine']['name'] 
+																			  ));
 
 																?>
 									                        </td>
@@ -126,6 +135,16 @@
 									</table>	
 
 									<hr>
+
+
+									<div class="paging" id="item_type_pagination">
+									<?php
+									echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
+									echo $this->Paginator->numbers(array('separator' => ''));
+									echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+									?>
+									</div>
+              
 
 									<div class="paging" id="item_type_pagination">
 			                            <?php

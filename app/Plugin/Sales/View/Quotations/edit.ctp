@@ -1,12 +1,10 @@
 <?php $this->Html->addCrumb('Sales', array('controller' => 'customer_sales', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Quotation', array('controller' => 'quotation', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Create', array('controller' => 'quotation', 'action' => 'create')); ?>
-<?php  echo $this->Html->script('Sales.company_quotation');?>
+<?php echo $this->Html->script('Sales.company_quotation');?>
 <?php echo $this->Html->script('Sales.checkvat');?>
 <style type="text/css">#QuotationField12Description{background-color:#fff;}</style>
 <div style="clear:both"></div>
-
-
         
 <?php echo $this->element('sales_option');?><br><br>
 
@@ -44,11 +42,38 @@
 									<div class="form-horizontal">
 										
 	                                    <?php 
+
+	                                    if($quotationData['Quotation']['status'] == 0){
 	                                        echo $this->Form->input('Quotation.id', array('class' => 'form-control item_type',
 						                        'hidden' => 'hidden',
 						                        'readonly' => 'readonly',
 						                        'label' => false,
 						                        'id' => 'id'));
+	                                    }
+	                                    ?>
+
+	                                    <?php 
+	                                        echo $this->Form->input('Quotation.status', array('class' => 'form-control item_type',
+						                        'type' => 'hidden',
+						                        'readonly' => 'readonly',
+						                        'label' => false,
+						                        'id' => 'status'));
+	                                    ?>
+
+	                                    <?php 
+	                                        echo $this->Form->input('Quotation.status', array('class' => 'form-control item_type',
+						                        'type' => 'hidden',
+						                        'readonly' => 'readonly',
+						                        'label' => false,
+						                        'id' => 'status'));
+	                                    ?>
+
+	                                    <?php 
+	                                        echo $this->Form->input('Quotation.uuid', array('class' => 'form-control item_type',
+						                        'type' => 'hidden',
+						                        'readonly' => 'readonly',
+						                        'label' => false,
+						                        'id' => 'uuid'));
 	                                    ?>
 
 	                                     <?php 
@@ -139,6 +164,7 @@
 
 	                                                    					));
 	                                            ?>
+
 											</div>
 										</div>
 
@@ -149,12 +175,23 @@
 					                                'options' => array($companyData),
 					                                'type' => 'select',
 					                                'label' => false,
+					                                'disabled' => 'disabled',
 					                                'class' => 'form-control required contacpersonlist',
 					                                'empty' => '---Select Company---',
 					                                'id' => 'select_company'
 					                                 )); 
 
 					                            ?>
+
+					                            <?php echo $this->Form->input('Quotation.company_id', array(
+					                                'type' => 'hidden',
+					                                'class' => 'form-control required contacpersonlist',
+					                                'empty' => '---Select Company---',
+					                                'id' => 'select_company'
+					                                 )); 
+
+					                            ?>
+
 											</div>
 										</div>
 
@@ -187,6 +224,14 @@
 		                                            echo $this->Form->input('QuotationDetail.size', array(
 		                                            								'class' => 'form-control item_type',
 								                                                    'type' => 'text',
+								                                                    'label' => false,
+								                                                    'placeholder' => 'Size'));
+	                                            ?>
+
+	                                            <?php 
+		                                            echo $this->Form->input('QuotationDetail.quotation_id', array(
+		                                            								'class' => 'form-control item_type',
+								                                                    'type' => 'hidden',
 								                                                    'label' => false,
 								                                                    'placeholder' => 'Size'));
 	                                            ?>
@@ -233,6 +278,16 @@
 		                                                    'name' => 'data[QuotationItemDetail]['.$key.'][quantity]',
 		                                                    'placeholder' => 'Quantity'));
 		                                            ?>
+
+		                                           <!--  <?php 
+			                                            echo $this->Form->input('QuotationItemDetail.0.id', array(
+                            								'class' => 'form-control item_type',
+		                                                    'type' => 'text',
+		                                                    'label' => false,
+		                                                    'value' => $itemDetailDetails['QuotationItemDetail']['id'],
+		                                                    'name' => 'data[QuotationItemDetail]['.$key.'][quantity]',
+		                                                    'placeholder' => 'Quantity'));
+		                                            ?> -->
 													 
 												</div>
 												<div class="col-lg-6">
@@ -256,7 +311,7 @@
 					                                'options' => array($currencyData),  
 					                                'label' => false,
 					                                'default' => $itemDetailDetails['QuotationItemDetail']['unit_price_currency_id'],
-					                                'class' => 'form-control',
+					                                'class' => 'form-control currency-option',
 					                                'name' => 'data[QuotationItemDetail]['.$key.'][unit_price_currency_id]',
 					                                'empty' => '---Select Currency---'
 					                                 )); 
@@ -266,7 +321,7 @@
 												<div class="col-lg-3">
 													<?php 
 			                                            echo $this->Form->input('QuotationItemDetail.0.unit_price', array(
-                            								'class' => 'form-control item_type unitprice vatEx number  ',
+                            								'class' => 'form-control item_type unitprice  prEx number  ',
 		                                                    'data' => 'unitprice',
 		                                                    'type' => 'text',
 		                                                    'label' => false,
@@ -293,25 +348,89 @@
 											
 											</div>
 
-											<div class="form-group">
-												<label class="col-lg-2 control-label">Vat Price</label>
-												<div class="col-lg-8">
+											<div class="form-group vat-section">
+												<label class="col-lg-2 control-label">Vat Option</label>
+												<div class="col-lg-4">
 													<?php 
-			                                            echo $this->Form->input('QuotationItemDetail.0.vat_price', array(
-			                                            								'class' => 'form-control item_type vatIn vatprice',
-									                                                    'type' => 'text',
-									                                                    'label' => false,
-									                                                    'value' => $itemDetailDetails['QuotationItemDetail']['vat_price'],
-									                                                    'id' => 'QuotationItemDetail'.$key.'VatPrice',
-									                                                    'name' => 'data[QuotationItemDetail]['.$key.'][vat_price]',
-									                                                    'readonly' => 'readonly',
-									                                                    'placeholder' => 'Vat Price'));
-		                                            ?>
+														$vatType = array('Vatable Sale' => 'Vatable Sale',
+																'Vat Exempt' => 'Vat Exempt',
+																'Zero Rated Sale' => 'Zero Rated Sale');
+
+														$vatTypeUSD = array(
+																'Vat Exempt' => 'Vat Exempt',
+																'Zero Rated Sale' => 'Zero Rated Sale');
+
+														$displayMe = '';
+														$displayMe1 = '';
+														if ($itemDetailDetails['QuotationItemDetail']['unit_price_currency_id'] == 2) {
+															$displayMe = 'dsplayShow';
+															
+														}else {
+															$displayMe1 = 'dsplayShow1';
+														}
+														echo $this->Form->input('QuotationItemDetail.0.vat_status', array( 
+							                                'options' => array($vatType),  
+							                                'label' => false,
+							                                'default' => !empty($itemDetailDetails['QuotationItemDetail']['unit_price']) ? $itemDetailDetails['QuotationItemDetail']['unit_price'] : '',
+							                                'class' => 'hide-me-first form-control for-php required select-vat-status '.$displayMe,
+							                                'empty' => '---Select Vat Type---'
+							                                 ));
+
+														echo $this->Form->input('QuotationItemDetail.0.vat_status', array( 
+															'options' => array($vatTypeUSD),
+															'default' => !empty($itemDetailDetails['QuotationItemDetail']['unit_price']) ? $itemDetailDetails['QuotationItemDetail']['unit_price'] : '',    
+							                                'label' => false,
+							                              //  'disabled' => true,
+							                                'empty' => '---Select Vat Type---',
+							                                'class' => 'hide-me-first form-control required for-usd '.$displayMe1
+							                                 ));
+														 
+						                            ?>
 													
+												</div>
+
+												<?php $displayMe = '';
+														$displayMe1 = '';
+														if ($itemDetailDetails['QuotationItemDetail']['unit_price_currency_id'] == 2) {
+															$displayMe = 'dsplayShow';
+															
+														}else {
+															$displayMe1 = 'dsplayShow1';
+														} ?>
+
+													<div class="col-lg-4 vat-option">
+														<?php 
+				                                            echo $this->Form->input('QuotationItemDetail.0.vat_price', array(
+	                            								'class' => 'form-control item_type vatIn vatprice '. $displayMe,
+			                                                    'type' => 'text',
+			                                                    'label' => false,
+			                                                    'value' => $itemDetailDetails['QuotationItemDetail']['vat_price'],
+			                                                    'id' => 'QuotationItemDetail'.$key.'VatPrice',
+			                                                    'name' => 'data[QuotationItemDetail]['.$key.'][vat_price]',
+			                                                    'readonly' => 'readonly',
+			                                                    'placeholder' => 'Vat Price'));
+			                                            ?>
+														
+													</div>
+												
+											</div>
+
+											<div class="form-group vat-option">
+												<label class="col-lg-2 control-label"></label>
+												<div class="col-lg-8">
+
+													<input id="checkbox-1" class="checkEx vat-exclusive" type="checkbox" data-section='quotationItemDetail' name="[QuotationItemDetail][0][unit_price]"rel=".12" name ="togglecheckboxtext"><label>
+													<font color="gray">&nbsp; Check to enable VAT Price   </font></label>
+
+
+													&nbsp; &nbsp;
+													
+													<input id="checkbox-1" class="checkvat checkIn checkbox-nice vat-price" type="checkbox" data-section='quotationItemDetail' name="[QuotationItemDetail][0][vat_price]" rel=".12"><label><font color="gray">&nbsp; Click to Compute the Unit Price/VAT Exclusive</font></label>
+														
 												</div>
 											</div>
 												
-											<div class="form-group">
+											<!-- <div class="form-group">
 												<label class="col-lg-2 control-label"></label>
 												<div class="col-lg-8">
 												<?php if(!empty($itemDetailDetails['QuotationItemDetail']['vat_price'])){ 
@@ -333,7 +452,7 @@
 													<font color="gray"> Click to Compute the Unit Price with VAT </font>
 														
 												</div>
-											</div>
+											</div> -->
 
 											<div class="form-group">
 												<label class="col-lg-2 control-label">Material</label>
@@ -504,9 +623,18 @@
 					</div>
 				</div>
 			<?php echo $this->Form->end(); ?>
-<!-- 		</div>
-	</div>
- -->
+
+ <style type="text/css">
+ 	.hide-me-first{
+ 		display: none;
+ 	}
+ 	.dsplayShow{
+ 		display: block ;
+ 	}
+ 	.dsplayShow1{
+ 		display: block ;
+ 	}
+ </style>
 
 	<script>
 		

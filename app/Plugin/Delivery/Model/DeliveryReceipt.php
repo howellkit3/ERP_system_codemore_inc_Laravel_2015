@@ -33,6 +33,12 @@ class DeliveryReceipt extends AppModel {
 					'foreignKey' => false,
 					'conditions' => 'DeliveryReceipt.dr_uuid = Delivery.dr_uuid '
 				),
+
+				'DeliveryDetail' => array(
+					'className' => 'Delivery.DeliveryDetail',
+					'foreignKey' => false,
+					'conditions' => 'DeliveryReceipt.dr_uuid = DeliveryDetail.delivery_uuid '
+				),
 			)
 		),false);
 
@@ -42,12 +48,24 @@ class DeliveryReceipt extends AppModel {
 	public function bindDelivery() {
 		$this->bindModel(array(
 			'hasOne' => array(
+				'DeliveryDetail' => array(
+					'className' => 'Delivery.DeliveryDetail',
+					'foreignKey' => false,
+					'conditions' => 'DeliveryReceipt.dr_uuid = DeliveryDetail.delivery_uuid'
+				),		
 				'Delivery' => array(
 					'className' => 'Delivery.Delivery',
 					'foreignKey' => false,
 					'conditions' => 'DeliveryReceipt.dr_uuid = Delivery.dr_uuid'
-				),		
-			
+				),	
+				
+				'Transmittal' => array(
+					'className' => 'Delivery.Transmittal',
+					'foreignKey' => false,
+					'conditions' => 'DeliveryReceipt.dr_uuid = Transmittal.dr_uuid'
+				),	
+
+
 			)
 		));
 		$this->recursive = 1;

@@ -4,7 +4,7 @@ App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 
 class MachineLog extends AppModel {
 
-    public $useDbConfig = 'koufu_production_system';
+    public $useDbConfig = 'koufu_production';
     public $name = 'MachineLog';
 
      public $recursive = -1;
@@ -28,14 +28,12 @@ class MachineLog extends AppModel {
 
 	public function bindTicket() {
 		$this->bindModel(array(
-			'hasOne' => array(
+			'belongsTo' => array(
 				'TicketProcessSchedule' => array(
 					'className' => 'Production.TicketProcessSchedule',
 					'foreignKey' => false,
 					'conditions' => 'TicketProcessSchedule.id = MachineLog.ticket_process_schedule_id'
-				),		
-				
-
+				),
 			)
 		));
 		$this->recursive = 1;
@@ -48,15 +46,21 @@ class MachineLog extends AppModel {
 			
 			$this->create();
 
-			$timeHolder = date("H:i:s");
-			 
+			// $timeHolder = date("H:i:s");
+				
+
+			// pr();
+
+
 			$data['MachineLog']['ticket_process_schedule_id'] = $value;
-			$data['MachineLog']['start'] = $timeHolder;
+			//$data['MachineLog']['start'] = $timeHolder;
 			$data['MachineLog']['start_by'] = $auth;
 			//pr($data); exit;
-			$this->save($data);
+			$id = $this->save($data);
 
 		} 
+
+		return $id;
 	}
 	
 }

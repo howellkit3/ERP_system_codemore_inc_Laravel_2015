@@ -9,56 +9,87 @@
         <?php echo $this->CustomText->getFullname($attendance['Employee']); ?>
     </div>
 </div>
-
-<div class="form-group">
-                            <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span> Time :   </label>
-                                <div class="col-lg-9">
+                        
+                         <!--        <div class="col-lg-9">
                                        <div >
                                                           <label for="categoryRadio1">
                                                            In
                                                         </label>
                                                          <input type="text" name="data[Attendance][in]" id="categoryRadio1" value="<?php echo 
-                                                         !empty($attendance['Attendance']['in']) ? date('Y-m-d h:i',strtotime($attendance['Attendance']['in'])) : ''
+                                                         !empty($attendance['Attendance']['in']) ? date('Y-m-d H:i',strtotime($attendance['Attendance']['in'])) : ''
                                                          ; ?>" class="form-control time_input datetime" >
                                                       
                                                           <label for="categoryRadio2">
                                                            Out
                                                         </label>
-                                                        <input type="text" name="data[Attendance][out]" id="categoryRadio1" value="<?php echo 
-                                                         !empty($attendance['Attendance']['out']) ? date('Y-m-d h:i',strtotime($attendance['Attendance']['out'])) : ''
-                                                         ; ?>" class="form-control time_input datetime">
+                                                        <?php 
+                                                         $value = '';
+
+                                                        if (!empty($attendance['Attendance']['out']) && $attendance['Attendance']['out'] != 'n\a' ) {
+
+                                                           $value = date('Y-m-d H:i',strtotime($attendance['Attendance']['out']));
+                                                        }
+
+                                                       ?>
+                                                        <input type="text" name="data[Attendance][out]" id="categoryRadio1" value="<?php echo $value ?>" class="form-control time_input datetime">
                                                         
                                         </div>
 
                                 </div>
+ -->
+
+
+
+                     <div class="form-group">
+                            <label for="exmaplePrependCheck"  class="col-lg-2 control-label">Time In</label>
+                            <div class="input-group col-lg-9">
+
+                             <?php 
+
+                                  $value = '';
+
+                                    if (!empty($attendance['Attendance']['in']) && $attendance['Attendance']['in'] != 'n\a' ) {
+
+                                       $value = date('Y-m-d H:i',strtotime($attendance['Attendance']['in']));
+                                    }
+
+                                    echo $this->Form->input('Attendance.in',
+                                         array(
+                                        'class' => 'item_type form-control datetime',  
+                                        'type' => 'text',
+                                        'placeholder' => 'Time',
+                                         'value' => $value,
+                                        'id' => 'datetimepickerTime',
+                                        'label' => false));
+                             ?>
+                            </div>
                         </div>
 
-<?php if (empty($attendance["Attendance"]['status'])) { ?>
-    <div class="form-group">
-        <label for="inputEmail1" class="col-lg-2 control-label"> Status :   </label>
-        <!-- <div class="col-lg-9">
-            <div class="time-pad" style="padding-top:3px;">
-                <?php 
-                date_default_timezone_set('Asia/Manila'); 
-                $date = explode(' ', $attendance['WorkShift']['from']);
-                
-                    if ($attendance['WorkShift']['from'] <= date('H:i:s')) {
-                        echo "<span class='label label-danger pull-left'>Late</span>";
-                        $status = 'Late';
-                    }else{
-                        echo "<span class='label label-success pull-left'>OnTime</span>";
-                        $status = 'OnTime';
-                    }
-                    echo $this->Form->input('Attendance.status',
-                        array('class' => 'form-control',  
-                            'value' => $status,
-                            'type' =>'hidden',
-                            'label' => false));
-                ?>
-            </div>
-        </div> -->
-    </div>
-<?php } ?>
+                        <div class="form-group">
+                        <label for="exmaplePrependCheck"  class="col-lg-2 control-label">Time Out</label>
+                        <div class="input-group col-lg-9 add_time" alt="time-in">
+
+                             <?php 
+
+                                  $value = '';
+
+                                    if (!empty($attendance['Attendance']['out']) && $attendance['Attendance']['out'] != 'n\a' ) {
+
+                                       $value = date('Y-m-d H:i',strtotime($attendance['Attendance']['out']));
+                                    }
+
+
+                                    echo $this->Form->input('Attendance.out',
+                                         array(
+                                        'class' => 'item_type  form-control  datetime',  
+                                        'type' => 'text',
+                                        'placeholder' => 'Time',
+                                        'value' => $value,
+                                        'id' => 'datetimepickerTime',
+                                        'label' => false));
+                             ?>
+                        </div>
+                     </div>
 
 <div class="form-group">
     <label for="inputEmail1" class="col-lg-2 control-label"> Notes :   </label>
@@ -83,10 +114,26 @@
 
 <?php echo $this->form->end(); ?>
 
+<script type="text/javascript">
+    $(document).ready(function(){
 
-<script>
-    
-     $(".datetime").datetimepicker( {
+          $(".datetime").datetimepicker( {
                 format:'Y-m-d H:i',
-          });
-</script>
+            });
+
+            $('.add_time input:checkbox').click(function(){
+
+                $this = $(this);
+
+                if ($(this).is(':checked')) {
+
+                    $this.parents('.form-group').find('.time_input').attr('disabled',false);
+                } else {
+
+                    $this.parents('.form-group').find('.time_input').attr('disabled','disabled');
+                }
+
+            });
+
+    });
+ </script>

@@ -25,9 +25,33 @@ class WarehouseRequestsController extends WareHouseAppController {
 															'order' => array('Unit.unit' => 'ASC')
 															));
 
-		$this->WarehouseRequest->bind('WarehouseRequestItem');		
+		$this->WarehouseRequest->bind('WarehouseRequestItem');			
 
-		$requestData = $this->WarehouseRequest->find('all', array('order' => array('WarehouseRequest.created' => 'DESC')));
+        $this->WarehouseRequest->recursive = 1;
+
+        $limit = 10;
+
+        $conditions = array('NOT' => array('WarehouseRequest.status_id' => 5));
+
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array(
+                'WarehouseRequest.uuid', 
+                'WarehouseRequest.name',
+                'WarehouseRequest.id',
+                'WarehouseRequest.status_id',
+                'WarehouseRequest.created_by'),
+            'order' => 'WarehouseRequest.id DESC',
+        );
+
+        //pr($conditions); exit;
+
+        $requestData = $this->paginate('WarehouseRequest');
+
+        //pr($requestData); exit;
+
+	//	$requestData = $this->WarehouseRequest->find('all', array('order' => array('WarehouseRequest.created' => 'DESC')));
 
 		foreach ($requestData as $key => $value) {
 
@@ -39,7 +63,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 		 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
 
-		 			$requestData[$key]['WarehouseRequestItem'][$key1]['name'] = $itemData[$valueOfRequest['foreign_key']];
+		 			$requestData[$key]['WarehouseRequestItem'][$key1]['name'] = !empty($itemData[$valueOfRequest['foreign_key']]) ? $itemData[$valueOfRequest['foreign_key']] : " ";
 		 		}
 
 		 		if($valueOfRequest['model'] == 'CorrugatedPaper'){
@@ -89,6 +113,12 @@ class WarehouseRequestsController extends WareHouseAppController {
 															'order' => array('Unit.unit' => 'ASC')
 															));
 
+		$this->loadModel('Purchasing.PurchasingType');
+
+	 	$purchasingTypeData = $this->PurchasingType->find('list', array(
+														'fields' => array('PurchasingType.id', 'PurchasingType.name'),
+														));
+
 	 	if ($this->request->is(array('post','put'))) {
 
 			$requestId = $this->WarehouseRequest->saveRequest($this->request->data['Request'],$userData['User']['id']);
@@ -105,7 +135,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
         }
 
-		$this->set(compact('unitData','itemData'));
+		$this->set(compact('unitData','itemData', 'purchasingTypeData'));
 			
 	}
 
@@ -240,7 +270,12 @@ class WarehouseRequestsController extends WareHouseAppController {
 	    $preparedData = $this->User->find('first', array(
 														'conditions' => array('User.id' => $requestData['WarehouseRequest']['created_by']),
 														));
-	    
+	   if (!empty($_GET['data'])) {
+
+            Configure::write('debug',2);
+
+            pr( $requestData );
+        } 	
     	$this->set(compact('requestId','requestData','userData','unitData','preparedData','roleName', 'outRecordData'));
     }
 
@@ -475,6 +510,12 @@ class WarehouseRequestsController extends WareHouseAppController {
 															'WarehouseRequest.id' => $requestID)
 													));
 
+	 	$this->loadModel('Purchasing.PurchasingType');
+
+	 	$purchasingTypeData = $this->PurchasingType->find('list', array(
+														'fields' => array('PurchasingType.id', 'PurchasingType.name'),
+														));
+
 	 	foreach ($request['WarehouseRequestItem'] as $key => $value) {
 			
 			if($value['model'] == 'GeneralItem'){
@@ -483,7 +524,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 	 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
 
-	 			$request['WarehouseRequestItem'][$key]['name'] = $itemData[$value['foreign_key']];
+	 			$request['WarehouseRequestItem'][$key]['name'] = !empty($itemData[$value['foreign_key']]) ? $itemData[$value['foreign_key']] : " ";
 	 		}
 
 	 		if($value['model'] == 'CorrugatedPaper'){
@@ -521,10 +562,19 @@ class WarehouseRequestsController extends WareHouseAppController {
 
 	 	if ($this->request->is(array('post','put'))) {
 
+	 		foreach ($this->request->data['WarehouseRequestItem'] as $key => $value) {
+
+    			if (!empty($value['id'])) {
+
+    				$this->WarehouseRequestItem->delete($value['id']);
+
+    			}
+    			
+    		}
 
 			$requestId = $this->WarehouseRequest->saveRequest($this->request->data['Request'],$userData['User']['id']);
 
-			$this->WarehouseRequestItem->saveRequestItem($this->request->data ,$requestId);
+			$this->WarehouseRequestItem->editRequestItem($this->request->data ,$requestId);
 		
 	 		$this->Session->setFlash(__('Request has been added.'));
 
@@ -536,7 +586,7 @@ class WarehouseRequestsController extends WareHouseAppController {
 
         }
 
-		$this->set(compact('unitData','itemData', 'request', 'requestID'));
+		$this->set(compact('unitData','itemData', 'request', 'requestID', 'purchasingTypeData'));
 			
 	 }
 
@@ -758,6 +808,25 @@ class WarehouseRequestsController extends WareHouseAppController {
 		$this->set(compact('outRecordData','userName'));
         
         $this->render('summary_deducted');
+
+    }
+
+    public function delete($id = null){
+
+    	$userData = $this->Session->read('Auth');
+
+		$this->loadModel('WareHouse.WarehouseRequest');
+
+		$this->WarehouseRequest->id = $id;
+
+		$this->WarehouseRequest->saveField('status_id', 5);
+
+		$this->Session->setFlash(__('Request has been Removed'), 'success');
+      
+        $this->redirect( array(
+            'controller' => 'warehouse_requests',   
+            'action' => 'index'
+        ));  
 
     }
 

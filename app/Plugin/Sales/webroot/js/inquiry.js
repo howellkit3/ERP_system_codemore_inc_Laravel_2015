@@ -6,22 +6,22 @@ jQuery(function($){
 
         $container = $('.result_client_table');
 
-        $container.html('<img src="'+serverPath+'/img/loader.gif"/>');
+        if ($this.val()) {
+        	$container.html('<img src="'+serverPath+'/img/loader.gif"/>');
+	        $.ajax({
 
+	            url: serverPath + "sales/sales_orders/index/",
+	            type: "GET",
+	            dataType: "html",
+	            data : {'name' : $this.val() },
+	            success: function(data) {
+	              	
 
-        $.ajax({
-
-            url: serverPath + "sales/sales_orders/index/",
-            type: "GET",
-            dataType: "html",
-            data : {'name' : $this.val() },
-            success: function(data) {
-              	
-
-                $container.html(data); 
-                
-                }
-        });
+	                $container.html(data); 
+	                
+	                }
+	        });
+	    };
 
     });
 
@@ -133,6 +133,7 @@ jQuery(function($){
 				$('#vat_price').val('');
 				$('#material').val('');	
 				$('#itemDetailId').val('');
+				$('#unit_price_total').val('');
 			}else{
 
 				var uPrice = Number(data.QuotationItemDetail.unit_price).toFixed(4);
@@ -156,6 +157,8 @@ jQuery(function($){
 				$('#material').val(data.QuotationItemDetail.material);
 				$('#itemDetailId').val(data.QuotationItemDetail.id);
 
+				var totalPrice = data.QuotationItemDetail.quantity * data.QuotationItemDetail.unit_price;
+				$('#unit_price_total').val(totalPrice+'.00');
 			}
 		}
 		});
@@ -200,8 +203,15 @@ jQuery(function($){
     {
         seconds = "0" + seconds;
     }
+
+    timestamp = event.timeStamp;
+    var timeToString = timestamp.toString();
+
+    timeSlice = timeToString.slice(-6);
+
     var ranDom = Math.floor(Math.random()*9000) + 1000;
-    var code = year.concat(month,ranDom);
+    var code = year.concat( month, timeSlice);
+
     console.log(year);
     console.log(month);
     console.log(ranDom);

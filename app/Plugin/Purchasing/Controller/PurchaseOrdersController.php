@@ -17,7 +17,7 @@ class PurchaseOrdersController extends PurchasingAppController {
 
 		$limit = 10;
 
-		$conditions = "";
+		$conditions = array('NOT' => array('PurchaseOrder.status' => 5));
 
 		$params =  array(
 	            'conditions' => $conditions,
@@ -52,6 +52,8 @@ class PurchaseOrdersController extends PurchasingAppController {
 		$this->loadModel('Purchasing.PurchasingItem');
 
 		$this->loadModel('Purchasing.RequestItem');
+
+		$this->loadModel('Purchasing.Contact');
 
 		$this->loadModel('GeneralItem');
 
@@ -91,7 +93,11 @@ class PurchaseOrdersController extends PurchasingAppController {
         $this->PurchaseOrder->bind(array('Contact','SupplierContactPerson'));
 
 		$purchaseOrderData = $this->PurchaseOrder->find('first',array('conditions' => array('PurchaseOrder.id' => $purchaseOrderid),'order' => 'PurchaseOrder.id DESC'));
-
+		
+		$faxContactData = $this->Contact->find('first',array('conditions' => array('Contact.foreign_key' => $purchaseOrderData['PurchaseOrder']['supplier_id'], 'Contact.type' => 1),'order' => 'Contact.id DESC'));
+		
+		$telContactData = $this->Contact->find('first',array('conditions' => array('Contact.foreign_key' => $purchaseOrderData['PurchaseOrder']['supplier_id'], 'Contact.type' => 0),'order' => 'Contact.id DESC'));
+		
 		$requestData = $this->Request->find('first', array('conditions' => array('Request.id' => $purchaseOrderData['PurchaseOrder']['request_id'])));
 
 		$purchaseItemData = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $requestData['Request']['uuid'])));
@@ -103,8 +109,6 @@ class PurchaseOrdersController extends PurchasingAppController {
     	} else {
     		$modelTable = 'PurchasingItem'; 
     	}
-
-		
 
 		foreach ($purchaseItemData as $key => $value) {
 			
@@ -144,7 +148,7 @@ class PurchaseOrdersController extends PurchasingAppController {
 														'conditions' => array('User.id' => $purchaseOrderData['PurchaseOrder']['created_by']),
 														));
 		
-		$this->set(compact('modelTable','purchaseOrderData','supplierData','purchaseOrderid','unitData','paymentTermData','purchaseItemData','preparedData', 'currencyData'));
+		$this->set(compact('modelTable','purchaseOrderData','supplierData','purchaseOrderid','unitData','paymentTermData','purchaseItemData','preparedData', 'currencyData', 'faxContactData', 'telContactData'));
 
     }
 
@@ -249,6 +253,8 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     	if (!empty($this->request->data)) {
     		
+    		//pr($this->request->data); exit;
+
     		foreach ($this->request->data['PurchasingItemIdHolder'] as $key => $value) {
 
     			
@@ -294,9 +300,27 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     public function approved($purchaseOrderId){
 
+    	$this->loadModel('Purchasing.PurchaseOrder');
+
+    	$purchaseOrderList = $this->PurchaseOrder->find('all', array('fields' => array('PurchaseOrder.id', 'PurchaseOrder.order'),
+															'order' => array('PurchaseOrder.id' => 'DESC')
+															));
+
+    	$array = array();
+
+    	foreach ($purchaseOrderList as $key => $value) {
+
+    		array_push($array, $value['PurchaseOrder']['order']);
+    		
+    	} 
+
+    	$highest_order = max($array) + 1;
+
     	$this->PurchaseOrder->id = $purchaseOrderId;
 
     	$this->PurchaseOrder->saveField('status',1);
+
+    	$this->PurchaseOrder->saveField('order', $highest_order);
 
     	$this->Session->setFlash(__('Purchase Order has been approved.'));
 
@@ -317,6 +341,8 @@ class PurchaseOrdersController extends PurchasingAppController {
 		$this->loadModel('Purchasing.PurchasingItem');
 
 		$this->loadModel('Purchasing.RequestItem');
+
+		$this->loadModel('Purchasing.Contact');
 
 		$this->loadModel('GeneralItem');
 
@@ -355,6 +381,10 @@ class PurchaseOrdersController extends PurchasingAppController {
 
 		$purchaseOrderData = $this->PurchaseOrder->find('first',array('conditions' => array('PurchaseOrder.id' => $purchaseOrderId),'order' => 'PurchaseOrder.id DESC'));
 
+		$faxContactData = $this->Contact->find('first',array('conditions' => array('Contact.foreign_key' => $purchaseOrderData['PurchaseOrder']['supplier_id'], 'Contact.type' => 1),'order' => 'Contact.id DESC'));
+		
+		$telContactData = $this->Contact->find('first',array('conditions' => array('Contact.foreign_key' => $purchaseOrderData['PurchaseOrder']['supplier_id'], 'Contact.type' => 0),'order' => 'Contact.id DESC'));
+		
 		$requestData = $this->Request->find('first', array('conditions' => array('Request.id' => $purchaseOrderData['PurchaseOrder']['request_id'])));
 
 		$purchaseItemData = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $requestData['Request']['uuid'])));
@@ -407,7 +437,7 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     	$view = new View(null, false);
 
-		$view->set(compact('modelTable','purchaseOrderData','supplierData','purchaseOrderId','unitData','paymentTermData','purchaseItemData','preparedData', 'currencyData'));
+		$view->set(compact('modelTable','purchaseOrderData','supplierData','purchaseOrderId','unitData','paymentTermData','purchaseItemData','preparedData', 'currencyData', 'telContactData', 'faxContactData'));
 		
 		$view->viewPath = 'PurchaseOrder'.DS.'pdf';	
    
@@ -446,24 +476,48 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     	$this->loadModel('Supplier');
 
+    	$this->loadModel('User');
+
 		$supplierData = $this->Supplier->find('list', array(
 														'fields' => array('Supplier.id', 'Supplier.name'),
 														));
 
-		$purchaseOrderData = $this->PurchaseOrder->find('all',array('order' => 'PurchaseOrder.id DESC'));
+        $joins = array(
+
+               array('table'=>'koufu_system.users', 
+                     'alias' => 'User',
+                     'type'=>'left',
+                     'conditions'=> array(
+                     'User.id = PurchaseOrder.created_by'
+               )),
+
+               array('table'=>'koufu_system.suppliers', 
+                     'alias' => 'Supplier',
+                     'type'=>'left',
+                     'conditions'=> array(
+                     'Supplier.id = PurchaseOrder.supplier_id'
+               )),
+        );
+
+        $this->PurchaseOrder->bind(array('User', 'Supplier'));
 
         $purchaseOrderData = $this->PurchaseOrder->find('all',array(
-                      'conditions' => array(
-                        'OR' => array(
-                        array('PurchaseOrder.uuid LIKE' => '%' . $hint . '%'),
-                        array('PurchaseOrder.name LIKE' => '%' . $hint . '%')
-                          )
-                        ),
-                      'limit' => 10
-                      )); 
+        			'joins'=>$joins,
+                  	'conditions' => array(
+                    'OR' => array(
+                    array('PurchaseOrder.po_number LIKE' => '%' . $hint . '%'),
+                    array('PurchaseOrder.name LIKE' => '%' . $hint . '%'),
+                    array('User.first_name LIKE' => '%' . $hint . '%'),
+                    array('User.last_name LIKE' => '%' . $hint . '%'),
+                    array('Supplier.name LIKE' => '%' . $hint . '%')
+                      )
+                    ),
+                //  'limit' => 10
+                  )); 
 
+		$userName = $this->User->find('list', array('fields' => array('id', 'fullname')));
 
-     	 $this->set(compact('purchaseOrderData','supplierData'));
+     	$this->set(compact('purchaseOrderData','supplierData', 'userName'));
 
         if ($hint == ' ') {
             $this->render('index');
@@ -471,5 +525,26 @@ class PurchaseOrdersController extends PurchasingAppController {
             $this->render('search_order');
         }
     }
+
+    public function delete($id = null){
+
+    	$userData = $this->Session->read('Auth');
+
+		$this->loadModel('Purchasing.PurchaseOrder');
+
+		$this->PurchaseOrder->id = $id;
+
+		$this->PurchaseOrder->saveField('status', 5);
+
+		$this->Session->setFlash(__('Purchase Order has been removed'), 'success');
+      
+        $this->redirect( array(
+            'controller' => 'purchase_orders',   
+            'action' => 'index'
+        ));  
+
+
+    }
+
 
 }

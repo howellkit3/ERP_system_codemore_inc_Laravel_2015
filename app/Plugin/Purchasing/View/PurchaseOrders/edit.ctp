@@ -1,7 +1,7 @@
 <?php $this->Html->addCrumb('Edit', array('controller' => 'purchase_orders', 'action' => 'edit',$purchaseOrderId)); ?>
 
 <?php  echo $this->Html->script('Purchasing.create_order_selector');?>
-
+<?php  echo $this->Html->script('Purchasing.category_purchase');?>
 <?php  echo $this->Html->script('Purchasing.modal_clone');?>
 
 <div style="clear:both"></div>
@@ -247,7 +247,7 @@
 						                ?>
 										<section class="cloneMe">
 											<div class="main-box-body clearfix">
-												<div class="form-horizontal">
+												<div class="form-horizontal item-category">
 													<div class="form-group" >
 														<label class="col-lg-2 control-label"><span style="color:red">*</span>Item</label>
 														<div class="col-lg-5">
@@ -310,11 +310,30 @@
 
 													<div class="form-group">
 
+														<label class="col-lg-2 control-label">Category</label>
+														
+														<div class="col-lg-6">
+															<?php 
+																echo $this->Form->input('PurchasingItem.'.$key.'.category', array(
+											                        'options' => array('No Amount Items', 'General Items'),   
+											                        'label' => false,
+											                        'class' => 'form-control category',
+											                        'empty' => '---Select Category---',
+											                        'value' =>  $value[$modelTable]['category']
+											                         )); 
+											                ?>
+
+														</div>
+
+													</div>
+
+													<div class="form-group other-items">
+
 														<label class="col-lg-2 control-label">Size</label>
 														<div class="col-lg-3">
 															<?php 
 											                    echo $this->Form->input('PurchasingItem.'.$key.'.size1', array(
-																	'class' => 'form-control item_type ',
+																	'class' => 'form-control item_type other-element',
 											                        'label' => false,
 											                        'placeholder' => 'Size',
 											                        'disabled' => false,
@@ -327,7 +346,7 @@
 																echo $this->Form->input('PurchasingItem.'.$key.'.size1_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
-											                        'class' => 'form-control select-drop',
+											                        'class' => 'form-control select-drop other-element',
 											                        'empty' => '---Select Unit---',
 											                        'disabled' => false,
 											                        'value' => $value[$modelTable]['size1_unit_id']
@@ -341,12 +360,12 @@
 
 													</div>
 
-													<div class="form-group">
+													<div class="form-group other-items">
 														<label class="col-lg-2 control-label"> </label>
 														<div class="col-lg-3">
 															<?php 
 																echo $this->Form->input('PurchasingItem.'.$key.'.size2', array(
-																	'class' => 'form-control item_type',
+																	'class' => 'form-control item_type other-element',
 											                        'label' => false,
 											                        'placeholder' => 'Size',
 											                        'disabled' => false,
@@ -360,7 +379,7 @@
 																echo $this->Form->input('PurchasingItem.'.$key.'.size2_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
-											                        'class' => 'form-control  select-drop',
+											                        'class' => 'form-control  select-drop other-element',
 											                        'empty' => '---Select Unit---',
 											                        'disabled' => false,
 											                        'default' => $value[$modelTable]['size2_unit_id']
@@ -373,12 +392,12 @@
 
 													</div>
 
-													<div class="form-group">
+													<div class="form-group other-items">
 														<label class="col-lg-2 control-label"> </label>
 														<div class="col-lg-3">
 															<?php 
 																echo $this->Form->input('PurchasingItem.'.$key.'.size3', array(
-																	'class' => 'form-control item_type',
+																	'class' => 'form-control item_type other-element',
 											                        'label' => false,
 											                        'placeholder' => 'Size',
 											                        'disabled' => false,
@@ -392,7 +411,7 @@
 																echo $this->Form->input('PurchasingItem.'.$key.'.size3_unit_id', array(
 											                        'options' => array($unitData),  
 											                        'label' => false,
-											                        'class' => 'form-control  select-drop',
+											                        'class' => 'form-control  select-drop other-element',
 											                        'empty' => '---Select Unit---',
 											                        'disabled' => false,
 											                        'default' => $value[$modelTable]['size3_unit_id']
@@ -405,7 +424,37 @@
 
 													</div>
 
-													<div class="form-group">
+													<div class="form-group rolls">
+														<label class="col-lg-2 control-label"><span style="color:red">*</span> Width</label>
+														<div class="col-lg-3">
+															<?php 
+																echo $this->Form->input('PurchasingItem.'.$key.'.width', array(
+																	'class' => 'form-control item_type roll-element required',
+											                        'label' => false,
+											                        'type' => 'number',
+											                        'value' => $value[$modelTable]['width'],
+											                        'placeholder' => 'Width'));
+
+											                ?>
+														</div>
+
+														<div class="col-lg-3 ">
+															<?php 
+																echo $this->Form->input('PurchasingItem.'.$key.'.width_unit_id', array(
+											                        'options' => array($unitData),  
+											                        'label' => false,
+											                        'class' => 'form-control item_type roll-element required',
+											                        'empty' => '---Select Unit---',
+											                        'default' => $value[$modelTable]['width_unit_id']
+											                         )); 
+
+											                ?>
+														</div>
+
+													</div>
+
+
+													<div class="form-group other-items">
 													<label class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
 													<div class="col-lg-6">
 														<?php 
@@ -424,7 +473,7 @@
 												<div class="form-group">
 														<!--<label class="col-lg-2 control-label"><span style="color:red">*</span>Pieces</label> -->
 
-														<label class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
+														<label class="col-lg-2 control-label"><span style="color:red">*</span>Pieces</label>
 
 													<div class="col-lg-3">
 														<?php 
@@ -471,12 +520,25 @@
 											                ?>
 														</div>
 
-														<div class="col-lg-3">
+														<div class="col-lg-3 other-items">
 															<?php 
 																echo $this->Form->input('PurchasingItem.'.$key.'.unit_price_unit_id', array(
 											                        'options' => array($currencyData),  
 											                        'label' => false,
-											                        'class' => 'form-control required select-drop',
+											                        'class' => 'form-control required select-drop other-element',
+											                        'empty' => '---Select Unit---',
+											                        'default' => $value[$modelTable]['unit_price_unit_id']
+											                         )); 
+
+											                ?>
+														</div>
+
+														<div class="col-lg-3 rolls">
+															<?php 
+																echo $this->Form->input('PurchasingItem.'.$key.'.unit_price_unit_id', array(
+											                        'options' => array($unitData),  
+											                        'label' => false,
+											                        'class' => 'form-control required select-drop roll-element',
 											                        'empty' => '---Select Unit---',
 											                        'default' => $value[$modelTable]['unit_price_unit_id']
 											                         )); 
@@ -611,16 +673,27 @@
 <script>
 	$(document).ready(function() {
 
+		var thisMe = $(this);
+        
+        $('.item-category').find('.category').each(function(){
 
-		// $('body').on('keyPress','.quantityInput',function(){
+           var category = $(this).val();
 
-		// 		$tickets = $(this).val();
+            if(category == 0){
 
-		// 		$(this).parent().parent().parent().parent().find(
-		// 			'.quantity_input'
-		// 			).val($tickets);
+	        	$(this).parents('.item-category').find('.other-items').hide();
+	        	$(this).parents('.item-category').find( ".other-element" ).prop( "disabled", true );
+            	$(this).parents('.item-category').find( ".roll-element" ).prop( "disabled", false );
 
-		// });
+	        }else{
+
+	        	$(this).parents('.item-category').find('.rolls').hide();
+	        	$(this).parents('.item-category').find( ".other-element" ).prop( "disabled", false );
+           		$(this).parents('.item-category').find( ".roll-element" ).prop( "disabled", true );
+
+	        }
+
+        });
 
 		$(".hide-remove").hide();
 

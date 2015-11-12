@@ -674,8 +674,6 @@ class SettingsController extends AppController
 
       public function item_group($indicators = null) {
 
-       //pr($indicators); exit;
-
         $indicator = substr($indicators, 0, -10);  
 
         $this->loadModel('Supplier');
@@ -764,7 +762,7 @@ class SettingsController extends AppController
 
 
        if ($this->request->is('post')) {
-                
+            //pr($this->request->data); exit;
                $generalItemDetails = $this->request->data;
           
             if (!empty($generalItemDetails)) {
@@ -1734,12 +1732,14 @@ class SettingsController extends AppController
 
         $limit = 10;
 
+        $typeMeasureData = array('Countable', 'Measurable');
+
         $conditions = array();
 
         $this->paginate = array(
             'conditions' => $conditions,
             'limit' => $limit,
-            'fields' => array('id', 'unit','created'),
+            'fields' => array('id', 'unit','type_measure','created'),
             'order' => 'Unit.id DESC',
         );
 
@@ -1761,7 +1761,7 @@ class SettingsController extends AppController
                 }
             }
 
-        $this->set(compact('unitData'));
+        $this->set(compact('unitData', 'typeMeasureData'));
     }
 
     public function unit_edit($id = null) {
@@ -2108,6 +2108,8 @@ class SettingsController extends AppController
         $this->loadModel('Role');
         $this->loadModel('Permission');
 
+        $this->loadModel('HumanResource.Department');
+
         $userDatList = $this->User->find('list',array('fields' => array('id','fullname')));
         $roleDataListAll = $this->Role->find('list',array('fields' => array('id','name')));
         $permissionDataList = $this->Permission->find('all',array('fields' => array('id','name')));
@@ -2116,6 +2118,9 @@ class SettingsController extends AppController
                                             'conditions' => array('Role.id NOT' => array(1))
                                             ));
        
+
+        $departments = $this->Department->find('list',array('order' => array('Department.name'),'fields' => array('id','department_position')));
+
         if (!empty($this->request->data)) {
 
             if(!empty($this->request->data['Role']['id']) && ($this->request->data['User']['id'])){
@@ -2148,7 +2153,7 @@ class SettingsController extends AppController
             }   
         }
 
-        $this->set(compact('userDatList','roleDataListAll','permissionDataList','roleDataListLimit'));
+        $this->set(compact('userDatList','roleDataListAll','permissionDataList','roleDataListLimit','departments'));
     }
 
     public function permissionData($roleId = null){
@@ -2616,10 +2621,22 @@ class SettingsController extends AppController
 
             $this->loadModel('User');
 
+            $this->loadModel('HumanResource.Department');
+
             $roleDatList = $this->Role->find('list', array('conditions' => array('NOT' => array('Role.id' => array(1, 2)))));
 
+            $departments = $this->Department->find('list',array('order' => array('Department.name'),'fields' => array('id','department_position')));
+
+
             if ($this->request->is('post')) {
-        
+
+
+
+               // pr($this->request->data); exit();
+
+                //check if in_charge
+
+            
                 if (!empty($this->request->data)) {
                    
                     $this->User->create();
@@ -2627,7 +2644,17 @@ class SettingsController extends AppController
                     $this->request->data['User']['rxt'] = $this->request->data['User']['password'];
 
                     $this->request->data['User']['role_id'] = $this->request->data['Role']['id'];
-                    
+
+                    if (!empty($this->request->data['User']['in_charge'])) {
+                        if (is_array($this->request->data['User']['departments_handle'])) {
+
+                         $this->request->data['User']['departments_handle'] = json_encode( $this->request->data['User']['departments_handle'] );
+                        }
+                        $this->request->data['User']['in_charge'] = !empty($this->request->data['User']['in_charge']) && $this->request->data['User']['in_charge'] == 'on' ? '1' : ''; 
+                      }
+                        
+                    $this->request->data['User']['uuid'] = 0;
+    
                     if($this->User->save($this->request->data)){
 
                         $this->Session->setFlash(__('Register Complete.'));
@@ -2644,7 +2671,7 @@ class SettingsController extends AppController
                 } 
             }
 
-            $this->set(compact('roleDatList'));
+            $this->set(compact('roleDatList','departments'));
 
         }
 
@@ -2789,11 +2816,9 @@ class SettingsController extends AppController
             }
     }
 
-    public function search_order($hint = null, $indicator = null ){
+    public function search_order($hint = null, $indicator = null , $model_num = null){
 
         $this->loadModel('Supplier');
-
-        $this->loadModel('GeneralItem');
 
         $this->loadModel('ItemCategoryHolder');
 
@@ -2818,30 +2843,156 @@ class SettingsController extends AppController
         
         //$this->GeneralItem->bind(array('ItemCategoryHolder', 'ItemTypeHolder', 'Supplier'));
 
-        $generalItemData = $this->GeneralItem->find('all',array('order' => 'GeneralItem.id DESC'));
+        if($model_num == 1){
+
+            $this->loadModel('GeneralItem');
+
+            $generalItemData = $this->GeneralItem->find('all',array('order' => 'GeneralItem.id DESC'));
+
+            $generalItemData = $this->GeneralItem->find('all',array(
+                          'conditions' => array(
+                            'OR' => array(
+                            array('GeneralItem.id LIKE' => '%' . $hint . '%'),
+                            array('GeneralItem.name LIKE' => '%' . $hint . '%')
+                              )
+                            ),
+                          'limit' => 10
+                          )); 
 
 
+             $this->set(compact('generalItemData','supplierData','typeData','categoryData', 'indicator'));
 
-        $generalItemData = $this->GeneralItem->find('all',array(
-                      'conditions' => array(
-                        'OR' => array(
-                        array('GeneralItem.id LIKE' => '%' . $hint . '%'),
-                        array('GeneralItem.name LIKE' => '%' . $hint . '%')
-                          )
-                        ),
-                      'limit' => 10
-                      )); 
+            if ($hint == ' ') {
+                $this->render('index');
+            }else{
+                $this->render('search_order');
+            }
+
+        } else if($model_num == 2){
+
+            $this->loadModel('Substrate');
+
+            $substrateData = $this->Substrate->find('all',array('order' => 'Substrate.id DESC'));
+
+            $substrateData = $this->Substrate->find('all',array(
+                          'conditions' => array(
+                            'OR' => array(
+                            array('Substrate.id LIKE' => '%' . $hint . '%'),
+                            array('Substrate.name LIKE' => '%' . $hint . '%')
+                              )
+                            ),
+                          'limit' => 10
+                          )); 
 
 
-         $this->set(compact('generalItemData','supplierData','typeData','categoryData', 'indicator'));
+             $this->set(compact('substrateData','supplierData','typeData','categoryData', 'indicator'));
 
-        if ($hint == ' ') {
-            $this->render('index');
-        }else{
-            $this->render('search_order');
+            if ($hint == ' ') {
+                $this->render('index');
+            }else{
+                $this->render('search_order_substrate');
+            }
+
+         } else if($model_num == 3){
+
+            $this->loadModel('CompoundSubstrate');
+
+            $compoundSubstrateData = $this->CompoundSubstrate->find('all',array('order' => 'CompoundSubstrate.id DESC'));
+
+            $compoundSubstrateData = $this->CompoundSubstrate->find('all',array(
+                          'conditions' => array(
+                            'OR' => array(
+                            array('CompoundSubstrate.id LIKE' => '%' . $hint . '%'),
+                            array('CompoundSubstrate.name LIKE' => '%' . $hint . '%')
+                              )
+                            ),
+                          'limit' => 10
+                          )); 
+
+
+             $this->set(compact('compoundSubstrateData','supplierData','typeData','categoryData', 'indicator'));
+
+            if ($hint == ' ') {
+                $this->render('index');
+            }else{
+                $this->render('search_order_compound_substrate');
+            }
+
+        } else if($model_num == 4){
+
+            $this->loadModel('CorrugatedPaper');
+
+            $corrugatedPaperData = $this->CorrugatedPaper->find('all',array('order' => 'CorrugatedPaper.id DESC'));
+
+            $corrugatedPaperData = $this->CorrugatedPaper->find('all',array(
+                          'conditions' => array(
+                            'OR' => array(
+                            array('CorrugatedPaper.id LIKE' => '%' . $hint . '%'),
+                            array('CorrugatedPaper.name LIKE' => '%' . $hint . '%')
+                              )
+                            ),
+                          'limit' => 10
+                          )); 
+
+
+             $this->set(compact('corrugatedPaperData','supplierData','typeData','categoryData', 'indicator'));
+
+            if ($hint == ' ') {
+                $this->render('index');
+            }else{
+                $this->render('search_order_corrugated_paper');
+            }
+
         }
+
     }
 
+    public function checkData($id = null) {
+
+        $this->loadModel('User');
+
+        if (!empty($id)) {
+
+            $employees = $this->User->findById($id);
+
+            if (is_array($employees)) {
+
+                echo json_encode($employees);
+            }
+
+        }
+
+        exit();
+    }
+
+
+   public function update_in_charge() {
+
+        if ($this->request->data) {
+
+            $this->loadModel('User');
+
+            if (!empty($this->request->data['User']['departments_handle'])) {
+                $this->request->data['User']['departments_handle']  = json_encode($this->request->data['User']['departments_handle']); 
+            }
+             if ($this->request->data['User']['in_charge'] == 'on') {
+                $this->request->data['User']['in_charge'] = 1;
+            }
+
+            if($this->User->save($this->request->data)){
+
+                        $this->Session->setFlash(__('Register Complete.'));
+
+                        $this->redirect(
+                            array('controller' => 'settings', 'action' => 'role_perm')
+                        );
+            } else {
+
+                $this->Session->setFlash(__('The invalid data. Please, try again.'),'error');
+                
+            }
+        }
+    }
 }
             
 

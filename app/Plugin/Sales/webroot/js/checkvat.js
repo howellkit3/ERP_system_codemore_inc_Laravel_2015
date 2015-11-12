@@ -26,9 +26,7 @@ function vatprice(whatsection, thisElement){
 } 
 
 function findValue($form, thisElement){
-
-
-   
+ 
     var $unit_value = thisElement.parents('.'+$form).find('.unitprice').val();
     var $vat_value = thisElement.parents('.'+$form).find('.vatIn').val();
 
@@ -83,7 +81,6 @@ function findValue($form, thisElement){
             console.log('check');
             console.log($vat_value);
             quotient = $vat_value / 1.12;
-            //total = (sum + parseFloat($unit_value));
             thisElement.parents('.quotationItemDetail').find('.unitprice').val(quotient);
 
          } else {
@@ -123,6 +120,66 @@ $('body').on('click','.vat-price',function(){
 
 });
 
+$('body').on('change','.currency-option',function(){
+
+    thisElement = $(this);
+
+    thisVal = $(this).val();
+
+    if (thisVal) {
+        if(thisVal == 2){
+            thisElement.parents('.form-horizontal').find('.vat-section').show();
+            thisElement.parents('.form-horizontal').find('.for-php').show();
+            thisElement.parents('.form-horizontal').find('.for-usd').hide();
+            thisElement.parents('.form-horizontal').find('.select-vat-status').val('');
+            thisElement.parents('.form-horizontal').find('.for-usd').removeClass('dsplayShow');
+        }
+
+        if(thisVal == 1){
+            thisElement.parents('.form-horizontal').find('.vat-section').show();
+            thisElement.parents('.form-horizontal').find('.for-php').hide();
+            thisElement.parents('.form-horizontal').find('.for-usd').show();
+            thisElement.parents('.form-horizontal').find('.vat-option').hide();
+            thisElement.parents('.form-horizontal').find('.for-usd').removeClass('dsplayShow1');
+
+            
+        }
+    }else{
+        thisElement.parents('.form-horizontal').find('.vat-section').hide();
+        thisElement.parents('.form-horizontal').find('.for-php').hide();
+        thisElement.parents('.form-horizontal').find('.for-usd').hide();
+        thisElement.parents('.form-horizontal').find('.vat-option').hide();
+    };
+    // if(thisVal == 'Vatable Exempt' || thisVal == 'Vatable Exempt'){
+
+    //     thisElement.parents('.form-horizontal').find('.vat-option').hide();
+    // }
+
+});
+
+$('body').on('change','.select-vat-status',function(){
+
+    thisElement = $(this);
+
+    thisVal = $(this).val();
+
+    if (thisVal) {
+        if(thisVal == 'Vatable Sale'){
+
+            thisElement.parents('.form-horizontal').find('.vat-option').show();
+        }
+
+        if(thisVal == 'Vat Exempt' || thisVal == 'Zero Rated Sale'){
+
+            thisElement.parents('.form-horizontal').find('.vat-option').hide();
+        }
+    }else{
+        thisElement.parents('.form-horizontal').find('.vat-option').hide();
+    };
+});
+
+
+
 $('.unitprice').keypress(function(){
     console.log($(this).val());
 });
@@ -153,7 +210,7 @@ $('body').on('change','.checkEx',function(){
     if($(this).is(":checked")) {
         var checkboxtext =  $('.checkEx').next('label').text();
         $(this).parents('.form-horizontal').find('.checkEx').next('label').text('Check to disable VAT Price');
-        $(this).parents('.form-horizontal').find(".vatEx").prop('readonly', true);
+        //$(this).parents('.form-horizontal').find(".vatEx").prop('readonly', true);
         $(this).parents('.form-horizontal').find(".vatIn").prop('readonly', false);
         $(this).parents('.form-horizontal').find('.vatEx').val("");
         $(this).parents('.form-horizontal').find('.vatIn').val("");
@@ -161,7 +218,7 @@ $('body').on('change','.checkEx',function(){
   
     }else{
         $(this).parents('.form-horizontal').find('.checkEx').next('label').text('Check to enable VAT Price');
-        $(this).parents('.form-horizontal').find(".vatEx").prop('readonly', false);
+        //$(this).parents('.form-horizontal').find(".vatEx").prop('readonly', false);
         $(this).parents('.form-horizontal').find(".vatIn").prop('readonly', true);
         $(this).parents('.form-horizontal').find('.vatIn').val("");
         $(this).parents('.form-horizontal').find('.vatEx').val("");

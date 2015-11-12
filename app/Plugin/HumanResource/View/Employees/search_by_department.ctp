@@ -11,7 +11,7 @@ if(!empty($employeeData)){
             if (!empty($employee['Employee']['image'])) {
 
 
-            $background =  $serverPath.'img/uploads/employee/'.$employee['Employee']['image'];  
+            $background =  $serverPath.'img/uploads/employee/'.$employee['Employee']['image'].'?d='.rand(0,1000).time(); 
             } else {
 
             $background =  $serverPath.'img/default-profile.png';   
@@ -38,11 +38,12 @@ if(!empty($employeeData)){
             </td>
 
             <td class="text-center">
+            <?php 
 
+            $status = $employee['Status']['name'] == 'Resigned' ? 'label-danger' : 'label-success';
 
-               <?php echo !empty($employee['Employee']['status']) ? ' <span class="label label-success">'.ucwords($employee['Status']['name']).'</span>'  : '';  ?>
+            echo !empty($employee['Employee']['status']) ? ' <span class="label '.$status.' ">'.ucwords($employee['Status']['name']).'</span>'  : '';  ?>
             </td>
-
             <td>
                <?php echo !empty($employee['Employee']['gender']) ? $employee['Employee']['gender'] : '';  ?>
             </td>

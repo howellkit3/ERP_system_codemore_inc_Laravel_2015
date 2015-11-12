@@ -46,6 +46,7 @@ $(document).ready(function() {
 
     $("body").on('keyup','.rateMe', function(e){
 
+        var quantitySpec = parseInt($('#ProductSpecificationQuantity').val());
         var rateval = $(this).val();
 
         if(rateval <= 0){
@@ -53,6 +54,8 @@ $(document).ready(function() {
             $(this).val(1);
             return false;
         }
+        console.log(quantitySpec);
+        console.log(rateval);
         var paperQtyVal = parseInt(quantitySpec) * parseInt(rateval);
 
         $(this).parents('.parentSection').find('.quantityMe').val(paperQtyVal);

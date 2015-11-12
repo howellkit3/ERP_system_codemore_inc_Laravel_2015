@@ -57,8 +57,12 @@ Configure::write('debug',0);
 					<td style="vertical-align:top; width: 350px">
 						<table >
 								<tr>
-									<td> <span class="grey-label bold"> Plate Type </span> </td>
-									<td> Offset CTP Plate Film Type </td>
+									<td style="width:80px"> <span class="grey-label bold"> Plate Type </span> </td>
+									<td> 
+										<?php echo !empty($subProcess[$processId]) ? $subProcess[$processId] : ''; ?>
+									</td>
+									<td> <span class="grey-label bold"> Film Type </span> </td>
+									<td> </td>
 								</tr>
 								<tr>
 									<td> <span class="grey-label bold"> Color </span> </td>
@@ -69,13 +73,49 @@ Configure::write('debug',0);
 									<td>  </td>
 								</tr>
 								<tr>
-									<td> Sample </td>
-									<td>  </td>
+									<td style="height:70px; vertical-align:top;"> <span class="grey-label bold"> Sample </span> </td>
+									<td> 
+
+
+									 </td>
 								</tr>
+
+								<tr>
+									<td> 	Paper Gripper  <?php echo !empty($PlateMakingProcess['PlateMakingProcess']['paper_gripper']) ? $PlateMakingProcess['PlateMakingProcess']['paper_gripper'] : '' ?> </td>
+									<td> 
+
+
+									 </td>
+								</tr>
+							
+						</table>
+
+						<table class="full-width" style="height:70px; border-top:1px solid #000" >
+							<tr>
+								<td> LPI </td>
+							</tr>
+							<tr>
+								<td> <!-- Screen Type --> </td>
+							</tr>
+						</table>
+
+						<table class="full-width" style="height:70px; border-top:1px solid #000" >
+							<tr>
+								<td>  <span class="grey-label bold"> Offset Machine  </span> </td>
+								<td>  <?php echo !empty($PlateMakingProcess['Machine']['name']) ? $PlateMakingProcess['Machine']['name'] : '' ?>   </td>
+							</tr>
+							<tr>
+								<td> <span class="grey-label bold"> Plate Size </span> </td>
+								<td>  <?php echo !empty($PlateMakingProcess['PlateMakingProcess']['plate']) ? $PlateMakingProcess['PlateMakingProcess']['plate'] : '' ?>   </td>
+							</tr>
+								<tr>
+								<td> <span class="grey-label bold"> Plate Gripper </span> </td>
+								<td>  <?php echo !empty($PlateMakingProcess['PlateMakingProcess']['plate_gripper']) ? $PlateMakingProcess['PlateMakingProcess']['plate_gripper'] : '' ?>   </td>
+							</tr>
 						</table>
 					</td>
 					<td style="vertical-align:top;">
-						<table style="border-left:1px solid #000; height:250px">
+						<table style="border-left:1px solid #000; height:300px">
 								<tr>
 									<td style="vertical-align:top;"> 
 									<strong>Remark</strong>

@@ -1,11 +1,12 @@
 <?php
 // header("Content-disposition: attachment; filename="'this.pdf');
 // header("Content-type: application/pdf");
-Configure::write('debug',0);
+Configure::write('debug',2);
 ?>
 <style>
 <?php include('word.css'); ?>
-
+@page { margin: 5px; }
+body { margin: 5px; }
 </style>
 
 <<html>
@@ -14,27 +15,30 @@ Configure::write('debug',0);
 </head>
 <body style="font-family:sans-serif;">
 
-		<table class="border full-width" style="">
+		<table class="border full-width" style="font-size:10px">
 				<tr>
-						<td><h2>Koufu Packaging Corp.</h2></td>
+						<td><h2 style="font-size:12px">Koufu Packaging Corp.</h2></td>
 				</tr>
 				<tr>
-						<td><h1>Main Job Ticket</h1></td>  <td class="text-right"> <b>Date</b> <?php echo date('Y/m/d'); ?> </td>
+						<td><h1 style="font-size:12px">Main Job Ticket</h1></td>  <td class="text-right"> <b>Date</b> <?php echo date('Y/m/d'); ?> </td>
 				</tr>
 
 		</table>
 
-		<table class="border full-width">
+		<table class="border full-width" style="font-size:10px; margin:0px">
 
 				<tr class="border">
 					<td >
-						<table class="medium-font full-width">
+						<table class="small-font full-width" style="font-size:9px">
 							<tr>
-								<td class="border-bottom-dashed"> <?php echo !empty($companyData[$productData['Product']['company_id']]) ? ucwords($companyData[$productData['Product']['company_id']]) : '';  ?> </td>
+								<td class="border-bottom-dashed" style="font-size:9px"> <?php 
+										echo !empty($companyData[$productData['Product']['company_id']]) ? ucfirst($companyData[$productData['Product']['company_id']]) : '' ;
+
+									?> </td>
 								<td class="text-right border-bottom-dashed"><label class="strong">Schedule No</label> <?php echo $ticketUuid; ?></td>
 							</tr>
 							<tr>
-								<td class="border-bottom-dashed"><label class="strong">Item</label> <?php echo $productData['Product']['name']; ?></td>
+								<td class="border-bottom-dashed"><label class="strong">Item</label> <?php echo $ticketData['Product']['name']; ?></td>
 								<td class="text-right border-bottom-dashed"><label>   </label> <?php echo $ticketData['JobTicket']['po_number']; ?> </td>
 							</tr>
 							
@@ -47,21 +51,17 @@ Configure::write('debug',0);
 									<?php echo !empty($specs['ProductSpecification']['size3']) ? $specs['ProductSpecification']['size3'] : '0' ?></td>
 								<td class="text-right"><label class="strong">Del Date</label> <?php 
 								echo !empty($delData['ClientOrderDeliverySchedule'][0]['schedule']) ? date('M d, Y', strtotime($delData['ClientOrderDeliverySchedule'][0]['schedule'])) : ''; ?>
-
-							
-
-								 </td>
+								</td>
 							</tr>
 						</table>
 					</td>
 				</tr>
 		</table>
 
-		<table class="border full-width">
-
+		<table class="border full-width" style="line-height:0.5">
 				<tr class="">
 					<td>
-						<table class="medium-font full-width">
+						<table class="small-font full-width" style="font-size:8px">
 							
 							<tr>
 								<td><label class="strong">PO Quantity</label>
@@ -86,9 +86,12 @@ Configure::write('debug',0);
 							<?php $partCounter = 1?>
 							<?php $processCounter = 1?>
 							<div class="border">
-								<table class="table medium-font">
+								<table class="table small-font">
 									<thead>
 										<?php $countSpecs = count($formatDataSpecs);  
+
+
+											$product = array();
 
 										foreach ($formatDataSpecs as $key => $specLists) { ?>
 							
@@ -104,10 +107,17 @@ Configure::write('debug',0);
 										      		echo $this->element('Specs/reports/part', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $partCounter,'ticketUuid' => $ticketUuid));
 										      		$partCounter++;
 										      		
+
+										      			if (!empty($specLists['ProductSpecificationDetail'])) {
+										      				$product = $specLists['ProductSpecificationDetail'];
+
+
+										      		}
 										      	}
+
 										      	if($specLists['ProductSpecificationDetail']['model'] == 'Process'){
 										      		
-										      		echo $this->element('Specs/reports/process', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $processCounter,'ticketUuid' => $ticketUuid));
+										      		echo $this->element('Specs/reports/process', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $processCounter,'ticketUuid' => $ticketUuid ,'product'=> $product));
 										      		$processCounter++;
 
 										      		$countSpecs = count($formatDataSpecs[$key]['ProductSpecificationProcess']['ProcessHolder']);
@@ -121,7 +131,7 @@ Configure::write('debug',0);
 										<?php 
 										 if ($countSpecs < 20) : 
 
-										$minimunTd = !empty($ticketData['JobTicket']['remarks']) ?  20 : 22;
+										$minimunTd = !empty($ticketData['JobTicket']['remarks']) ?  4 : 4;
 
 
 
@@ -138,11 +148,12 @@ Configure::write('debug',0);
 										<?php } ?>
 
 										<?php endif; ?>
+											
 									</thead>
 							    </table>
 
-
 						   	</div> 
+
 						   	<?php if (!empty($ticketData['JobTicket']['remarks'])) : ?>
 						   		<table class="border full-width">
 
@@ -171,11 +182,11 @@ Configure::write('debug',0);
 						</table>
 					<?php endif; ?>
 
-						<table class="border full-width">
+						<table class="border full-width" style="font-size:10px" style="line-height:0">
 
 								<tr class="">
 									<td>
-										<table class="medium-font full-width">
+										<table class="small-font full-width">
 											
 											<tr>
 												<td class="border-bottom-dashed"><label class="strong">Packing Option</label></td>
@@ -190,11 +201,11 @@ Configure::write('debug',0);
 								</tr>
 						</table>
 
-						<table class="full-width">
+						<table class="full-width" style="line-height:0;margin-top:2.5px">
 
 								<tr class="">
 									<td>
-										<table class="medium-font full-width">
+										<table class="small-font full-width">
 											
 											<tr>
 												<td><label class="strong">Sales</label>

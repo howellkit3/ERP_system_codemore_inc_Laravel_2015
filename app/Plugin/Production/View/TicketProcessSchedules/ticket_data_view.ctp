@@ -28,12 +28,12 @@
 						<div class="col-lg-5">
 							:&emsp;
 							<?php 
-								echo !empty($companyData[$productData['Product']['company_id']]) ? ucfirst($companyData[$productData['Product']['company_id']]) : '' ;
+								echo !empty($companyData[$jobTickets['Product']['company_id']]) ? ucfirst($companyData[$jobTickets['Product']['company_id']]) : '' ;
 
 							?>
 						</div>
 						<div class="col-lg-4">
-							Schedule No. : <?php echo $ticketData['JobTicket']['uuid']; ?>
+							Schedule No. : <?php echo $jobTickets['JobTicket']['uuid']; ?>
 						</div>
 					</div>
 
@@ -44,11 +44,11 @@
 						<div class="col-lg-5">
 							:&emsp;
 							<?php 
-								echo !empty($productData['Product']['name']) ? ucfirst($productData['Product']['name']) : '' ;
+								echo !empty($jobTickets['Product']['name']) ? ucfirst($jobTickets['Product']['name']) : '' ;
 							?>
 						</div>
 						<div class="col-lg-4">
-							PO No. : <?php echo $ticketData['JobTicket']['po_number']; ?>
+							PO No. : <?php echo $jobTickets['JobTicket']['po_number']; ?>
 						</div>
 					</div>
 
@@ -68,7 +68,7 @@
 							?>
 						</div>
 						<div class="col-lg-4">
-							Delivery Date : <?php echo date('M d, Y', strtotime($delData['ClientOrderDeliverySchedule'][0]['schedule'])); ?>
+							Delivery Date : <?php echo date('M d, Y', strtotime($jobTickets['ClientOrderDeliverySchedule']['schedule'])); ?>
 						</div>
 					</div>
 
@@ -100,24 +100,29 @@
 					<div class="table-responsive">
 						<table class="table table-bordered">
 							<thead>
-								<?php foreach ($formatDataSpecs as $key => $specLists) { ?>
+								<?php 
+
+								foreach ($formatDataSpecs as $key => $specLists) { ?>
 					
 									<?php
 
 								      	if($specLists['ProductSpecificationDetail']['model'] == 'Component'){
 
 								      		echo $this->element('Specs/component', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $componentCounter));
+								      		
 								      		$componentCounter++;
 								      	}
 								      	if($specLists['ProductSpecificationDetail']['model'] == 'Part'){
 								      		
 								      		echo $this->element('Specs/part', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $partCounter));
+								      		
 								      		$partCounter++;
 								      		
 								      	}
 								      	if($specLists['ProductSpecificationDetail']['model'] == 'Process'){
+											
+											echo $this->element('Specs/process', array('dataSpecs' => $formatDataSpecs[$key],'key' => $processCounter,'subProcessData' => $subProcessData,'ticketData' => $jobTickets));
 								      		
-								      		echo $this->element('Specs/process', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $processCounter));
 								      		$processCounter++;
 
 								      	}

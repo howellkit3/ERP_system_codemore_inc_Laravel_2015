@@ -8,7 +8,19 @@
                         'HumanResource.workshifts'
 )); ?>
 <div style="clear:both"></div>
-<?php echo $this->element('hr_options'); ?><br><br>
+<?php
+if (!empty($userData['User']['in_charge']) && $userData['User']['in_charge'] == 1) {
+
+echo $this->element('in_charge_option'); 
+
+$incharge = true;
+} else {
+$incharge = false;
+echo $this->element('hr_options'); 
+} 
+
+
+?><br><br>
 <?php echo $this->Form->create('Breaktime',array('url'=>(array('controller' => 'workshifts','action' => 'edit')),
 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data' ));?>
 
@@ -116,13 +128,13 @@
                                                         <div class="clearfix"></div>
                                                         <div class="selected_breaks" >
                                                             <ul>
-                                                                <?php foreach ($breaktimes as $key => $time) { ?>
+                                                                <?php foreach ($breaktimes as $key => $time) {  ?>
                                                                     <li>
 
                                                                     <div class="radio">
-                                                                        <input type="radio"  id="checkbox-<?php echo $time['BreakTime']['id']?>" value="<?php echo $time['BreakTime']['id']?>" name="data[Workshift][breakids][]" <?php echo (in_array($time['BreakTime']['id'], $breaks)) ? 'checked' : ''; ?>>
+                                                                        <input type="radio"  id="checkbox-<?php echo $time['BreakTime']['id']?>" value="<?php echo $time['BreakTime']['id']?>" name="data[Workshift][breakids][]" <?php echo !empty($time['BreakTime']['id']) && (in_array($time['BreakTime']['id'], $breaks)) ? 'checked' : ''; ?>>
                                                                             <label for="checkbox-<?php echo $time['BreakTime']['id']?>">
-                                                                            <?php echo date('H:i: a',strtotime($time['BreakTime']['from'])); ?>~<?php echo date('H:i: a',strtotime($time['BreakTime']['to'])); ?>
+                                                                            <?php echo $time['BreakTime']['name'].' ( '.date('H:i: a',strtotime($time['BreakTime']['from'])); ?>~<?php echo date('H:i: a',strtotime($time['BreakTime']['to'])) .' )'; ?>
                                                                             </label>
                                                                         </div>
 

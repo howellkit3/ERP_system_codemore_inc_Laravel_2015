@@ -39,7 +39,7 @@ th, td {
 				<table style=" border:1px solid black;border-collapse:collapse; margin-bottom:0px;  ">
 					<tr>
 						<td align = "center" style="border:1px solid black; width:10px; font-size:70%;" ><b>No.</b></td>
-						<td align = "center" style =" width:180px; word-wrap: break-word;" ><b>Item Description</b></td>
+						<td align = "center" style =" width:150px; word-wrap: break-word;" ><b>Item Description</b></td>
 						<td align = "center" style="border:1px solid black; width:20px; font-size:70%;"><b>Qty Needed</b></td>
 						<td align = "center" style="border:1px solid black; width:35px; font-size:70%;"><b>UOM</b></td>
 						<td align = "center" style="border:1px solid black; width:35px; font-size:60%;"><b>Current Stock</b></td>
@@ -51,26 +51,38 @@ th, td {
 
 					<?php $ctr = 8;
 
-					foreach($requestItem as $key=>$value) { ?>
+					foreach($requestItem as $key=> $value) { 
+
+						$specs1 = !empty($value['RequestItem']['size1']) ? $value['RequestItem']['size1'] . " " . $unitData[$value['RequestItem']['size1_unit_id']] : "";
+
+						$specs2 = !empty($value['RequestItem']['size2']) ? " x " . $value['RequestItem']['size2'] . " " . $unitData[$value['RequestItem']['size2_unit_id']] : "";
+
+						$specs3 = !empty($value['RequestItem']['size3']) ? " x " .  $value['RequestItem']['size3'] . " " . $unitData[$value['RequestItem']['size3_unit_id']] : "";
+
+						$specsAll = $specs1 . " " . $specs2  . " " . $specs3 ;
+
+						$nameWithSpecs = $requestRequestItem[$key]['RequestItem']['name'] . " " . $specsAll;
+
+						$lengthName = strlen($nameWithSpecs);
+
+					?>
 
 					<tr>
 						<td  align = "center" style="border:1px solid black; width:10px;   word-wrap: break-word; "><span style="font-size:70%"; ><?php echo $key + 1 ?></span></td>
 
-						<?php $lengthName = strlen($requestRequestItem[$key]['RequestItem']['name'])?>
-
 						<?php if($lengthName >= 30 && $lengthName <= 70){ ?>
 
-							<td style="border:1px solid black; "><span style="font-size:45%"; ><?php echo $requestRequestItem[$key]['RequestItem']['name']?></span>
+							<td style="border:1px solid black; "><span style="font-size:45%"; ><?php echo $nameWithSpecs?></span>
 							</td>
 
 						<?php } else if($lengthName >= 70) { ?>
 
-							<td style="border:1px solid black; "><span style="font-size:40%"; ><?php echo $requestRequestItem[$key]['RequestItem']['name']?></span>
+							<td style="border:1px solid black; "><span style="font-size:40%"; ><?php echo $nameWithSpecs  ?></span>
 							</td>
 
 						<?php }else{ ?>
 
-							<td style="border:1px solid black; "><span style="font-size:70%"; ><?php echo $requestRequestItem[$key]['RequestItem']['name']?></span>
+							<td style="border:1px solid black; "><span style="font-size:60%"; ><?php echo $nameWithSpecs ?></span> 
 							</td>
 
 						<?php } ?>
@@ -88,14 +100,14 @@ th, td {
 						
 						<?php
 
-						 $lengthName = strlen($requestRequestItem[$key]['RequestItem']['purpose']);
+						 $lengthName = strlen($value['RequestItem']['purpose']);
 
-						 if($lengthName >= 30 && $lengthName <= 70){ ?>
+						 if($lengthName >= 20 && $lengthName <= 40){ ?>
 
-							<td style="border:1px solid black; width:50px"><span style="font-size:35%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
+							<td style="border:1px solid black; width:50px"><span style="font-size:40%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
 							</td>
 
-						<?php } else if($lengthName >= 70) { ?>
+						<?php } else if($lengthName >= 40) { ?>
 
 							<td style="border:1px solid black; width:50px"><span style="font-size:30%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
 							</td>
@@ -107,8 +119,24 @@ th, td {
 
 						<?php } ?>
 
-						<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:50%; max-width:50px"><?php echo $value['RequestItem']['remarks'] ?></td>
-						
+						<?php
+
+						$lengthRemarks = strlen($value['RequestItem']['remarks']);
+
+						 if($lengthRemarks >= 20 && $lengthRemarks <= 40){ ?>
+
+							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:40%; max-width:50px"><?php echo $value['RequestItem']['remarks'] ?></td>
+
+						<?php } else if($lengthRemarks >= 40) { ?>
+
+							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:30%; max-width:50px"><?php echo $value['RequestItem']['remarks'] ?></td>
+
+						<?php }else{ ?>
+
+							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:50%; max-width:50px"><?php echo $value['RequestItem']['remarks'] ?></td>
+
+						<?php } ?>
+
 					</tr>
 
 					<?php 
@@ -135,29 +163,28 @@ th, td {
 					
 				</table>
 
-					<br>
 
-					<table style=" margin-top:0px; border:0px solid black;border-collapse: separate; border-spacing: 0px; padding:0px; margin:0px; line-height:0px; ">
+					<table style=" margin-top:0px; border:0px solid black;border-collapse: separate; border-spacing: 0px; padding:0px; margin-top:15px 0; line-height:0px; ">
 					
 					<tr>
-						<td align = "left" style=" width:183px; vertical-align: text-top; height:25px; ">Requisitioner:</td>
-						<td align = "left" style=" width:182px; vertical-align: text-top;">Approved by:</td>
-						<td align = "left" style=" width:182px; vertical-align: text-top;">Purchased by:</td>
+						<td align = "left" style=" width:183px; vertical-align: text-top; height:8px; font-size:13px">Requisitioner:</td>
+						<td align = "left" style=" width:182px; vertical-align: text-top; font-size:13px">Approved by:</td>
+						<td align = "left" style=" width:182px; vertical-align: text-top; font-size:13px">Purchased by:</td>
 					</tr>
 
 					<tr>
-						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px; margin:0px;"><?php echo ucwords($preparedFullName )?><br>____________________</td>
-						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px; margin:0px; "> 
+						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px; margin:0px; font-size:13px"><?php echo ucwords($preparedFullName )?><br>____________________</td>
+						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px; margin:0px;font-size:13px "> 
 							Ms. Carryl Yu
 						<br>____________________</td>
-						<td align = "center" style=" width:183px; vertical-align: bottom; height:15px;margin:0px; ">____________________<br></td>
+						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px;margin:0px;font-size:13px ">____________________<br></td>
 					</tr>
 
 					</table>
 						
 					<table style =" padding:0px; margin:0px;">
 					<tr>
-						<td align = "center" style="  vertical-align: text-top;; margin:0px; line-height:10px;font-size:60%;"><br>PRINT NAME AND SIGN</td>
+						<td align = "center" style="  vertical-align: text-top;; margin-top:10px; line-height:7px;font-size:60%;"><br>PRINT NAME AND SIGN</td>
 						<td align = "center" style="width:200px; vertical-align: text-top;; margin:0px; line-height:10px;font-size:60%; color:white;">Un </td>
 						<td align = "center" style=" vertical-align:text-top;margin:0px; font-size:60%; line-height:8px;"><br>PURCHASING PERSONNEL</td>
 					</tr>
@@ -168,6 +195,8 @@ th, td {
 						<td align = "center" style=" vertical-align:text-top;margin:0px; font-size:60%; line-height:8px;"><br>KP-FR-LG1-001 R0 <br>Effective Date: 10 Aug 2015</td>
 					</tr>
 				</table>
+					
+					
 					
 				</div>
 
@@ -192,7 +221,7 @@ th, td {
 					<table style=" border:1px solid black;border-collapse:collapse; margin-bottom:0px;  ">
 					<tr>
 						<td align = "center" style="border:1px solid black; width:10px; font-size:70%;" ><b>No.</b></td>
-						<td align = "center" style =" width:180px; word-wrap: break-word;" ><b>Item Description</b></td>
+						<td align = "center" style =" width:150px; word-wrap: break-word;" ><b>Item Description</b></td>
 						<td align = "center" style="border:1px solid black; width:20px; font-size:70%;"><b>Qty Needed</b></td>
 						<td align = "center" style="border:1px solid black; width:35px; font-size:70%;"><b>UOM</b></td>
 						<td align = "center" style="border:1px solid black; width:35px; font-size:60%;"><b>Current Stock</b></td>
@@ -204,26 +233,38 @@ th, td {
 
 					<?php $ctr = 8;
 
-					foreach($requestItem as $key=>$value) { ?>
+					foreach($requestItem as $key=> $value) { 
+
+						$specs1 = !empty($value['RequestItem']['size1']) ? $value['RequestItem']['size1'] . " " . $unitData[$value['RequestItem']['size1_unit_id']] : "";
+
+						$specs2 = !empty($value['RequestItem']['size2']) ? " x " . $value['RequestItem']['size2'] . " " . $unitData[$value['RequestItem']['size2_unit_id']] : "";
+
+						$specs3 = !empty($value['RequestItem']['size3']) ? " x " .  $value['RequestItem']['size3'] . " " . $unitData[$value['RequestItem']['size3_unit_id']] : "";
+
+						$specsAll = $specs1 . " " . $specs2  . " " . $specs3 ;
+
+						$nameWithSpecs = $requestRequestItem[$key]['RequestItem']['name'] . " " . $specsAll;
+
+						$lengthName = strlen($nameWithSpecs);
+
+					?>
 
 					<tr>
 						<td  align = "center" style="border:1px solid black; width:10px;   word-wrap: break-word; "><span style="font-size:70%"; ><?php echo $key + 1 ?></span></td>
 
-						<?php $lengthName = strlen($requestRequestItem[$key]['RequestItem']['name'])?>
-
 						<?php if($lengthName >= 30 && $lengthName <= 70){ ?>
 
-							<td style="border:1px solid black; "><span style="font-size:45%"; ><?php echo $requestRequestItem[$key]['RequestItem']['name']?></span>
+							<td style="border:1px solid black; "><span style="font-size:45%"; ><?php echo $nameWithSpecs?></span>
 							</td>
 
 						<?php } else if($lengthName >= 70) { ?>
 
-							<td style="border:1px solid black; "><span style="font-size:40%"; ><?php echo $requestRequestItem[$key]['RequestItem']['name']?></span>
+							<td style="border:1px solid black; "><span style="font-size:40%"; ><?php echo $nameWithSpecs  ?></span>
 							</td>
 
 						<?php }else{ ?>
 
-							<td style="border:1px solid black; "><span style="font-size:70%"; ><?php echo $requestRequestItem[$key]['RequestItem']['name']?></span>
+							<td style="border:1px solid black; "><span style="font-size:60%"; ><?php echo $nameWithSpecs ?></span> 
 							</td>
 
 						<?php } ?>
@@ -243,14 +284,14 @@ th, td {
 						
 						<?php
 
-						 $lengthName = strlen($requestRequestItem[$key]['RequestItem']['purpose']);
+						 $lengthName = strlen($value['RequestItem']['purpose']);
 
-						 if($lengthName >= 30 && $lengthName <= 70){ ?>
+						 if($lengthName >= 20 && $lengthName <= 40){ ?>
 
-							<td style="border:1px solid black; width:50px"><span style="font-size:35%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
+							<td style="border:1px solid black; width:50px"><span style="font-size:40%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
 							</td>
 
-						<?php } else if($lengthName >= 70) { ?>
+						<?php } else if($lengthName >= 40) { ?>
 
 							<td style="border:1px solid black; width:50px"><span style="font-size:30%"; ><?php echo $value['RequestItem']['purpose'] ?></span>
 							</td>
@@ -262,7 +303,23 @@ th, td {
 
 						<?php } ?>
 
-						<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:50%"><?php echo $value['RequestItem']['remarks'] ?></td>	
+						<?php
+
+						$lengthRemarks = strlen($value['RequestItem']['remarks']);
+
+						 if($lengthRemarks >= 20 && $lengthRemarks <= 40){ ?>
+
+							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:40%; max-width:50px"><?php echo $value['RequestItem']['remarks'] ?></td>
+
+						<?php } else if($lengthRemarks >= 40) { ?>
+
+							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:30%; max-width:50px"><?php echo $value['RequestItem']['remarks'] ?></td>
+
+						<?php }else{ ?>
+
+							<td align ="center" style="border:1px solid black; word-wrap: break-word; font-size:50%; max-width:50px"><?php echo $value['RequestItem']['remarks'] ?></td>
+
+						<?php } ?>
 					</tr>
 
 					<?php 
@@ -289,35 +346,36 @@ th, td {
 					
 					</table>
 
-					<br>
-
-					<table style=" margin-top:0px; border:0px solid black;border-collapse: separate; border-spacing: 0px; padding:0px; margin:0px; line-height:0px; ">
+				
+					<table style=" margin-top:0px; border:0px solid black;border-collapse: separate; border-spacing: 0px; padding:0px; margin-top:15px; line-height:0px; ">
 					
 					<tr>
-						<td align = "left" style=" width:183px; vertical-align: text-top; height:25px; ">Requisitioner:</td>
-						<td align = "left" style=" width:182px; vertical-align: text-top;">Approved by:</td>
-						<td align = "left" style=" width:182px; vertical-align: text-top;">Purchased by:</td>
+						<td align = "left" style=" width:183px; vertical-align: text-top; height:8px; font-size:13px">Requisitioner:</td>
+						<td align = "left" style=" width:182px; vertical-align: text-top; font-size:13px">Approved by:</td>
+						<td align = "left" style=" width:182px; vertical-align: text-top; font-size:13px">Purchased by:</td>
 					</tr>
 
 					<tr>
-						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px; margin:0px;"><?php echo ucwords($preparedFullName )?><br>____________________</td>
-						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px; margin:0px; ">
-							Ms. Carryl Yu <br>____________________</td>
-						<td align = "center" style=" width:183px; vertical-align: bottom; height:15px;margin:0px; ">____________________<br></td>
+						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px; margin:0px; font-size:13px"><?php echo ucwords($preparedFullName )?><br>____________________</td>
+						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px; margin:0px;font-size:13px "> 
+							Ms. Carryl Yu
+						<br>____________________</td>
+						<td align = "center" style=" width:183px; vertical-align: bottom; height:10px;margin:0px;font-size:13px ">____________________<br></td>
 					</tr>
 
 					</table>
 						
+						
 					<table style =" padding:0px; margin:0px;">
 					<tr>
-						<td align = "center" style="  vertical-align: text-top;; margin:0px; line-height:10px;font-size:60%;"><br>PRINT NAME AND SIGN</td>
+						<td align = "center" style="  vertical-align: text-top;; margin-top:10px; line-height:7px;font-size:60%;"><br>PRINT NAME AND SIGN</td>
 						<td align = "center" style="width:200px; vertical-align: text-top;; margin:0px; line-height:10px;font-size:60%; color:white;">Un </td>
 						<td align = "center" style=" vertical-align:text-top;margin:0px; font-size:60%; line-height:8px;"><br>PURCHASING PERSONNEL</td>
 					</tr>
 
 					<tr>
-						<td align = "center" style="  vertical-align: text-top;; margin:0px; line-height:10px;font-size:60%;"><br>*Unit of Measure(UOM)  could be <I>pcs, kgs, liter, MT </I></td>
-						<td align = "center" style="width:200px; vertical-align: text-top;; margin:0px; line-height:10px;font-size:60%; color:white;"><br><br>Un </td>
+						<td align = "center" style="  vertical-align: text-top;; margin:0px; line-height:1;font-size:60%;"><br>*Unit of Measure(UOM)  could be <I>pcs, kgs, liter, MT </I></td>
+						<td align = "center" style="width:200px; vertical-align: text-top;; margin:0px; line-height:1px;font-size:60%; color:white;"><br><br>Un </td>
 						<td align = "center" style=" vertical-align:text-top;margin:0px; font-size:60%; line-height:8px;"><br>KP-FR-LG1-001 R0 <br>Effective Date: 10 Aug 2015</td>
 					</tr>
 				</table>

@@ -43,6 +43,26 @@ $page = !empty($this->params['named']['page']) ? $this->params['named']['page'] 
 			               </div> 
 			               <div class="clearfix"></div>
 			                <div class="filter-block pull-right">
+
+			                		<div class="form-group pull-left search-dropdown">
+			                 		<?php 
+			                 			echo $this->Form->input('profile',array(
+					                 		'options' => array(
+					                 			'profile' => 'With Profile',
+					                 			'no_profile' => 'No Profile Pic'
+					                 		),
+					                 		'class' => 'select-profile-view autocomplete',
+					                 		'label' => false,
+					                 		'div'  => false,
+					                 		//'default' => $department,
+					                 		'empty'=> '-- Select --'
+
+					                 		)); 
+
+					                ?>
+			                    </div>
+
+
 			                	<div class="form-group pull-left search-dropdown">
 			                 		<?php 
 			                 			echo $this->Form->input('department_id',array(
@@ -82,6 +102,9 @@ $page = !empty($this->params['named']['page']) ? $this->params['named']['page'] 
 			                            <input type="hidden" name="department" value="" class="form-control departmentHidden"  />
 			                            <input type="hidden" name="status" value="" class="form-control statusHidden"  />
 			                            <input type="hidden" name="input_search" value="" class="form-control searchHidden"  />
+
+			                            <input type="hidden" name="profile" value="" class="form-control profileHidden"  />
+
 			                            <button type="submit" class="btn btn-success pull-right "><i class="fa fa-share-square-o fa-lg"></i> Export</button>
 			                         <?php echo $this->Form->end(); ?>
 			                    </div>
@@ -135,7 +158,7 @@ $page = !empty($this->params['named']['page']) ? $this->params['named']['page'] 
 														if (!empty($employee['Employee']['image'])) {
 
 													
-														$background =  $serverPath.'img/uploads/employee/'.$employee['Employee']['image'];	
+														$background =  $serverPath.'img/uploads/employee/'.$employee['Employee']['image'].'?d='.rand(0,1000).time();	
 														} else {
 
 															$background =  $serverPath.'img/default-profile.png';	
@@ -161,7 +184,11 @@ $page = !empty($this->params['named']['page']) ? $this->params['named']['page'] 
 								                        </td>
 
 								                        <td class="text-center">
-															<?php echo !empty($employee['Employee']['status']) ? ' <span class="label label-success">'.ucwords($employee['Status']['name']).'</span>'  : '';  ?>
+															<?php 
+
+															$status = $employee['Status']['name'] == 'Resigned' ? 'label-danger' : 'label-success';
+
+															echo !empty($employee['Employee']['status']) ? ' <span class="label '.$status.' ">'.ucwords($employee['Status']['name']).'</span>'  : '';  ?>
 								                        </td>
 
 								                        <td>

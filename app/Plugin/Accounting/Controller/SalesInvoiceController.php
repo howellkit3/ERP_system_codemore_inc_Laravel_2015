@@ -9,10 +9,14 @@ class SalesInvoiceController extends AccountingAppController {
     public $helpers = array('Accounting.PhpExcel');
 
     public function index(){
-        
+
         $userData = $this->Session->read('Auth');
+        
+        $this->loadModel('Sales.Company');
 
+        $this->loadModel('Delivery.Delivery');
 
+       // $this->SalesInvoice->bindInvoice();
 
         $limit = 10;
 
@@ -27,25 +31,26 @@ class SalesInvoiceController extends AccountingAppController {
                 'SalesInvoice.statement_no',  
                 'SalesInvoice.dr_uuid', 
                 'SalesInvoice.status',
+             //   'Delivery.company_id',
                 ),
             'order' => 'SalesInvoice.id DESC',
         );
 
         $invoiceData = $this->paginate('SalesInvoice');
 
+        $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
 
-
-        // $invoiceData = $this->SalesInvoice->find('all', array(
-        //                                             'fields' => array(
-        //                                                 'id','sales_invoice_no',
-        //                                                 'dr_uuid','statement_no',
-        //                                                 'status'),
-        //                                             'conditions' => array(
-        //                                                 'NOT' => array(
-        //                                                     'SalesInvoice.status' => 2) ),
-        //                                             'order' => 'SalesInvoice.id DESC'
-        //                                         ));
-        
+        $deliveryNumHolder = $this->Delivery->find('list',array('fields' => array('dr_uuid','company_id')));
+        //pr($deliveryNum); exit;
+        foreach($deliveryNumHolder as $key => $deliveryList) {
+          //  pr($deliveryList);    
+           //$keyHolder = strval($key);
+           //pr( $keyHolder);
+           $keyHolder = ltrim($key, '0');
+           $deliveryNum[$keyHolder] = $deliveryList;
+        }
+      //  pr($deliveryNum); exit;
+      
         if ($userData['User']['role_id'] == 9 ) {
             $noPermissionReciv = 'disabled not-active';
         } else {
@@ -63,7 +68,7 @@ class SalesInvoiceController extends AccountingAppController {
             $noPermissionPay = ' ';
         }
 
-        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay'));
+        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay','companyName', 'deliveryNumHolder'));
 
     }
 
@@ -100,18 +105,13 @@ class SalesInvoiceController extends AccountingAppController {
 
     public function view($invoiceId = null,$saNo = null){
 
-       //pr($saNo); exit;
         $userData = $this->Session->read('Auth');
 
-        $this->loadModel('Sales.ClientOrder');
+        $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
-        $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule',
-                                        'QuotationItemDetail','QuotationDetail',
-                                        'Product'));
-        
+        $this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product', 'Quotation', 'QuotationItemDetail', 'Company', 'Address'));
+
         $this->loadModel('Delivery.Delivery');
-
-        $this->loadModel('Sales.Company');
 
         $this->loadModel('Sales.PaymentTermHolder');
 
@@ -141,12 +141,11 @@ class SalesInvoiceController extends AccountingAppController {
 
         Cache::write('currencyData', $currencyData);
 
-        $this->Company->bind('Address');
-
+        
+        //$this->SalesInvoice->bindInvoice();
         $invoiceData = $this->SalesInvoice->find('first', array(
                                             'conditions' => array('SalesInvoice.id' => $invoiceId
                                             )));
-
 
         $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $invoiceData['SalesInvoice']['created_by'])
@@ -164,23 +163,22 @@ class SalesInvoiceController extends AccountingAppController {
             $drData = " ";
         }
 
-       // pr($invoiceData); exit;
 
-        $clientData = $this->ClientOrder->find('first', array(
-                                            'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
+        $conditions = array('ClientOrderDeliverySchedule.uuid' => $drData['Delivery']['schedule_uuid']);
+      // $conditions = array_merge($conditions,array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']));
+        $clientData = $this->ClientOrderDeliverySchedule->find('first', array(
+                                            'conditions' => array($conditions
                                             )));
 
-        
-        //pr($clientData); exit;
-        $companyData = $this->Company->find('first', array(
-                                            'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
-                                            )));
+        $clientOrderId = $clientData['ClientOrder']['id'];
 
+        $companyData = $clientData['Company']['company_name'];
+       
         $noPermissionPay = "";
 
         $noPermissionReciv = "";
 
-        $this->set(compact('invoiceId','prepared','approved','drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData', 'noPermissionPay', 'noPermissionReciv','quotationData'));
+        $this->set(compact('invoiceId','prepared','approved','drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData', 'noPermissionPay', 'noPermissionReciv','quotationData', 'clientOrderId'));
         
         if (!empty($saNo)) {
 
@@ -346,6 +344,8 @@ class SalesInvoiceController extends AccountingAppController {
 
         $this->loadModel('Sales.Company');
 
+      //  $this->Delivery->bindInvoice();
+
         $limit = 10;
 
         $conditions = array();
@@ -357,6 +357,7 @@ class SalesInvoiceController extends AccountingAppController {
                 'Delivery.id',
                 'Delivery.clients_order_id',
                 'Delivery.company_id',  
+                'Delivery.status',
                 'Delivery.dr_uuid', 
                 ),
             'order' => 'Delivery.id DESC',
@@ -364,19 +365,11 @@ class SalesInvoiceController extends AccountingAppController {
 
         $deliveryData = $this->paginate('Delivery');
 
-       // $this->Delivery->bindInvoice('ClientOrder');
-
-        //$deliveryData = $this->Delivery->find('all');
-
-        //$clientData = $this->ClientOrder->find('all');
-
-        //pr($clientData); exit;
+     // pr($deliveryData); exit;
 
         $poNumber = $this->ClientOrder->find('list', array('fields' => array('uuid', 'po_number')));
 
         $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
-
-        //pr($deliveryData); exit;
 
         $seriesNo = $this->SalesInvoice->find('first', array(
                 'order' => array('SalesInvoice.sales_invoice_no DESC')));
@@ -511,18 +504,17 @@ class SalesInvoiceController extends AccountingAppController {
 
     public function create_sales_invoice(){ }
  
-    public function print_invoice($invoiceId = null ,$saNo = null) {
+    public function print_invoice($invoiceId = null ,$clientsId = null) {
+
+  //      pr($clientsId); pr($invoiceId); exit;
 
         $userData = $this->Session->read('Auth');
 
-        $this->loadModel('Sales.ClientOrder');
+        $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
-        $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule',
-                                        'QuotationItemDetail','QuotationDetail','Product'));
+        $this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product', 'Quotation', 'QuotationItemDetail', 'Company', 'Address'));
         
         $this->loadModel('Delivery.Delivery');
-
-        $this->loadModel('Sales.Company');
 
         $this->loadModel('Sales.PaymentTermHolder');
 
@@ -555,7 +547,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         Cache::write('currencyData', $currencyData);
      
-        $this->Company->bind('Address');
+     // $this->Company->bind('Address');
 
         $invoiceData = $this->SalesInvoice->find('first', array(
                                             'conditions' => array('SalesInvoice.id' => $invoiceId
@@ -564,22 +556,27 @@ class SalesInvoiceController extends AccountingAppController {
         $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $invoiceData['SalesInvoice']['created_by'])
                                                             )); 
+
+      //  pr($prepared); exit;
+
         
         $this->Delivery->bindDelivery();
 
         $drData = $this->Delivery->find('first', array(
                                             'conditions' => array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid']
                                             )));
-       
-        $clientData = $this->ClientOrder->find('first', array(
-                                            'conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id']
+
+        $clientData = $this->ClientOrderDeliverySchedule->find('first', array(
+                                            'conditions' => array('ClientOrder.id' => $clientsId
                                             )));
 
-        //pr($clientData); exit;
         
-        $companyData = $this->Company->find('first', array(
-                                            'conditions' => array('Company.id' => $clientData['ClientOrder']['company_id']
-                                            )));
+        //pr($clientData); exit;
+        // $companyData = $this->Company->find('first', array(
+        //                                     'conditions' => array('Company.id' => $drData['Delivery']['company_id']
+        //                                     )));
+
+    //    pr($companyData); exit;
 
         //$view = new View(null, false);
         
@@ -907,7 +904,105 @@ class SalesInvoiceController extends AccountingAppController {
         
     }
 
-    public function daterange_summary($from = null, $to = null,$whatreport = null){
+
+    public function payables_print($reportname = null) {
+
+        $this->loadModel('WareHouse.ReceivedItem');
+
+        $this->loadModel('Purchasing.PurchaseOrder');
+
+        $this->loadModel('Supplier');
+
+        $this->loadModel('User');
+
+        $this->ReceivedItem->bind('DeliveredOrder', 'PurchaseOrder');
+
+        if(!empty($this->request->data['from_date'])){
+
+            $dateRange = str_replace(' ', '', $this->request->data['from_date']);
+       
+            $splitDate = split('-', $dateRange);
+            $from = str_replace('/', '-', $splitDate[0]);
+            $to = str_replace('/', '-', $splitDate[1]);
+
+
+            $receivedItemData = $this->ReceivedItem->find('all', array(
+            'conditions' => array(
+                'AND' => array(
+                    'DeliveredOrder.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')
+                ),
+            ),
+            'order' => 'ReceivedItem.id DESC'
+            ));
+
+        } else {
+
+            $receivedItemData = $this->ReceivedItem->find('all', array(
+                'order' => array('ReceivedItem.id DESC')));
+ 
+        }
+
+        foreach ($receivedItemData as $key => $value) {
+
+            if ($value['ReceivedItem']['model'] ==  "GeneralItem"){
+
+                $this->loadModel('GeneralItem');
+
+                $itemData = $this->GeneralItem->find('list', array('fields' => array('id', 'name')));
+
+                $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
+
+            }
+
+            if ($value['ReceivedItem']['model'] ==  "Substrate"){
+
+                $this->loadModel('Substrate');
+
+                $itemData = $this->Substrate->find('list', array('fields' => array('id', 'name')));
+
+                $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
+
+            }
+
+            if ($value['ReceivedItem']['model'] ==  "CompoundSubstrate"){
+
+                $this->loadModel('CompoundSubstrate');
+
+                $itemData = $this->CompoundSubstrate->find('list', array('fields' => array('id', 'name')));
+
+                $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
+
+            }
+
+            if ($value['ReceivedItem']['model'] ==  "CorrugatedPaper"){
+
+                $this->loadModel('CorrugatedPaper');
+
+                $itemData = $this->CorrugatedPaper->find('list', array('fields' => array('id', 'name')));
+
+                $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
+
+            }
+
+
+        }
+
+        $purchaseOrderSupplier = $this->PurchaseOrder->find('list', array('fields' => array('id', 'supplier_id')));
+
+        $purchaseOrderPONum = $this->PurchaseOrder->find('list', array('fields' => array('id', 'po_number')));
+
+        $userName = $this->User->find('list', array('fields' => array('id', 'fullname')));
+
+        $supplierName = $this->Supplier->find('list', array('fields' => array('id', 'name')));
+
+        $this->set(compact('noPermissionReciv','noPermissionPay', 'userName', 'receivedItemData','purchaseOrderPONum', 'purchaseOrderSupplier','supplierName'));
+
+        $this->render('SalesInvoice/xls/payables_print');
+ 
+    }
+
+
+    public function daterange_summary($from = null, $to = null){
 
         $this->loadModel('Delivery.Delivery');
 
@@ -1019,6 +1114,92 @@ class SalesInvoiceController extends AccountingAppController {
         
     }
 
+    public function daterange_summary_payables($from = null, $to = null,$whatreport = null){
+
+        $this->loadModel('WareHouse.ReceivedItem');
+
+        $this->loadModel('Purchasing.PurchaseOrder');
+
+        $this->loadModel('Supplier');
+
+        $this->loadModel('User');
+
+        $this->ReceivedItem->bind('DeliveredOrder', 'PurchaseOrder');
+
+        // $receivedItemData = $this->ReceivedItem->find('all', array(
+        //         'order' => array('ReceivedItem.id DESC')));
+
+        $receivedItemData = $this->ReceivedItem->find('all', array(
+            'conditions' => array(
+                'AND' => array(
+                    'DeliveredOrder.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')
+                ),
+            ),
+            'order' => 'ReceivedItem.id DESC'
+        ));
+
+        foreach ($receivedItemData as $key => $value) {
+
+            if ($value['ReceivedItem']['model'] ==  "GeneralItem"){
+
+                $this->loadModel('GeneralItem');
+
+                $itemData = $this->GeneralItem->find('list', array('fields' => array('id', 'name')));
+
+                $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
+
+            }
+
+            if ($value['ReceivedItem']['model'] ==  "Substrate"){
+
+                $this->loadModel('Substrate');
+
+                $itemData = $this->Substrate->find('list', array('fields' => array('id', 'name')));
+
+                $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
+
+            }
+
+            if ($value['ReceivedItem']['model'] ==  "CompoundSubstrate"){
+
+                $this->loadModel('CompoundSubstrate');
+
+                $itemData = $this->CompoundSubstrate->find('list', array('fields' => array('id', 'name')));
+
+                $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
+
+            }
+
+            if ($value['ReceivedItem']['model'] ==  "CorrugatedPaper"){
+
+                $this->loadModel('CorrugatedPaper');
+
+                $itemData = $this->CorrugatedPaper->find('list', array('fields' => array('id', 'name')));
+
+                $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
+
+            }
+
+
+        }
+
+        $purchaseOrderSupplier = $this->PurchaseOrder->find('list', array('fields' => array('id', 'supplier_id')));
+
+        $purchaseOrderPONum = $this->PurchaseOrder->find('list', array('fields' => array('id', 'po_number')));
+
+        $userName = $this->User->find('list', array('fields' => array('id', 'fullname')));
+
+        $supplierName = $this->Supplier->find('list', array('fields' => array('id', 'name')));
+
+        $this->set(compact('userName', 'receivedItemData','purchaseOrderPONum', 'purchaseOrderSupplier','supplierName'));
+  
+
+        $this->render('daterange_summary_payables');
+       
+
+        
+    }
+
     public function payable(){
 
         $userData = $this->Session->read('Auth');
@@ -1036,7 +1217,89 @@ class SalesInvoiceController extends AccountingAppController {
             $noPermissionPay = ' ';
         }
 
-        $this->set(compact('noPermissionReciv','noPermissionPay'));
+        $this->loadModel('WareHouse.ReceivedItem');
+
+        $this->loadModel('Purchasing.PurchaseOrder');
+
+        $this->loadModel('Supplier');
+
+        $this->loadModel('User');
+
+        $this->ReceivedItem->bind('DeliveredOrder', 'PurchaseOrder');
+
+        // $receivedItemData = $this->ReceivedItem->find('all', array(
+        //         'order' => array('ReceivedItem.id DESC')));
+
+        $limit = 10;
+
+        $conditions = " ";
+
+        $params =  array(
+                'conditions' => $conditions,
+                'limit' => $limit,
+                //'fields' => array('id', 'status','created'),
+                'order' => 'ReceivedItem.id DESC',
+        );
+
+        $this->paginate = $params;
+
+        $receivedItemData = $this->paginate('ReceivedItem');
+
+
+        foreach ($receivedItemData as $key => $value) {
+
+            if ($value['ReceivedItem']['model'] ==  "GeneralItem"){
+
+                $this->loadModel('GeneralItem');
+
+                $itemData = $this->GeneralItem->find('list', array('fields' => array('id', 'name')));
+            
+                $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
+
+            }
+
+            if ($value['ReceivedItem']['model'] ==  "Substrate"){
+
+                $this->loadModel('Substrate');
+
+                $itemData = $this->Substrate->find('list', array('fields' => array('id', 'name')));
+
+                $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
+
+            }
+
+            if ($value['ReceivedItem']['model'] ==  "CompoundSubstrate"){
+
+                $this->loadModel('CompoundSubstrate');
+
+                $itemData = $this->CompoundSubstrate->find('list', array('fields' => array('id', 'name')));
+
+                $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
+
+            }
+
+            if ($value['ReceivedItem']['model'] ==  "CorrugatedPaper"){
+
+                $this->loadModel('CorrugatedPaper');
+
+                $itemData = $this->CorrugatedPaper->find('list', array('fields' => array('id', 'name')));
+
+                $receivedItemData[$key]['DeliveredOrder']['item_name'] = $itemData[$value['ReceivedItem']['foreign_key']];
+
+            }
+
+
+        }
+
+        $purchaseOrderSupplier = $this->PurchaseOrder->find('list', array('fields' => array('id', 'supplier_id')));
+
+        $purchaseOrderPONum = $this->PurchaseOrder->find('list', array('fields' => array('id', 'po_number')));
+
+        $userName = $this->User->find('list', array('fields' => array('id', 'fullname')));
+
+        $supplierName = $this->Supplier->find('list', array('fields' => array('id', 'name')));
+
+        $this->set(compact('noPermissionReciv','noPermissionPay', 'userName', 'receivedItemData','purchaseOrderPONum', 'purchaseOrderSupplier','supplierName'));
     }
 
     public function change_to_invoice($id = null) {
@@ -1145,5 +1408,32 @@ class SalesInvoiceController extends AccountingAppController {
 
         }
     }
+
+        public function change_vat_status($invoiceId = null){
+
+          //  pr($this->request->data); exit;
+
+            $this->loadModel('Sales.QuotationItemDetail');
+
+            //$this->QuotationItemDetail->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product', 'Quotation', 'QuotationItemDetail', 'Company', 'Address'));
+
+            // $clientVatStatus = $this->QuotationItemDetail->find('all', array(
+            //                                 'conditions' => array('ClientOrder.id' => $clientOrderId
+            //                                 )));
+
+           // pr($this->request->data); exit;
+       //     $this->QuotationItemDetail->id = $id;
+
+            $this->QuotationItemDetail->saveFromInvoice( $this->request->data);
+
+            $this->Session->setFlash(__('Vat Details has been Updated'), 'success');
+      
+            $this->redirect( array(
+                'controller' => 'sales_invoice',   
+                'action' => 'view',
+                $invoiceId
+            ));  
+    //
+     }
 
 }

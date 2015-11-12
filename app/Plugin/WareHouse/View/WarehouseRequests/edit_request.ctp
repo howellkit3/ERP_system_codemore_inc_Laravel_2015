@@ -52,7 +52,26 @@
 								                                                    'type' => 'hidden'));
 	                                            ?>
 											</div>
+
 										</div>
+
+										<div class="form-group" id="existing_items">
+												<label class="col-lg-2 control-label"><span style="color:red">*</span>Type</label>
+												<div class="col-lg-8">
+													<?php 
+		                                                echo $this->Form->input('Request.pur_type_id', 
+		                                                						array( 
+		                                                						'options' => array($purchasingTypeData),	
+		                                                						'type' => 'select',
+		                                                						'class' => 'form-control item_type categorylist required', 
+		                                                    					'label' => false, 
+		                                                    					'placeholder' => 'Item',
+		                                                    					'value' => $request['WarehouseRequest']['pur_type_id'],
+		                                                    					'empty' => '--Select Category--'
+		                                                    					));
+		                                            ?>
+												</div>
+											</div>
 
 									</div>
 								</div>
@@ -74,7 +93,7 @@
 
 									
 
-									<?php  foreach ($request['WarehouseRequestItem'] as $key => $value) { 
+									<?php foreach ($request['WarehouseRequestItem'] as $key => $value) { 
 
 										   echo $this->Form->input('WarehouseRequestItem.'.$key.'.id', 
 															array( 
@@ -83,6 +102,8 @@
 						    					'label' => false,
 						    					'value' => $value['id']
 						    					));
+
+										  
 						                ?>
 						                <section class="cloneMe">
 											<div class="main-box-body clearfix">
@@ -107,7 +128,17 @@
 											    					'readonly' => 'readonly',
 											    					'value' => $value['foreign_key']
 											    					));
+
+											                    	echo $this->Form->input('WarehouseRequestItem.'.$key.'.request_id', 
+																				array( 
+																	'class' => 'form-control item_id required', 
+																	'type' => 'hidden',
+											    					'label' => false,
+											    					'value' => $value['request_id']
+											    					));
 											                ?>
+
+
 
 											                <?php 
 											                    echo $this->Form->input('WarehouseRequestItem.'.$key.'.model', 
@@ -262,6 +293,38 @@
 											                ?>
 														</div>
 
+													</div>
+
+													<div class="form-group">
+														<label class="col-lg-2 control-label">Date Needed</label>
+														<div class="col-lg-6">
+															<?php 
+	                                   						 echo $this->Form->input('WarehouseRequestItem.'.$key.'.date_needed', array(
+						                                        'type' => 'text',
+						                                        'label' => false,
+						                                        'required' => 'required',
+						                                        'class' => 'form-control item_type datepick required',
+						                                        'value' => date("Y-m-d", strtotime($value['date_needed']))
+						                                        ));
+				                                            ?>
+														</div>
+													</div>
+
+													<div class="form-group">
+														<label class="col-lg-2 control-label">Purpose</label>
+														<div class="col-lg-6">
+															<?php 
+		                               						 echo $this->Form->input('WarehouseRequestItem.'.$key.'.purpose', array(
+						                                        'type' => 'text',
+						                                        'label' => false,
+						                                        'required' => 'required',
+						                                        'class' => 'form-control item_type required',
+						                                        'placeholder' => 'Request Purpose',
+						                                        'value' => $value['purpose']
+						                                        ));
+		                          	
+				                                            ?>
+														</div>
 													</div>
 
 													<div class="form-group">

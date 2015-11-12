@@ -57,7 +57,7 @@
     		$count2 = $count1 + 1;
     		$objTpl->setActiveSheetIndex(0)
                         ->setCellValue('A'.$counter, 'C'.' '.$partCounter.' '.'-Part'.$partCounter)
-                        ->setCellValue('B'.$counter, $specLists['ProductSpecificationPart']['material'])
+                        ->setCellValue('B'.$counter, !empty($specLists['ProductSpecificationPart']['name']) ? $specLists['ProductSpecificationPart']['name'] : $specLists['ProductSpecificationPart']['material'])
                         ->setCellValue('C'.$counter, $specLists['ProductSpecificationPart']['quantity'])
                         ->setCellValue('C'.$count1, $specLists['ProductSpecificationPart']['material'].' >> '.$specLists['ProductSpecificationPart']['color'])
                         ->setCellValue('C'.$count2, $specLists['ProductSpecificationPart']['size1'].' x '.$specLists['ProductSpecificationPart']['size2'].' >> '.$outs.' Outs >> '.$specLists['ProductSpecificationPart']['paper_quantity'].' + '.$specs['ProductSpecification']['stock'].' '.$unitData[$specLists['ProductSpecificationPart']['quantity_unit_id']]);

@@ -51,9 +51,10 @@ class ClientOrderDeliverySchedule extends AppModel {
 			'belongsTo' => array(
 				'ClientOrder' => array(
 					'className' => 'Sales.ClientOrder',
-					'foreignKey' => 'client_order_id',
+					'conditions' => array('ClientOrderDeliverySchedule.client_order_id = ClientOrder.id'),
 					'dependent' => true
 				),
+
 				'QuotationDetail' => array(
 					'className' => 'Sales.QuotationDetail',
 					'foreignKey' => false,
@@ -61,10 +62,17 @@ class ClientOrderDeliverySchedule extends AppModel {
 					'dependent' => true
 				),
 
+				'Quotation' => array(
+					'className' => 'Sales.Quotation',
+					'foreignKey' => false,
+					'conditions' => array('Quotation.id = QuotationDetail.quotation_id'),
+					'dependent' => true
+				),
+
 				'QuotationItemDetail' => array(
 					'className' => 'Sales.QuotationItemDetail',
 					'foreignKey' => false,
-					'conditions' => array('QuotationItemDetail.quotation_id = ClientOrder.quotation_id'),
+					'conditions' => array('QuotationItemDetail.id = ClientOrder.client_order_item_details_id'),
 					'dependent' => true
 				),
 				'Product' => array(
@@ -75,7 +83,14 @@ class ClientOrderDeliverySchedule extends AppModel {
 				),
 				'Company' => array(
 					'className' => 'Sales.Company',
-					'foreignKey' => 'company_id', 
+					'foreignKey' => false,
+					'conditions' => array('Company.id = ClientOrder.company_id'),
+					'dependent' => true
+				),
+				'Address' => array(
+					'className' => 'Sales.Address',
+					'foreignKey' => false,
+					'conditions' => array('Address.foreign_key = Company.id'),
 					'dependent' => true
 				),
 				
@@ -107,6 +122,34 @@ class ClientOrderDeliverySchedule extends AppModel {
 		    $seconds = date("s");
 		    $random = rand(1000, 10000);
 	        
+			$timestamp = strtotime(date('y-m-d h:i:s'));  
+
+			$this->create();
+			
+			if (!empty($clientOrderData[$this->name])) {
+				
+				//$clientOrderDetails['delivery_type'] = 'Once';
+				$clientOrderDetails['uuid'] = $timestamp;
+				$clientOrderDetails['created_by'] = $auth;
+				$clientOrderDetails['modified_by'] = $auth;
+				$clientOrderDetails['client_order_id'] = $clientOrderId;
+				$this->save($clientOrderDetails);
+	
+			}				
+		}
+	}
+
+	public function editClientOrderDeliverySchedule($clientOrderData = null, $auth = null, $clientOrderId = null){
+
+		foreach ($clientOrderData[$this->name] as $key => $clientOrderDetails)
+		{
+			$month = date("m"); 
+		    $year = date("y");
+		    $hour = date("H");
+		    $minute = date("i");
+		    $seconds = date("s");
+		    $random = rand(1000, 10000);
+	        
 		$code =  $year. $month .$random;
 
 			$this->create();
@@ -114,7 +157,6 @@ class ClientOrderDeliverySchedule extends AppModel {
 			if (!empty($clientOrderData[$this->name])) {
 				
 				//$clientOrderDetails['delivery_type'] = 'Once';
-				$clientOrderDetails['uuid'] = $code;
 				$clientOrderDetails['created_by'] = $auth;
 				$clientOrderDetails['modified_by'] = $auth;
 				$clientOrderDetails['client_order_id'] = $clientOrderId;

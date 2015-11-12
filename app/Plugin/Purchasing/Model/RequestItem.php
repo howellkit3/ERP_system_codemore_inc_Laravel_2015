@@ -26,9 +26,7 @@ class RequestItem extends AppModel {
 					'conditions' => array('RequestItem.request_uuid' => 'Request.uuid')
 				),
 			),
-
-		
-			
+	
 		));
 
 		$this->contain($model);
@@ -43,7 +41,7 @@ class RequestItem extends AppModel {
 			$this->create();
 
 			$requestValue['request_uuid'] = $requestUuid;
-
+			//pr($requestValue); exit;
 			$this->save($requestValue);
 		}
 

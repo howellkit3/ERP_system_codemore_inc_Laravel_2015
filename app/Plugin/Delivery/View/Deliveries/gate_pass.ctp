@@ -12,7 +12,9 @@
                         Create Gate Pass
                     </h1>
                     <?php 
-                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'deliveries', 'action' => 'view',$deliveryScheduleId,$quotationId,$clientsOrderUuid),array('class' =>'btn btn-primary pull-right','escape' => false));
+
+
+                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'deliveries', 'action' => 'view',$deliveryScheduleId,$quotationId,$clientsOrderUuid,$clientUuid),array('class' =>'btn btn-primary pull-right','escape' => false));
                     ?>
                 </header>
 

@@ -2,19 +2,24 @@
     
         <tr class="">
 
-            <td class="">
+            <!-- <td class="">
                 <?php echo ucfirst($purchaseOrderDataList['PurchaseOrder']['uuid']) ?>  
-            </td>
+            </td> -->
 
             <td class="">
 
                 <?php echo ucfirst($purchaseOrderDataList['PurchaseOrder']['po_number']) ?>
 
-            </td>
+            </td> 
 
             <td class="">
                 <?php echo ucfirst($supplierData[$purchaseOrderDataList['PurchaseOrder']['supplier_id']]) ?>
             </td>
+
+            <td class="">
+                <?php echo ucfirst($userName[$purchaseOrderDataList['PurchaseOrder']['created_by']]) ?>
+            </td>
+
 
             <td class="text-center">
                 <?php 

@@ -76,10 +76,12 @@ $active_tab = 'pendings';
                                     <thead>
                                         <tr>
                                             <th><a href="#"><span>Date</span></a></th>
+
+                                            <th><a href="#"><span>Requested By</span></a></th>
                                             <th><a href="#" ><span>From</span></a></th>
                                             <th><a href="#" ><span>To</span></a></th>
-                                            <th><a href="#"><span>Status</span></a></th>
-                                            <th><a href="#"><span>Department</span></a></th>
+                                            <th><a href="#"><span>Status</span></a></th><!-- 
+                                            <th><a href="#"><span>Department</span></a></th> -->
                                             <th><a href="#"><span>Actions</span></a></th> 
                                             <!-- 
                                             <th><a href="#"><span>Out</span></a></th>
@@ -98,6 +100,9 @@ $active_tab = 'pendings';
                                                         <td > 
                                                            <?php echo $overtime['Overtime']['date'] ?> 
                                                         </td>
+                                                        <td > 
+                                                           <?php echo !empty($overtime['User']['fullname']) ? $overtime['User']['fullname'] : ''; ?> 
+                                                        </td>
                                                         <td> 
                                                            <?php  $from = (!empty($overtime['Overtime']['from']) && $overtime['Overtime']['from']  != '00:00:00') ? date('Y-m-d h:i a',strtotime($overtime['Overtime']['from'])) : '';
                                                             echo $from;
@@ -111,9 +116,9 @@ $active_tab = 'pendings';
                                                         <td > 
                                                             <?php echo !empty($overtime['Overtime']['status']) ? $overtime['Overtime']['status'] : '<span class="label label-default">Pending</span>'; ?>
                                                         </td>
-                                                        <td > 
+                                                   <!--      <td > 
                                                            <?php echo $overtime['Department']['name']; ?>
-                                                        </td>
+                                                        </td> -->
                                                           <td > 
                                                         <?php
                                                         // echo $this->Html->link('<span class="fa-stack">

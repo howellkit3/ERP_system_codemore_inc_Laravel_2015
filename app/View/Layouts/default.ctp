@@ -198,7 +198,8 @@
 	    	echo $this->Html->script('jquery.facedetection');
 	    	echo $this->Html->script('jquery.facedetection.min');
 	    	
-	        
+	    	// all sortable table js
+	    	echo $this->Html->script('sortable');
 	    ?>
     
 	</body>

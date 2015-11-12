@@ -50,7 +50,7 @@
                     <div class="main-box-body clearfix">
                         <div class="main-box-body clearfix">
                             <div class="form-horizontal">                                   
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label class="col-lg-2 control-label">Purchase Order Number</label>
                                     
                                     <div class="col-lg-8">
@@ -65,6 +65,36 @@
 
                                         ?>
                                     </div>
+                                </div> -->
+
+                                
+
+                                <!-- <div class="form-group">
+                                    <label class="col-lg-2 control-label">Delivery Number</label>
+                                    <div class="col-lg-8">
+                                        <?php 
+                                            echo $this->Form->input('PurchaseOrder.quantity', array(
+                                                                            'class' => 'form-control item_type',
+                                                                            'label' => false,
+                                                                            'disabled' => true,
+                                                                            'fields' =>array('name'),
+                                                                            'value' => !empty($receivedOrderData['ReceivedOrder']['dr_num']) ? $receivedOrderData['ReceivedOrder']['dr_num'] : " "));
+                                        ?>
+                                    </div>
+                                </div> -->
+
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">P.O. Number</label>
+                                    <div class="col-lg-8">
+                                        <?php 
+                                            echo $this->Form->input('PurchaseOrder.quantity', array(
+                                                                            'class' => 'form-control item_type',
+                                                                            'label' => false,
+                                                                            'disabled' => true,
+                                                                            'fields' =>array('name'),
+                                                                            'value' => $purchaseOrderData['PurchaseOrder']['po_number']));
+                                        ?>
+                                    </div>
                                 </div>
 
                                 <div class="form-group">
@@ -77,20 +107,6 @@
                                                                             'disabled' => true,
                                                                             'fields' =>array('name'),
                                                                             'value' => ucwords($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']])));
-                                        ?>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">P.O. Number</label>
-                                    <div class="col-lg-8">
-                                        <?php 
-                                            echo $this->Form->input('PurchaseOrder.quantity', array(
-                                                                            'class' => 'form-control item_type',
-                                                                            'label' => false,
-                                                                            'disabled' => true,
-                                                                            'fields' =>array('name'),
-                                                                            'value' => $purchaseOrderData['PurchaseOrder']['po_number']));
                                         ?>
                                     </div>
                                 </div>
@@ -180,7 +196,7 @@
                 <table class="table table-products table-hover">
                     <tbody>
 
-                         <?php  foreach ($requestPurchasingItem as $requestDataList): ?>
+                         <?php  foreach ($requestPurchasingItem as $key => $requestDataList): ?>
                         <tr>
                             <td>
                             <img src="<?php echo Router::url('/', true) ?>img/itemboxopen.png" alt="logo" style="width:60px;height:60px;padding-bottom:10;">
@@ -193,7 +209,7 @@
                                 <i class="fa fa-tags"></i>&nbsp;<?php echo $requestDataList[$itemHolder]['model'] ?> 
                                 </span>
                                 <span class="warranty">
-                                <i class="fa fa-certificate"></i>&nbsp; <?php echo $requestDataList[$itemHolder]['quantity'] ?> pcs
+                                <i class="fa fa-certificate"></i>&nbsp; <?php echo $requestDataList[$itemHolder]['quantity'] . " " . $unitData[$itemData[$key][$itemHolder]['quantity_unit_id']]  ?> 
                                 </span>
                             </td>
                         </tr>
@@ -233,7 +249,7 @@
                     <tbody> 
 
                     <?php  
-                         foreach ($requestPurchasingItem as $requestDataList):?>
+                         foreach ($requestPurchasingItem as $key => $requestDataList):?>
                         <tr>
                             <td>
                             <img src="<?php echo Router::url('/', true) ?>img/itembox.png" alt="logo" style="width:85px;height:60px;padding-bottom:10;">
@@ -247,7 +263,7 @@
 
                                 if(!empty($requestDataList[$itemHolder]['good_quantity'])){
 
-                                 echo $requestDataList[$itemHolder]['good_quantity'] ?> pcs
+                                 echo $requestDataList[$itemHolder]['good_quantity'] . " " . $unitData[$itemData[$key][$itemHolder]['quantity_unit_id']] ?> 
 
                                 <?php } ?>
                                 </span>
@@ -256,7 +272,7 @@
 
                                 if(!empty($requestDataList[$itemHolder]['reject_quantity'])){
 
-                                 echo $requestDataList[$itemHolder]['reject_quantity'] ?> pcs
+                                 echo $requestDataList[$itemHolder]['reject_quantity'] . " " . $unitData[$itemData[$key][$itemHolder]['quantity_unit_id']] ?> 
 
                                 <?php } ?>
                                 </span>

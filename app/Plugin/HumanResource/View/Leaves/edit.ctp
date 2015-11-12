@@ -4,20 +4,26 @@
 <?php echo $this->Html->script(array(
                         'jquery.maskedinput.min',
                         'HumanResource.custom'
+
 )); ?>
 <?php 
     echo $this->Html->css(array(
                     'HumanResource.default',
                     'HumanResource.select2.css',
+
+                    'datetimepicker/jquery.datetimepicker'
                     //'timepicker'
     ));
      echo $this->Html->script(array(
                     'jquery.maskedinput.min',
                     'HumanResource.custom',
                     'HumanResource.select2.min',
+
+                    'datetimepicker/jquery.datetimepicker',
                     //'HumanResource.monthpicker-master/jquery.monthpicker',
                     'HumanResource.work_schedules',
                     'HumanResource.leave',
+
 
 )); ?>
 <div style="clear:both"></div>

@@ -384,7 +384,7 @@ $(document).ready(function(){
         // });
 
 
-     $("#datetimepickerTime,#AttendanceTime").datetimepicker( {
+        $("#datetimepickerTime,#AttendanceTime").datetimepicker( {
             format:'Y-m-d H:i',
         });
 
@@ -456,6 +456,91 @@ $(document).ready(function(){
         e.preventDefault();
 
 
+    });
+
+     $('body').on('submit','#AttendanceEditAttendanceForm',function(e){
+
+        $this = $(this);
+
+        $url = $(this).attr('action');
+
+        console.log($url);
+
+         $.ajax({
+            type: "POST",
+            url: $url,
+            data : $this.serialize(),
+            dataType: "json",
+            success: function(data) {
+               
+               $parent = $('.parent-tr-'+data.Attendance.id);
+                
+                $parent.find('.time-in').text(data.Attendance.in);
+                 
+                 if (data.Attendance.out != null) {
+
+                    $parent.find('.time-out').text(data.Attendance.out);
+                    $parent.find('.time-out').text(data.Attendance.out);
+                    
+                    if (data.Attendance.duration != '') {
+                        $parent.find('.duration').text(data.Attendance.duration);
+                    }
+                    
+
+                 }
+                
+                 // if (data.Attendance.status == 'OnTime') {
+                 //    $parent.find('.attendance-status').html('<span class="label label-success">OnTime</span>');
+                 // };
+                 // if (data.Attendance.status == 'Late') {
+                 //    $parent.find('.attendance-status').html('<span class="label label-danger">&nbsp;&emsp;&emsp;Late&emsp;&emsp;&nbsp;</span>');
+                 // };
+                 
+                 $parent.find('.notes-td').text(data.Attendance.notes);
+             
+                //$('button[data-dismiss="modal"]').click();    
+
+              
+                if (data.Attendance.in != '') {
+                    
+                    $parent.find('.add-timekeep i')
+                    .removeClass('.fa-sign-in')
+                    .addClass('.fa-sign-out');
+
+                }
+                
+                $('.close').click();
+
+
+
+            }
+        });
+
+        e.preventDefault();
+     });
+
+
+    $('#AttendanceExportAttendanceForm,#AttendanceGetLatesForm').submit(function(e){
+
+        $('.hidden_date').val($('.myDateRange').val());
+
+        if ($('.hidden_search').val($('#selectEmployee').val())) {
+
+        } else {
+            
+            e.preventDefault();
+        }
+ 
+
+
+    });
+
+
+    $('#exportLate').click(function(e){
+
+        $('#hidden_late').val('true');
+
+       // e.preventDefault();
     });
 
 });

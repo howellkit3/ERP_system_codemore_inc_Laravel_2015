@@ -3,11 +3,9 @@ $active_page = !empty($this->params['controller']) ? $this->params['controller']
 $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
 ?>
 
-
-<?php foreach ($generalItemData as $generalItemDataList ):?>
+<?php if(!empty($generalItemData)){ ?>
+    <?php foreach ($generalItemData as $generalItemDataList ):?>
     
-  
-
         <tr class="">
 
             <td class="text-center">
@@ -19,7 +17,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
             </td>
 
             <td class="text-center">
-                <?php echo ucfirst($categoryData[$generalItemDataList['GeneralItem']['category_id']]) ?>
+                <?php echo ucfirst(!empty($categoryData[$generalItemDataList['GeneralItem']['category_id']]) ? $categoryData[$generalItemDataList['GeneralItem']['category_id']] : " ") ?>
             </td>
 
             <td class="text-center">
@@ -27,7 +25,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
             </td>
 
             <td class="text-center">
-                <?php echo ucfirst($supplierData[$generalItemDataList['GeneralItem']['manufacturer_id']]) ?>
+                <?php echo ucfirst(!empty($supplierData[$generalItemDataList['GeneralItem']['manufacturer_id']]) ? $supplierData[$generalItemDataList['GeneralItem']['manufacturer_id']] : " ") ?>
             </td>
 
             <td class="text-center">
@@ -72,4 +70,6 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
         </tr>
 
 
-<?php endforeach; ?> 
+<?php endforeach; 
+
+}?> 

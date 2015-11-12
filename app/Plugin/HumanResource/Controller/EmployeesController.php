@@ -82,7 +82,7 @@ class EmployeesController  extends HumanResourceAppController {
 	}
 
 
-	public function search_by_department($departmentId = null , $status = null,$hintKey = null){
+	public function search_by_department($departmentId = null , $status = null,$hintKey = null,$profile = null,$type = "html"){
 
 		$this->loadModel('HumanResource.Position');
 		$this->loadModel('HumanResource.Department');
@@ -104,6 +104,17 @@ class EmployeesController  extends HumanResourceAppController {
 
 		}
 
+		if (!empty($profile) && $profile == 'profile') {
+
+			$conditions = array_merge($conditions,array('Employee.image NOT' => '' ));
+
+		}
+		if (!empty($profile) && $profile == 'no_profile') {
+				$conditions = array_merge($conditions,array('Employee.image' => '' ));
+		} 
+
+	
+
 		if (!empty($hintKey)) {
 
 			$conditions = array_merge($conditions,array(
@@ -119,7 +130,21 @@ class EmployeesController  extends HumanResourceAppController {
 		$employeeData = $this->Employee->find('all',array(
 			'conditions' => $conditions,
 			'order' => array('Employee.code DESC')
-			));
+		));
+
+
+		if ($type == 'json') {
+
+			$employee = array();
+
+			foreach ($employeeData as $key => $list) {
+
+				$employee[$list['Employee']['id']] = $list['Employee']['full_name'];
+
+			}
+			echo json_encode($employee);
+			exit();
+		}
 
 		$this->set(compact('employeeData'));
 		
@@ -291,8 +316,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 	public function edit($id){
 
-		Configure::write('debug',2);
-		
+
 		$this->loadModel('HumanResource.EmployeeAdditionalInformation');
 
 		$this->loadModel('HumanResource.Email');
@@ -343,6 +367,7 @@ class EmployeesController  extends HumanResourceAppController {
                
                 	$data['Employee']['image'] = $file['name'];
            		 }
+
 
 
 			 	if ($this->Employee->save($data)) {
@@ -404,7 +429,7 @@ class EmployeesController  extends HumanResourceAppController {
                                  'controller' => 'employees', 
                                  'action' => 'index',
                                  'page' => !empty($this->request->params['named']['page']) ? $this->request->params['named']['page'] : '',
-                                 'model' => 'Employee?'.rand(1000,9999).'='.date("is")
+                                 'model' => 'Employee'
                             ));
                 
                 	} else {
@@ -496,10 +521,14 @@ class EmployeesController  extends HumanResourceAppController {
 
 		if (!empty($id)) {
 
-		// $query = tru	
-		// if (!empty($)) {
+			// if (!isset($_GET['rand'])) {
 
-		// }
+			// 		$this->redirect( array(
+			// 		'controller' => 'employees', 
+			// 		'action' => 'view',
+			// 		$id.'?rand='.time()
+			// 	));
+			// }
 
 		 $this->loadModel('HumanResource.EmployeeAdditionalInformation');
 
@@ -536,7 +565,7 @@ class EmployeesController  extends HumanResourceAppController {
 			'Address',
 			'Contact',
 			'ContactPerson',
-			// 'HumanResourceContactPerson',
+			'HumanResourceContactPerson',
 			'ContactPersonEmail',
 			'ContactPersonAddress',
 			'ContactPersonNumber',
@@ -618,6 +647,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 	public function findByDepartment($id = null) {
 
+			Configure::write('debug',2);
 			$this->layout = false;
 
 			if (!empty($id)) {
@@ -631,15 +661,25 @@ class EmployeesController  extends HumanResourceAppController {
 
 				$conditions = array();
 
-				$date = date('Y-m-d');
+				$query = $this->request->query;
+
+				if (!empty($this->request->data)) {
+
+					$date = $this->request->data['date'];
+				} else {
+
+					$date = date('Y-m-d');
+				}
+
 
 				$conditions = array_merge($conditions,array(
-  						'date(Attendance.date) BETWEEN ? AND ?' => array($date,$date), 
+  						'date(Attendance.in) BETWEEN ? AND ?' => array($date,$date), 
   				));
   				
-				$conditions = array_merge($conditions,array('Attendance.in !=' => ' '));
 
-				$conditions = array_merge($conditions,array('Employee.department_id' => $id));
+				$conditions = array_merge($conditions,array('Employee.department_id' => $id, 'Attendance.in !=' => ' '));
+
+
 
 				// $employees = $this->Employee->find('all',array(
 				// 	'conditions' => $conditions,
@@ -674,14 +714,15 @@ class EmployeesController  extends HumanResourceAppController {
 					'Employee.image',
 					'Attendance.schedule_id',
 					'Attendance.type',
+					'Attendance.date',
 					'Attendance.in',
 					'Attendance.out'
 					//'Position.name'
 					),
+
 					
 				));
 
-				//pr($employees);exit();
 
 				if (count($employees) == 0) {
 
@@ -751,6 +792,19 @@ class EmployeesController  extends HumanResourceAppController {
 									));
 
 			}
+
+			$profile = $this->request->data['profile'];
+
+			if (!empty($profile) && $profile == 'profile') {
+
+			$conditions = array_merge($conditions,array('Employee.image NOT' => '' ));
+
+			}
+			if (!empty($profile) && $profile == 'no_profile') {
+			$conditions = array_merge($conditions,array('Employee.image' => '' ));
+			} 
+
+		
 
 			$employeeData = $this->Employee->find('all',array(
 				'conditions' => $conditions,
@@ -1105,7 +1159,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 							if (!empty($employee['Employee']['image'])) { 
 
-                            	$background =  $serverPath.'img/uploads/employee/'.$employee['Employee']['image'];	
+                            	$background =  $serverPath.'img/uploads/employee/'.$employee['Employee']['image'];
                             
                            
 							 } else {
@@ -1117,8 +1171,8 @@ class EmployeesController  extends HumanResourceAppController {
 							$width = 25;
 							$height = 25;
 
-							$A4_HEIGHT = $size['h'] - 31.5;
-							$A4_WIDTH = $size['w'] + 19.8;
+							$A4_HEIGHT = $size['h'] - 35.8;
+							$A4_WIDTH = $size['w'] + 24;
 						
 
 							$pdf->Image(
@@ -1131,25 +1185,36 @@ class EmployeesController  extends HumanResourceAppController {
 
 					//$pdf->HTMLCell(100, 50, 10, 10, '<img src="'.$background .'" height="150" /> Curabitur at porta dui...');
 
-					$pdf->SetXY(26, 50);
+					$pdf->SetXY(28, 52);
 					$pdf->SetFont('Arial','',10);
 	
 					$pdf->Write(10,$employee['Employee']['code']);	
 
 
-					$pdf->SetXY(15, 61.5);
+					$pdf->SetXY(15, 63);
 					// $pdf->SetFont('Arial','B',10);
 					$pdf->SetFont('Arial','',8);
 
 					$middle = !empty($employee['Employee']['middle_name']) ? ucfirst($employee['Employee']['middle_name'][0]) : '';
 					
 					//name
-					$name = !empty($employee['Employee']['full_name']) ? ucwords($employee['Employee']['first_name']).' '. ucwords($employee['Employee']['last_name']).' '.$middle  : '';
+					$name = !empty($employee['Employee']['full_name']) ? str_replace(',','',ucwords($employee['Employee']['first_name'])).' '.$middle .'. '. str_replace(',','',ucwords($employee['Employee']['last_name'])) : '';
+						
+					if (!empty($employee['Employee']['suffix'])) {
+
+						$name .= " ".ucfirst($employee['Employee']['suffix']);
+					}
+
 					$pdf->SetFont('Arial','B',8);
+					if (strlen($name) > 25) {
+
+					$pdf->SetFont('Arial','B',7);
+					}
+
 					$pdf->MultiCell(38, 1 , ucwords(utf8_decode($name)) , '', 'C');	
 
 					//department
-					$pdf->SetXY(15, 65.5);
+					$pdf->SetXY(15, 67);
 					$department = !empty($employee['Department']['notes']) ? $employee['Department']['notes'] : '';
 
 					//$pdf->Write(7,$department);	
@@ -1161,7 +1226,7 @@ class EmployeesController  extends HumanResourceAppController {
 					//$pdf->MultiCell( 35, 5, $position,2);
 					$position = !empty($employee['Position']['name']) ? $employee['Position']['name'] : '';
 					
-					$pdf->SetXY(15, 70);
+					$pdf->SetXY(15, 72);
 					 $pdf->SetFont('Arial','B',8);
 					$pdf->MultiCell(38, 1 , utf8_decode($position), '', 'C');
 
@@ -1179,7 +1244,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 					//SSS
 
-					$pdf->SetXY(20, 9.5);
+					$pdf->SetXY(19.5, 12);
 
 					$sss = !empty($employee['SSS']['value']) ? $employee['SSS']['value'] : ''; 
 
@@ -1187,7 +1252,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 					//tin
 
-					$pdf->SetXY(20, 14);
+					$pdf->SetXY(19.5, 16);
 
 					$tin = !empty($employee['TIN']['value']) ? $employee['TIN']['value'] : ''; 
 
@@ -1195,7 +1260,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 
 					//department
-					$pdf->SetXY(20, 18.5);
+					$pdf->SetXY(19.5, 20.5);
 
 					$dateHired = !empty($employee['Employee']['date_hired']) ? date('Y / m / d',strtotime($employee['Employee']['date_hired'])) : ''; 
 
@@ -1204,30 +1269,106 @@ class EmployeesController  extends HumanResourceAppController {
 
 					//contact person
 
-					$pdf->SetXY(20, 24);
+					$pdf->SetXY(19.5, 26);
 					$pdf->SetFont('Arial','',7);
 					
 					//
 
-					$middlename = !empty($employee['ContactPerson']['middlename']) ? $employee['ContactPerson']['middlename'][0] : '';
-					$contactPerson = !empty($employee['ContactPerson']['firstname']) ? ucfirst($employee['ContactPerson']['firstname']).', '. ucfirst($middlename ).' '.ucfirst($employee['ContactPerson']['lastname']): '';
-					$pdf->Write(10, utf8_decode($contactPerson));	
 
-					$pdf->SetXY(20, 32.);
+					$contactPerson = '';
+
+					$contactPerson .= !empty($employee['ContactPerson']['firstname']) ?  str_replace(","," ",$employee['ContactPerson']['firstname']) : '';
+
+					$contactPerson .= !empty($employee['ContactPerson']['middlename']) ? ' '.str_replace(","," ",$employee['ContactPerson']['middlename'][0]).'.' : '';
+
+					$contactPerson .= !empty($employee['ContactPerson']['lastname']) ? ' '.str_replace(","," ",$employee['ContactPerson']['lastname'])  : '';
+
+					//echo $contactPesronName;
+					$pdf->Write(10, ucwords(utf8_decode($contactPerson)));	
+
+					$pdf->SetXY(19.5, 33.5);
+
 					$pdf->SetFont('Arial','',6);
 
 					$address =  !empty($employee['ContactPersonAddress']['address_1']) ? trim(nl2br($employee['ContactPersonAddress']['address_1'])).',' : '';
-					$address .=  !empty($employee['ContactPersonAddress']['city']) ? $employee['ContactPersonAddress']['city'].',' : '';
-					$address .= !empty($employee['ContactPersonAddress']['state_province']) ? $employee['ContactPersonAddress']['state_province'].', ' : '';
-					$address .= !empty($employee['ContactPersonAddress']['zipcode']) ? $employee['ContactPersonAddress']['zipcode'] : '';
-					
+					$addresscity =  !empty($employee['ContactPersonAddress']['city']) ? $employee['ContactPersonAddress']['city'].',' : '';
+					$addressprovince = !empty($employee['ContactPersonAddress']['state_province']) ? $employee['ContactPersonAddress']['state_province'].', ' : '';
+					$addressprovince .= !empty($employee['ContactPersonAddress']['zipcode']) ? $employee['ContactPersonAddress']['zipcode'] : '';
+
 					//	pr(str_replace(' ','',$address));
 
-					$pdf->MultiCell( 35, 4, trim(utf8_decode($address)));
+
+				
+					if (strlen($address) > 30) {
+						$pdf->SetFont('Arial','',5);	
+					}
+
+					// $addressprovince = stripslashes($addressprovince);
+					// //$pdf->Multicell(0,3,$dateHired);
+
+					// $pdf->MultiCell( 35, 4, trim(utf8_decode($address)));
+
+
+					// $pdf->SetXY(19.5, 36);
+					// $pdf->MultiCell( 40,4, trim(utf8_decode($addresscity)));
+					// $pdf->SetXY(19.5, 40.5);
+					// $pdf->MultiCell( 40, 4, trim(utf8_decode($addressprovince)));
+
+
+
+
+				
+					if (strlen($address) > 30) {
+						$pdf->SetFont('Arial','',5);	
+					}
+
+
+					if (strlen($address) > 35) {
+
+
+
+					$addressprovince = stripslashes($addressprovince);
+					//$pdf->Multicell(0,3,$dateHired);
+
+					$address = $address.' '. str_replace(',',' ',$addresscity);
+
+					$pdf->MultiCell( 35, 4, trim(utf8_decode($address)),'',false);
+
+
+					// $pdf->SetXY(19.5, 36);
+					// $pdf->MultiCell( 40,4, trim(utf8_decode($addresscity)));
+
+
+					$pdf->SetXY(19.5, 42.5);
+					$pdf->MultiCell( 40, 4, trim(utf8_decode($addressprovince)));
+
+
+					} else {
+
+
+
+					$addressprovince = stripslashes($addressprovince);
+					//$pdf->Multicell(0,3,$dateHired);
+
+					$pdf->MultiCell( 35, 4, trim(utf8_decode($address)),'',false);
+
+
+					$pdf->SetXY(19.5, 38);
+					$pdf->MultiCell( 40,4, trim(utf8_decode($addresscity)),'',false);
+
+
+					$pdf->SetXY(19.5, 42.5);
+					$pdf->MultiCell( 40, 4, trim(utf8_decode($addressprovince)),'',false);
+
+					}
+
+
+
+					$pdf->SetFont('Arial','',6);
 
 					$contact_number = !empty($employee['ContactPersonNumber']['number']) ? $employee['ContactPersonNumber']['number'] : '';
 
-					$pdf->SetXY(20, 44.5);		
+					$pdf->SetXY(19.5, 46.5);		
 					//$pdf->Write(10,$contact_number);
 					$pdf->MultiCell( 35, 5, $contact_number,2);
 
@@ -1240,7 +1381,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 			//$pdf->Output();
 
-			
+
 			//return true;
 		} else {
 
@@ -1255,6 +1396,92 @@ class EmployeesController  extends HumanResourceAppController {
 
 	}
 
+
+
+	public function searchEmployee() {
+
+		$this->autoRender = false;
+
+		$this->layout = false;
+
+	//	if ($this->request->is('ajax')) {
+
+			$query = $this->request->query;
+
+			$conditions = array();
+
+			if (!empty($query['search'])) {
+
+
+				$conditions = array_merge($conditions,array(
+					'OR' => array(
+						array('Employee.first_name LIKE' => '%' . $query['search'] . '%'),
+						array('Employee.last_name LIKE' => '%' . $query['search'] . '%'),
+						array('Employee.code LIKE' => '%'. $query['search'] .'%')
+					)
+				));
+
+
+			}
+
+			if (!empty($query['date']) && $query['overtime'] == true) {
+
+				$this->loadModel('HumanResource.Attendance');
+
+				$this->loadModel('HumanResource.Employee');
+
+				$this->Attendance->bind(array('Employee'));
+
+				$attendance =  array_merge($conditions,array(
+  						'date(Attendance.date) BETWEEN ? AND ?' => array($query['date'],$query['date']), 
+  				));
+
+
+				$attendances = $this->Attendance->find('all',array(
+					'conditions' => $attendance
+				)
+				);
+
+
+				$this->set(compact('attendances'));	
+
+			} else {
+
+
+				if (!empty($query['departmentId']) && $query['departmentId']) {
+
+				$conditions = array_merge($conditions,array('Employee.department_id' => $query['departmentId'] ));
+				} 
+
+				$employees = $this->Employee->find('list',array(
+				'conditions' => $conditions,
+				'order' => array('Employee.code DESC'),
+				'fields' => array('Employee.id','Employee.full_name')
+				));
+
+				$this->set(compact('employees'));	
+
+			}
+
+		
+
+			// $query = $this->request->query;
+
+			if (!empty($query['overtime']) && $query['overtime'] == true) {
+
+
+			$this->render('Employees/ajax/employee_list_overtime');
+
+			} else {
+
+			$this->render('Employees/ajax/employee_list');
+			}
+
+
+//	}
+
+
+	}
 
 	public function saveImage() {
 

@@ -14,42 +14,44 @@
                     </div>
                     <?php
 
-                       
                     ?>
                 </div>
             </header>
 
-         
-
-                <div class="clearfix"></div>
+            <div class="clearfix"></div>
             
             <div class="main-box-body clearfix">
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover">
+                    <table class="table table-striped table-hover sortable">
                         <thead>
                             <tr>
-                                <th><a href="#"><span>Ticket id</span></a></th>
-                                <th><a href="#"><span>Product No. </span></a></th>
-                                <th><a href="#"><span>PO No. </span></a></th>
-                                <th><a href="#"><span>Item Name </span></a></th>
-                                <th><a href="#"><span>Company </span></a></th>
-                                <th><a href="#"><span>Created</span></a></th>
+                                <th class="table-header" >Ticket id</th>
+                                <th class="table-header">Company</th>
+                                <th class="table-header" >Client Order #</th>
+                             <!--    <th class="table-header" >Product No.</th> -->
+                                <th class="table-header">PO No.</th>
+                                <th class="table-header">Item Name </th>
                                 <th style="text-align:center">Action</th>
                             </tr>
                         </thead>
 
-                        <?php echo $this->element('ticket_table'); ?>
-
+                        <tbody aria-relevant="all" aria-live="polite" class="requestFields" role="alert" >
+                          
+                              <?php echo $this->element('ticket_table'); ?>
+                         
+                        </tbody>
+                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" >
+                        </tbody>
 
                     </table>
                     <hr>
- <div class="paging" id="item_type_pagination">
-                                <?php
-                                echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
-                                echo $this->Paginator->numbers(array('separator' => ''));
-                                echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
-                                ?>
-                                </div>
+                        <div class="paging" id="item_type_pagination">
+                            <?php
+                            echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
+                            echo $this->Paginator->numbers(array('separator' => ''));
+                            echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+                            ?>
+                        </div>
                 </div>
                 
             </div>
@@ -58,56 +60,59 @@
     </div>
 </div>
 <?php //echo $this->element('sql_dump'); ?>
-
-<script>
-    
-    $('document').ready(function(e){
-
-function searchJobTicket() {
-
-        $this = $('.searchTickets');
-
-        $container = $('.result_ticket_table');
-
-        $container.html('<img src="'+serverPath+'/img/loader.gif"/>');
-
-        $.ajax({
-
-        url: serverPath + "ticket/ticketing_systems/index/",
-        type: "GET",
-        dataType: "html",
-        data : {'name' : $this.val() },
-        success: function(data) {
-            
-
-             $container.html(data); 
-            
-            }
-        }); 
-}
-
-var timeout;
-
-$('.searchTickets').keypress(function() {
-    if(timeout) {
-        clearTimeout(timeout);
-        timeout = null;
+<style type="text/css">
+    .table-header:hover{
+        color: #03A9F4;
     }
+    .table-header{
+        cursor: pointer;
+    }
+</style>
+<script>
 
-    timeout = setTimeout(searchJobTicket,400)
-})
+    $("body").on('keyup','.searchTickets', function(e){
 
+        var searchInput = $(this).val();
+      
+        if(searchInput != ''){
 
+            $('.requestFields').hide();
+            $('.searchAppend').show();
+            //alert('hide');
 
-        // $('body').on('keyup','.searchTickets',function(){
+        }else{
 
+            $('.requestFields').show();
+            $('.searchAppend').hide();
+            //alert('show');
+        }
+        
+        $.ajax({
+            type: "GET",
+            url: serverPath + "ticket/ticketing_systems/search_ticket/"+searchInput,
+            dataType: "html",
+            success: function(data) {
 
-        // });
+                //alert(data);
 
+                if(data){
 
-     });
+                    $('.searchAppend').html(data);
 
+                } 
+                if (data.length < 5 ) {
 
+                    $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
+                     
+                }
+                
+            }
+        });
 
+    });
 
 </script>
+
+
+
+

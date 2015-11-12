@@ -10,12 +10,11 @@ class DashboardsController  extends HumanResourceAppController {
 
 	public function index() {
 
-	
 		$this->loadModel('HumanResource.WorkSchedule');
 
 		$this->loadModel('HumanResource.Employee');
 
-		$this->loadModel('HumanResource.Workshift');
+		$this->loadModel('HumanResource.WorkShift');
 
 		$this->loadModel('HumanResource.Holiday');
 		

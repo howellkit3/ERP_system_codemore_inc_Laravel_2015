@@ -1,15 +1,15 @@
 <?php $this->Html->addCrumb('Production', array('controller' => 'dashboards', 'action' => 'index')); ?>
 <?php $this->Html->addCrumb('Machine', array('controller' => 'settings', 'action' => 'machines','tab' => 'machines')); ?>
 <?php $this->Html->addCrumb('Add', array('controller' => 'machines', 'action' => 'add')); ?>
+<?php $active_tab = ''; ?>
 
-<?php 	echo $this->element('production_options'); ?>
-
-<br><br><br>
-	
+    	<?php echo $this->element('tab/settings',array('active_tab' => $active_tab)); ?>
 <?php echo $this->Form->create('Machine',array('url'=>(array('controller' => 'machines','action' => 'add')),
 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data' ));?>
 
     <div class="row">
+		
+		<br>
         <div class="col-lg-12">
         	<div class="row">
                 <div class="col-lg-12">
@@ -20,8 +20,10 @@
                                 Add Machine Information
                             </h1>
                         </center>
+                        
                         <?php 
-                            echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'machines','tab' => 'machines','plugin' => 'production'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                        
+                        	echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'settings', 'action' => 'machines','tab' => 'machines','plugin' => 'production'),array('class' =>'btn btn-primary pull-right','escape' => false));
                         ?>
                     </header>
 
@@ -30,7 +32,8 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="main-box">
+                    <div class="main-box clearfix body-pod">
+                    		<?php //echo $this->element('tab/settings',array('active_tab' => $active_tab)); ?>
                         <h1>Machine Info</h1>
                         <!-- <div class="top-space"></div> -->
                         <div class="main-box-body clearfix">
@@ -46,20 +49,22 @@
 	                                            <?php echo $this->Form->input('Machine.no',
 				                                         array('class' => 'form-control required',
 				                                        'placeholder' => 'Machine no.',
-				                                        'label' => false));
-
-				                                ?>
+				                                        'label' => false)); ?>
 
 	                                        </div>
 	                                    </div>
 
 	                                    <div class="form-group">
 
-	                                        <label class="col-lg-2 control-label"><span style="color:red">*</span> Name</label>
+	                                        <label class="col-lg-2 control-label"><span style="color:red">*</span> Name </label>
+
 	                                        <div class="col-lg-8">
 	                                        	
-	                                            <?php echo $this->Form->input('Machine.name',
-				                                         array('class' => 'form-control required',
+	                                            <?php
+
+	                                            	echo $this->Form->input('Machine.name',
+				                                         array(
+				                                        'class' => 'form-control required',
 				                                        'placeholder' => 'Machine name',
 				                                        'label' => false));
 
@@ -337,20 +342,23 @@
                     <div class="main-box-body clearfix">
                         <div class="form-horizontal">
                 
-                            <div class="multi-field clearfix">
+                         
+
+                             <div class="multi-field clearfix">
                                 <div class="col-xs-2 col-md-2"></div>
-                                <div class="col-xs-2 col-md-2 2">
+                                <div class="col-xs-4 col-md-3 2">
                                     <?php 
                                         echo $this->Form->submit('Submit Machine Information', array('class' => 'btn btn-success pull-left',  'title' => 'Click here to add the machine'));
                                     ?>
-                                  
+
                                 </div>
                                 <div class="col-xs-2 col-md-2 2">
-                                    <?php 
+                                   <?php 
                                         echo $this->Html->link('Cancel ', array('controller' => 'settings', 'action' => 'machines','tab' => 'machines','plugin' => 'production'),array('class' =>'btn btn-default','escape' => false));
                                     ?>
                                 </div>
                             </div>
+                            
                             
                         </div>
                     </div>

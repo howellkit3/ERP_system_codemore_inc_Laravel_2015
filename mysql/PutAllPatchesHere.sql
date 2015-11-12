@@ -1895,8 +1895,8 @@ CREATE TABLE IF NOT EXISTS `philhealth_ranges` (
 --
 
 INSERT INTO `philhealth_ranges` (`id`, `range_from`, `range_to`, `condition`, `salary_base`, `employer`, `employee`, `created_by`, `modified_by`, `created`, `modified`) VALUES
-(3, '8999.99', '0.00', 'below', '8000.00', '100.00', '100.00', 4, 4, '2015-08-12 04:05:41', '2015-08-12 04:05:41'),
-(4, '9000.00', '9999.99', NULL, '9000.00', '112.50', '112.50', 4, 4, '2015-08-12 04:06:25', '2015-08-12 04:06:25');
+(null, '8999.99', '0.00', 'below', '8000.00', '100.00', '100.00', 4, 4, '2015-08-12 04:05:41', '2015-08-12 04:05:41'),
+(null, '9000.00', '9999.99', NULL, '9000.00', '112.50', '112.50', 4, 4, '2015-08-12 04:06:25', '2015-08-12 04:06:25');
 
 CREATE TABLE IF NOT EXISTS `sss_ranges` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1919,9 +1919,9 @@ CREATE TABLE IF NOT EXISTS `sss_ranges` (
 --
 
 INSERT INTO `sss_ranges` (`id`, `range_from`, `range_to`, `bounds`, `credits`, `employers`, `employees`, `employee_compensations`, `created_by`, `modified_by`, `created`, `modified`) VALUES
-(3, '1250.00', '1749.99', '0.00', '1500.00', '110.50', '54.50', '10.00', 4, 4, '2015-08-12 02:33:19', '2015-08-12 03:05:32'),
-(4, '1000.00', '1249.99', '0.00', '1000.00', '73.70', '36.30', '10.00', 4, 4, '2015-08-12 08:53:43', '2015-08-12 08:53:43'),
-(5, '1750.00', '2249.99', '0.00', '2000.00', '147.30', '72.70', '10.00', 4, 4, '2015-08-24 06:39:01', '2015-08-24 06:39:01');
+(null, '1250.00', '1749.99', '0.00', '1500.00', '110.50', '54.50', '10.00', 4, 4, '2015-08-12 02:33:19', '2015-08-12 03:05:32'),
+(null, '1000.00', '1249.99', '0.00', '1000.00', '73.70', '36.30', '10.00', 4, 4, '2015-08-12 08:53:43', '2015-08-12 08:53:43'),
+(null, '1750.00', '2249.99', '0.00', '2000.00', '147.30', '72.70', '10.00', 4, 4, '2015-08-24 06:39:01', '2015-08-24 06:39:01');
 
 
 /** howellkit added this 09/02/2015  */
@@ -2151,3 +2151,235 @@ CREATE TABLE `plate_making_process` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+
+ALTER TABLE `koufu_ticketing`.`plate_making_process`   
+  ADD COLUMN `product_id` INT(11) NULL AFTER `process_id`;
+
+  /* aldrin added this oct-12-2015 koufu_ticketing*/
+
+ALTER TABLE `plate_making_process`
+DROP COLUMN `product`,
+ADD COLUMN `product`  int(11) NULL AFTER `modified`;
+
+/* howell added this oct-9-2015 koufu_ticketing*/
+ALTER TABLE `received_orders` ADD `supplier_id` INT(11)  NULL  DEFAULT NULL  AFTER `purchase_order_id`;
+ALTER TABLE `received_orders`  ADD `address` VARCHAR(60) NULL  AFTER `supplier_id`;
+ALTER TABLE `received_orders`  ADD `purchase_order_uuid` VARCHAR(60) NULL  AFTER `purchase_order_id`;
+
+
+CREATE TABLE `received_receipt_items` (
+  `id` INT(11) ,
+  `delivered_order_id` INT(11),
+  `received_orders_id` INT(11) ,
+  `model` VARCHAR (90),
+  `item_type` VARCHAR (90),
+  `foreign_key` INT(11) ,
+  `quantity` INT(11) ,
+  `number_of_boxes` INT(11) ,
+  `quantity_per_boxes` INT(11) ,
+  `lot` INT(11) 
+); 
+
+ALTER TABLE `received_receipt_items`  ADD `remarks` VARCHAR(60) NULL  AFTER `lot`;
+
+/* Bien added this oct-13-2015 koufu_sale*/
+
+ALTER TABLE `koufu_sale`.`product_specification_parts`     ADD COLUMN `name` VARCHAR(80) NULL AFTER `product_id`;
+
+/* howell added this oct-13-2015 koufu_purchasing*/
+
+ALTER TABLE `request_items` ADD `category` INT(11)  NULL  DEFAULT NULL  AFTER `quantity_unit_id`;
+ALTER TABLE `request_items` ADD `width` INT(11)  NULL  DEFAULT NULL  AFTER `category`;
+ALTER TABLE `request_items` ADD `width_unit_id` INT(11)  NULL  DEFAULT NULL  AFTER `width`;
+
+ALTER TABLE `purchasing_items` ADD `category` INT(11)  NULL  DEFAULT NULL  AFTER `quantity_unit_id`;
+ALTER TABLE `purchasing_items` ADD `width` INT(11)  NULL  DEFAULT NULL  AFTER `category`;
+ALTER TABLE `purchasing_items` ADD `width_unit_id` INT(11)  NULL  DEFAULT NULL  AFTER `width`;
+
+
+/* howell added this oct-15-2015 koufu_purchasing*/
+
+ALTER TABLE `leaves`
+MODIFY COLUMN `from`  datetime NOT NULL AFTER `type_id`,
+MODIFY COLUMN `to`  datetime NOT NULL AFTER `from`;
+
+ALTER TABLE `payrolls`
+MODIFY COLUMN `id`  int(11) NOT NULL AUTO_INCREMENT FIRST ,
+ADD COLUMN `department_id`  int(11) NULL AFTER `employeeIds`;
+
+/* howell kit added this oct-15-2015 sales*/
+ALTER TABLE `client_orders`  ADD `status_id` INT(11)  NULL  DEFAULT NULL  AFTER `payment_terms`;
+
+/* howell kit added this oct-15-2015 warehouse*/
+ALTER TABLE `warehouse_requests`  ADD `pur_type_id` INT(11)  NULL  DEFAULT NULL  AFTER `name`;
+ALTER TABLE `received_orders`  ADD `dr_num` INT(11)  NULL  DEFAULT NULL  AFTER `purchase_order_uuid`;
+
+/* howell kit added this oct-20-2015 warehouse*/
+ALTER TABLE `delivered_orders`  ADD `dr_num` INT(11)  NULL  DEFAULT NULL  AFTER `uuid`;
+ALTER TABLE `delivered_orders`  ADD `si_num` INT(11)  NULL  DEFAULT NULL  AFTER `dr_num`;
+
+/* howell kit added this oct-21-2015 warehouse*/
+ALTER TABLE `purchase_orders`  ADD `receive_item_status` INT(11)  NULL  DEFAULT NULL  AFTER `uuid`;
+ALTER TABLE `purchase_orders`  ADD `order` INT(11)  NULL  DEFAULT NULL  AFTER `dr_num`;
+ALTER TABLE `delivered_orders`  ADD `order` INT(11)  NULL  DEFAULT NULL  AFTER `status_id`;
+ALTER TABLE `delivered_orders`  ADD `purchase_order_uuid` INT(11)  NULL  DEFAULT NULL  AFTER `purchase_orders_id`;
+
+/* bien added this oct-21-2015 sales*/
+ALTER TABLE `koufu_sale`.`quotation_item_details`  ADD COLUMN `vat_status` VARCHAR(50) NULL AFTER `material`;
+
+/* howell kit added this oct-21-2015 system*/
+ALTER TABLE `units`  ADD COLUMN `type_measure` INT(11) NULL AFTER `unit`;
+
+/* bien added this oct-21-2015 warehouse*/
+ALTER TABLE `received_items`  ADD COLUMN `quantity_unit_id` INT(11) NULL AFTER `quantity`;
+
+/* howellkit added this oct-21-2015 warehouse*/
+ALTER TABLE `received_items`  ADD `unit_price` INT(11)  NULL  DEFAULT NULL  AFTER `original_quantity`;
+
+/*aldrin addedd this oct-23-2015 */
+ALTER TABLE `items`
+ADD COLUMN `item_group` varchar(255) NULL AFTER `supplier`;
+
+ALTER TABLE `ticket_process_schedules`
+ADD COLUMN `status`  int(11) NULL DEFAULT 0 AFTER `remarks`;
+
+
+
+
+/*aldrin added this oct 28 2015 */
+-- ----------------------------
+DROP TABLE IF EXISTS `pagibig_ranges`;
+CREATE TABLE `pagibig_ranges` (
+  `id` int(11) NOT NULL DEFAULT '0',
+  `range_from` varchar(255) DEFAULT NULL,
+  `range_to` varchar(255) DEFAULT NULL,
+  `conditions` varchar(255) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of pagibig_ranges
+-- ----------------------------
+INSERT INTO `pagibig_ranges` VALUES ('0', '1500', '0', 'below', null, null, null, null);
+INSERT INTO `pagibig_ranges` VALUES ('1', '1,500', null, null, null, null, null, null);
+
+
+/*howell kit addedd this oct-27-2015 Delivery */
+ALTER TABLE `deliveries` CHANGE `dr_uuid` `dr_uuid` VARCHAR(50) NOT NULL;
+ALTER TABLE `delivery_receipts` CHANGE `dr_uuid` `dr_uuid` VARCHAR(50) NOT NULL;
+ALTER TABLE `delivery_details` CHANGE `delivery_uuid` `delivery_uuid` VARCHAR(50) NOT NULL;
+
+/*howell kit addedd this oct-28-2015 Job Ticket */
+
+CREATE TABLE `corrugated_paper_job_tickets` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `process_id` INT(11) DEFAULT NULL,
+  `product_id` INT(11) DEFAULT NULL,
+  `job_ticket_id` INT(11) DEFAULT NULL,
+  `created_by` INT(11) DEFAULT NULL,
+  `modified_by` INT(11) DEFAULT NULL,
+  `created` DATETIME DEFAULT NULL,
+  `modified` DATETIME DEFAULT NULL,
+  `flute_combi` VARCHAR(255) DEFAULT NULL,
+  `cutting_size` VARCHAR(255) DEFAULT NULL,
+  `quantity` INT(11) DEFAULT NULL,
+  `allowance` INT(11) DEFAULT NULL,
+  `remarks` TEXT,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `corrugated_process_details` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `corrugated_job_ticket_id` INT(11) DEFAULT NULL,
+  `no` INT(11) DEFAULT NULL,
+  `foreign_key` INT(11) DEFAULT NULL,
+  `model` VARCHAR(255) DEFAULT NULL,
+  `flute` INT(11) DEFAULT NULL,
+  `gsm` INT(11) DEFAULT NULL,
+  `estimated_kg` INT(11) DEFAULT NULL, 
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+ALTER TABLE `corrugated_paper_job_tickets` ADD `corrugated_id` INT(11)  NULL  DEFAULT NULL  AFTER `job_ticket_id`;
+
+/*howell kit addedd this oct-28-2015 Accounting */
+ALTER TABLE `sales_invoices` CHANGE `dr_uuid` `dr_uuid` VARCHAR(50) NOT NULL;
+
+/*howell kit addedd this oct-28-2015 Warehouse */
+ALTER TABLE `received_receipt_items` ADD `quantity_unit_id` INT(11)  NULL  DEFAULT NULL  AFTER `quantity`;
+
+
+/* aldrin added this nov-5-2015 koufu_system */
+ALTER TABLE `users`
+MODIFY COLUMN `id`  int(11) UNSIGNED NOT NULL AUTO_INCREMENT FIRST ,
+ADD COLUMN `in_charge`  int(11) NULL DEFAULT 0 AFTER `image`,
+ADD COLUMN `departments_handle`  text NULL AFTER `in_charge`;
+
+
+ALTER TABLE `koufu_warehouse`.`items`   
+  ADD COLUMN `gsm` VARCHAR(255) NULL AFTER `modified`,
+  ADD COLUMN `type` VARCHAR(255) NULL AFTER `gsm`,
+  ADD COLUMN `width` VARCHAR(255) NULL AFTER `type`,
+  ADD COLUMN `length` VARCHAR(255) NULL AFTER `width`,
+  ADD COLUMN `item_group` VARCHAR(255) NULL AFTER `length`,
+  ADD COLUMN `quantity` VARCHAR(255) NULL AFTER `item_group`,
+  ADD COLUMN `location` VARCHAR(255) NULL AFTER `quantity`;
+
+ALTER TABLE `koufu_warehouse`.`items` 
+ADD COLUMN `inch` VARCHAR(255) NULL AFTER `width`;
+
+
+/* aldrin added this nov 9 2015 */
+DROP TABLE IF EXISTS `item_specs`;
+CREATE TABLE `item_specs` (
+  `id` int(11) DEFAULT NULL,
+  `items_id` int(11) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `unit` varchar(255) DEFAULT NULL,
+  `item_group_id` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE `item_specs`
+ADD COLUMN `width`  varchar(255) NULL AFTER `unit`,
+ADD COLUMN `length`  varchar(255) NULL AFTER `width`;
+-- ----------------------------
+-- Table structure for `item_specs`
+-- ----------------------------
+DROP TABLE IF EXISTS `item_specs`;
+CREATE TABLE `item_specs` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `items_id` int(11) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `unit` varchar(255) DEFAULT NULL,
+  `width` varchar(255) DEFAULT NULL,
+  `length` varchar(255) DEFAULT NULL,
+  `item_group` varchar(255) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `item_specs`
+ADD COLUMN `unit_width`  varchar(255) NULL AFTER `length`,
+ADD COLUMN `unit_length`  varchar(255) NULL AFTER `unit_width`;
+
+
+/* howell kit added this nov 11 2015 Purchasing Table*/
+ALTER TABLE `request_items` CHANGE COLUMN `purpose` `purpose` VARCHAR(300) NULL DEFAULT NULL;
+ALTER TABLE `request_items` CHANGE COLUMN `remarks` `remarks` VARCHAR(300) NULL DEFAULT NULL;
+ALTER TABLE `koufu_purchasing`.`purchasing_items` ADD COLUMN `purpose` VARCHAR(300) NULL AFTER `unit_price_unit_id`;
+ALTER TABLE `koufu_purchasing`.`purchasing_items` ADD COLUMN `remarks` VARCHAR(300) NULL AFTER `purpose`;
+

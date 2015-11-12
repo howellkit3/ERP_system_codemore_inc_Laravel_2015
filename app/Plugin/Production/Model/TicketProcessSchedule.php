@@ -4,7 +4,7 @@ App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 
 class TicketProcessSchedule extends AppModel {
 
-    public $useDbConfig = 'koufu_production_system';
+    public $useDbConfig = 'koufu_production';
     public $name = 'TicketProcessSchedule';
 
      public $recursive = -1;
@@ -36,19 +36,63 @@ class TicketProcessSchedule extends AppModel {
 	public function saveTicketProcessSchedule($data,$auth){
 		
 		$ticketID = array();	
-		foreach ($data['TicketProcessSchedule'] as $key => $value) {
-			
+
+		$idHolder = array();
+		
+		foreach ($data['TicketProcessSchedule'] as $mainKey => $value) {
+				
 			$this->create();
-		 	$value['job_ticket_id'] = $data['Ticket']['job_ticket_id'];
-			$value['created_by'] = $auth;
-			$value['modified_by'] = $auth;
-			$this->save($value);
 
-			$idHolder = $this->id;
+			if (is_array($value)) {
 
-			array_push($ticketID, $idHolder);
+			
+				
+				foreach ($value as $key => $innerValue) {
+
+						$ticketData = array();
+
+					if (!empty($innerValue['department_process_id'])) {
+
+						$ticketData = $innerValue;
+						$ticketData['job_ticket_id'] = $data['Ticket']['job_ticket_id'];
+						$ticketData['component_id'] = $mainKey;
+						$ticketData['remarks'] = '';
+						$ticketData['status'] = '';
+
+						$ticketData['id'] = !empty($innerValue['id']) ? $innerValue['id'] : '';
+
+						if( $this->save($ticketData) ) {
+
+							$idHolder = $this->id;
+							$ticketID[] = $idHolder;
+						}
+					
+					}
+
+					
+				}
+
+			} else {
+
+
+			if (!empty($data['department_process_id'])) {
+
+			 	$ticketData['job_ticket_id'] = $data['Ticket']['job_ticket_id'];
+				$ticketData['created_by'] = $auth;
+				$ticketData['modified_by'] = $auth;	
+
+					if ($this->save($ticketData) ) {
+
+						$idHolder = $this->id;
+						array_push($ticketID, $idHolder);
+					}
+			}
+			
+			}	
+
 
 		} 
+
 
 		return $ticketID;
 		

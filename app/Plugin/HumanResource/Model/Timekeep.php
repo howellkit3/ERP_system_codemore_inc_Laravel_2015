@@ -32,18 +32,51 @@ class Timekeep extends AppModel {
 			
 			$time = array();
 
-			$date = !empty($data['Attendance']['time']) ? explode(' ',$data['Attendance']['time']) : '';
+			$timeProcess = array('in','out');
 
-	
-			$time['Timekeep']['employee_id'] = $data['Attendance']['employee_id'];
-			$time['Timekeep']['date'] = !empty($date[0]) ? date('Y-m-d',strtotime($date[0])) : date('Y-m-d');
-			$time['Timekeep']['time'] = !empty($date[1]) ? trim($date[1]) : date('h:i:ss');
-			$time['Timekeep']['notes'] = $data['Attendance']['notes'];
-			$time['Timekeep']['type'] = $data['Attendance']['type'];
-			$time['Timekeep']['created_by'] = $authId;
-			$time['Timekeep']['modified_by'] = $authId;
+
+			if (!empty($data['Attendance']['time_in'])) {
+
 			
-			return $this->save($time);
+			foreach ($timeProcess as $key => $value) {
+			
+				if (!empty($data['Attendance']['time_'.$value])) {
+
+						
+				$date = !empty($data['Attendance']['time_'.$value]) ? explode(' ',$data['Attendance']['time_'.$value]) : '';
+
+				$time['Timekeep']['employee_id'] = $data['Attendance']['employee_id'];
+				$time['Timekeep']['date'] = !empty($date[0]) ? date('Y-m-d',strtotime($date[0])) : date('Y-m-d');
+				$time['Timekeep']['time'] = !empty($date[1]) ? trim($date[1]) : date('h:i:ss');
+				$time['Timekeep']['notes'] = $data['Attendance']['notes'];
+				$time['Timekeep']['type'] = $value;
+				$time['Timekeep']['created_by'] = $authId;
+				$time['Timekeep']['modified_by'] = $authId;
+
+
+				$save[] =  $this->save($time);
+
+				}
+
+			}
+		} else {
+
+						
+				$date = !empty($data['Attendance']['time']) ? explode(' ',$data['Attendance']['time']) : '';
+
+				$time['Timekeep']['employee_id'] = $data['Attendance']['employee_id'];
+				$time['Timekeep']['date'] = !empty($date[0]) ? date('Y-m-d',strtotime($date[0])) : date('Y-m-d');
+				$time['Timekeep']['time'] = !empty($date[1]) ? trim($date[1]) : date('h:i:ss');
+				$time['Timekeep']['notes'] = $data['Attendance']['notes'];
+				$time['Timekeep']['type'] = $data['Attendance']['type'];
+				$time['Timekeep']['created_by'] = $authId;
+				$time['Timekeep']['modified_by'] = $authId;
+
+				$save =  $this->save($time);
+		}
+			
+			
+			return $save;
 		
 		}
 	}

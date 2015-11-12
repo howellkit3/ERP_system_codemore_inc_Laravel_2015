@@ -29,7 +29,8 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
                 'class' => 'btn '.$page 
               )); ?>
         </li>
-      
+       <?php if(in_array($userData['User']['role_id'],array('19','12'))) { ?>
+                 
        <li class="">
           <?php $page =($active_page == 'attendances') ? 'active' : '' ?>
             <?php echo $this->Html->link("<span class='count'>Attendance</span>",
@@ -69,7 +70,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
                 'class' => 'btn '.$page 
               )); ?>
         </li>
-
+        <?php } ?>
          <li class="">
           <?php $page =($active_page == 'settings') ? 'active' : '' ?>
             <?php echo $this->Html->link("<span class='count'>Settings</span>",

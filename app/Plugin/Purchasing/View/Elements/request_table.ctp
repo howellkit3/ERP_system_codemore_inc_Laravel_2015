@@ -24,6 +24,11 @@
             </td>
 
             <td class="">
+                <?php echo date('Y/m/d',strtotime($requestList['Request']['created']));?>
+                
+            </td>
+
+            <td class="">
 
                 <?php echo $userName[$requestList['Request']['prepared_by']];?>
                 
@@ -54,10 +59,15 @@
                 ?>
                
                 <?php
-                    echo $this->Html->link('<span class="fa-stack">
+
+                    if(in_array($userData['User']['role_id'],array('1','2','7'))) { 
+                        
+                        echo $this->Html->link('<span class="fa-stack">
                         <i class="fa fa-square fa-stack-2x"></i>
                         <i class="fa fa-trash fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Remove </font></span>
-                        </span>', array('controller' => 'requests', 'action' => 'delete',$requestList['Request']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
+                        </span>', array('controller' => 'requests', 'action' => 'delete',$requestList['Request']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information','confirm' => 'Do you want to remove this Request?'));
+
+                        }
                 ?>
              
                 

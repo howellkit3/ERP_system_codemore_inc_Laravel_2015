@@ -11,8 +11,8 @@
 
                 <?php
 
-                    echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Receive Receipts ', array('controller' => 'receivings', 'action' => 'receive_receipt'),array('class' =>'btn btn-primary pull-right ','escape' => false));
-                   
+                    echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Receive Receipt ', array('controller' => 'receivings', 'action' => 'receive_receipt'),array('class' =>'btn btn-primary pull-right ','escape' => false));
+                           
                 ?>
 
             </header>
@@ -23,7 +23,6 @@
                         <thead>
                             <tr>
                                 <th><a href="#"><span>Purchase Order No</span></a></th>
-                                <th><a href="#"><span>PO No.</span></a></th>
                                 <th><a href="#"><span>Supplier</span></a></th>
                                 <th><a href="#"><span>Status</span></a></th>
                                 <th>Action</th>

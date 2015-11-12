@@ -15,7 +15,7 @@
     $objTpl->setActiveSheetIndex(0)->insertNewRowBefore(11,$addRow);
 
       $objTpl->setActiveSheetIndex(0)
-                    ->setCellValue('B3',(new \DateTime())->format('m/d/Y'));
+                    ->setCellValue('B3',date('Y/m/d'));
 
     $counter = 6;
 

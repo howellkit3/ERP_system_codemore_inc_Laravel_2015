@@ -141,6 +141,8 @@ $(document).ready(function() {
         }
 
     });
+
+    component_button.trigger( 'click' );
     
     $(part_button).click(function(e){ //on add input button click
         submitCount++;
@@ -262,7 +264,7 @@ $(document).ready(function() {
             });
             
             if (counterData != 0) {
-                process_button.trigger( 'click' );
+               // process_button.trigger( 'click' );
             }
 
             //start//computation for outs,paper quantity and rate
@@ -301,24 +303,28 @@ $(document).ready(function() {
                 }
             });
             $("body").on('keyup','.rate'+varCounter, function(e){
-
+                var quantitySpec = parseInt($('#ProductSpecificationQuantity').val());
                 var rateval = $(this).val();
-
+                console.log(rateval);
                 if(rateval <= 0){
                     alert('You must enter a positive number');
                     $(this).val(1);
                     return false;
                 }
                 var paperQtyVal = parseInt(quantitySpec) * parseInt(rateval);
+                
+                console.log(quantitySpec);
+                console.log(rateval);
+                console.log(paperQtyVal);
                 $('.quantity'+varCounter).val(paperQtyVal);
                 var outs = $('.outs'+varCounter).val();
 
-                console.log(paperQtyVal);
+            
                
                 var paperqty = parseInt(paperQtyVal) / parseInt(outs);
                 $('.paper_qty'+varCounter).val(paperqty);
 
-                 console.log(paperqty);
+                
                 
             });
             
@@ -346,6 +352,8 @@ $(document).ready(function() {
         }
 
     });
+
+    part_button.trigger( 'click' );
 
     $(process_button).click(function(e){ //on add input button click
         e.preventDefault();
@@ -457,8 +465,8 @@ $(document).ready(function() {
        
     });
 
-    component_button.trigger( 'click' ); 
-    part_button.trigger( 'click' );
+    // component_button.trigger( 'click' ); 
+    // part_button.trigger( 'click' );
     process_button.trigger( 'click' );
     
     
@@ -501,7 +509,21 @@ $(document).ready(function() {
       
     });
     //$( "#sortable" ).disableSelection();
-   
+
+    //new code 
+    $('body').on("click",".click-multiple", function(e){ 
+        if ($(this).is(":checked")) {
+            $(this).parents('.input-group').find('.show-multiple').attr('readonly' ,false);
+
+            var name = $(this).parents('.dragField').find('.material').val();
+
+            $(this).parents('.input-group').find('.show-multiple').val(name);
+        }else{
+            $(this).parents('.input-group').find('.show-multiple').attr('readonly' ,true);
+
+            $(this).parents('.input-group').find('.show-multiple').val('');
+        }
+    });
 
 });
 

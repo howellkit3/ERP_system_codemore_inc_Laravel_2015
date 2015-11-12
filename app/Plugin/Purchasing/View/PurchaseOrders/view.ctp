@@ -11,12 +11,12 @@
         
         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'purchase_orders', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 
-        if ($purchaseOrderData['PurchaseOrder']['status'] == 8) {
+       if ($purchaseOrderData['PurchaseOrder']['status'] == 8) {
 
             echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Approved', array('controller' => 'purchase_orders', 'action' => 'approved',$purchaseOrderid),array('class' =>'btn btn-primary pull-right','escape' => false));
 
             echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'purchase_orders', 'action' => 'edit',$purchaseOrderid),array('class' =>'btn btn-primary pull-right','escape' => false));
-        }
+       }
 
         echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print', array('controller' => 'purchase_orders', 'action' => 'print_purchase_order',$purchaseOrderid),array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
     ?>
@@ -53,22 +53,22 @@
             <table  width = "100%" style="margin-left:2%;" >
                 
                     <tr>
-                        <td align = "left" width = "25%">Supplier </td>
-                        <td align = "left" width = "25%">:<?php echo ucfirst($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]); ?></td>
-                         
-                        <td align = "left" width = "25%">Date </td>
-                        <td align = "left" width = "25%">:<?php echo (new \DateTime())->format('M d, Y') ?>
+                        <td align = "left" width = "20%">Supplier </td>
+                        <td align = "left" width = "20%">:<?php echo ucfirst($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]); ?></td>
+                        <td align = "left" width = "20%"></td>
+                        <td align = "left" width = "20%">Date </td>
+                        <td align = "left" width = "20%">:<?php echo (new \DateTime())->format('M d, Y') ?>
                         </td>
                     </tr>
             </table>
 
             <table  width = "100%" style="margin-left:2%;" >
                     <tr>
-                        <td align = "left" width = "25%">Contact Person</td>
-                        <td align = "left" width = "25%">:<?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']); ?> <?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
-                        
-                        <td align = "left" width = "25%">Terms </td>
-                        <td align = "left" width = "25%">:<?php echo $paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]; ?>   
+                        <td align = "left" width = "20%">Contact Person</td>
+                        <td align = "left" width = "20%">:<?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']); ?> <?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
+                        <td align = "left" width = "20%"></td>
+                        <td align = "left" width = "20%">Terms </td>
+                        <td align = "left" width = "20%">:<?php echo $paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]; ?>   
                         </td>
                         
                     </tr>
@@ -77,11 +77,11 @@
 
             <table  width = "100%"  style="margin-left:2%;">
                     <tr>
-                        <td align = "left" width = "25%">Telephone</td>
-                        <td align = "left" width = "25%">:<?php echo $purchaseOrderData['Contact']['number']; ?></td>
-                         
-                        <td align = "left" width = "25%">Delivery Date:</td>
-                        <td align = "left" width = "25%">:<?php echo date('M d, Y', strtotime($purchaseOrderData['PurchaseOrder']['delivery_date'])); ?> 
+                        <td align = "left" width = "20%">Telephone</td>
+                        <td align = "left" width = "20%">:<?php echo !empty($telContactData['Contact']['number']) ? $telContactData['Contact']['number'] : " "; ?></td>
+                        <td align = "left" width = "20%"><?php echo  !empty($faxContactData['Contact']['number']) ? "Fax # :  " .  $faxContactData['Contact']['number'] : " "; ?></td>
+                        <td align = "left" width = "20%">Delivery Date:</td>
+                        <td align = "left" width = "20%">:<?php echo date('M d, Y', strtotime($purchaseOrderData['PurchaseOrder']['delivery_date'])); ?> 
                         </td>
                         
                     </tr>
@@ -104,16 +104,33 @@
                         <?php  $total = 0; foreach ($purchaseItemData as $key => $value) {  $key++ ?>
                             <tr>
                                <?php  $dividend = floor($value[$modelTable]['quantity'] / $value[$modelTable]['pieces']);
-                                $difference = $value[$modelTable]['quantity'] - (floor($dividend) * $value[$modelTable]['pieces']); ?>
+                                $difference = $value[$modelTable]['quantity'] - (floor($dividend) * $value[$modelTable]['pieces']);
+
+                                $itemdescription = $value[$modelTable]['name'];
+
+                                if($value[$modelTable]['category'] == 0){ 
+
+                                    $itemdescription .= !empty($value[$modelTable]['width']) ? " " .$value[$modelTable]['width'] . " " .$unitData[$value[$modelTable]['width_unit_id']] : " ";
+
+                                }else{
+
+                                    $itemdescription .= !empty($value[$modelTable]['size1']) ? " " . $value[$modelTable]['size1'] . " " .$unitData[$value[$modelTable]['size1_unit_id']] : " ";
+
+                                    $itemdescription .= !empty($value[$modelTable]['size2']) ? " " .  "x" . " " . $value[$modelTable]['size2'] . " " . $unitData[$value[$modelTable]['size2_unit_id']] : " ";
+
+                                    $itemdescription .= !empty($value[$modelTable]['size3']) ? " " . "x" . " " .$value[$modelTable]['size3'] . " " . $unitData[$value[$modelTable]['size3_unit_id']] : " ";
+                                }
+
+                                ?>
 
                                 <td><?php echo $key ?></td>
-                                <td class="text-center"><?php echo $value[$modelTable]['name']?></td>
+                                <td class="text-center"><?php echo $itemdescription ?></td>
                                 <td class="text-center"><?php echo ($difference == 0 ? $value[$modelTable]['pieces'] . " " . $unitData[$value[$modelTable]['quantity_unit_id']] : $value[$modelTable]['pieces'] . " " . $unitData[$value[$modelTable]['quantity_unit_id']])?></td>
                                 <td class="text-center"><?php echo number_format($value[$modelTable]['unit_price'],2)?><?php //echo $unitData[$value[$modelTable]['unit_price_unit_id']]?></td>
                                 <td class="text-center">
                                     <?php 
                                         $amount = $value[$modelTable]['quantity'] * $value[$modelTable]['unit_price'];
-                                        echo $currencyData[$value[$modelTable]['unit_price_unit_id']] ." ".  number_format($amount,2);
+                                        echo ($value[$modelTable]['category']== 0) ?  " " :$currencyData[$value[$modelTable]['unit_price_unit_id']] ." ".  number_format($amount,2);
 
                                         $total = $total + $amount;
                                     ?>
@@ -132,7 +149,7 @@
                             <td class="text-center"></td>
                             <td class="text-center"> </td>
                             <td class="text-center"> </td>
-                            <td class="text-center"><b>Total : PHP <?php echo number_format($total,2)?></b></td>
+                            <td class="text-center"><b> <?php echo ($value[$modelTable]['category']== 0) ? " " : "Total : PHP" . " " .number_format($total,2)?></b></td>
                         </tr>
                     </table>
 
@@ -166,7 +183,7 @@
                             <th class="text-center">Requested by :</th>
                             <th class="text-center">Approved by :</th>
                             <th class="text-center">Purchased by :</th>
-                            </thead>
+                        </thead>
                         <tr>
                             <td class="text-center"><?php echo ucfirst($preparedData['User']['first_name'])?> <?php echo ucfirst($preparedData['User']['last_name'])?></td>
                             <td class="text-center">Ms. Carryl Yu</td>
@@ -180,9 +197,7 @@
                     </label>
                     </div> 
                 </div>
-
             </div>
-
         </div>
     </div>
 </div>

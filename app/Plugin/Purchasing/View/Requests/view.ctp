@@ -7,25 +7,25 @@
 
 <div class="filter-block pull-right">
                     
-    <?php 
+    <?php
+
+        if($userData['User']['role_id'] != 1 && $userData['User']['role_id'] != 2 && $userData['User']['role_id'] != 4  ){
+
+            $active = "not-active" ;
+        }else {
+
+            $active = "" ;
+        }
         
-        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'requests', 'action' => 'request_list'),array('class' =>'btn btn-primary pull-right','escape' => false));
+        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'requests', 'action' => 'request_list'),array('class' =>'btn btn-primary pull-right ' ,'escape' => false));
 
-     //   if ($requestData['Request']['status_id'] == 1) {
 
-            echo $this->Html->link('<i class="fa fa fa-pencil-square-o fa-lg"></i> Create Order', array('controller' => 'requests', 'action' => 'create_order',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
+        echo $this->Html->link('<i class="fa fa fa-pencil-square-o fa-lg"></i> Create Order', array('controller' => 'requests', 'action' => 'create_order',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
 
-        //}
-
-        // if ($requestData['Request']['status_id'] == 0) {
-
-        //     echo $this->Html->link('<i class="fa fa-gift fa-lg"></i> Purchase Order', array('controller' => 'requests', 'action' => 'create_order',$requestId),array('class' =>'btn btn-primary pull-right disabled','escape' => false));
-
-        // }
 
         if ($requestData['Request']['status_id'] == 8) {
 
-            echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Approved', array('controller' => 'requests', 'action' => 'approved',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
+            echo $this->Html->link('<i class= "fa fa-check-square-o fa-lg "></i> Approved', array('controller' => 'requests', 'action' => 'approved',$requestId),array('class' => 'btn btn-primary pull-right ' . $active   ,'escape' => false));
 
             // echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'requests', 'action' => 'edit',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
         }
@@ -77,7 +77,7 @@
                         <td></td>
                         <td></td>
                         <td ></td>
-                        <td align="right" style="line-height:8px;"><b>No: </b>RQ<?php echo $requestData['Request']['uuid']; ?><br><br><br><b>Date: </b><?php echo (new \DateTime())->format('d/m/Y') ?><br></td>
+                        <td align="right" style="line-height:8px;"><b>No: </b>RQ<?php echo $requestData['Request']['uuid']; ?><br><br><br><b>Date: </b><?php echo date('Y/m/d') ?><br></td>
                     </tr>
 
                 </tbody>
@@ -95,11 +95,26 @@
                             <th class="text-center">Purpose</th>
                             <th class="text-center">Remarks</th>
                         </thead>
+
                         <?php  foreach ($requestPurchasingItem as $key => $value) {  $key++ ?>
-                           
+
+                        <?php 
+
+                        $specs1 = !empty($value['RequestItem']['size1']) ? $value['RequestItem']['size1'] . " " . $unitData[$value['RequestItem']['size1_unit_id']] : "";
+
+                        $specs2 = !empty($value['RequestItem']['size2']) ? " x " . $value['RequestItem']['size2'] . " " . $unitData[$value['RequestItem']['size2_unit_id']] : "";
+
+                        $specs3 = !empty($value['RequestItem']['size3']) ? " x " .  $value['RequestItem']['size3'] . " " . $unitData[$value['RequestItem']['size3_unit_id']] : "";
+
+                        $specsAll = $specs1 . " " . $specs2  . " " . $specs3 ;
+
+                        $nameWithSpecs = $value['RequestItem']['name'] . " " . $specsAll;
+
+                        ?>
+
                             <tr>
                                 <td><?php echo $key ?></td>
-                                <td class="text-center"><?php echo $value['RequestItem']['name']?></td>
+                                <td class="text-center"><?php echo $nameWithSpecs?></td>
                                 <td class="text-center">
                                     <?php  
                                     if(!empty($value['RequestItem']['quantity'])){ 

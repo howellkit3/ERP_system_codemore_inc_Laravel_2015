@@ -1,7 +1,7 @@
 <style type="text/css">#QuotationField12Description{background-color:#fff;}</style>
 <div style="clear:both"></div>
 <?php  echo $this->Html->script('Purchasing.modal_clone');?>
-<?php  //echo $this->Html->script('Purchasing.request_section');?>
+<?php  echo $this->Html->script('Purchasing.category_purchase');?>
 <?php echo $this->element('purchasings_option'); ?><br><br>
 
 <?php if(!empty($inquiry['Inquiry']['id'])) {
@@ -98,10 +98,10 @@
 									<section class="cloneMe">
 										
 										<div class="main-box-body clearfix">
-											<div class="form-horizontal">
+											<div class="form-horizontal item-category">
 
 												<div class="form-group" >
-													<label class="col-lg-2 control-label"><span style="color:red">*</span>Item</label>
+													<label class="col-lg-2 control-label"><span style="color:red">*</span>Item </label>
 													<div class="col-lg-5">
 														<?php 
 										                    echo $this->Form->input('RequestItem.0.nameToShow', 
@@ -160,11 +160,29 @@
 
 												<div class="form-group">
 
+													<label class="col-lg-2 control-label">Category</label>
+													
+													<div class="col-lg-6">
+														<?php 
+															echo $this->Form->input('RequestItem.0.category', array(
+										                        'options' => array('No Amount Items', 'General Items'),  
+										                        'label' => false,
+										                        'class' => 'form-control category',
+										                        'empty' => '---Select Category---'
+										                         )); 
+										                ?>
+
+													</div>
+
+												</div>
+
+												<div class="form-group other-items">
+
 													<label class="col-lg-2 control-label">Size</label>
 													<div class="col-lg-3">
 														<?php 
 										                    echo $this->Form->input('RequestItem.0.size1', array(
-																'class' => 'form-control item_type',
+																'class' => 'form-control item_type other-element',
 										                        'label' => false,
 										                        'type' => 'number',
 										                        'placeholder' => 'Size'));
@@ -176,7 +194,7 @@
 															echo $this->Form->input('RequestItem.0.size1_unit_id', array(
 										                        'options' => array($unitData),  
 										                        'label' => false,
-										                        'class' => 'form-control ',
+										                        'class' => 'form-control other-element',
 										                        'empty' => '---Select Unit---'
 										                         )); 
 										                ?>
@@ -187,12 +205,12 @@
 
 												</div>
 
-												<div class="form-group">
+												<div class="form-group other-items">
 													<label class="col-lg-2 control-label"> </label>
 													<div class="col-lg-3">
 														<?php 
 															echo $this->Form->input('RequestItem.0.size2', array(
-																'class' => 'form-control item_type',
+																'class' => 'form-control item_type other-element',
 										                        'label' => false,
 										                        'type' => 'number',
 										                        'placeholder' => 'Size'));
@@ -205,7 +223,7 @@
 															echo $this->Form->input('RequestItem.0.size2_unit_id', array(
 										                        'options' => array($unitData),  
 										                        'label' => false,
-										                        'class' => 'form-control ',
+										                        'class' => 'form-control other-element',
 										                        'empty' => '---Select Unit---'
 										                         )); 
 
@@ -216,12 +234,12 @@
 
 												</div>
 
-												<div class="form-group">
+												<div class="form-group other-items">
 													<label class="col-lg-2 control-label"> </label>
 													<div class="col-lg-3">
 														<?php 
 															echo $this->Form->input('RequestItem.0.size3', array(
-																'class' => 'form-control item_type',
+																'class' => 'form-control item_type other-element',
 										                        'label' => false,
 										                        'type' => 'number',
 										                        'placeholder' => 'Size'));
@@ -229,12 +247,12 @@
 										                ?>
 													</div>
 
-													<div class="col-lg-3">
+													<div class="col-lg-3 ">
 														<?php 
 															echo $this->Form->input('RequestItem.0.size3_unit_id', array(
 										                        'options' => array($unitData),  
 										                        'label' => false,
-										                        'class' => 'form-control ',
+										                        'class' => 'form-control other-element',
 										                        'empty' => '---Select Unit---'
 										                         )); 
 
@@ -242,6 +260,33 @@
 													</div>
 
 													<label class="col-lg-3 sizeWith">&emsp;&emsp;x </label>
+
+												</div>
+
+												<div class="form-group rolls">
+													<label class="col-lg-2 control-label"> Width</label>
+													<div class="col-lg-3">
+														<?php 
+															echo $this->Form->input('RequestItem.0.width', array(
+																'class' => 'form-control item_type roll-element',
+										                        'label' => false,
+										                        'type' => 'number',
+										                        'placeholder' => 'Width'));
+
+										                ?>
+													</div>
+
+													<div class="col-lg-3 ">
+														<?php 
+															echo $this->Form->input('RequestItem.0.width_unit_id', array(
+										                        'options' => array($unitData),  
+										                        'label' => false,
+										                        'class' => 'form-control roll-element',
+										                        'empty' => '---Select Unit---'
+										                         )); 
+
+										                ?>
+													</div>
 
 												</div>
 
@@ -289,11 +334,11 @@
 												</div>
 
 												<div class="form-group">
-													<label class="col-lg-2 control-label"><span style="color:red">*</span>Purpose</label>
+													<label class="col-lg-2 control-label"> Purpose </label>
 													<div class="col-lg-6">
 														<?php 
 				                                            echo $this->Form->textarea('RequestItem.0.purpose', array(
-				                                            								'class' => 'form-control item_type required',
+				                                            								'class' => 'form-control item_type',
 										                                                    'label' => false,
 										                                                    'placeholder' => 'Request Purpose'));
 			                                            ?>
@@ -336,94 +381,14 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="myModalItem" role="dialog" data-item="" aria-labelledby="myModalLabel" aria-hidden="true">
-			    <div class="modal-dialog specModal">
-			        <div class="modal-content">
-			            <div class="modal-header">
-			                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			                <h4 class="modal-title">Material</h4>
-			            </div>
-
-			            <div class="modal-body">
-			                <div class="form-group">
-			                    <div class="col-lg-3"></div>
-			                    <div class="col-lg-6">
-			                        <div class="input-group">
-			                            <span class="input-group-addon"><i class="fa fa-reorder"></i></span>
-			                            <select  class="form-control select-group ItemGroup" >
-			                                <option value="0">--Select Item Group--</option>
-			                                <option value="1">General Items</option>
-			                                <option value="2">Substrates</option>
-			                                <option value="3">Compound Substrates</option>
-			                                <option value="4">Corrugated Papers</option>
-			                            </select>
-			                        </div>
-			                    </div>
-			                </div>
-
-			                <header class="main-box-header clearfix">
-			                    <h1 class="pull-left">Item List</h1>
-			                    <div class="filter-block pull-right">
-			                        <div class="form-group">
-
-			                            <input placeholder="Search..."  class="form-control searchItem" type="search" disabled="disabled" />
-			                            <i class="fa fa-search search-icon"></i>
-			                         
-			                        </div>  
-			                    </div>
-			                </header>
-
-			                <input type="hidden" class="current_page" />
-
-			                <input type="hidden" class="show_per_page" />
-
-			                <table class="table table-striped table-hover">
-			                    <thead>
-			                        <tr>
-			                            <th><a href="#"><span>Select</span></a></th>
-			                            <th style="width:200px;"><a href="#"><span>Item Number</span></a></th>
-			                            <th><a href="#"><span>Name</span></a></th>
-			                        </tr>
-			                    </thead>
-			                    <tbody class="tableProduct" aria-relevant="all" id="scrollTable" aria-live="polite" role="alert" >
-			                    </tbody>
-
-			                    <tbody class="Itemtable" aria-relevant="all" id="scrollTable" aria-live="polite" role="alert" >
-			                    </tbody>
-
-			                    
-			                </table>
-
-			                <div class="table-responsive">
-			                    <header class="main-box-header clearfix">
-			                        <h1 class="pull-left">Item List</h1>
-			                        <div class="filter-block pull-right">
-			                            <div class="form-group pull-left">
-
-			                            </div>
-			                        </div>
-			                    </header>
-			                </div>
-
-			                <div class="form-group">
-			                    <div class="col-lg-10"></div>
-			                    <div class="col-lg-2">
-			                    </div>
-			                </div>
-			            </div>
-			        </div>
-			    </div>
-			</div>
-
-			<div class="md-overlay"></div>	
 			
-
-			<?php //echo $this->element('item_modal'); ?>
-
+		<?php echo $this->element('item_modal'); ?>
 
 	<script>
 		
 	jQuery(document).ready(function($){
+
+		$(".rolls").hide();	
 
 		$(".remove").hide();
 
@@ -474,7 +439,7 @@
 	        
 	    });
 
-		$("body").on('keyup','.searchItem', function(e){
+	$("body").on('keyup','.searchItem', function(e){
         var searchInput = $(this).val();
         var thisMe = $(this);
         var itemGroup = $('.ItemGroup').val();
@@ -512,6 +477,7 @@
         }
         
     });
+
 
 	 </script>
 

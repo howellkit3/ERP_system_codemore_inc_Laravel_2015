@@ -1,5 +1,9 @@
 <?php //echo $this->Html->script('Deliveries.searchOrder');?>
 <?php echo $this->element('deliveries_options'); ?><br><br>
+
+<?php $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : 'tab-waiting';
+?>
+
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
@@ -19,51 +23,63 @@
             </div> 
                 
             </header>
-            
-            <div class="main-box-body clearfix ">
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover ">
-                        <thead>
-                            <tr >
-                                <th class="text-center"><a href="#"><span>Client Order</span></a></th>
-                                <th class="text-center"><a href="#"><span>P.O. Number</span></a></th>
-                                <th class="text-center"><a href="#"><span>Customer Name</span></a></th>
-                                <th class="text-center"><a href="#"><span>Item Name</span></a></th>
-                                <th class="text-center"><a href="#"><span>Quantity</span></a></th>
-                                <th class="text-center"><a href="#"><span>P.O. Balance</span></a></th>
-                                <th class="text-center"><a href="#"><span>Status</span></a></th>
-                                <th class="text-center">Action</th>
-                            </tr>
-                        </thead>
 
-                        <tbody aria-relevant="all" aria-live="polite" class="OrderFields" role="alert" >
-                            <!-- <div class ="field"> -->
-                            <?php echo $this->element('schedule_requests_table'); ?> 
-                            <!-- </div> -->
-                        </tbody>
-                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" >
-                        </tbody>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="main-box clearfix">
+                        <ul class="nav nav-tabs">
+                                    <li class="<?php echo ($active_tab == 'tab-waiting') ? 'active' : '' ?>" alt="tab-waiting"><a href="#tab-waiting" data-toggle="tab">Waiting</a></li>
+                                    <li class="<?php echo ($active_tab == 'tab-due') ? 'active' : '' ?>" alt="tab-due"><a href="#tab-due" id = 'itemType' data-toggle="tab">Due</a></li>
+                                    <li class="<?php echo ($active_tab == 'tab-approved') ? 'active' : '' ?>" alt="tab-approved"><a href="#tab-approved" id = 'itemType' data-toggle="tab">Approved</a></li>
+                                    <li class="<?php echo ($active_tab == 'tab-closed') ? 'active' : '' ?>" alt="tab-closed"><a href="#tab-closed" id = 'itemType' data-toggle="tab">Closed</a></li>
+                                    <li class="<?php echo ($active_tab == 'tab-completed') ? 'active' : '' ?>" alt="tab-completed"><a href="#tab-completed" id = 'itemType' data-toggle="tab">Completed</a></li>
+                                </ul>
+                        <div class="main-box-body clearfix">
+                            <div class="tabs-wrapper">                  
+                                <div class="tab-content">
+                                    <div class="tab-pane fade  <?php echo ($active_tab == 'tab-waiting') ? 'in active' : '' ?>" id="tab-waiting">
+                                         waiting
 
-                       <!--  <tbody aria-relevant="all" aria-live="polite" class="" role="alert" style="display:none;">
-                        </tbody> -->
+                                        <?php //$tableHolder = "1"; ?>
 
-                    </table>
-                    <hr>
-                        <div class="paging" id="dr_pagination">
-                        <?php
+                                        <?php echo $this->element('index'); ?><br><br>
 
-                        echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'ClientOrder','model' => 'ClientOrder'), null, array('class' => 'disable','model' => 'ClientOrder'));
-                        echo $this->Paginator->numbers(array('separator' => '','paginate' => 'ClientOrder'), array('paginate' => 'ClientOrder'));
-                        echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'ClientOrder','model' => 'ClientOrder'), null, array('class' => 'disable'));
-                        ?>
 
+                                        
+                                    </div>
+
+                                    <div class="tab-pane fade  <?php echo ($active_tab == 'tab-due') ? 'in active' : '' ?>" id="tab-due">
+                                         due
+                                        <?php echo $this->element('index'); ?><br><br>
+                                        
+                                    </div>
+
+                                     <div class="tab-pane fade  <?php echo ($active_tab == 'tab-approved') ? 'in active' : '' ?>" id="tab-approved">
+                                         approved
+                                        <?php echo $this->element('index'); ?><br><br>
+                                    </div>       
+
+                                    <div class="tab-pane fade  <?php echo ($active_tab == 'tab-closed') ? 'in active' : '' ?>" id="tab-closed">
+                                         closed
+                                        <?php echo $this->element('index'); ?><br><br>
+                                    </div>
+
+                                    <div class="tab-pane fade  <?php echo ($active_tab == 'tab-completed') ? 'in active' : '' ?>" id="tab-completed">
+                                         completed
+                                        <?php echo $this->element('index'); ?><br><br>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
+                    </div>
                 </div>
             </div>
-    
+             
         </div>
     </div>
 </div>
+
 
 <script>
 

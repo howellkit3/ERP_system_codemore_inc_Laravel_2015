@@ -13,7 +13,7 @@ class DeliveredOrder extends AppModel {
     
   	public $name = 'DeliveredOrder';
 
-	public function saveDeliveredOrder($auth, $receivedOrdersId, $purchaseId){
+	public function saveDeliveredOrder($auth, $receivedOrdersId, $purchaseId, $deliveredItemsData = null){
 
 		$month = date("m"); 
 	    $year = date("y");
@@ -23,15 +23,24 @@ class DeliveredOrder extends AppModel {
 	    $random = rand(1000, 10000);
 	        
 		$code =  $year. $month .$random;
-		
-		$this->create();
 
-		$data['created_by'] = $auth;
+		$this->create();
+		//pr($deliveredItemsData); exit;
+		if(!empty($deliveredItemsData['purchase_orders_id'])){
+
+			$mystring = mb_substr($deliveredItemsData['uuid'],4,9);
+			$data['uuid'] = $mystring;
+			$data['si_num'] = $deliveredItemsData['si_num'];
+			
+
+		}
+		$data['purchase_order_uuid'] = $deliveredItemsData['po_number'];
 		$data['modified_by'] = $auth;
 		$data['received_orders_id'] = $receivedOrdersId;
 		$data['purchase_orders_id'] = $purchaseId;
-		$data['uuid'] = $code;
-		
+		$data['dr_num'] = $deliveredItemsData['dr_num'];
+		$data['uuid'] = $deliveredItemsData['uuid'];
+		//pr($data); exit;
 		$this->save($data);
 
 		return $this->id;
@@ -40,12 +49,17 @@ class DeliveredOrder extends AppModel {
 
 
 	public function bind($model = array('Group')){
-
-
+		
 		$this->bindModel(array(
 			'hasMany' => array(
 				'ReceivedItem' => array(
 					'className' => 'WareHouse.ReceivedItem',
+					'foreignKey' => 'delivered_order_id'
+					//'conditions' => 'ReceivedItem.delivered_order_id = DeliveredOrder.id'
+				),
+
+				'ReceivedReceiptItem' => array(
+					'className' => 'WareHouse.ReceivedReceiptItem',
 					'foreignKey' => 'delivered_order_id'
 					//'conditions' => 'ReceivedItem.delivered_order_id = DeliveredOrder.id'
 				),

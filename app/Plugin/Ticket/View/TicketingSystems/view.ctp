@@ -23,7 +23,7 @@
 
 	                        	echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> (Pre-Press) PDF ', array(
 					        	'controller' => 'ticketing_systems', 
-					        	'action' => 'prepress_ticket',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId),
+					        	'action' => 'prepress_ticket',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId,$ticketData['JobTicket']['id']),
 					        	array('class' =>'btn btn-info pull-right','escape' => false,'target' => '_blank'));
 
 	                       
@@ -35,7 +35,7 @@
 
 							echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> (Job Ticket) PDF ', array(
 					        	'controller' => 'ticketing_systems', 
-					        	'action' => 'print_ticket_export',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId,'pdf'),
+					        	'action' => 'print_ticket_export',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId,'pdf',$ticketData['JobTicket']['id']),
 					        	array('class' =>'btn btn-info pull-right','target' => '_blank','escape' => false));
 						?>
 
@@ -196,7 +196,8 @@
 										      		
 										      		echo $this->element('Specs/part', array('formatDataSpecs' => $formatDataSpecs[$key],
 										      			'key' => $partCounter,
-										      			'component' => $component
+										      			'component' => $component,
+										      			'machines' => $machines
 										      			 ));
 										      		$partCounter++;
 

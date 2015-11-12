@@ -12,10 +12,12 @@ $(document).ready(function(){
 
     $id = $(this).attr('id');
 
+    $ticketId = $(this).data('ticket_id');
+
 		$container = $('#result-table');
 
 		$.ajax({
-        url: serverPath + "ticket/ticketing_systems/find_process/"+$processId+'/'+$productId+'/'+$ticketUuid+'/'+$product+'/'+$id,
+        url: serverPath + "ticket/ticketing_systems/find_process/"+$processId+'/'+$productId+'/'+$ticketUuid+'/'+$product+'/'+$id+'/'+ $ticketId,
         type: "GET",
         dataType: "html",
        // data : { 'processId' : $processId , 'subProcess' : $subProcess , 'ticketId' : $ticketUuid },
@@ -34,7 +36,6 @@ $(document).ready(function(){
     if ($(this).val() != '') {
 
       $id = $(this).val();
-
 
       $container = $('#offsetForm');
 
@@ -73,7 +74,6 @@ $(document).ready(function(){
         data : $form.serialize(),
         success: function(data) {
 
-
             $text = data.result.PlateMakingProcess.machine_name;
             $('#'+data.result.formProcessId).parent().next().text($text);
 
@@ -82,10 +82,26 @@ $(document).ready(function(){
             }
         });
 
-
-
       e.preventDefault();
 
+  });
+
+
+   $('body').on('change','#corrugated',function(e){
+
+      corrugated_id = $('#corrugated').val();
+
+      $.ajax({
+        url: serverPath + "ticket/ticketing_systems/single_face/"+corrugated_id,
+        type: "GET",
+        dataType: "html",
+       // data : { 'processId' : $processId , 'subProcess' : $subProcess , 'ticketId' : $ticketUuid },
+        success: function(data) {
+            
+            $('.append').html(data);
+            
+            }
+        });
   });
 
 });

@@ -40,8 +40,13 @@ echo $this->Html->css(array(
 
                           <div class="filter-block">
                             <?php 
-                            echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'employees', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+                            // echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'employees', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
                             ?>
+
+
+                            <a href="javascript:history.back(1)" class="btn btn-primary pull-right"> <i class="fa fa-arrow-circle-left fa-lg"></i> Go Back </a>
+                            
+
 
                             <div class="form-group pull-right" style="margin-right:10px;">
 
@@ -51,12 +56,16 @@ echo $this->Html->css(array(
 
                             </div>
 
+                            <?php if (in_array($userData['User']['role_id'],array('19'))) { ?>
+                   
                             <div class="form-group pull-right" style="margin-right:25px;">
 
                             <?php echo $this->Html->link('<i class="fa fa-money fa-lg"></i> Salary Settings', array('controller' => 'salaries', 'action' => 'employee_settings',$this->request->data['Employee']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
                             ?>
 
                           </div>
+
+                          <?php } ?>
                      
                     </div
                     </header>
@@ -90,8 +99,12 @@ echo $this->Html->css(array(
                                 </div>
                                 <div class="col-xs-2 col-md-2 2">
                                     <?php 
-                                        echo $this->Html->link('Cancel ', array('controller' => 'employees', 'action' => 'index','plugin' => 'human_resource'),array('class' =>'btn btn-default','escape' => false));
+                                        // echo $this->Html->link('Cancel ', array('controller' => 'employees', 'action' => 'index','plugin' => 'human_resource'),array('class' =>'btn btn-default','escape' => false));
                                     ?>
+
+                                    <a href="javascript:history.back(1)" class="btn btn-default">
+                                           Cancel 
+                                    </a>
                                 </div>
                             </div>
                             

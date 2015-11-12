@@ -6,14 +6,26 @@ App::uses('SessionComponent', 'Controller/Component');
 class AttendancesController  extends HumanResourceAppController {
 
 	var $helpers = array('HumanResource.PhpExcel','HumanResource.CustomTime');
+
+	function beforeFilter() {
+		parent::beforeFilter();
+  		$this->Auth->allow('check_attendance');
+ 	}
+
 	//,'HumanResource.CustomText'
 	public function index() {
+
+		//Configure::write('debug',2);
 
 		$this->loadModel('HumanResource.WorkSchedule');
 
 		$this->loadModel('HumanResource.Employee');
 
 		$this->loadModel('HumanResource.Workshift');
+
+		$this->loadModel('HumanResource.WorkshiftBreak');
+
+		$this->loadModel('HumanResource.Breaktime');
 
 		$this->loadModel('HumanResource.Department');
 
@@ -29,16 +41,21 @@ class AttendancesController  extends HumanResourceAppController {
 
 		$date2 = date('Y-m-d', strtotime($date . ' +1 day'));
 		
-		$conditions = 	array('date(Attendance.date) BETWEEN ? AND ?' => array($date,$date2));
+		$conditions =array('date(Attendance.date) BETWEEN ? AND ?' => array($date,$date2));
 		
+		//$conditions = array();
+
 		if (!empty($query['data'])) {
 
 			$conditions = array();
 		}
 
+		$dateSelected = '';
+
 		if (!empty($query['data']['date'])) {
 
 			//$fromDate =
+			$dateSelected = $query['data']['date'];
 
 			$date = explode('-', $query['data']['date']); 
 
@@ -50,7 +67,7 @@ class AttendancesController  extends HumanResourceAppController {
   						'date(Attendance.date) BETWEEN ? AND ?' => array($date1,$date2), 
   			));
 
-			//$date = $query['data']['date'];
+			$date = $query['data']['date'];
 		}
 	
 		// $conditions = array(
@@ -58,9 +75,23 @@ class AttendancesController  extends HumanResourceAppController {
 		//  	'Attendance.date >=' => $date
 		// );
 
+		$empId = '';
+
+		if (!empty($query['employee_id'])) {
+
+			$empId =$query['employee_id'];
+			
+			$conditions = array_merge($conditions,array(
+					'Attendance.employee_id' => $empId
+			));
+
+
+		}
 
 		if (!empty($query['data']['name'])) {
+
 			$search = $query['data']['name'];
+			
 			$conditions = array_merge($conditions,array(
 					'OR' => array(
 					'Employee.first_name LIKE' => '%'.$search.'%',
@@ -69,32 +100,76 @@ class AttendancesController  extends HumanResourceAppController {
 			)));
 		}
 
-		$this->Attendance->bind(array('WorkSchedule','Employee','WorkShift','Overtime'));
 
 
+		$this->Attendance->bind(array('Employee','Overtime','MySchedule','MyWorkshift','MyWorkShiftBreak','MyBreakTime'));
 
+		//$this->Employee->virtualFields['totalItem'] = 'COUNT(`OrderDetail`.`order_id`)';
 		//$conditions = array();
+
 		$params =  array(
 	            'conditions' => $conditions,
 	            'limit' => $limit,
-	            //'fields' => array('id', 'status','created'),
-	            'order' => 'Attendance.in DESC',
+	            'fields' => array(
+	            	'id',
+	            	'status',
+	            	'created',
+	            	'Employee.first_name',
+	            	'Employee.last_name',
+	            	'Employee.middle_name',
+	            	'Employee.code',
+	            	'Attendance.in',
+	            	'Attendance.out',
+	            	'Attendance.type',
+	            	'Attendance.schedule_id',
+	            	'Attendance.notes',
+	            	'Attendance.date',
+					'Attendance.overtime_id',
+	            	'MySchedule.day',
+	            	'MyWorkshift.from',
+	            	'MyWorkshift.to',
+	            	//'MyWorkshift.overtime_id',
+	            	'MyWorkShiftBreak.breaktime_id',
+	            	// /'MyWorkshift.ovetime_id',
+	            	'MyBreakTime.from',
+	            	'MyBreakTime.to',
+	            	'Overtime.from',
+	            	'Overtime.to',
+	            	'Overtime.employee_ids',
+	            	'Overtime.status'
+					),
+	           'group' => array('Attendance.date'),
+	            'order' => 'Attendance.date DESC',
 	    );
 
 		$this->paginate = $params;
 		
 		$attendances = $this->paginate();
+
+		if (!empty($_GET['test'])) {
+
+			
+			pr(	$attendances );
+
+			exit();
+
+		}
+		
 		
 		$conditions = array();
 		
-		$departmentList =  $this->Department->find('list',array('conditions' => $conditions,'fields' => array('id','department_position')));
+		$departmentList =  $this->Department->find('list',array(
+			'conditions' => $conditions,
+			'fields' => array('id','department_position'),
+			'group' => array('Department.id')
+		));
 		
 		$conditions = array();
 
 		$employeeList = $this->Employee->getList($conditions);
 
 
-		$this->set(compact('attendances','date','search','departmentList','employeeList'));
+		$this->set(compact('attendances','date','empId','search','departmentList','employeeList','dateSelected','empId'));
 
 	}
 
@@ -168,6 +243,7 @@ class AttendancesController  extends HumanResourceAppController {
 		$timekeeps = $this->paginate('Timekeep');
 
 		$this->set(compact('employees','timekeeps','date','search'));
+
 	}
 
 	public function view($id) {
@@ -177,7 +253,9 @@ class AttendancesController  extends HumanResourceAppController {
 			$date = date('Y-m-d');
 
 			$this->loadModel('HumanResource.Employee');
+			
 			$this->loadModel('HumanResource.WorkSchedule');
+			
 			$this->loadModel('HumanResource.WorkShift');
 
 			$this->Attendance->bind(array('WorkSchedule','Employee','WorkShift'));
@@ -185,6 +263,7 @@ class AttendancesController  extends HumanResourceAppController {
 			$attendances = $this->Attendance->find('all', array('conditions' => array('Attendance.id' => $id)));
 
 			$conditions = array();
+
 			$employees = $this->Employee->getList($conditions);
 
 			$this->set(compact('attendances','date','employees'));
@@ -234,7 +313,20 @@ class AttendancesController  extends HumanResourceAppController {
 
 			$this->LoadModel('HumanResource.WorkSchedule');		
 
-			$dateSplit = explode(' ', $data['Attendance']['time']);	
+			if (!empty($data['Attendance']['time'])) {
+
+				$dateSplit = explode(' ', $data['Attendance']['time']);	
+			}
+			if (!empty($data['Attendance']['time_in'])) {
+
+				$dateSplit = explode(' ', $data['Attendance']['time_in']);	
+			}
+			if (!empty($data['Attendance']['time_out'])) {
+
+				$dateSplit = explode(' ', $data['Attendance']['time_out']);	
+			}
+
+
 
 			$WorkSchedule = $this->WorkSchedule->find('first',array(
 					'conditions' => array(
@@ -256,6 +348,8 @@ class AttendancesController  extends HumanResourceAppController {
                          'plugin' => 'human_resource'
 				));
 			} */
+
+
 		
 			if ($this->Timekeep->saveTime($data,null,$auth['id'])) {
 
@@ -265,23 +359,26 @@ class AttendancesController  extends HumanResourceAppController {
 			//update attendance
 			if (!empty($attendance)) {
 
+				$rawAttendance = $attendance;
+
 				$this->Attendance->save($attendance);
 
 				if ($this->request->is('ajax')) {
 
+
 					if (!empty($attendance['Attendance']['in'])) {
 
-						$attendance['Attendance']['in'] = date('h:i a',strtotime($attendance['Attendance']['in']));
+						$attendance['Attendance']['in'] = date('H:i a',strtotime($attendance['Attendance']['in']));
 					}
 
 					if (!empty($attendance['Attendance']['out'])) {
 
-						$attendance['Attendance']['out'] = date('h:i a',strtotime($attendance['Attendance']['out']));
+						$attendance['Attendance']['out'] = date('H:i a',strtotime($attendance['Attendance']['out']));
 
-						$attendance['Attendance']['duration'] = $this->_getDuration($attendance['Attendance']['in'],$attendance['Attendance']['out']);
+						$attendance['Attendance']['duration'] = $this->_getDuration($rawAttendance['Attendance']['in'],$rawAttendance['Attendance']['out']);
 					
 					}
-					 
+
 					echo json_encode($attendance);
 					exit();
 				}
@@ -290,8 +387,13 @@ class AttendancesController  extends HumanResourceAppController {
 
 						//update daily info
 						$this->Attendance->bindWorkshift();
-						$callAttendance = $this->Attendance->findById($data['Attendance']['id']);
 
+						
+						if (!empty($data['Attendance']['id'])) {
+							$callAttendance = $this->Attendance->findById($data['Attendance']['id']);
+
+						}
+						
 
 						//$this->DailyInfo->updateDailyInfo($attendance,$attendance['Attendance']['employee_id'],$attendance['Attendance']['date']);	
 
@@ -327,12 +429,27 @@ class AttendancesController  extends HumanResourceAppController {
 
 			} else {
 
-			$this->redirect( array(
-                         'controller' => 'attendances', 
-                         'action' => 'index',
-                         'plugin' => 'human_resource'
+				if (!empty($this->params['named']['return'])) {
 
-                    ));	
+
+	            	$return = base64_decode($this->params['named']['return']);
+	            	
+	            	$return = str_replace('/koufunet','',$return);
+
+	            	$this->redirect($return);
+            	
+				} else {
+
+						$this->redirect( array(
+	                         'controller' => 'attendances', 
+	                         'action' => 'index',
+	                         'plugin' => 'human_resource'
+
+	                    ));
+
+				}
+
+				
 			}
 
 			} else {
@@ -344,14 +461,51 @@ class AttendancesController  extends HumanResourceAppController {
 }
 
 
+public function delete($id = null) {
+
+		if (!empty($id)) {
+
+			if ($this->Attendance->delete($id)) {
+                $this->Session->setFlash(
+                    __('Successfully deleted.', h($id))
+                );
+            } else {
+                $this->Session->setFlash(
+                    __('Attendance cannot be deleted.', h($id))
+                );
+            }
+
+            if (!empty($this->params['named']['return'])) {
+            	$return = base64_decode($this->params['named']['return']);
+            	
+            	$return = str_replace('/koufunet','',$return);
+            	
+            	return $this->redirect($return);
+
+            } else {
+
+            	return  $this->redirect( array(
+                             'controller' => 'attendances', 
+                             'action' => 'index',
+                             'tab' => 'attendance',
+                             'plugin' => 'human_resource'
+
+                        ));
+            }
+           
+		}
+}
+
 private function _getDuration($time1 = null,$time2 = null){
 
 
 		if (!empty($time1) && $time2) {
 
 		$date = date('Y-m-d');
-		$date1 = new DateTime($date.' '.$time1);
-		$date2 = new DateTime($date.' '.$time2);
+
+	
+		$date1 = new DateTime($time1);
+		$date2 = new DateTime($time2);
 
 		$interval = $date1->diff($date2);
 
@@ -752,6 +906,369 @@ public function daily_info() {
 		$this->render('Attendances/xls/attendance_report');
 	}
 
+
+	function _regularDays($days) {
+
+		if (!empty($days['Attendance']['in']) && !empty($days['Attendance']['out'])) {
+
+				$inToday = date('Y-m-d',strtotime($days['Attendance']['in']));
+				
+				$outToday = date('Y-m-d',strtotime($days['Attendance']['out']));
+
+				$time1 = $days['Attendance']['in'];
+
+			if (strtotime($days['Attendance']['in']) <= strtotime($outToday.' '.$days['MyWorkshift']['from']) ) {
+
+
+				$time1 = $outToday.' '.$days['MyWorkshift']['from'];
+
+			}
+			$time2 = $days['Attendance']['out'];
+
+					
+			$date = date('Y-m-d');
+			$date1 = new DateTime($time1);
+			$date2 = new DateTime($time2);
+
+			$interval = $date1->diff($date2)->format('%h');
+
+			if ($interval > 8) {
+				$interval = 8;
+			}
+
+			return $interval;
+		}
+
+	}
+
+
+	public function get_lates($data = array(),$conditions = array()) {
+
+		if (!empty($this->request->data)) {
+
+			ini_set('max_execution_time', 300);
+			
+			$conditions = array();
+
+			if (!empty($this->request->data['date'])) {
+
+				$selectedDate = $this->request->data['date'];
+
+				$dateSplit = explode('-',$this->request->data['date']);
+				$date1 = trim($dateSplit[0]);
+				$date2 = trim($dateSplit[1]);
+				$date1 = date('Y-m-d',strtotime($date1));
+				$date2 = date('Y-m-d',strtotime($date2));
+
+				$conditions = array_merge($conditions,array('date(Attendance.date) BETWEEN ? AND ?' => array($date1,$date2)));
+
+			}
+
+			$this->loadModel('HumanResource.Employee');
+
+			$this->loadModel('HumanResource.Overtime');
+
+			$this->loadModel('HumanResource.WorkSchedule');
+
+			$this->loadModel('HumanResource.WorkShift');
+
+			$filter = array();
+
+			$start_date = $date1;
+			
+			//Configure::write('debug',2);
+			
+			$selectedDate = $date1.' - '. $date2;
+			
+			$employees = $this->Employee->find('all',array('fields' => array('id','first_name','last_name','middle_name','code'),'order' => array('Employee.last_name ASC')));
+
+			$this->Attendance->bind(array('MySchedule','MyWorkshift','Employee'));
+
+				
+				//$dateKey = 0;
+				while (strtotime($start_date) <= strtotime($date2)) {
+						
+							$att_conditions = array('date(Attendance.date) BETWEEN ? AND ?' => array($start_date,$start_date),'Attendance.employee_id NOT' => 'NULL');
+
+							$filter[$start_date] = array();
+
+
+
+							$attendances = $this->Attendance->find('all',array(
+								'conditions' => $att_conditions,
+								'recursive' => -1,
+								//'limit' => ,
+ 								'contain' => array('MyWorkshift','MySchedule','Employee'),
+ 								'fields' => array(
+ 									'id',
+ 									'Attendance.in',
+ 									'Attendance.out',
+ 									'Attendance.overtime_id',
+ 									'Attendance.employee_id',
+ 									'Employee.id',
+ 									'Employee.code',
+ 									'Employee.first_name',
+ 									'Employee.last_name',
+ 									'Employee.middle_name',
+ 									'MySchedule.id',
+ 									'MySchedule.day',
+ 									'MyWorkshift.from',
+ 									'MyWorkshift.to'
+ 								),
+								'group' => array('Attendance.id'),
+								'order' => array('Employee.last_name ASC')
+							));
+							//$employeeIds = Set::extract($attendances, '{n}.Attendance.employee_id');
+							$attendanceKey = 0;
+
+							$employeeIds = array();
+							
+							foreach ($attendances as $key => $alist) {
+
+									$inToday = date('Y-m-d',strtotime($alist['Attendance']['in']));
+
+									$outToday = date('Y-m-d',strtotime($alist['Attendance']['out']));
+
+									$time1 = $alist['Attendance']['in'];
+
+								if (!empty($alist['MyWorkshift']['from'])) {
+
+									// pr(strtotime($alist['Attendance']['in']));
+
+									// pr( strtotime($inToday.' '.$alist['MyWorkshift']['from']));
+
+									// pr('-------');
+
+									if (!empty($alist['Attendance']['employee_id'])) {
+
+										$dateIn = date('Y-m-d h:i',strtotime($alist['Attendance']['in'])).':00';
+										
+										if (strtotime($dateIn) > strtotime($inToday.' '.$alist['MyWorkshift']['from'])) {
+
+											$filter[$start_date][$attendanceKey]['Attendance'] = $alist['Attendance'];
+
+											$filter[$start_date][$attendanceKey]['MyWorkshift'] = $alist['MyWorkshift'];
+
+											$filter[$start_date][$attendanceKey]['MySchedule'] = $alist['MySchedule'];
+
+											$filter[$start_date][$attendanceKey]['Employee'] = !empty($alist['Attendance']['employee_id']) ? $alist['Employee'] : array();
+											$filter[$start_date][$attendanceKey]['Time']['date'] = $start_date;
+										//	
+											$filter[$start_date][$attendanceKey]['Time']['status'] = 'late';
+
+											$filter[$start_date][$attendanceKey]['Time']['timeIn'] = $alist['Attendance']['in'];
+										}
+
+										$employeeIds[] = $alist['Attendance']['employee_id'];
+										
+									} 
+
+								}
+
+								$attendanceKey++;
+
+								# code...
+							}
+
+							if ( date("w",strtotime($start_date)) != 0) {
+
+
+							//check employee with no attendances
+							foreach ($employees as $empList => $emp) {
+								
+								if (!in_array($emp['Employee']['id'],$employeeIds)) {
+										
+										$filter[$start_date][$attendanceKey]['Time']['date'] = $start_date;
+
+										$filter[$start_date][$attendanceKey]['Time']['status'] = 'no_attendance';
+
+										$filter[$start_date][$attendanceKey]['Employee']['first_name'] = $emp['Employee']['first_name']; 
+
+										$filter[$start_date][$attendanceKey]['Employee']['middle_name'] = $emp['Employee']['middle_name']; 
+
+										$filter[$start_date][$attendanceKey]['Employee']['last_name'] = $emp['Employee']['last_name']; 
+
+										$filter[$start_date][$attendanceKey]['Employee']['code'] = $emp['Employee']['code']; 
+									
+									
+									$attendanceKey++;
+								}
+
+
+							}
+						}
+
+					//	pr($filter);
+
+					//pr($filter);
+
+					// 		if (!empty($attendances)) {
+
+					// 			//check if late
+					// 			if (!empty($attendances['MyWorkshift']['from'])) {
+
+								
+					// 			//	$time2 = $attendances[$attendanceKey]['Attendance']['out'];
+
+
+					// 			}
+
+
+					// } else {
+
+					// 	$filter[$attendanceKey]['Employee']['status'] = 'no_attendance';
+
+					// }
+
+
+						$start_date = date ("Y-m-d", strtotime("+1 days", strtotime($start_date)));
+
+						//$dateKey++;
+					}
+
+				
+					if (!empty($filter)) {
+
+						// pr($filter);
+						// exit();
+
+						$this->set(compact('filter','selectedDate'));
+
+						$this->render('Attendances/xls/lates');
+
+
+					}
+
+
+			}
+
+
+			exit();
+
+	
+	}
+
+	public function export_attendance() {
+
+		//Configure::write('debug',2);
+
+		$this->loadModel('HumanResource.WorkSchedule');
+
+		$this->loadModel('HumanResource.Employee');
+
+		$this->loadModel('HumanResource.Workshift');
+
+		$this->loadModel('HumanResource.WorkShiftBreak');
+
+		$this->loadModel('HumanResource.BreakTime');
+
+		$this->loadModel('HumanResource.Department');
+
+		$conditions = array();
+
+		$selectedDate = date('Y-m-d');
+
+		if (!empty($this->request->data)) {
+
+
+		if (!empty($this->request->data['date'])) {
+
+			$selectedDate = $this->request->data['date'];
+
+			$dateSplit = explode('-',$this->request->data['date']);
+			$date1 = trim($dateSplit[0]);
+			$date2 = trim($dateSplit[1]);
+			$date1 = date('Y-m-d',strtotime($date1));
+			$date2 = date('Y-m-d',strtotime($date2));
+			
+			$conditions = array_merge($conditions,array('date(Attendance.date) BETWEEN ? AND ?' => array($date1,$date2)));
+		
+		}
+
+		if (!empty($this->request->data['lates'])) {
+
+
+			$this->_getLates($this->request->data,$conditions,$date1,$date2);
+
+			exit();
+		}
+
+		
+
+		if (!empty($this->request->data['search'])) {
+
+			$search = $this->request->data['search'];
+
+			$conditions = array_merge($conditions,array(
+					'Attendance.employee_id' => $search
+			));
+
+		}
+			
+			$this->Attendance->bind(array('Employee','MySchedule','MyWorkshift','MyWorkShiftBreak','MyBreakTime'));
+
+    	}
+
+    	$conditions = array_merge($conditions,array(
+    		'Attendance.in NOT' => "",
+    		'Attendance.out NOT' => ''
+
+    	));
+
+
+
+    	
+        $attendanceData = $this->Attendance->find('all', array(
+          'conditions' => $conditions,
+            // 'order' => 'Attendance.out DESC',
+            // 'group' => 'Attendance.id',
+
+	        'group' => array('Attendance.date'),
+	        'order' => 'Attendance.out DESC',
+            //'fields'=> array('Attendance.in','Attendance.out')
+        ));
+
+
+ 
+        //check duplicity
+
+    //     foreach ($attendanceData as $key => $value) {
+        
+    //     	if (!empty($value['Attendance']['in']) && !empty($value['Attendance']['out'])) {
+
+    //     		$dateIn = date('Y-m-d',strtotime($value['Attendance']['in']));
+
+    //     		$dateOut = date('Y-m-d',strtotime($value['Attendance']['out']));
+
+    //     		$timeIn = $dateIn;
+
+    //     		$workIn = $dateOut.' '.$value['MyWorkshift']['from'];
+
+    //     		$workOut = $dateOut.' '.$value['MyWorkshift']['to'];	
+
+				// if (strtotime($timeIn) >= strtotime($workIn)) {
+
+				// 	// $workshift = 
+
+	   //      	}
+
+
+    //     	} else {
+
+    //     		unset($attendanceData[$key]);
+    //     	}
+
+        	
+    //     }
+
+
+
+
+    	$this->set(compact('attendanceData','selectedDate'));
+
+		$this->render('Attendances/xls/attendance_report');
+	}
+
 	public function getAllAttendance() {
 
 		$this->layout = false;
@@ -972,27 +1489,83 @@ public function daily_info() {
 
 			$data = $this->request->data;
 
+			$data['Attendance']['in'] = !empty($this->request->data['Attendance']['in']) ? $this->request->data['Attendance']['in'] : '';
 
+			$data['Attendance']['out'] = !empty($this->request->data['Attendance']['out']) ? $this->request->data['Attendance']['out'] : '';
+			
 			if ($this->Attendance->save($data)) {
-				//rediect  
-				$this->Session->setFlash('Time Sucessfully updated','success');
+
+				if ($this->request->is('ajax'))  {
+
+					$save = true;
+				}  else {
+
+					$this->Session->setFlash('Time Sucessfully updated','success');
+				} 
 
 				
 			} else {
 
-				$this->Session->setFlash('There\'s an error updating attendance','success');
+				if ($this->request->is('ajax'))  {
+
+					$save = false;
+				}  else {
+
+						$this->Session->setFlash('There\'s an error updating attendance','success');
+				} 
+
+			
 
 			}
 
 
-			$this->redirect( array(
-                         'controller' => 'attendances', 
-                         'action' => 'index',
-                         'tab' => 'attendance',
-                         'plugin' => 'human_resource'
-				));
+			if ($this->request->is('ajax'))  {
+
+
+
+					$attendance = $this->Attendance->read(null,$id);
+
+
+
+					if (!empty($attendance['Attendance']['in'])) {
+
+						$attendance['Attendance']['in'] = date('y/m/d h:i a',strtotime($attendance['Attendance']['in']));
+
+					} else {
+
+						$attendance['Attendance']['in'] = '';
+					}
+
+
+					if (!empty($attendance['Attendance']['out'])) {
+
+						$attendance['Attendance']['out'] = date('y/m/d h:i a',strtotime($attendance['Attendance']['out']));
+
+					} else {
+
+							$attendance['Attendance']['out'] = '';
+					}
+
+				
+					echo json_encode($attendance);
+
+					exit();
+
+				}  else {
+
+					
+				
+				$this->redirect( array(
+	                         'controller' => 'attendances', 
+	                         'action' => 'index',
+	                         'tab' => 'attendance',
+	                         'plugin' => 'human_resource'
+					));
+				} 
+
 
 		}
+
 		$attendance  = array();
 
 		if (!empty($query['attendanceId'])) {
@@ -1010,6 +1583,60 @@ public function daily_info() {
 
 		$this->render('Attendances/ajax/edit_attendance');
 
+	}
+
+	public function check_attendance() {
+
+
+		$this->loadModel('HumanResource.WorkSchedule');
+
+		$this->loadModel('HumanResource.Workshift');
+
+		$this->loadModel('HumanResource.WorkshiftBreak');
+
+		$this->loadModel('HumanResource.Breaktime');
+
+		$this->loadModel('HumanResource.Overtime');
+
+		$this->Attendance->bind(array('MySchedule','MyWorkshift','Overtime'));
+
+		$dateNow = date('Y-m-d');
+
+		$tomorrow = date('Y-m-d',strtotime($dateNow . "+1 days"));
+
+		$conditions = 	array(
+			'date(Attendance.date) BETWEEN ? AND ?' => array($dateNow,$tomorrow),
+			'Attendance.in NOT' => NULL
+			);
+
+		$this->Attendance->bind(array('MySchedule','MyWorkshift'));
+
+		$attendances = $this->Attendance->find('all',array('conditions' => $conditions));
+
+		$attendanceData = array();
+
+		foreach ($attendances as $key => $attnd) {
+			
+					$attendanceData = $attnd['Attendance'];
+				//morning shift	
+				if ($attnd['MyWorkshift']['from'] = '08:00:00') {
+
+					if (empty($attnd['Attendance']['out']) && empty($attnd['Attendance']['overtime_id'])) {
+
+						$attendanceData['out'] = 'n/a';
+
+						if ( $this->Attendance->save($attendanceData)) {
+
+							echo "no timeout for : ". $attendanceData['id'];
+
+							echo "<br>";
+						}
+
+					}
+				}
+		}
+
+		exit();
 	}
 
 }	

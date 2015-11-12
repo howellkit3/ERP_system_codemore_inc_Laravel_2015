@@ -30,7 +30,9 @@ class ReceivedItem extends AppModel {
 					$valueOfvalue['foreign_key'] = $key1;
 					$valueOfvalue['received_orders_id'] = $id;
 					$valueOfvalue['delivered_order_id'] = $uuid;
-					$valueOfvalue['reject_quantity'] = $valueOfvalue['rejectQuantity'];
+					$valueOfvalue['unit_price'] = !empty($valueOfvalue['unit_price']) ? $valueOfvalue['unit_price'] : 0;
+					$valueOfvalue['quantity_unit_id'] =!empty($valueOfvalue['quantity_unit_id']) ? $valueOfvalue['quantity_unit_id'] : 14;
+					$valueOfvalue['reject_quantity'] = !empty($valueOfvalue['rejectQuantity']) ? $valueOfvalue['rejectQuantity'] : 0;
 					$valueOfvalue['request_uuid'] = $data['ReceivedItems']['request_id'];
 			 		$this->save($valueOfvalue);
 				}
@@ -49,7 +51,12 @@ class ReceivedItem extends AppModel {
 			'belongsTo' => array(
 				'DeliveredOrder' => array(
 					'className' => 'WareHouse.DeliveredOrder',
-					'foreignKey' => id
+					'foreignKey' => 'delivered_order_id'
+				),
+
+				'ReceivedOrder' => array(
+					'className' => 'WareHouse.ReceivedOrder',
+					'foreignKey' => 'received_orders_id'
 				),
 			)
 		));

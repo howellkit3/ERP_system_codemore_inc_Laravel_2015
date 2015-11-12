@@ -291,13 +291,13 @@
                                 	<label class="col-lg-2 control-label">Quantity</label>
 									<div class="col-lg-8">
 										<?php 
-											$fullQuantity = number_format($quotationItemDetail['QuotationItemDetail']['quantity']).' '.$units[$quotationItemDetail['QuotationItemDetail']['quantity_unit_id']];
+											$fullQuantity = number_format($clientOrderData['QuotationItemDetail']['quantity']).' '.$units[$clientOrderData['QuotationItemDetail']['quantity_unit_id']];
 											
                                             echo $this->Form->input('QuotationItemDetail.quantity', array(
                                             								'type' => 'hidden',
                                             								'class' => 'form-control item_type',
 						                                                    'label' => false,
-						                                                   	'value' => $quotationItemDetail['QuotationItemDetail']['quantity'],
+						                                                   	'value' => $clientOrderData['QuotationItemDetail']['quantity'],
 						                                                    'id' => 'quantity'));
                                             echo $this->Form->input('QuotationItemDetail.quantity_proxy', array(
                                             								'type' => 'text',
@@ -316,7 +316,7 @@
 
 											//pr($quotationItemDetail); 
 
-											$fullPrice = $currencies[$quotationItemDetail['QuotationItemDetail']['unit_price_currency_id']].' '.number_format($quotationItemDetail['QuotationItemDetail']['unit_price'],4).' '.$units[$quotationItemDetail['QuotationItemDetail']['unit_price_unit_id']];
+											$fullPrice = $currencies[$clientOrderData['QuotationItemDetail']['unit_price_currency_id']].' '.number_format($clientOrderData['QuotationItemDetail']['unit_price'],4).' '.$units[$clientOrderData['QuotationItemDetail']['unit_price_unit_id']];
 
 
 
@@ -325,7 +325,7 @@
                                             								'class' => 'form-control item_type',
 						                                                    'label' => false,
 						                                                    'readonly' => 'readonly',
-						                                                    'value' => $quotationItemDetail['QuotationItemDetail']['unit_price']));
+						                                                    'value' => $clientOrderData['QuotationItemDetail']['unit_price']));
                                             echo $this->Form->input('QuotationItemDetail.unit_price_proxy', array(
                                             								'type' => 'text',
                                             								'class' => 'form-control item_type',
@@ -341,7 +341,7 @@
                             		<label class="col-lg-2 control-label">Vat Price</label>
 									<div class="col-lg-8">
 										<?php 
-											$fullvat = number_format($quotationItemDetail['QuotationItemDetail']['vat_price'],4);
+											$fullvat = number_format($clientOrderData['QuotationItemDetail']['vat_price'],4);
 
                                             echo $this->Form->input('QuotationItemDetail.vat_price_field', array(
                                             								'class' => 'form-control item_type',
@@ -362,7 +362,7 @@
                                             								'class' => 'form-control item_type',
 						                                                    'label' => false,
 						                                                    'readonly' => 'readonly',
-						                                                    'value' => $quotationItemDetail['QuotationItemDetail']['material']));
+						                                                    'value' => $clientOrderData['QuotationItemDetail']['material']));
                                         ?>
 
                                         

@@ -20,15 +20,10 @@ class PlateMakingProcess extends AppModel {
 
         $this->bindModel(array(
             'belongsTo' => array(
-                'JobTicketDescription' => array(
-                    'className' => 'Ticket.JobTicketDescription',
-                    'foreignKey' => false,
-                    'conditions' => 'JobTicketDescription.id = JobTicketSummary.description_id'
-                ),
-                'JobTicketDetail' => array(
-                    'className' => 'Ticket.JobTicketDetail',
-                    'foreignKey' => false,
-                    'conditions' => 'JobTicketDetail.id = JobTicketSummary.detail_id'
+                'Machine' => array(
+                    'className' => 'Machine',
+                    'foreignKey' => 'machine',
+                    'conditions' => ''
                 )
             )
             
@@ -37,6 +32,24 @@ class PlateMakingProcess extends AppModel {
         $this->contain($model);
     }
 
+
+    public function getProcess($data = array()){
+
+
+     $this->bind(array('Machine'));
+
+
+     $process = $this->find('first',array(
+                    'conditions' => array(
+                            'PlateMakingProcess.job_ticket_id' =>  $data['ticketuuId'],
+                            'PlateMakingProcess.process_id' =>  $data['processID'],
+                            'PlateMakingProcess.product' => $data['product']
+                    )
+                ));
+
+     return $process;
+
+    }
     
 
 }

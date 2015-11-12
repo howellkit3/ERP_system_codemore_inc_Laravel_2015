@@ -17,9 +17,15 @@
                 <div class="modal-body">
                     
                          <?php   
-                         
                         echo $this->Form->create('ClientOrderDeliverySchedule',array(
-                                    'url'=>(array('controller' => 'deliveries','action' => 'add_schedule', $deliveryEdit[0]['Delivery']['id'], $deliveryEdit[0]['DeliveryDetail']['id'],$scheduleInfo['ClientOrderDeliverySchedule']['id'],$quotationId,$clientsOrderUuid)),'class' => 'form-horizontal')); ?>
+                                    'url'=>(array(
+                                    'controller' => 'deliveries',
+                                    'action' => 'add_schedule', 
+                                    !empty($deliveryEdit[0]['Delivery']['id']) ? $deliveryEdit[0]['Delivery']['id'] : '',
+                                    !empty( $scheduleInfo['ClientOrderDeliverySchedule']['id']) ? $scheduleInfo['ClientOrderDeliverySchedule']['id'] : '',
+                                    $clientsOrderUuid,
+                                    $clientUuid
+                                    )),'class' => 'form-horizontal')); ?>
                     
                         <div class="form-group" id="existing_items">
                             <label class="col-lg-2 control-label"><span style="color:red">*</span>D.R. #</label>
@@ -28,13 +34,13 @@
                                 <?php 
                                     foreach ($deliveryEdit as $deliveryDataList): 
 
-                                        if($deliveryDataList['DeliveryDetail']['status'] == 3){
+                                        if($deliveryDataList['DeliveryDetail']['status'] == 3 && $deliveryDataList['Delivery']['status'] == 1){
 
                                           $difference = $deliveryDataList['DeliveryDetail']['delivered_quantity']; 
 
                                           array_push($pushRemaining,$difference );
 
-                                        }else if ($deliveryDataList['DeliveryDetail']['status'] != 5){
+                                        }else if ($deliveryDataList['DeliveryDetail']['status'] != 5 && $deliveryDataList['Delivery']['status'] == 1 ){
 
                                         $difference = $deliveryDataList['DeliveryDetail']['quantity']; 
 
@@ -50,6 +56,8 @@
 
                                           $totaldifference = $totaldifference + $value;
 
+
+
                                           }   
         
 
@@ -61,7 +69,6 @@
 
                                           $totalremaining = $scheduleInfo['ClientOrderDeliverySchedule']['quantity'];
                                           }
-
 
 
                                           ?>
@@ -177,12 +184,11 @@
                                     echo $this->Form->input('DeliveryDetail.location', array(
                                                                     'empty' => '--Select Location--',
                                                                     'class' => 'form-control item_type editable addquantityLimit',
-                                                                    'options' => array($companyAddress[$clientsOrder['ClientOrder']['company_id']]),
+                                                                    'options' => array(!empty($scheduleInfo['ClientOrder']['company_id'])) ? $companyAddress[$scheduleInfo['ClientOrder']['company_id']] : "" ,
                                                                     'type' => 'select',
                                                                     'required' => 'required',
                                                                     'label' => false,
-                                                                     'value' => $deliveryEdit[0]['DeliveryDetail']['location']
-                                                                    ));
+                                                                     'value' => !empty($deliveryEdit[0]['DeliveryDetail']['location']) ? $deliveryEdit[0]['DeliveryDetail']['location'] : " "                                                                    ));
                                 ?>
                             </div>
                         </div>
@@ -210,7 +216,7 @@
                 </div>
                 <div class="modal-body">
                     <?php  echo $this->Form->create('Delivery',array('url'=>(array('controller' => 'deliveries', 
-                            'action' => 'add', $scheduleInfo['ClientOrderDeliverySchedule']['id'],$quotationId,$clientsOrderUuid)),'class' => 'form-horizontal'))?>
+                            'action' => 'add', $scheduleInfo['ClientOrderDeliverySchedule']['id'],$clientsOrderUuid,$clientUuid)),'class' => 'form-horizontal'))?>
                     
 
                         <div class="form-group" id="existing_items">
@@ -341,7 +347,7 @@
                 </div>
                 <div class="modal-body">
                     <?php  echo $this->Form->create('Delivery',array('url'=>(array('controller' => 'deliveries', 
-                            'action' => 'add', $scheduleInfo['ClientOrderDeliverySchedule']['id'],$quotationId,$clientsOrderUuid)),'class' => 'form-horizontal'))?>
+                            'action' => 'add', $scheduleInfo['ClientOrderDeliverySchedule']['id'],$clientsOrderUuid)),'class' => 'form-horizontal'))?>
                     
 
                         <div class="form-group" id="existing_items">

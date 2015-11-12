@@ -46,6 +46,16 @@ class PurchaseOrder extends AppModel {
 					'foreignKey' =>  false,
 					'conditions' => array('ReceivedOrder.purchase_orders_id = PurchaseOrder.id')
 				),
+				'DeliveredOrder' => array(
+					'className' => 'WareHouse.DeliveredOrder',
+					'foreignKey' =>  false,
+					'conditions' => array('DeliveredOrder.purchase_orders_id = PurchaseOrder.id')
+				),
+				'User' => array(
+					'className' => 'User',
+					'foreignKey' =>  false,
+					'conditions' => array('User.id = PurchaseOrder.created_by')
+				),
 			),
 
 			'hasMany' => array(	
@@ -82,7 +92,7 @@ class PurchaseOrder extends AppModel {
 
 		$code =  $year. $month .$random;
 
-		$this->create();
+		//$this->create();
 
 		if (empty($purchaseOrderData['PurchaseOrder']['id'])) {
 
@@ -124,5 +134,4 @@ class PurchaseOrder extends AppModel {
 		));
 		$this->recursive = 1;
 	}
-
 }

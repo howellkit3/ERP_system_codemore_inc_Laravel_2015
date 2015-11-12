@@ -18,8 +18,8 @@
                         </h1> 
                     </center>
                      <div class="form-group pull-right">
-                     	<?php echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'employees', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
-                   		?>
+                     
+                   		<a href="javascript:history.back(1)" class="btn btn-primary pull-right"> <i class="fa fa-arrow-circle-left fa-lg"></i> Go Back </a>
                     </div>
                     <div class="form-group pull-right" style="margin-right:10px;">
                     	
@@ -28,6 +28,8 @@
 
                     </div>
 
+                 <?php if(in_array($userData['User']['role_id'],array('19'))) { ?>
+                   
                     <div class="form-group pull-right" style="margin-right:10px;">
                     	
                     	<?php echo $this->Html->link('<i class="fa fa-money fa-lg"></i> Salary Settings', array('controller' => 'salaries', 'action' => 'employee_settings',$employee['Employee']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
@@ -35,6 +37,7 @@
 
                     </div>
 
+                <?php  } ?>
 
                     <div class="form-group pull-right" style="margin-right:10px;">
                     	
@@ -86,8 +89,19 @@
                              		<div class="form-group">
                                         <label for="inputEmail1" class="col-lg-12 control-label strong">Name</label>
 	                                      <div class="col-lg-12 value">
+											<?php //echo $this->CustomText->getFullname($employee['Employee']); 
 
-	                                       <?php echo $this->CustomText->getFullname($employee['Employee']);  ?>
+													$name = '';
+
+													$name .= !empty($employee['Employee']['first_name']) ?  str_replace(","," ",$employee['Employee']['first_name']) : '';
+
+													$name .= !empty($employee['Employee']['last_name']) ? ' '.$employee['Employee']['last_name'].' ' : '';
+
+													$name .= !empty($employee['Employee']['middle_name']) ? ' '.$employee['Employee']['middle_name'].' ' : '';
+													$name .= !empty($employee['Employee']['suffix']) ? ' '.ucwords($employee['Employee']['suffix']).' ' : '';
+
+													echo $name;
+											?>
 	                                       </div>
                                     </div>
                                     <div class="form-group">
@@ -307,7 +321,20 @@
 				                                        Name :
 				                                         </label>
 					                                      <div class="col-lg-9 value"> 
-					                                        <?php echo $this->CustomText->getFullname($employee['ContactPerson'],'firstname','middlename','lastname');  ?>
+					                                        <?php 
+					                                        		//echo $this->CustomText->getFullname($employee['ContactPerson'],'firstname','middlename','lastname'); 
+
+																	$contactPesronName = '';
+
+																	$contactPesronName .= !empty($employee['ContactPerson']['firstname']) ?  str_replace(","," ",$employee['ContactPerson']['firstname']) : '';
+
+																	$contactPesronName .= !empty($employee['ContactPerson']['lastname']) ? ', '.str_replace(","," ",$employee['ContactPerson']['lastname'])  : '';
+
+																	$contactPesronName .= !empty($employee['ContactPerson']['middlename']) ? ', '.str_replace(","," ",$employee['ContactPerson']['middlename']) : '';
+
+																	echo $contactPesronName;
+
+					                                        ?>
 					                                       </div>
 								                 	</div>
 								                 	<div class="clearfix"></div>

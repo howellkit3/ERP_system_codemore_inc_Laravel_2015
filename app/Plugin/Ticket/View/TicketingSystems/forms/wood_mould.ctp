@@ -6,7 +6,7 @@
                         <div class="col-lg-9">
 
                           <?php
-                            echo $this->Form->input('job_ticket_id',array('type' => 'hidden','value' => $parameter['ticketId']
+                            echo $this->Form->input('job_ticket_id',array('type' => 'hidden','value' => $parameter['ticketuuId']
 
                               ));
 
@@ -14,6 +14,11 @@
 
                               ));
                             echo $this->Form->input('product_id',array('type' => 'hidden','value' => $parameter['productId']
+
+                              ));
+
+
+                              echo $this->Form->input('ticket_id',array('type' => 'hidden','value' => $parameter['ticketId']
 
                               ))
                           ?>
@@ -91,8 +96,10 @@
                             'productId' => !empty( $parameter['product']) ?  $parameter['product'] : '',
                              $parameter['processId'],
                              $parameter['productId'],
-                            $parameter['ticketId']
-                            ),
+                            $parameter['ticketuuId'],
+                              0,
+                              0,
+                              $parameter['ticketId']),
                             array(
                              //'title' => 'Print '. $subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']],
                                 'target' => '_blank',

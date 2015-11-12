@@ -7,27 +7,39 @@ class DeliveryDetail extends AppModel {
     public $useDbConfig = 'koufu_delivery_system';
     public $name = 'DeliveryDetail';
 
-     public $validate = array(
+ //     public $validate = array(
 
-		'delivery_uuid' => array(
+	// 	'delivery_uuid' => array(
 			
-			'unique' => array(
-				'rule'    => 'isUnique',
-				'message' => 'Delivery receipt should be unique.'
-			),
+	// 		'unique' => array(
+	// 			'rule'    => 'isUnique',
+	// 			'message' => 'Delivery receipt should be unique.'
+	// 		),
 
-		)
+	// 	)
 		
-	);
+	// );
   
 
-  public function saveDeliveryDetail($data = null, $auth = null){
+  public function saveDeliveryDetail($data = null, $auth = null,$novalidate = null){
 
 		$this->create();
 
-				$data['DeliveryDetail']['modified_by'] = $auth;
+		$data['DeliveryDetail']['modified_by'] = $auth;
 				
-		$this->save($data);
+
+		if ($novalidate) {
+
+			$this->validate = array();
+		}
+
+		if ($this->save($data)) {
+
+		} else {
+
+			pr($this->validationErrors);
+		}
+
 
 
 	}

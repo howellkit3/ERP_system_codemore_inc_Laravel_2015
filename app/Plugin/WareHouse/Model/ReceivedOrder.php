@@ -13,17 +13,7 @@ class ReceivedOrder extends AppModel {
     
   	public $name = 'ReceivedOrder';
 
-  	public $validate = array(
 
-		'dpurchase_order_id' => array(
-			
-			'unique' => array(
-				'rule'    => 'isUnique',
-			),
-
-		)
-		
-	);
 
 	public function saveReceivedOrders($data, $auth, $order_id){
 
@@ -43,15 +33,23 @@ class ReceivedOrder extends AppModel {
 		$data['uuid'] = $code;
 		$data['purchase_order_id'] = $order_id;
 		$data['status_id'] = 11;
+		//$data['purchase_order_uuid'] = $data;
 
-		
+		if(!empty($data['ReceiveReceipt'])){
+		//	pr($data); exit;
+			$data['supplier_id'] = $data['ReceiveReceipt']['supplier_id'];
+			$data['address'] = $data['ReceiveReceipt']['address'];
+			$data['purchase_order_uuid'] = $data['ReceiveReceipt']['po_number'];
+			$data['status_id'] = 14;
+		}
+	
 		$this->save($data);
 
 		return $this->id;
 
 	}
 
-	public function bind($model = array('PurchaseOrder', 'ReceivedItem')){
+	public function bind($model = array('PurchaseOrder', 'ReceivedItem', 'DeliveredOrder')){
 
 		$this->bindModel(array(
 			'belongsTo' => array(
@@ -60,10 +58,17 @@ class ReceivedOrder extends AppModel {
 					'foreignKey' => 'purchase_order_id',
 					'dependent' => true
 				),
+
 			),
 			'hasMany' => array(
 				'ReceivedItem' => array(
 					'className' => 'WareHouse.ReceivedItem',
+					'foreignKey' => 'received_orders_id',
+					'dependent' => true
+				),
+
+				'DeliveredOrder' => array(
+					'className' => 'WareHouse.DeliveredOrder',
 					'foreignKey' => 'received_orders_id',
 					'dependent' => true
 				),

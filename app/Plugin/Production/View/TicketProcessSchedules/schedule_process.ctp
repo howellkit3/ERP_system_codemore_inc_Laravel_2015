@@ -17,7 +17,7 @@
 						<div class="col-lg-5">
 							:&emsp;
 							<?php 
-								echo !empty($productData['Product']['name']) ? ucfirst($productData['Product']['name']) : '' ;
+								echo !empty($jobTickets['Product']['name']) ? ucfirst($jobTickets['Product']['name']) : '' ;
 							?>
 						</div>
 						<div class="col-lg-4">
@@ -39,7 +39,7 @@
 					<?php $componentCounter = 1?>
 					<?php $partCounter = 1?>
 					<?php $processCounter = 1?>
-					<div class="table-responsive">
+				<!-- 	<div class="table-responsive">
 						<table class="table table-bordered">
 							<thead>
 								<?php foreach ($formatDataSpecs as $key => $specLists) { ?>
@@ -59,7 +59,7 @@
 								      	}
 								      	if($specLists['ProductSpecificationDetail']['model'] == 'Process'){
 								      		
-								      		echo $this->element('Specs/process', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $processCounter));
+								      			echo $this->element('Specs/process', array('dataSpecs' => $formatDataSpecs[$key],'key' => $processCounter,'subProcessData' => $subProcessData,'ticketData' => $jobTickets));
 								      		$processCounter++;
 
 								      	}
@@ -68,7 +68,7 @@
 								<?php } ?>
 							</thead>
 					    </table>
-				   	</div> 
+				   	</div>  -->
 				</form>
 			</div>
 		</div>
@@ -86,15 +86,23 @@
 				
 				<?php echo $this->Form->create('TicketProcessSchedule',array('url'=>(array('controller' => 'ticket_process_schedules','action' => 'add')),'class' => 'form-horizontal', 'enctype' => 'multipart/form-data' ));?>
 
-					<?php foreach ($formatDataSpecs as $key => $specLists) { ?>
+					<?php foreach ($formatDataSpecs as $dataKey => $specLists) { ?>
 							
-						<?php
+						<?php if ($specLists['ProductSpecificationDetail']['model'] == 'Component') { ?>
+								<div class="process_compoonent">
+									<?php
+								      		echo $this->element('Specs/component', array('formatDataSpecs' => $formatDataSpecs[$dataKey],'key' => $componentCounter));
+								      		$componentCounter++; 
+								      ?>
+								    </div>
 
-					      	if($specLists['ProductSpecificationDetail']['model'] == 'Process'){
+						<?php } ?>
+
+					      <?php	if($specLists['ProductSpecificationDetail']['model'] == 'Process'){
 					      		
 					      		//echo $this->element('Specs/process', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $processCounter));
 
-					      		foreach ($formatDataSpecs[$key]['ProductSpecificationProcess']['ProcessHolder'] as $key => $processList) { $no = $key + 1; ?>
+					      		foreach ($formatDataSpecs[$dataKey]['ProductSpecificationProcess']['ProcessHolder'] as $key => $processList) { $no = $key + 1; ?>
 						      		<div class="form-group process-layer">
 						      			<label class="col-lg-1 control-label"><?php echo $no ?></label>
 										<div class="col-lg-3">
@@ -103,21 +111,21 @@
                                                     'class' => 'form-control ',
                                                     'label' => false,
                                                     'readonly' => true,
-                                                    'value' => ucfirst($subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']])
+                                                    'value' => ucfirst($subProcessData[$processList['ProductSpecificationProcessHolder']['sub_process_id']])
                                                     ));
                                                 //hidden data
                                                 echo $this->Form->input('Ticket.job_ticket_id', array(
                                                     'class' => 'form-control ',
                                                     'label' => false,
                                                     'type' => 'hidden',
-                                                    'value' => $ticketData['JobTicket']['id']
+                                                    'value' => $jobTickets['JobTicket']['id']
                                                     ));
                                             ?>
-                                            <input type="hidden" name="data[TicketProcessSchedule][<?php echo $key ?>][order]" value="<?php echo $no ?>">
+                                            <input type="hidden" name="data[TicketProcessSchedule][<?php echo $dataKey; ?>][<?php echo $key ?>][order]" value="<?php echo $no ?>">
 										</div>
 										<div class="col-lg-4">
 											<?php 
-                                                echo $this->Form->input('TicketProcessSchedule.'.$key.'.department_process_id', array(
+                                                echo $this->Form->input('TicketProcessSchedule.'.$dataKey.'.'.$key.'.department_process_id', array(
                                                 	'options' => array($processDepartmentData),
                                                 	'empty' => '-- Select Department Process--',
                                                     'class' => 'form-control departmentProcess',
@@ -128,7 +136,7 @@
 										</div>
 										<div class="col-lg-4">
 											<?php 
-                                                echo $this->Form->input('TicketProcessSchedule.'.$key.'.machine_id', array(
+                                                echo $this->Form->input('TicketProcessSchedule.'.$dataKey.'.'.$key.'.machine_id', array(
                                                 	'options' => array(),
                                                 	'empty' => '-- Select Machine --',
                                                     'class' => 'form-control machine-append',

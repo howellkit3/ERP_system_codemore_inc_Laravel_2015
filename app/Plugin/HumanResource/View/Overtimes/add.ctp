@@ -17,8 +17,17 @@ echo $this->Html->script(array(
 )); 
 ?>
 <div style="clear:both"></div>
+<?php 
+if (!empty($this->params['named']['in_charge']) && $this->params['named']['in_charge'] == 1) {
 
-<?php echo $this->element('hr_options'); ?><br><br>
+echo $this->element('in_charge_option'); 
+
+$incharge = true;
+} else {
+$incharge = false;
+echo $this->element('hr_options'); 
+}
+?><br><br>
 <?php echo $this->Form->create('Overtime',array('url'=>(array('controller' => 'overtimes','action' => 'add')),
 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data' ));?>
  <div class="row">
@@ -50,7 +59,7 @@ echo $this->Html->script(array(
                                     <div class="form-group">
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                               <div class="col-lg-12">
+                                              <!--  <div class="col-lg-12">
                                                     <div class="form-group">
                                                         <label for="inputEmail1" class="col-lg-2 control-label"><span style="color:red">*</span>  <b> Department </b> </label>
                                                         <div class="col-lg-9">
@@ -65,7 +74,37 @@ echo $this->Html->script(array(
 
                                                         </div>
                                                      </div>
+                                                </div> -->
+
+
+
+
+                                                <div class="form-group">
+                                                  <div class="col-lg-2 text-right">
+                                                    <label for="exampleRadio"> <span style="color:red">*</span>  <b>Search Employee</b> </label>
+                                                  </div>
+                                                <div class="col-lg-9">
+                                                      
+                                                            <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                    <i class="fa fa-search"></i>
+                                                            </span>
+                                                            <input type="text" id="SearchEmployee" class="form-control">
+                                                    </div>
+                                                    </div>
+                                                </div>  
+
+                                                  <div class="clearfix"></div>
+
+                                               <label for="inputEmail1" class="col-lg-2 control-label"></label>
+                                                  <div class="col-lg-9"  id="selection" >
+                                                   
+                                                    <ul style="margin:0;padding:0" id="result-tale-employee">
+                                                 
+                                                      </ul>  
                                                 </div>
+
+
                                             </div>
 
                                              <div class="form-group">
@@ -79,7 +118,6 @@ echo $this->Html->script(array(
                                                                             'type' => 'text',
                                                                             'label' => false,
                                                                             'value' => date('Y-m-d'),
-                                                                            'readonly' => true
                                                                             ));
                                                                  ?>
 
@@ -157,7 +195,7 @@ echo $this->Html->script(array(
 
                                             <div class="form-group">
                                                     <div class="col-lg-12">
-                                                        <label class="large-label"><span style="color:red;">*</span> <b>Breaktime </b> </label>
+                                                        <label class="large-label"> <b>Breaktime </b> </label>
                                                         <div class="clearfix"></div>
                                                         <div class="selected_breaks" >
                                                             <ul>
@@ -195,7 +233,7 @@ echo $this->Html->script(array(
                                                         <label class="large-label"><span style="color:red;">*</span> <b>Employees </b> </label>
                                                         <label class="selected-text"></label>
 
-
+<!-- 
                                                         <div class="pull-right">
                                                         <label class="large-label"><b>Select ALL </b> </label>
                                                                  <div class="onoffswitch onoffswitch-success select-all">
@@ -205,10 +243,21 @@ echo $this->Html->script(array(
                                                                             <div class="onoffswitch-switch"></div>
                                                                             </label>
                                                                     </div>
+                                                        </div> -->
+
+                                                        <div class="clearfix"></div>
+                                                        <div id="resultList">
+<!-- 
+                                                            <table class="table table-border">
+
+                                                                
+                                                            </table> -->
+
                                                         </div>
+
                                                         <div class="clearfix"></div>
                                                         <div class="employees result">
-                                                            <ul class="widget-users row">
+                                                           <!--  <ul class="widget-users row">
                                                             <?php foreach ($employees as $key => $employee) : ?>
                                                                 <li class="col-md-6">
                                                                     <?php
@@ -257,7 +306,7 @@ echo $this->Html->script(array(
                                                                 </div>
                                                                 </li>
                                                             <?php endforeach; ?>    
-                                                            </ul>
+                                                            </ul> -->
                                                         </div>
                                                     </div>
                                             </div>
@@ -311,13 +360,17 @@ echo $this->Html->script(array(
 
                 $('body').on('change','#OvertimeDate',function(){
                     
+                    $("#OvertimeFrom,#OvertimeTo").val($(this).val()+ ' 00:00');
+
                     var selectedDate = $.datepicker.formatDate('yy/mm/dd', new Date($(this).val()));
                     
                     $("#OvertimeFrom,#OvertimeTo").datetimepicker( {
                         format:'Y-m-d H:i',
-                        minDate: selectedDate
+                        current : $(this).val()+ ' 00:00',
+                       // current: '2015-11-20 00:00'
                     });
                 });
+
 
                 $('#OvertimeDepartmentId').change();
 

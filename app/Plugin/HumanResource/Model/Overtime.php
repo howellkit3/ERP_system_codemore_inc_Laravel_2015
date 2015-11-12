@@ -18,8 +18,13 @@ class Overtime extends AppModel {
 			'belongsTo' => array(
 				'Department' => array(
 					'className' => 'Department',
-					'foreignKey' => 'department_id')
-								)
+					'foreignKey' => 'department_id'),
+                'User' => array(
+                    'className' => 'User',
+                    'foreignKey' => 'created_by',
+                    //'conditions' => array('id = Overtime.created_by')
+                    )
+				)
 			),false);
 
 		$this->contain($model);
@@ -28,7 +33,13 @@ class Overtime extends AppModel {
     public function formatData($data = null,$auth = null) {
         
         $employeeIds = array();
-        foreach ($data['Employee']['id'] as $key => $value) {
+
+        if (is_array($data['Employee']['id'] )) {
+
+            $employeeIds = $data['Employee']['id'];
+        } else {
+
+         foreach ($data['Employee']['id'] as $key => $value) {
             
             $employeid = explode('-', $value);
 
@@ -37,9 +48,13 @@ class Overtime extends AppModel {
             $data['Attendance']['id'][$key] = $employeid[1];
             
         }
+        }
+        
+
 
     	if (!empty($data['Employee'])) {
 
+            $employeeIds = array_values($employeeIds);
     		$data[$this->alias]['employee_ids']	= json_encode($employeeIds);	
             //$data['Employee']['id']
     	}

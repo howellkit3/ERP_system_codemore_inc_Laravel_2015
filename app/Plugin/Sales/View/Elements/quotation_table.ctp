@@ -1,5 +1,5 @@
-<?php foreach ($quotationData as $quotationList): ?>
-   
+<?php foreach ($quotationData as $quotationList): 
+   if($quotationList['Quotation']['status'] != 2 ){ ?>
         <tr class="">
              <td class="">
                 PQ-<?php echo $quotationList['Quotation']['uuid'] ?>  
@@ -125,7 +125,9 @@
             </td>
         </tr>
 
-<?php endforeach; ?> 
+<?php
+        }
+        endforeach; ?> 
 
 
 

@@ -1,3 +1,16 @@
 #ticketDataFullDetails .modal-dialog {
     width: 50%;
 }
+
+.process_compoonent {
+  font-weight: bold;
+  margin: 16px 31px;
+}
+
+.time_input{
+  min-width: 160px;
+}
+.quantity_input {
+
+  min-width: 200px;
+}

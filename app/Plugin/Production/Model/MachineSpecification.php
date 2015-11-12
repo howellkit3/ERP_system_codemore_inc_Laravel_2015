@@ -4,7 +4,8 @@ App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 
 class MachineSpecification extends AppModel {
 
-    public $useDbConfig = 'koufu_production_system';
+    public $useDbConfig = 'koufu_production';
+
     public $name = 'MachineSpecification';
 
      public $recursive = -1;

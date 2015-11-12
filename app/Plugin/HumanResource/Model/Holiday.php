@@ -26,18 +26,41 @@ class Holiday extends AppModel {
 
 	public function formatData($data = null){
 
+		$save = array();
+
 		if (!empty($data)) {
 
 			$date = explode('-',$data['from_date']);
 
 			$split = new DateTime(trim($date[0]));
-			$data['Holiday']['year'] = $split->format('Y');
 
-			$data['Holiday']['start_date'] = date('Y-m-d',strtotime(trim($date[0])));
-			$data['Holiday']['end_date'] = date('Y-m-d',strtotime(trim($date[1])));
+
+			$start_date = date('Y-m-d',strtotime(trim($date[0])));
+
+			$end_date = date('Y-m-d',strtotime(trim($date[1])));
+
+			$key = 0;
+
+		
+
+			while (strtotime($start_date) <= strtotime($end_date)) {
+
+				$save['Holiday'][$key] = $data['Holiday'];
+
+				//$data['Holiday'][$key]['year'] = date('Y',strtotime($start_date));
+				$save['Holiday'][$key]['start_date'] = $start_date;
+				$save['Holiday'][$key]['end_date'] = $start_date;
+
+				$start_date = date ("Y-m-d", strtotime("+1 days", strtotime($start_date)));
+
+
+				
+				$key++;	
+			}
+		
 		}
 
-		return $data;
+		return $save;
 	}
 	public function getAllHolidays($params = array()){
 

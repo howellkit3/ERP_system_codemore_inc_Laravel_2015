@@ -208,7 +208,7 @@
 												<?php echo $this->Form->input('QuotationItemDetail.0.unit_price_currency_id', array(
 					                                'options' => array($currencyData),  
 					                                'label' => false,
-					                                'class' => 'form-control required ',
+					                                'class' => 'form-control required currency-option',
 					                                'empty' => '-Select Currency-'
 					                                 )); 
 
@@ -241,9 +241,37 @@
 
 											</div>
 
-											<div class="form-group">
-												<label class="col-lg-2 control-label">Vat Price</label>
-												<div class="col-lg-8">
+											<div class="form-group vat-section" style="display:none;">
+												<label class="col-lg-2 control-label">Vat Option</label>
+												<div class="col-lg-4">
+													<?php 
+														$vatType = array('Vatable Sale' => 'Vatable Sale',
+																'Vat Exempt' => 'Vat Exempt',
+																'Zero Rated Sale' => 'Zero Rated Sale');
+
+														$vatTypeUSD = array(
+																'Vat Exempt' => 'Vat Exempt',
+																'Zero Rated Sale' => 'Zero Rated Sale');
+
+														echo $this->Form->input('QuotationItemDetail.0.vat_status', array( 
+							                                'options' => array($vatType),  
+							                                'label' => false,
+							                                'class' => 'form-control for-php required select-vat-status',
+							                                'empty' => '---Select Vat Type---'
+							                                 )); 
+
+														echo $this->Form->input('QuotationItemDetail.0.vat_status', array( 
+							                                'options' => array($vatTypeUSD),  
+							                                'label' => false,
+							                                'empty' => '---Select Vat Type---',
+							                                'class' => 'form-control required for-usd'
+							                                 ));
+
+						                            ?>
+													
+												</div>
+
+												<div class="col-lg-4 vat-option" style="display:none;">
 													<?php 
 			                                            echo $this->Form->input('QuotationItemDetail.0.vat_price', array(
                             								'class' => 'form-control item_type vatIn vatprice',
@@ -257,17 +285,17 @@
 												</div>
 											</div>
 												
-											<div class="form-group">
+											<div class="form-group vat-option" style="display:none;">
 												<label class="col-lg-2 control-label"></label>
 												<div class="col-lg-8">
 
 													<input id="checkbox-1" class="checkEx vat-exclusive" type="checkbox" data-section='quotationItemDetail' name="[QuotationItemDetail][0][unit_price]"rel=".12" name ="togglecheckboxtext"><label>
-													<font color="gray"> Check to enable VAT Price   </font></label>
+													<font color="gray">&nbsp;Check to enable VAT Price   </font></label>
 
 
-													&nbsp &nbsp
+													&nbsp; &nbsp;
 													
-													<input id="checkbox-1" class="checkvat checkIn checkbox-nice vat-price" type="checkbox" data-section='quotationItemDetail' name="[QuotationItemDetail][0][vat_price]" rel=".12"><label><font color="gray"> Click to Compute the Unit Price/VAT Exclusive</font></label>
+													<input id="checkbox-1" class="checkvat checkIn checkbox-nice vat-price" type="checkbox" data-section='quotationItemDetail' name="[QuotationItemDetail][0][vat_price]" rel=".12"><label><font color="gray">&nbsp; Click to Compute the Unit Price/VAT Exclusive</font></label>
 														
 												</div>
 											</div>
@@ -444,17 +472,17 @@
 			<?php echo $this->Form->end(); ?>
 		</div>
 	</div>
-
+	
 	<script>
 		
-	jQuery(document).ready(function($){
-		$("#QuotationCreateForm").validate();
-		//datepicker
-		$('.datepick').datepicker({
-			format: 'yyyy-mm-dd'
+		jQuery(document).ready(function($){
+			$("#QuotationCreateForm").validate();
+			//datepicker
+			$('.datepick').datepicker({
+				format: 'yyyy-mm-dd'
+			});
+		
 		});
-	
-	});
 
 	 </script>
 		

@@ -174,7 +174,7 @@ $active_tab = 'sss_table';
                       </td>
                         
                       <td class="text-center">
-                        <?php echo number_format($deduction['Deduction']['paid_amount'],2); ?>   
+                        <?php echo !empty($deduction['Deduction']['paid_amount']) ? number_format($deduction['Deduction']['paid_amount'],2) : 0; ?>   
                       </td>
 
                         <td class="text-center">

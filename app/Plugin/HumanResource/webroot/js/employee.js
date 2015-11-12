@@ -1,5 +1,5 @@
 
-function ajaxCallSearchEmployee(DepartmentId,thisStatus,inputSearch){
+function ajaxCallSearchEmployee(DepartmentId,thisStatus,inputSearch,profile){
 
     $container =  $('.append-table-department');
 
@@ -8,7 +8,7 @@ function ajaxCallSearchEmployee(DepartmentId,thisStatus,inputSearch){
 
     $.ajax({
         type: "GET",
-        url: serverPath + "human_resource/employees/search_by_department/"+DepartmentId+"/"+thisStatus+"/"+inputSearch,
+        url: serverPath + "human_resource/employees/search_by_department/"+DepartmentId+"/"+thisStatus+"/"+inputSearch+'/'+profile,
         dataType: "html",
         success: function(data) {
            
@@ -167,15 +167,26 @@ function searchEmployee() {
     if (!status) {
         status = 0;
     };
+
+         var profile = $('#profile option:selected').val();
+    if (!profile) {
+        profile ='';
+    };
+
    
     var inputSearch = $('.searchEmployee').val();
+      if (!inputSearch) {
+        inputSearch =0;
+    };
+
+
     $('.searchHidden').val(inputSearch);
 
     $('.default-table').hide();
     $('.append-table-department').show();
 
     //ajax function to search
-    ajaxCallSearchEmployee(DepartmentId,status,inputSearch);
+    ajaxCallSearchEmployee(DepartmentId,status,inputSearch,profile);
 }
 
 
@@ -307,9 +318,16 @@ $('body').on('change','.select-department-view',function(e){
     if (!status) {
         status = 0;
     };
+       var profile = $('#profile option:selected').val();
+    if (!profile) {
+        profile ='';
+    };
 
     var inputSearch = $('.searchEmployee').val();
-    
+        if (!inputSearch) {
+        inputSearch =0;
+        }
+
     var thisDepartmentId = $(this).val();
 
     if (!thisDepartmentId) {
@@ -321,8 +339,8 @@ $('body').on('change','.select-department-view',function(e){
     $('.default-table').hide();
     $('.append-table-department').show();
 
-    //ajax function to search
-    ajaxCallSearchEmployee(thisDepartmentId,status,inputSearch);
+    //ajax function to search 
+    ajaxCallSearchEmployee(thisDepartmentId,status,inputSearch,profile);
 
 });
 
@@ -333,8 +351,15 @@ $('body').on('change','.select-status-view',function(e){
     if (!DepartmentId) {
         DepartmentId = 0;
     };
+     var profile = $('#profile option:selected').val();
+    if (!profile) {
+        profile ='';
+    };
     
     var inputSearch = $('.searchEmployee').val();
+     if (!inputSearch) {
+        inputSearch =0;
+    };
 
     var thisStatus = $(this).val();
     
@@ -348,7 +373,39 @@ $('body').on('change','.select-status-view',function(e){
     $('.append-table-department').show();
 
     //ajax function to search
-    ajaxCallSearchEmployee(DepartmentId,thisStatus,inputSearch);
+    ajaxCallSearchEmployee(DepartmentId,thisStatus,inputSearch,profile);
+   
+});
+
+$('body').on('change','.select-profile-view',function(e){
+
+    //some filter
+    var DepartmentId = $('.select-department-view option:selected').val();
+    if (!DepartmentId) {
+        DepartmentId = 0;
+    };
+    
+    var profile = $('#profile').val();
+
+    var inputSearch = $('.searchEmployee').val();
+
+    if (!inputSearch) {
+        inputSearch = 0;
+    };
+
+    var thisStatus =$('.select-status-view').val();
+    
+     if (!thisStatus) {
+        thisStatus = 0;
+    };
+
+    $('.profileHidden').val(profile);
+
+    $('.default-table').hide();
+    $('.append-table-department').show();
+
+    //ajax function to search
+    ajaxCallSearchEmployee(DepartmentId,thisStatus,inputSearch,profile);
    
 });
 

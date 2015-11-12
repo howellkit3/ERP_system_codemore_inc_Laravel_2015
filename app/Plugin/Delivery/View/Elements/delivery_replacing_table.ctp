@@ -22,8 +22,8 @@ $totalremaining = 0;
 
                         <td class="">
               
-                           <?php echo ucwords($deliveryDataList['DeliveryDetail']['location']); ?>    
-                                
+                          <?php echo substr($deliveryDataList['DeliveryDetail']['location'],0,25);  ?> ..
+
                         </td>
 
                         <td class="">
@@ -74,7 +74,6 @@ $totalremaining = 0;
 
                         <td>
 
-
                               <?php 
 
                               $dr_uuid_holder = $deliveryDataList['Delivery']['dr_uuid'];
@@ -82,29 +81,18 @@ $totalremaining = 0;
                               $tr_type_holder = null;
                               $dr_holder = null;
 
-                             foreach ($DeliveryReceiptData as $key) {
+                             // foreach ($DeliveryReceiptData as $key) {
 
-                                 if($key['DeliveryReceipt']['dr_uuid'] == $dr_uuid_holder){
+                             //     if($key['DeliveryReceipt']['dr_uuid'] == $dr_uuid_holder){
 
-                                  if($key['DeliveryReceipt']['type'] == 'replacing'){
+                             //      if($key['DeliveryReceipt']['type'] == 'replacing'){
 
-                                    $dr_type_holder = 'replacing';
+                             //        $dr_type_holder = 'replacing';
 
-                                    }
-                                  }
+                             //        }
+                             //      }
 
-                                  // if($key['DeliveryReceipt']['dr_uuid'] == $deliveryDataList['Delivery']['dr_uuid']){
-
-                                  //       $dr_holder = 'matched';
-
-                                  //       break;
-
-                                  //     }else{
-
-                                  //       $dr_holder = 'not matched';
-
-                                  // } 
-                              }  
+                             //  }  
 
                               foreach ($TransmittalData as $key) {
 
@@ -133,30 +121,30 @@ $totalremaining = 0;
 
 
 
-                              if(!empty($dr_type_holder)){
+                             // if(!empty($dr_type_holder)){
 
-                                echo $this->Html->link('<span class="fa-stack">
-                                    <i class="fa fa-square fa-stack-2x"></i>
-                                    <i class="fa  fa-ticket fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px">  D.R.</font></span>
-                                    </span> ', array('controller' => 'deliveries', 'action' => 'delivery_receipt',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid']),array('class' =>' table-link not-active','escape' => false,'title'=>'Print Delivery Receipt'));
-                              }else{
+                              //   echo $this->Html->link('<span class="fa-stack">
+                              //       <i class="fa fa-square fa-stack-2x"></i>
+                              //       <i class="fa  fa-ticket fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px">  D.R.</font></span>
+                              //       </span> ', array('controller' => 'deliveries', 'action' => 'delivery_receipt',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid']),array('class' =>' table-link not-active','escape' => false,'title'=>'Print Delivery Receipt'));
+                              // }else{
 
                                 echo $this->Html->link('<span class="fa-stack">
                                     <i class="fa fa-square fa-stack-2x"></i>
                                     <i class="fa  fa-ticket fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px">  D.R.</font></span>
                                     </span> ', array('controller' => 'deliveries', 'action' => 'delivery_receipt',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid']),array('class' =>' table-link ','escape' => false,'title'=>'Print Delivery Receipt'));
 
-                              }
+                             // }
 
                               
-                              if(!empty($tr_type_holder)){
+                             if(!empty($tr_type_holder)){
                               
                                 echo $this->Html->link('<span class="fa-stack">
                                     <i class="fa fa-square fa-stack-2x"></i>
                                     <i class="fa  fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> T.F.</font></span>
                                     </span> ', array('controller' => 'deliveries', 'action' => 'delivery_transmittal',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid']),array('class' =>' table-link ','escape' => false,'title'=>'Print Transmittal Receipt'));
 
-                              }else{
+                             }else{
 
                                 echo $this->Html->link('<span class="fa-stack">
                                     <i class="fa fa-square fa-stack-2x"></i>
@@ -164,7 +152,7 @@ $totalremaining = 0;
                                     </span> ', array('controller' => 'deliveries', 'action' => 'delivery_transmittal',$deliveryDataList['Delivery']['dr_uuid'],$deliveryDataList['Delivery']['schedule_uuid']),array('class' =>' table-link','escape' => false,'title'=>'Print Transmittal Receipt'));
 
                               } 
-                              //pr($dr_holder);
+                              
                               if($dr_holder == 'matched'){ ?>
                       
                                <a data-toggle="modal" href="#myModalReturn<?php echo $deliveryDataList['DeliveryDetail']['id'] ?>" class="table-link "><i class="fa fa-lg "></i><span class="fa-stack">

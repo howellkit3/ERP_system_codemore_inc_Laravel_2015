@@ -91,7 +91,6 @@
                                            <?php foreach ($payrolls as $key => $payroll): ?>
                                                     
                                                     <tr>
-                                                       
                                                         <td class="">
                                                            <?php echo !empty($payroll['Payroll']['date']) ? date('Y/m/d', strtotime($payroll['Payroll']['date']))  : ''; ?>
                                                         </td>
@@ -128,7 +127,7 @@
                                                         'title'=>'View Amorization'
                                                         ));
                                                         
-                                                        if($payroll['Payroll']['status'] == 'pending') {
+                                                        if ( in_array($payroll['Payroll']['status'],array('2','pending'))) {
 
                                                           echo $this->Html->link('<span class="fa-stack">
                                                             <i class="fa fa-square fa-stack-2x"></i>
@@ -137,6 +136,17 @@
                                                               'action' => 'payroll_edit',$payroll['Payroll']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
 
                                                           }
+
+                                                          echo $this->Html->link('<span class="fa-stack">
+                                                            <i class="fa fa-square fa-stack-2x"></i>
+                                                            <i class="fa fa-trash fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
+                                                            </span> ', array('controller' => 'salaries', 
+                                                              'action' => 'payroll_delete',$payroll['Payroll']['id']),
+                                                            array(
+                                                              'class' =>' table-link',
+                                                              'escape' => false,'title'=>'Edit Information',
+                                                              'confirm' => 'Are you sure you want to delete this Payroll? ',
+                                                              ));
 
                                                         ?>
                                                         </td>

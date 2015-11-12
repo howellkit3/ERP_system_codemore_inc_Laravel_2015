@@ -13,6 +13,10 @@
 /app/webroot/css/font-awesome/
 /app/Vendor/dompdf/fonts/*
 /app/webroot/salaries/files/*
+/app/webroot/img/uploads/*
+/app/Vendor/dompdf/lib/fonts/*
+
+/app/Vendor/fpdf/*
 *.mo
 
 # IDE and editor specific files #
@@ -30,3 +34,4 @@
 Icon?
 ehthumbs.db
 Thumbs.db
+app/Vendor/dompdf/lib/fonts/Helvetica-Oblique.afm.php

@@ -12,6 +12,6 @@ class WareHouse extends AppModel {
 
     public $name = 'WareHouse';
 
- 
+ 	
 
 }

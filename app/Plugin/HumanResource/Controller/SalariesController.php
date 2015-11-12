@@ -26,6 +26,7 @@ class SalariesController  extends HumanResourceAppController {
 	public function settings(){
 
 	}
+
 	public function employee_settings($id = null) {
 
 		$this->loadModel('HumanResource.Employee');
@@ -398,7 +399,8 @@ class SalariesController  extends HumanResourceAppController {
 
 			$salaries = $this->SalaryComputation->calculateBenifits($employees,$payScheds,$customDate,$updateDatabase);
 
-		//	pr($salaries); exit();
+			//pr($salaries); exit();
+			
 			//save for salary report
 			// if (!empty($salaries) && $updateDatabase) {
 
@@ -426,7 +428,15 @@ class SalariesController  extends HumanResourceAppController {
 				$type = $query['type'];
 			}
 
+
+			pr($type);
+			exit();
+
 			switch ($type) {
+
+			case 'word' :
+				$this->render('Salaries/payslip/payslip');
+			break;	
 
 			case 'payslip':
 			
@@ -447,24 +457,43 @@ class SalariesController  extends HumanResourceAppController {
 		        $dompdf = new DOMPDF();
 		        $dompdf->set_paper("A5",'portrait');
 		        $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
-		        $dompdf->render();
+		        // $dompdf->render();
 		        $canvas = $dompdf->get_canvas();
 		        $font = Font_Metrics::get_font("helvetica", "bold");
 		        $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
 
-		        $output = $dompdf->output();
-		        $random = rand(0, 1000000) . '-' . time();
+		       // $output = $dompdf->output();
+		       //  $random = rand(0, 1000000) . '-' . time();
 
-		        if (empty($filename)) {
-		        	$filename = 'payslip-record'.time();
-		        }
-		      	$filePath = $filename.'.pdf';
+		       //  if (empty($filename)) {
+		       //  	$filename = 'payslip-record'.time();
+		       //  }
+		      	// $filePath = $filename.'.pdf';
 
-		        $file_to_save = WWW_ROOT .DS. $filePath;
+		       //  $file_to_save = WWW_ROOT .DS. $filePath;
 		        	
-		        if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+		       //  if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
 		        		
-		        		unlink($file_to_save);
+		       //  		unlink($file_to_save);
+		       //  }
+				// Get the style section out of the HTML 
+				$styles = $doc->getElementsByTagName('style'); 
+				$style = $styles->item(0); 
+
+				// Get all the divs with class page (separate pages) 
+				$xpath = new DOMXPath($dompdf); 
+				$pages = $xpath->query('//div[contains(@class, "page")]'); 
+
+				// insert each page individually 
+				foreach($pages as $page) { 
+				    $html = $doc->saveXML($style) . $doc->saveXML($page); 
+				    $dompdf->insert_html($html); 
+				} 
+
+				
+				if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+		        		
+		        	//	unlink($file_to_save);
 		        }
 
                 break; 	
@@ -489,7 +518,7 @@ class SalariesController  extends HumanResourceAppController {
 
                 break;
             
-        }
+        	}
 
 		}
 
@@ -530,6 +559,24 @@ class SalariesController  extends HumanResourceAppController {
 		$this->render('/Salaries/philhealth_table');
 
 	}
+
+	public function pagibig_table() {
+
+	 	$this->loadModel('Payroll.PagibigRange');
+
+	    $conditions = array();
+
+	    $ranges = $this->PagibigRange->find('all',array(
+	        'conditions' => $conditions,
+	        'order' => array('PagibigRange.range_from ASC')
+	    ));
+
+	    $this->set(compact('ranges'));
+
+		$this->render('/Salaries/pagibig_table');
+
+	}
+
 	public function adjustments() {
 
 
@@ -1574,13 +1621,19 @@ class SalariesController  extends HumanResourceAppController {
 
 	public function payroll_create() {
 
+
+		$this->loadModel('HumanResource.Department');
+
 		$this->loadModel('Payroll.Payroll');
 
-		$date = date('Y-m-d');		
+		$date = date('Y-m-d');	
 
-		$this->set(compact('date'));	
+		$departments = $this->Department->find('list',array('fields' => array('id','notes')));
+
+		$this->set(compact('date','departments'));	
 
 		$auth = $this->Session->read('Auth.User');
+
 
 		if ($this->request->is('post')) {
 
@@ -1593,8 +1646,10 @@ class SalariesController  extends HumanResourceAppController {
 				//make data save in file
                 $this->Session->setFlash(__('Saving data completed.'),'success');
 
+                $departmentId = $this->request->data['Payroll']['department'];
+
                 $this->redirect(
-                    array('controller' => 'salaries', 'action' => 'employee_select',$this->Payroll->id)
+                    array('controller' => 'salaries', 'action' => 'employee_select',$this->Payroll->id, $departmentId )
                 );
 
             } else {
@@ -1605,19 +1660,91 @@ class SalariesController  extends HumanResourceAppController {
 		}	
 	}
 
+
+	public function payroll_delete($id) {
+
+	
+		if (!empty($id)) {
+
+			$this->loadModel('Payroll.Payroll');
+
+			$this->loadModel('Payroll.SalaryReport');
+
+			$payroll = $this->Payroll->read(null,$id);
+
+
+			//check employees
+
+			$employeeId = json_decode($payroll['Payroll']['employeeIds']);
+
+			if ($this->Payroll->delete($id)) {
+
+				//delete salary report
+				$this->SalaryReport->deleteAll(array(
+				'SalaryReport.from' => $payroll['Payroll']['from'],
+				'SalaryReport.to' => $payroll['Payroll']['to'],
+				'SalaryReport.employee_id' => $employeeId
+			
+			));
+
+				$this->Session->setFlash(__('Payroll data delete successfully.'),'success');
+
+			} else {
+
+				  $this->Session->setFlash(__('There\'s an error deleting data, Please try again'),'error');
+			}
+
+		    $this->redirect(
+                array('controller' => 'salaries', 'action' => 'payroll')
+            );
+
+		}
+
+	}
+
 	public function process_payroll_save() {
 		
 		if (!empty($this->request->data)) {
 
+			$this->loadModel('Payroll.Payroll');
+
+
+			$this->loadModel('Payroll.Loan');
+
 			$data = $this->request->data;
 			
-			if( $this->process_payroll($data['Payroll']['payroll_id'],$data['Payroll']['emp'])) {
+			/* if( $this->process_payroll($data['Payroll']['payroll_id'],$data['Payroll']['emp'])) {
 
-			}
+			} */
+
+			$payrollData = array();
+
+			$payroll = $this->Payroll->findById($data['Payroll']['payroll_id']);
+
+			$payrollData['Payroll']['id'] = $data['Payroll']['payroll_id'];
+
+			$payrollData['Payroll']['employeeIds'] = json_encode($data['Payroll']['emp']);
+
+			$payrollData['Payroll']['status'] = 3;
+
+			$this->Payroll->save($payrollData);
+
+			$deductions = $this->Loan->find('all',array('fields' => array('id','name','description')));
+
+			//exit();
+
+			$salariesList = $this->_checkPayroll($payroll,false,$data['Payroll']['emp']);
+
+			$this->set(compact('payroll','salariesList','deductions'));
+
+			$this->render('Salaries/payroll_view');
+				
+
+			//	private function _checkPayroll($payroll = null , $update = false , $empConditions = array() ){
 		}
 	}
 
-	public function employee_select($id = null) {
+	public function employee_select($id = null,$departmentId = null) {
 
 		$this->loadModel('Payroll.Payroll');
 
@@ -1625,9 +1752,20 @@ class SalariesController  extends HumanResourceAppController {
 
 		if (!empty($id)) {
 
+	
 			$payroll = $this->Payroll->findById($id);
 
+			//find employee by date
+			//$employees = $this->Payroll->checkEmployee($payroll);
+
 			$conditions = array();
+
+			if (!empty($departmentId)) {
+
+				$conditions = array_merge($conditions,array(
+						'Employee.department_id' => $departmentId
+				));
+			}
 
 			$employees = $this->Employee->find('all',array(
 				'conditions' => $conditions,
@@ -1715,29 +1853,43 @@ class SalariesController  extends HumanResourceAppController {
 				$data =  file_get_contents("salaries/files/payroll-".$id.".txt");
 
 				$salaries = $this->Payroll->objectToArray(json_decode($data)); 
+
 			}
+
 			
-			$deductions = $this->Loan->find('list',array('fields' => array('id','name')));
+			$deductions = $this->Loan->find('all',array('fields' => array('id','name','description')));
+
+			$salariesList = $salaries;
+
+
+			// $salarySplit = array_chunk($salaries , 10);
+
+			// if (!empty($this->params['named']['page'])) {
+
+			// 	$salariesList = $salarySplit[$this->params['named']['page']];
+
+			// } else {
+
+			// 	$salariesList = $salarySplit[0];
+			// }
+
+			} else {
+
+				$empIds = array();
+
+				if (!empty($payroll['Payroll']['employeeIds'])) {
+
+					$empIds = (array)json_decode($payroll['Payroll']['employeeIds']);
+
+				}	
+
 		
-			$salarySplit = array_chunk($salaries , 10);
-
-			if (!empty($this->params['named']['page'])) {
-
-				$salariesList = $salarySplit[$this->params['named']['page']];
-
-			} else {
-
-				$salariesList = $salarySplit[0];
-			}
-
-			} else {
-				
 				switch ($payroll['Payroll']['type']) {
 					case 'normal':
-						$salariesList = $this->_checkPayroll($payroll);
-					break;
+						$salariesList = $this->_checkPayroll($payroll,false,$empIds);
+
 					case '13_month':
-						$salariesList = $this->_checkThirteenPayroll($payroll);
+						$salariesList = $this->_checkThirteenPayroll($payroll,false,$empIds);
 
 					break;
 										
@@ -1752,7 +1904,7 @@ class SalariesController  extends HumanResourceAppController {
 
 		switch ($payroll['Payroll']['type']) {
 					case 'normal':
-						
+						$this->render('Salaries/payroll_view');
 					break;
 					case '13_month':
 					
@@ -1778,6 +1930,10 @@ class SalariesController  extends HumanResourceAppController {
 
 			$payroll = $this->Payroll->findById($id);
 
+			if (!empty($payroll['Payroll']['employeeIds'])) {
+
+				$employeeId = (array)json_decode($payroll['Payroll']['employeeIds']);
+			}
 
 			if ($payroll['Payroll']['type'] == '13_month') {
 
@@ -1787,7 +1943,6 @@ class SalariesController  extends HumanResourceAppController {
 				
 				$salaries = $this->_checkPayroll($payroll,null,$employeeId);
 			}
-
 
 			if ($salaries) {
 				//save to salary report data
@@ -1867,8 +2022,20 @@ class SalariesController  extends HumanResourceAppController {
 		if (!empty($id)) {
 
             $this->loadModel('Payroll.Payroll');
-           
+           	
+           	//find payroll
+           	$payroll = $this->Payroll->read(null,$id);
+
+
             if ($this->Payroll->delete($id)) {
+
+            	//delete salary report
+				$this->SalaryReport->deleteAll(array(
+				'SalaryReport.from' => $payroll['Payroll']['from'],
+				'SalaryReport.to' => $payroll['Payroll']['to'],
+				'SalaryReport.employee_id' => $employeeId
+			
+				));
 
                 $this->Session->setFlash(
                     __('Payroll have been rejected.', h($id)), 'success'
@@ -1889,6 +2056,8 @@ class SalariesController  extends HumanResourceAppController {
 		
 		$salaries = '';
 
+		ini_set('max_execution_time', 300);
+
 		if (!empty($payroll)) {
 
 			$this->loadModel('HumanResource.Attendance');
@@ -1902,6 +2071,8 @@ class SalariesController  extends HumanResourceAppController {
 			$this->loadModel('HumanResource.WorkShift');
 			$this->loadModel('HumanResource.WorkShiftBreak');
 			$this->loadModel('HumanResource.BreakTime');
+
+			$this->loadModel('HumanResource.Overtime');
 			$this->loadModel('HumanResource.OvertimeExcess');
 
 			$this->Employee->bind(array('Salary','GovernmentRecord','Department','Position','EmployeeAdditionalInformation'));	
@@ -1914,9 +2085,35 @@ class SalariesController  extends HumanResourceAppController {
 			$employees = $this->Employee->find('all',array(
 								'conditions' => $empConditions,
 								'order' => array('Employee.last_name ASC'),
-								//'fields' => array('')
+								'fields' => array(
+									'Employee.id',
+									'Employee.code',
+									'Employee.first_name',
+									'Employee.middle_name',
+									'Employee.last_name',
+									'Employee.suffix',
+									'Employee.full_name',
+									'Position.name',
+									'Position.id',
+									'Department.id',
+									'Department.name',
+									'Department.description',
+									'Salary.id',
+									'Salary.wage',
+									'Salary.tax_status',
+									'Salary.basic_pay',
+									'Salary.basic_pay_per_month',
+									'Salary.ctpa',
+									'Salary.sea',
+									'Salary.allowances',
+									'Salary.employee_salary_type',
+									'Salary.tax_status',
+									'EmployeeAdditionalInformation.id',
+									'EmployeeAdditionalInformation.status'
+									),
 								'group' => array('Employee.id')
 							));
+			
 
 			$customDate['start'] = $payroll['Payroll']['from'];
 
@@ -1938,7 +2135,7 @@ class SalariesController  extends HumanResourceAppController {
 					foreach ($employees as $key => $emp) {
 							
 							$conditions =  array_merge($conditions,array('Attendance.employee_id' => $emp['Employee']['id']));
-							$this->Attendance->bindWorkshift(); 
+							$this->Attendance->bindMyWorkshift(); 
 							$employees[$key]['Attendance'] = $this->Attendance->computeAttendance($conditions);
 							
 					}
@@ -1982,6 +2179,7 @@ class SalariesController  extends HumanResourceAppController {
 
 	public function export_salaries($payroll_id = null, $type = 'excel') {
 
+		Configure::write('debug',2);
 
 		$query = $this->request->query;
 
@@ -1996,6 +2194,7 @@ class SalariesController  extends HumanResourceAppController {
 			}
 
 		}
+
 		if (!empty($payroll_id)) {
 
 			$this->loadModel('Payroll.Payroll');
@@ -2021,13 +2220,13 @@ class SalariesController  extends HumanResourceAppController {
 			if ($payroll['Payroll']['type'] == '13_month') {
 
 				$data = file_get_contents("salaries/files/payroll-thirteen-month-".$payroll_id.".txt");
-			} else {
 
+			} else {
 
 				$data = file_get_contents("salaries/files/payroll-".$payroll_id.".txt");
 			}
 
-			$salaries = $this->Payroll->objectToArray(json_decode($data)); 
+			$salaries = $this->Payroll->objectToArray(json_decode($data));
 
 			$this->Employee->bindPrimary();
 
@@ -2036,12 +2235,15 @@ class SalariesController  extends HumanResourceAppController {
 				$emp_conditions = array();
 
 				if (!empty($query['departments'])) {
+
 					$emp_conditions = array_merge($emp_conditions, array(
 							'Employee.department_id' => $query['departments']
 					));
+
 				}
 
 				if (!empty($query['employee_type'])) {
+					
 					$emp_conditions = array_merge($emp_conditions, array(
 							'Salary.employee_salary_type' => $query['employee_type']
 					));
@@ -2066,10 +2268,12 @@ class SalariesController  extends HumanResourceAppController {
 				}
 
 				$filterEmp = $this->Employee->filter($emp_conditions);
+
 				$salaries = $this->Payroll->filterData($salaries,$filterEmp);
 			}
+		
 
-			$deductions = $this->Loan->find('list',array('fields' => array('id','name')));
+			$deductions = $this->Loan->find('all',array('fields' => array('id','name','description')));
 			
 			ini_set('max_execution_time', 3600);
 			ini_set('memory_input_time', 1024);
@@ -2077,28 +2281,46 @@ class SalariesController  extends HumanResourceAppController {
 			ini_set('memory_limit', '1024M');
 
 			$this->set(compact('salaries','payroll','payrollDate','deductions'));
+			
+			//$type = 'payslip';
+
+			// pr($salaries);
+			// exit();
 
 			switch ($type) {
 
+				case 'word' :
+				$this->render('Salaries/payslip/payslip');
+				break;	
+
 				case 'payslip':
 
+				//$this->render('Salaries/xls/payslip');
+				
 				$view = new View(null, false);
 
 				$view->set(compact('salaries','payroll','payrollDate','deductions'));
 
-				$view->viewPath = 'Salaries'.DS.'pdf';	
-
-				$view->viewPath = 'Salaries'.DS.'pdf';	
+				$view->viewPath = 'Salaries'.DS.'pdf';
 		   	
 		        $output = $view->render('payslip', false);
 
 		        $dompdf = new DOMPDF();
-		        $dompdf->set_paper("A5", 'portrait');
+
+		       	//$dompdf->set_paper("A4", 'portrait');
+
+				$customPaper = array(0,0,235,370);
+				$dompdf->set_paper($customPaper,'portrait');
+		        
 		        $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
+		        
 		        $dompdf->render();
+		        
 		        $canvas = $dompdf->get_canvas();
+		        
 		        $font = Font_Metrics::get_font("helvetica", "bold");
-		        $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
+		        
+		       // $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
 
 		        $output = $dompdf->output();
 		        $random = rand(0, 1000000) . '-' . time();
@@ -2106,17 +2328,19 @@ class SalariesController  extends HumanResourceAppController {
 		        if (empty($filename)) {
 		        	$filename = 'payslip-record'.time();
 		        }
+
 		      	$filePath = $filename.'.pdf';
 
 		        $file_to_save = WWW_ROOT .DS. $filePath;
 		        	
-		        if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
+		  //       if ($dompdf->stream( $file_to_save, array( 'Attachment'=>0 ) )) {
 		        		
-		        		unlink($file_to_save);
-		        }
+		  //       		unlink($file_to_save);
+		  //       }
 
-				$dompdf->render();
-				 if ($dompdf->stream('payslip-'.$payroll['Payroll']['id'].'-'.str_replace(' ','-',strtolower($payrollDate)).'-'.time().'.pdf')){
+				// $dompdf->render();
+
+				if ($dompdf->stream('payslip-'.$payroll['Payroll']['id'].'-'.str_replace(' ','-',strtolower($payrollDate)).'-'.time().'.pdf')){
 
 				 	unlink($file_to_save);
 				}
@@ -2291,5 +2515,149 @@ class SalariesController  extends HumanResourceAppController {
 
 
 	return $employees;
+	}
+
+
+	public function export_all_attendance() {
+
+
+		$salaries = '';
+
+		if (!empty($this->request->data)) {
+
+			$data = $this->request->data;
+
+			$month = date('m');
+
+			if (!empty($data['Attendance']['month'])) {
+
+				$month = $data['Attendance']['month'];
+			}
+
+
+			$monthDate = date('Y').'-'.$month.'-';
+
+			if ($data['Payroll']['date'] == '1:15') {
+
+
+				$date = array(
+					'date1' => date($monthDate.'01'),
+					'date2' => date($monthDate.'15')
+					);
+			} elseif ($data['Payroll']['date'] == '16:31') {
+
+				$date = array(
+					'date1' => date($monthDate.'16'),
+					'date2' => date($monthDate.'t')
+					);
+
+			}
+
+	
+			$this->loadModel('HumanResource.Attendance');
+			$this->loadModel('HumanResource.Employee');
+			$this->loadModel('HumanResource.EmployeeAdditionalInformation');
+			$this->loadModel('HumanResource.Department');
+			$this->loadModel('HumanResource.Position');
+			$this->loadModel('HumanResource.Salary');
+			$this->loadModel('HumanResource.GovernmentRecord');
+			$this->loadModel('HumanResource.WorkSchedule');
+			$this->loadModel('HumanResource.WorkShift');
+			$this->loadModel('HumanResource.WorkShiftBreak');
+			$this->loadModel('HumanResource.BreakTime');
+
+			$this->loadModel('HumanResource.Overtime');
+			$this->loadModel('HumanResource.OvertimeExcess');
+			
+			$empConditions = array('Employee.status NOT' => '3');
+
+			$this->Employee->bind(array('Salary','GovernmentRecord','Department','Position','EmployeeAdditionalInformation'));	
+
+			// if (!empty($empConditions)) {
+
+			// 	$empConditions = array_merge($empConditions,array('EmployeeAdditionalInformation.id' => $empConditions));
+			// }
+
+			if (!empty($this->request->data['Attendance']['department_id'])) {
+
+				$empConditions = array_merge($empConditions,array(
+						'Employee.department_id' => $this->request->data['Attendance']['department_id']
+				));
+			}
+
+			$employees = $this->Employee->find('all',array(
+								'conditions' => $empConditions,
+								'order' => array('Employee.last_name ASC'),
+								//'fields' => array('Employee.full_name','Employee.id'),	
+								'group' => array('Employee.id')
+							));
+
+
+			$customDate['start'] = $date['date1'];
+
+			$customDate['end'] = $date['date2'];
+
+			$days = explode('-', $customDate['start']);
+
+			$payScheds = ( $days[2] == '16' ) ? 'second' : 'first';
+
+
+			$conditions = array();
+
+			$conditions = array_merge($conditions,
+
+				array('date(Attendance.date) BETWEEN ? AND ?' => array($customDate['start'],$customDate['end'])) );
+
+			if (!empty($employees)) {
+
+					foreach ($employees as $key => $emp) {
+							
+							$conditions =  array_merge($conditions,array('Attendance.employee_id' => $emp['Employee']['id']));
+							$this->Attendance->bindMyWorkshift(); 
+							$employees[$key]['Attendance'] = $this->Attendance->computeAttendance($conditions);
+					}
+					//$this->Components->load('HumanResource.SalaryComputation');
+					$this->loadModel('HumanResource.SalaryReport');
+					$this->loadModel('HumanResource.Holiday');
+					$this->loadModel('HumanResource.Overtime');
+					$this->loadModel('Payroll.Deduction');
+					$this->loadModel('Payroll.Amortization');			
+					$this->loadModel('Payroll.OvertimeRate');
+					$this->loadModel('Payroll.Contribution');
+					$this->loadModel('Payroll.Loan');
+
+					$this->loadModel('Payroll.Adjustment');	
+
+					//taxes tables		
+					$this->loadModel('Payroll.Tax');
+					$this->loadModel('Payroll.TaxDeduction');
+					$this->loadModel('Payroll.Wage');
+					$this->loadModel('Payroll.Setting');
+
+					//$OvertimeRate = ClassRegistry::init('Amortization')->find('all');
+					$updateDatabase = !empty($update) && $update == true ? true : false;
+
+					$payrollSettings = $this->Setting->find('first');
+
+					$salaries = $this->SalaryComputation->calculateBenifits($employees,$payScheds,$customDate,$updateDatabase,$payrollSettings);
+
+			}
+			else {
+
+					// $this->Session->setFlash(__('There\'s an error Processing Payroll'),'error');
+					// $this->redirect(array('controller' => 'salaries','action' => 'payroll'));
+			}
+
+
+
+			$this->set(compact('salaries'));
+
+			$this->render('Attendances/xls/attendance_report_user');
+
+			exit();
+
+			
+	}
+
 	}
 }

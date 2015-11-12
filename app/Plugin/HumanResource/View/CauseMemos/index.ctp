@@ -122,7 +122,7 @@ echo $this->Html->script(array(
                                         <thead>
                                             <tr>
                                                 <th><a href="#"><span>Name</span></a></th>
-                                                <th class=""><a href="#"><span>Description/span></a></th>
+                                                <th class=""><a href="#"><span>Description</span></a></th>
                                                 <th class=""><a href="#"><span>Created</span></a></th>
                                                 <th class=""><a href="#"><span>Created by</span></a></th>
                                                 <th><a href="#"><span>Actions</span></a></th>

@@ -75,6 +75,8 @@ class QuotationsController extends SalesAppController {
 
         $quotationData = $this->paginate('Quotation');
 
+       // pr($quotationData); exit;
+
 		$this->Company->bind(array('Inquiry'));
 
 		//set to cache in first load
@@ -223,7 +225,7 @@ class QuotationsController extends SalesAppController {
 		if ($this->request->is(array('post','put'))) {
 
             if (!empty($this->request->data)) {
-            	
+            	//pr($this->request->data);exit();
             	if(!empty($this->request->data['IdHolder'])){
             		foreach ($this->request->data['IdHolder'] as $key => $value) {
             			$this->Quotation->QuotationItemDetail->delete($value['id']);
@@ -681,7 +683,7 @@ class QuotationsController extends SalesAppController {
         $dompdf->render();
         $canvas = $dompdf->get_canvas();
         $font = Font_Metrics::get_font("helvetica", "bold");
-        $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
+      //  $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
 
         $output = $dompdf->output();
         $random = rand(0, 1000000) . '-' . time();
@@ -741,7 +743,8 @@ class QuotationsController extends SalesAppController {
 	}
 
 	public function edit($quotationId = null,$companyId = null){
-		
+
+
 		$this->loadModel('User');
 		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
 
@@ -832,34 +835,62 @@ class QuotationsController extends SalesAppController {
 		            
 		            if ($this->request->is(array('post', 'put'))) {
 
-		            	//pr($quotationId); pr($companyId); exit;
-		                $this->Quotation->id = $quotationId;
-		                $this->Quotation->QuotationDetail->quotation_id = $quotationId;
-		                $this->Quotation->QuotationItemDetail->quotation_id = $quotationId;
+		            //	pr($this->request->data); exit;
 
-		                if ($this->Quotation->save($this->request->data)) {
-		                    $this->Quotation->save($this->request->data);
-		              		$this->Quotation->QuotationDetail->save($this->request->data, $userData['User']['id'], $this->id);
-            			
-	
+			                $this->Quotation->id = $quotationId;
+			                $this->Quotation->QuotationDetail->quotation_id = $quotationId;
+			                $this->Quotation->QuotationItemDetail->quotation_id = $quotationId;
+
+		            	if($this->request->data['Quotation']['status'] != 0){
+
+		            		$this->request->data['QuotationDetail']['id'] = " ";
+		            		$this->request->data['Quotation']['created_by'] = $userData['User']['id'];
+		            		$this->request->data['Quotation']['modified_by'] = $userData['User']['id'];
+		            		$this->request->data['QuotationDetail']['created_by'] = $userData['User']['id'];
+		            		$this->request->data['QuotationDetail']['modified_by'] = $userData['User']['id'];
+		            	}
+
+		             //   if ($this->Quotation->save($this->request->data)) {
+
+		                	//pr($this->request->data);exit;
+		                    $quotationIdEdit = $this->Quotation->saveEdit($this->request->data['Quotation'], $userData['User']['id']);
+
+		              		$this->Quotation->QuotationDetail->saveEdit($this->request->data['QuotationDetail'], $userData['User']['id'],$quotationIdEdit);
+            				
 		              		//delete All QuotationDetails
-		              		$this->Quotation->QuotationItemDetail->deleteAll(array(
-		              				'QuotationItemDetail.quotation_id' => $quotationId
-		              		)); 
-		              		
 
-		              		foreach ($this->request->data['QuotationItemDetail'] as $key => $save) {
-		              			$save['id'] ='';
-		              			$save['quotation_id'] = $quotationId;	
-		              			$this->Quotation->QuotationItemDetail->save($save);	
+		              		if($this->request->data['Quotation']['status'] == 0){
+
+			              		$this->Quotation->QuotationItemDetail->deleteAll(array(
+			              				'QuotationItemDetail.quotation_id' => $quotationId
+			              		)); 
+		              		
+			              		foreach ($this->request->data['QuotationItemDetail'] as $key => $save) {
+			              			$save['id'] ='';
+			              			$save['quotation_id'] = $quotationId;	
+			              			$this->Quotation->QuotationItemDetail->save($save);	
+			              		}
+
+			              		$this->Session->setFlash(__('Quotation has been updated.'));
+		                   		return $this->redirect(array('action' => 'view', $quotationId, $companyId));
+
+		              		}else{
+
+		              			$this->Quotation->id = $quotationId;
+
+								$this->Quotation->saveField('status', 2);
+		              		
+			              		foreach ($this->request->data['QuotationItemDetail'] as $key => $save) {
+			              			$save['id'] ='';
+			              			$save['quotation_id'] = $quotationIdEdit;	
+			              			$this->Quotation->QuotationItemDetail->save($save);	
+			              		}
+
+			              		$this->Session->setFlash(__('Quotation has been updated.'));
+		                   		return $this->redirect(array('action' => 'view', $quotationIdEdit, $companyId));
+
 		              		}
-		              		
 
-		            
-            				$this->Session->setFlash(__('Quotation has been updated.'));
-		                    return $this->redirect(array('action' => 'view', $quotationId, $companyId));
-		                }
-		                $this->Session->setFlash(__('Unable to update your post.'));
 		            }
 
 		            if (!$this->request->data) {
@@ -868,7 +899,6 @@ class QuotationsController extends SalesAppController {
 		
 		     }
 		$noPermission = ' ';
-		    //pr($productData); exit;
 		$this->set(compact('noPermission','quotationData','itemDetailData','unitData','currencyData','companyData','customField','itemCategoryData', 'paymentTermData','itemTypeData','productData', 'quotationId', 'company'));
 	}
 
@@ -1295,7 +1325,7 @@ class QuotationsController extends SalesAppController {
 									'group' => 'Quotation.id'
 								)
 		);
-
+		//pr($quotationData); exit;
 		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
 
 		$rolesPermissionData = $this->RolesPermission->find('list', array(

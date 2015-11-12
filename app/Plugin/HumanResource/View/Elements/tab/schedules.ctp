@@ -34,6 +34,22 @@
 									'plugin' => 'human_resource'
 						)); ?>
 					</li>
+
+					<?php if (!empty($userData['User']['in_charge']) && $userData['User']['in_charge'] == 1) : ?>
+
+					<li class="<?php echo ($active_tab == 'work_schedules') ? 'active' : '' ?>" alt="tab-type">
+						<?php echo $this->Html->link('Work Schedules',array(
+									'controller' => 'work_schedules',
+									'action' => 'schedules',
+									'tab' => 'work_schedules',
+									'plugin' => 'human_resource'
+						)); ?>
+					</li>
+
+
+					<?php else : ?>
+
+
 					<li class="<?php echo ($active_tab == 'work_schedules') ? 'active' : '' ?>" alt="tab-type">
 						<?php echo $this->Html->link('Work Schedules',array(
 									'controller' => 'schedules',
@@ -42,4 +58,5 @@
 									'plugin' => 'human_resource'
 						)); ?>
 					</li>
+					<?php endif; ?>	
 </ul>

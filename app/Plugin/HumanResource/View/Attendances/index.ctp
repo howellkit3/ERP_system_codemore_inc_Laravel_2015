@@ -17,6 +17,13 @@ echo $this->Html->script(array(
 
 )); 
 
+$params = $this->request->params;
+// pr($params);
+
+// pr($_SERVER);
+
+
+$page = base64_encode($_SERVER['REQUEST_URI']);
 
 echo $this->element('hr_options');
 
@@ -40,7 +47,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 			                 <div class="form-group pull-left">
 			                 	<div class="input-group">
 	                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-	                                <input placeholder="Date Range" name="data[date]" data="1" type="text" class="form-control myDateRange" >
+	                                <input placeholder="Date Range" name="data[date]" data="1" type="text" class="form-control myDateRange"  value="<?php echo $dateSelected ?>" >
 	                            </div>
 							</div>
 
@@ -48,22 +55,134 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 			                 		 <input placeholder="Search..." class="form-control searchCustomer" value="<?php echo $search ?>" name="data[name]" />
 			                            <i class="fa fa-search search-icon"></i>
 								</div>
+
+
+			                	<div class="form-group pull-left" style="min-width:200px;">
+			                 		<?php echo $this->Form->input('employee_id',array(
+			                 			'type' => 'select',
+			                 			'options' => $employeeList,
+			                 			'class' => 'autocomplete',
+			                 			'label' => false,
+			                 			'id' => 'selectEmployee',
+			                 			'empty' => '--- Select Employee ---',
+			                 			'default' => $empId
+			                 		)); ?>
+			                    </div>
+ 
+
 			                     <div class="form-group pull-left">
 			                    	 <button class="btn btn-success">Go</button> 
 			                     </div>
 
-			                     <a data-toggle="modal" href="#myAttendance" class="btn btn-primary pull-right"><i class="fa fa-share-square-o fa-lg"></i> Export</a>
-			                     	
 			                   	 <?php echo $this->Form->end(); ?>
 
-			                     <div class="form-group pull-left">
+			                     <?php echo $this->Form->create('Attendance',array('controller' => 'attendances','action' => 'export_attendance', 'type'=> 'POST'),array('id' => 'exportAttendance')); ?>
+
+			                      <input type="hidden" name="date" class="hidden_date" value="" />
+
+			                      <input type="hidden"  name="search" class="hidden_search" value="" />
+
+
+
+			                     <!-- <a data-toggle="modal" href="#myAttendance" class="btn btn-primary pull-right"><i class="fa fa-share-square-o fa-lg"></i> Export</a> -->
+			                       <div class="form-group pull-left">
 			                    	 <a data-toggle="modal" class="btn btn-success" href="#timeKeep"> <i class="fa fa-clock-o"></i> Add Attendances </a> 
 			                     </div>
+ 			                      <button class="btn btn-primary pull-left" class="export"><i class="fa fa-share-square-o fa-lg"></i> Export </button>
+
+						 			<?php echo $this->Form->end(); ?>
+			                   	 	
+
+						 	<?php echo $this->Form->create('Attendance',array('controller' => 'attendances','action' => 'get_lates', 'type'=> 'POST'),array('id' => 'exportAttendance')); ?>
+
+						 		 <input type="hidden" name="date" class="hidden_date" value="" />
+
+			                      <input type="hidden"  name="search" class="hidden_search" value="" />
+
+			                      <input type="hidden"  name="lates" class="hidden_late" value="" />
+
+
+			                       <button class="btn btn-primary pull-right" id="exportLate"><i class="fa fa-share-square-o fa-lg"></i>
+			                       	Export Late / Absences </button>
+
+
+			                       	<?php ?>
+			                   
 
 			                   <br><br>
 
 			               </div>
 			            </header>
+	            	<div class="main-box-body clearfix">
+		               <div class="form-group">
+	                                     <div class="col-lg-11">
+	                                    <div class="form-group">
+	                                        <?php echo $this->Form->create('Attendance',array( 
+	                                        	'url' => array('controller' => 'salaries','action' => 'export_all_attendance', 'type'=> 'POST'))); ?>   	
+	                                        <div class="col-lg-12">
+												<div class="form-group col-lg-7">
+
+														<?php echo $this->Form->input('department_id',array(
+															'options' => $departmentList,
+															'class' => 'form-control col-lg-7',
+															'empty' => '---- Select All ----',
+														)); ?>
+
+
+	                                        	</div>
+	                                        	<div class="clearfix"></div>
+	                                           <div class="form-group col-lg-6 pull-left">
+	                                           	 <div class="col-lg-5 pull-left" style="padding:0;margin-right:10px">
+	                                              	<?php
+
+		                                           $month = array(
+		                                           	'01' => 'January',
+		                                           	'02' => 'February',
+		                                           	'03' => 'March',
+		                                           	'04' => 'April',
+		                                           	'05' => 'May',
+		                                           	'06' => 'June',
+		                                           	'07' => 'July',
+		                                           	'08' => 'August',
+		                                           	'09' => 'September',
+		                                           	'10' => 'October',
+		                                           	'11' => 'November',
+		                                           	'12' => 'December'
+		                                           );		
+
+	                                           	 echo $this->Form->input('month',array(
+															'options' => $month,
+															'class' => 'form-control inline-block',
+															'empty' => '---- Select All ----',
+															'label' => false
+														)); ?>
+												</div>	
+	                                         
+
+	                                            <div class="radio inline-block">
+	                                            <input type="radio" checked="checked" value="1:15" data-key="First Half ( 1- 15 )" class="mode_type required" id="optionsRadios1" name="data[Payroll][date]">
+	                                                <label for="optionsRadios1">
+	                                                    First Half ( 1- 15)
+	                                                </label>
+	                                            </div>
+	                                            <div class="radio inline-block ">
+	                                            <input type="radio" class="mode_type required" value="16:31" data-key="Second Half ( 16 - 30 / 31 ) " id="optionsRadios2" name="data[Payroll][date]">
+	                                                <label for="optionsRadios2">
+	                                                    Second Half ( 16 - 30 / 31 )
+	                                                </label>
+	                                            </div>
+	                                            </div>
+	                                           	
+	                                            <button class="btn btn-primary pull-left"><i class="fa fa-share-square-o fa-lg"></i> Export All</button>
+
+	                                        </div>
+
+
+	                                        <?php echo $this->Form->end(); ?>
+	                                     </div>
+	                                </div>      
+	                            </div>
+                        </div>
 
 			          	<div class="main-box-body clearfix">
 			            	<div class="table-responsive">
@@ -79,6 +198,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 											<th><a href="#"><span>In</span></a></th>
 											<th><a href="#"><span>Out</span></a></th>
 											<th><a href="#"><span>OT</span></a></th>
+											<th><a href="#"><span>Time Work</span></a></th>
 											<th><a href="#"><span>Duration</span></a></th>
 											<th><a href="#" class="text-center"><span>Status</span></a></th>
 											<th><a href="#"><span>Remarks</span></a></th>
@@ -94,15 +214,10 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 													<tr class="parent-tr-<?php echo $schedule['Attendance']['id'] ?>">
 														<td> <?php echo $schedule['Employee']['code']; ?></td>
 														<td class="">
-								                          <?php 
-									                        //  if ($schedule['WorkSchedule']['model'] == 'Employee') {
+								                          <?php $name =  $this->CustomText->getFullname($schedule['Employee']);
 
-									                          		echo $this->CustomText->getFullname($schedule['Employee']);
+								                          	echo !empty($name) ? $name : '';
 
-									                        //  } else if ($schedule['WorkSchedule']['model'] == 'Department') {
-
-									                          	//	echo "Department";
-									                        //  }
 									                        ?>
 								                        </td>
 								                        <td class="text-center"> 
@@ -119,32 +234,54 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 								                        </td> -->
 
 								                        <td>
-								                        <?php if (!empty($schedule['WorkShift']['to'])) : ?>
+								                        <?php if (!empty($schedule['MyWorkshift']['to'])) : ?>
 
-								                          <?php echo date('Y/m/d',strtotime($schedule['Attendance']['date'])).' '.date('h:i a',strtotime($schedule['WorkShift']['from'])); ?> 
+								                          <?php echo date('h:i a',strtotime($schedule['MyWorkshift']['from'])); ?> 
 								                          - 
-								                          <?php echo date('Y/m/d',strtotime($schedule['Attendance']['date'])).' '.date('h:i a',strtotime($schedule['WorkShift']['to'])); ?> 
+								                          <?php echo date('h:i a',strtotime($schedule['MyWorkshift']['to'])); ?> 
 								                    	<?php else : ?>
 								                    		<span class="label label-default"> No Sched </span>
 								                        <?php endif; ?>
 								                        </td>
 								                        <td class="text-center time-in"> 
 								                           <?php 
-								                        	 echo (!empty($schedule['Attendance']['in']) && $schedule['Attendance']['in']  != '0000-00-00 00:00:00') ? date('y/m/d h:i a',strtotime($schedule['Attendance']['in'])) : '';
+								                           $timeIn = '';
+								                           if (!empty($schedule['Attendance']['in']) &&  $schedule['Attendance']['in'] == 'n/a' ) {
+
+								                           	echo "no time-in";
+
+								                           } else {
+
+								                           	echo (!empty($schedule['Attendance']['in']) && $schedule['Attendance']['in']  != '0000-00-00 00:00:00') ? date('y/m/d h:i a',strtotime($schedule['Attendance']['in'])) : '';
 															 $timeIn;
+
 								                            $timeIn = !empty($schedule['Attendance']['in']) ? date('Y/m/d h:i a',strtotime($schedule['Attendance']['in'])) : '';
+
+								                           }
+								                        	
 								                            ?> 
 								                        </td>
 								                        </td>
 								                        <td class="text-center time-out"> 
 								                           <?php 
-								                          echo  (!empty($schedule['Attendance']['out']) && $schedule['Attendance']['out']  != '0000-00-00 00:00:00') ? date('y/m/d h:i a',strtotime($schedule['Attendance']['out'])) : '';
+								                             $timeOut  = '';
+								                             
+								                            if (!empty($schedule['Attendance']['out']) &&  $schedule['Attendance']['out'] == 'n/a' ) {
 
-								                            $timeOut = !empty($schedule['Attendance']['out']) ? date('Y/m/d h:i a',strtotime($schedule['Attendance']['out'])) : '' ;
+								                            		echo "no time-out";
+
+								                           } else {
+								                            
+								                            	echo  (!empty($schedule['Attendance']['out']) && $schedule['Attendance']['out']  != '0000-00-00 00:00:00') ? date('y/m/d h:i a',strtotime($schedule['Attendance']['out'])) : '';
+
+									                            $timeOut = !empty($schedule['Attendance']['out']) ? date('Y/m/d h:i a',strtotime($schedule['Attendance']['out'])) : '' ;
+
+									                        }
 								                           ?> 
 								                        </td>
 								                        <td class="text-center" > 
 								                           	<?php 
+
 								                           		if (!empty($schedule['Attendance']['overtime_id'])) {
 								                           			if ($schedule['Overtime']['status'] == 'approved') {
 								                           				$from = $schedule['Overtime']['from'];
@@ -153,8 +290,14 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									                           			$ex2 = explode(' ', $to);
 
 									                           			$diff = $ex2[1] - $ex1[1];
+
+									                           			if (strtotime($schedule['Attendance']['out']) >= strtotime($to)) {
+									                           				$to = $to;
+									                           			} else {
+									                           				$to = $schedule['Attendance']['out'];
+									                           			}
 									                           			
-									                           			echo ' + '. $diff .' hr/s ';
+																		echo $this->CustomTime->getDuration($from,$to); 
 
 									                           		}else {
 									                           			
@@ -167,7 +310,22 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 								                           	?> 
 								                        </td> 
 								                         <td class="text-center duration" > 
-								                           <?php echo $this->CustomTime->getDuration($timeIn,$timeOut); ?> 
+								                           <?php 
+								                         	if (!empty($schedule['Attendance']['out']) &&  $schedule['Attendance']['out'] == 'n/a' ) {
+
+								                         		 } else {
+
+																	 echo $this->CustomTime->getDurationSchedule($schedule['Attendance']['in'],$schedule['Attendance']['out'],$schedule['MyWorkshift'],$schedule['MyBreakTime']);
+								                          	 }
+								                           ?> 
+								                        </td>
+								                         <td class="text-center duration" > 
+								                           <?php 
+								                           if (!empty($timeIn) && !empty($timeOut)) {
+
+								                           			 echo $this->CustomTime->getDuration($timeIn,$timeOut);
+								                         	 }
+								                           ?> 
 								                        </td>
 								                        <td class="attendance-status"> 
 								                           <?php 
@@ -243,7 +401,23 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 															   'data-id' => $schedule['Attendance']['id'],
 															));
 
-															
+
+																echo $this->Html->link('<span class="fa-stack">
+														<i class="fa fa-square fa-stack-2x"></i>
+														<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
+														</span> ',array(
+															'controller' => 'attendances',
+															'action' =>'delete',
+															 $schedule['Attendance']['id'],
+															 'return' => $page
+															),
+														array('class' =>'table-link',
+															   'escape' => false,
+															   'data-url' => '/attendances/view/'.$schedule['Attendance']['id'],
+															   'title'=>'Edit Information',
+															   'confirm' => 'Are you sure you want to delete this attendances ? ',
+															));
+			
 														}
 														?>
 
@@ -274,13 +448,13 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 		 </div>
     </div>
 </div>
-<?php echo $this->element('modals/personnal_attendance',array('employeeList' => $employeeList)); ?>
+<?php echo $this->element('modals/personnal_attendance',array('employeeList' => $employeeList,'page' => $page,'empId' => $empId)); ?>
 
-<?php echo $this->element('modals/time_in_attendance',array('employeeList' => $employeeList)); ?>
+<?php echo $this->element('modals/time_in_attendance',array('employeeList' => $employeeList,'page' => $page,'empId' => $empId)); ?>
 
-<?php echo $this->element('modals/time_in_attendance_log',array('employeeList' => $employeeList)); ?>
+<?php echo $this->element('modals/time_in_attendance_log',array('employeeList' => $employeeList,'page' => $page,'empId' => $empId)); ?>
 
-<?php echo $this->element('modals/time_in_edit',array('employeeList' => $employeeList )); ?>
+<?php echo $this->element('modals/time_in_edit',array('employeeList' => $employeeList,'page' => $page,'empId' => $empId)); ?>
 
 <div class="modal fade" id="myAttendance" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">

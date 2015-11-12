@@ -45,10 +45,8 @@
                                 </div>
 
 
-                    <div class="form-group pull-left">
-                      <input class="form-control searchItem" onkeyup="searchItem(this)" placeholder="Search...">
-                            <i class="fa fa-search search-icon"></i>
-                                             </div>
+                    <div class="form-group pull-left"> <input class="form-control searchItem" onkeyup="searchItem(this)" placeholder="Search...">
+                            <i class="fa fa-search search-icon"></i></div>
                     
                      <?php echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add Items', array('controller' => 'items', 'action' => 'add'),array('class' =>'btn btn-primary pull-right','escape' => false));
                      ?>
@@ -152,13 +150,15 @@
                     <hr>
                 </div>
              
-                <ul class="pagination pull-left">
-                    <?php 
-                     echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
-                     echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
-                     echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); ?>
-
-                </ul>
+                  
+                <div class="paging" id="item_type_pagination">
+                                <?php
+                                echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
+                                echo $this->Paginator->numbers(array('separator' => ''));
+                                echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+                                ?>
+                                </div>
+              
 
               
             </div>

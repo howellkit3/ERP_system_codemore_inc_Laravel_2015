@@ -53,5 +53,18 @@ class QuotationDetail extends AppModel {
 		return $this->id;
 
 	}
+
+	public function saveEdit($data, $auth, $quoteId){
+
+		$this->create();
+		$data['created_by'] = $auth;
+		$data['modified_by'] = $auth;
+		$data['quotation_id'] = $quoteId;
+		//pr($data); exit;
+		$this->save($data);
+
+		return $this->id;
+
+	}
 	
 }

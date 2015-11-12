@@ -185,49 +185,47 @@ class ProductsController extends SalesAppController {
 
 	public function create_product($companyId = null){
 		
-
 		if ($this->request->is('post')) {
-				//pr($this->request->data);exit();
-				$userData = $this->Session->read('Auth');
-			 	$productDetails = $this->request->data;
-	        	$this->loadModel('Sales.Product');
+			$userData = $this->Session->read('Auth');
+		 	$productDetails = $this->request->data;
+        	$this->loadModel('Sales.Product');
 
-	        	$month = date("m"); 
-			    $year = date("y");
-			    $hour = date("H");
-			    $minute = date("i");
-			    $seconds = date("s");
-			    $random = rand(1000, 10000);
+        	$month = date("m"); 
+		    $year = date("y");
+		    $hour = date("H");
+		    $minute = date("i");
+		    $seconds = date("s");
+		    $random = rand(1000, 10000);
 
-			    $code =  $year. $month .$random;
-	        	$productDetails['Product']['uuid'] = $code;
+		    $code =  $year. $month .$random;
+        	$productDetails['Product']['uuid'] = $code;
 
-	           if ($this->Product->save($productDetails)) {
+           if ($this->Product->save($productDetails)) {
 
 
-	           	 $this->Session->setFlash(__('Products Successfully Added'));
+           	 $this->Session->setFlash(__('Products Successfully Added'));
 
-	           	 if (!empty($this->params['named']['redirect_uri'])) {
+           	 if (!empty($this->params['named']['redirect_uri'])) {
 
-	           	 		 //$this->redirect(Router::url('/', true).$this->params['url']);
+           	 		 //$this->redirect(Router::url('/', true).$this->params['url']);
 
-	           	 		 	$this->redirect( array(
-	                                     'controller' => $this->params['named']['redirect_uri']['controller'], 
-	                                     'action' => $this->params['named']['redirect_uri']['action'],
-	                                     !empty( $this->params['named']['redirect_uri']['id'] )	?  $this->params['named']['redirect_uri']['id'] : ''                              
-	                             ));
-	           	 } else {
-	           	 	 $this->redirect( array(
-	                                     'controller' => 'products', 
-	                                     'action' => 'index',	                              
-	                             ));
+           	 		 	$this->redirect( array(
+                                     'controller' => $this->params['named']['redirect_uri']['controller'], 
+                                     'action' => $this->params['named']['redirect_uri']['action'],
+                                     !empty( $this->params['named']['redirect_uri']['id'] )	?  $this->params['named']['redirect_uri']['id'] : ''                              
+                             ));
+           	 } else {
+           	 	 $this->redirect( array(
+                                     'controller' => 'products', 
+                                     'action' => 'index',	                              
+                             ));
 
-	           	 }
-	            
-	            } else {
+           	 }
+            
+            } else {
 
-	            		 $this->Session->setFlash(__('There\'s an error saving your product'));	             	
-	            }
+            		 $this->Session->setFlash(__('There\'s an error saving your product'));	             	
+            }
 		}
 
 
@@ -638,6 +636,13 @@ class ProductsController extends SalesAppController {
 		echo json_encode($checkData);
     }
 
+    public function get_main($varCounter,$realName){
+
+    	$this->set(compact('varCounter','realName'));
+		$this->render('main_panel');
+
+    }
+
     public function component($varCounter,$realName){
 
     	$this->set(compact('varCounter','realName'));
@@ -688,6 +693,8 @@ class ProductsController extends SalesAppController {
 
         $this->loadModel('Sales.ProductSpecificationDetail');
 
+        $this->loadModel('Sales.ProductSpecificationMainPanel');
+
         $this->loadModel('Sales.ProductSpecificationComponent');
 
 		$this->loadModel('Sales.Product');
@@ -733,7 +740,7 @@ class ProductsController extends SalesAppController {
 		
 		//find if product has specs
 		$formatDataSpecs = $this->ProductSpecificationDetail->findData($product['Product']['uuid']);
-
+		
 		$companyData = $this->Company->read(null,$product['Product']['company_id']);
 
 		$this->request->data['Company'] = $companyData['Company'];
@@ -854,6 +861,8 @@ class ProductsController extends SalesAppController {
 
     	$this->loadModel('Sales.ProductSpecificationDetail');
 
+    	$this->loadModel('Sales.ProductSpecificationMainPanel');
+
     	$this->loadModel('Sales.ProductSpecificationComponent');
 
     	$this->loadModel('Sales.ProductSpecificationPart');
@@ -869,7 +878,7 @@ class ProductsController extends SalesAppController {
     	$this->ProductSpecificationDetail->bind(array('Sales.ProductSpecificationComponent','Sales.ProductSpecificationPart','Sales.ProductSpecificationProcess'));
 				
 		if (!empty($this->request->data)) {
-
+			//pr($this->request->data);exit();
 			if(!empty($this->request->data['IdHolder'])){
 				
 				$this->Product->ProductSpecification->delete($this->request->data['ProductSpecification']['id']);
@@ -883,6 +892,7 @@ class ProductsController extends SalesAppController {
 
 			$specId = $this->Product->ProductSpecification->saveSpec($this->request->data,$userData['User']['id']);
 			
+			//$mainPanelArray = array();
 			$componentArray = array();
 			$partArray = array();
 			$processArray = array();
@@ -890,6 +900,9 @@ class ProductsController extends SalesAppController {
 			
 				foreach ($this->request->data['ProductSpecificationDetail'] as $key => $value) {
 					
+					// if($value == 'MainPanel'){
+					// 	array_push($mainPanelArray, $key);
+					// }
 					if($value == 'Component'){
 						array_push($componentArray, $key);
 					}
@@ -902,62 +915,94 @@ class ProductsController extends SalesAppController {
 				}
 			}
 			
+			// if (isset($this->request->data['ProductSpecificationMainPanel'])) {
+				
+			// 	$mainPanelData['ProductSpecificationMainPanel'] = array_values($this->request->data['ProductSpecificationMainPanel']);
+				
+			// 	foreach ($mainPanelData['ProductSpecificationMainPanel'] as $key => $value) {
+					
+			// 		$mainPanelData['ProductSpecificationMainPanel'][$key] = $value;
+			// 		$mainPanelData['ProductSpecificationMainPanel'][$key]['order'] = $mainPanelArray[$key];
+					
+			// 	}
+			// 	$mainPanelData['Product'] = $this->request->data['Product']['id'];
+				
+			// }
+			
 			if (isset($this->request->data['ProductSpecificationComponent'])) {
 				
-				foreach (array_values($this->request->data['ProductSpecificationComponent']) as $key => $value) {
+				$componentData['ProductSpecificationComponent'] = array_values($this->request->data['ProductSpecificationComponent']);
+				
+				foreach ($componentData['ProductSpecificationComponent'] as $key => $value) {
 					
-					$this->request->data['ProductSpecificationComponent'][$key] = $value;
-					$this->request->data['ProductSpecificationComponent'][$key]['order'] = $componentArray[$key];
+					$componentData['ProductSpecificationComponent'][$key] = $value;
+					$componentData['ProductSpecificationComponent'][$key]['order'] = $componentArray[$key];
 					
 				}
-
+				$componentData['Product'] = $this->request->data['Product']['id'];
+				
 			}
-
+			
 			if (isset($this->request->data['ProductSpecificationPart'])) {
 
-				foreach (array_values($this->request->data['ProductSpecificationPart']) as $key => $value) {
+				$partData['ProductSpecificationPart'] = array_values($this->request->data['ProductSpecificationPart']);
+				
+				foreach ($partData['ProductSpecificationPart'] as $key => $value) {
+					
 					if (isset($partArray[$key])) {
-						$this->request->data['ProductSpecificationPart'][$key] = $value;
-						$this->request->data['ProductSpecificationPart'][$key]['order'] = $partArray[$key];
+						
+						$partData['ProductSpecificationPart'][$key] = $value;
+						$partData['ProductSpecificationPart'][$key]['order'] = $partArray[$key];
 						
 					}
 					
 				}
+				$partData['Product'] = $this->request->data['Product']['id'];
 				
 			}
 			
 			if (!empty($this->request->data['ProductSpecificationProcess'])) {
 
-				foreach (array_values($this->request->data['ProductSpecificationProcess']) as $key => $value) {
+				$processData['ProductSpecificationProcess'] = array_values($this->request->data['ProductSpecificationProcess']);
+				
+				foreach ($processData['ProductSpecificationProcess'] as $key => $value) {
 
-						if (isset($processArray[$key])) {
-							$this->request->data['ProductSpecificationProcess'][$key] = $value;
-							$this->request->data['ProductSpecificationProcess'][$key]['order'] = $processArray[$key];
-						}
+					if (isset($processArray[$key])) {
+						$processData['ProductSpecificationProcess'][$key] = $value;
+						$processData['ProductSpecificationProcess'][$key]['order'] = $processArray[$key];
+					}
 				}
+				$processData['Product'] = $this->request->data['Product']['id'];
 
 			}
+
 			$getIds = array();
 
+			// if (!empty($this->request->data['ProductSpecificationMainPanel'])) {
 
-			if (!empty($this->request->data['ProductSpecificationComponent']) {
+			// 	$thisMainPanelIds = $this->ProductSpecificationMainPanel->saveMainPanel($mainPanelData,$userData['User']['id'],$specId);
 
-				$thisComponentIds = $this->ProductSpecificationComponent->saveComponent($this->request->data,$userData['User']['id'],$specId);
+			// 	$getIds = array_merge($getIds,$thisMainPanelIds);
+			// }
+
+			if (!empty($this->request->data['ProductSpecificationComponent'])) {
+
+				$thisComponentIds = $this->ProductSpecificationComponent->saveComponent($componentData,$userData['User']['id'],$specId);
 
 				$getIds = array_merge($getIds,$thisComponentIds);
 			}
 			
-			if (!empty($this->request->data['ProductSpecificationPart']) {
+			if (!empty($this->request->data['ProductSpecificationPart'])) {
 
-				$thisPartIds = $this->ProductSpecificationPart->savePart($this->request->data,$userData['User']['id'],$specId);
+				$thisPartIds = $this->ProductSpecificationPart->savePart($partData,$userData['User']['id'],$specId);
 				
 				$getIds = array_merge($getIds,$thisPartIds);
 
 			}
 
-			if (!empty($this->request->data['ProductSpecificationProcess']) {
+			if (!empty($this->request->data['ProductSpecificationProcess'])) {
 
-				$thisProcessIds = $this->ProductSpecificationProcess->saveProcess($this->request->data,$userData['User']['id'],$specId);
+				$thisProcessIds = $this->ProductSpecificationProcess->saveProcess($processData,$userData['User']['id'],$specId);
 				
 				$getIds = array_merge($getIds,$thisProcessIds);
 

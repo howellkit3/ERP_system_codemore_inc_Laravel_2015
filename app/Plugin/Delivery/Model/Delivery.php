@@ -11,32 +11,58 @@ class Delivery extends AppModel {
     
     public $name = 'Delivery';
 
-    public $validate = array(
+ //    public $validate = array(
 
-		'dr_uuid' => array(
+	// 	'dr_uuid' => array(
 			
-			'unique' => array(
-				'rule'    => 'isUnique',
-				'message' => 'Delivery receipt should be unique.'
-			),
+	// 		'unique' => array(
+	// 			'rule'    => 'isUnique',
+	// 			'message' => 'Delivery receipt should be unique.'
+	// 		),
 
-		)
+	// 	)
 		
-	);
+	// );
+
+	//  public function bind($model = array('Group')){
+
+	// 	$this->bindModel(array(
+	// 		'belongsTo' => array(
+	// 			'Company' => array(
+	// 				'className' => 'Sales.Company',
+	// 				'foreignKey' => 'company_id',
+	// 				'dependent' => true
+	// 			),
+	// 		)
+	// 	),false);
+
+	// 	$this->contain($model);
+	// }
 
 
  
-	public function saveDelivery($data = null, $auth = null){
+	public function saveDelivery($data = null, $auth = null,$novalidate = null){
 
 		$this->create();
 
 						
-				$data['Delivery']['created_by'] = $auth;
+		$data['Delivery']['created_by'] = $auth;
 			//	$data['Delivery']['modified_by'] = $auth;
 
 				//pr($data); exit;
-				
+		//pr($data); exit;
+
+		//if ($novalidate) {
+
+		//	$this->validate = array();
+		//}
+
 		$this->save($data);
+
+		//} else {
+
+			//pr($this->validationErrors);
+		//}
 
 
 		// $this->create();
@@ -77,6 +103,12 @@ class Delivery extends AppModel {
 					'foreignKey' => false,
 					'conditions' => 'Delivery.dr_uuid = DeliveryReceipt.dr_uuid'
 				),	
+				
+				'Transmittal' => array(
+					'className' => 'Delivery.Transmittal',
+					'foreignKey' => false,
+					'conditions' => 'Delivery.dr_uuid = Transmittal.dr_uuid'
+				),	
 
 			)
 		));
@@ -92,6 +124,22 @@ class Delivery extends AppModel {
 					'foreignKey' => false,
 					'conditions' => 'Delivery.dr_uuid = DeliveryDetail.delivery_uuid'
 				),		
+			)
+		));
+		$this->recursive = 1;
+		//$this->contain($giveMeTheTableRelationship);
+	}
+
+	public function bindDeliveryClientOrder() {
+		$this->bindModel(array(
+			'hasOne' => array(
+				'DeliveryDetail' => array(
+					'className' => 'Delivery.DeliveryDetail',
+					'foreignKey' => false,
+					'conditions' => 'Delivery.dr_uuid = DeliveryDetail.delivery_uuid'
+				),
+
+						
 			)
 		));
 		$this->recursive = 1;
@@ -130,7 +178,12 @@ class Delivery extends AppModel {
 					'className' => 'Sales.ClientOrder',
 					'foreignKey' => false,
 					'conditions' => 'Delivery.clients_order_id = ClientOrder.uuid'
-				),		
+				),	
+				'Company' => array(
+					'className' => 'Sales.Company',
+					'foreignKey' => false,
+					'conditions' => array('Company.id = Delivery.company_id')
+				),	
 			)
 		));
 		$this->recursive = 1;

@@ -40,7 +40,11 @@ class ImageUploader {
 			if (!file_exists($folder_path)) {
 				mkdir($folder_path, 0777, true);
 			}
-			$image_name = $time.'_'.round($width)."x".$height."_".str_replace(' ','_',$name);
+			//
+			
+			$pathInfo = pathinfo($name);
+
+			$image_name = $time.date('ymdhis').'.'.$pathInfo['extension'];
             $path = $folder_path.$image_name;
 
 		} else {
@@ -66,7 +70,11 @@ class ImageUploader {
 			if (!file_exists($folder_path)) {
 				mkdir($folder_path, 0777, true);
 			}
-			$image_name = $time.'_'.round($width)."x".$height."_".str_replace(' ','_',$name);
+
+			$pathInfo = pathinfo($name);
+
+			$image_name = $time.date('ymdhis').'.'.$pathInfo['extension'];
+
             $path = $folder_path.$image_name;
        
 		}
@@ -86,6 +94,7 @@ class ImageUploader {
 				exit;
 				break;
 		}
+
 		return $image_name;
 		/* cleanup memory */
 		imagedestroy($image);

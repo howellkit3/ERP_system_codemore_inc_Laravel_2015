@@ -41,10 +41,8 @@ class ProductSpecificationComponent extends AppModel {
 		
 		$Ids = array();
 
-
-		
-
 		if (!empty($componentdata[$this->name])) {
+
 		
 		foreach ($componentdata[$this->name] as $key => $componentList) {
 			$this->create();
@@ -52,7 +50,7 @@ class ProductSpecificationComponent extends AppModel {
 			$componentList['created_by'] = $auth;
 			$componentList['modified_by'] = $auth;
 			$componentList['product_specification_id'] = $specId;
-			$componentList['product_id'] = $componentdata['Product']['id'];
+			$componentList['product_id'] = $componentdata['Product'];
 			
 			
 			$this->save($componentList);

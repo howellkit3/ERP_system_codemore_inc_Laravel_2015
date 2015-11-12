@@ -49,7 +49,7 @@ function openMultiplePrompts(element,url,status){
 
 var checkDepartmentEmployee = function(element){
 
-    var departmentId = $(element).val();
+    $departmentId = $(element).val();
 
     $append_cont = $('.employees.result');
 
@@ -57,10 +57,16 @@ var checkDepartmentEmployee = function(element){
 
     $('#myonoffswitch-all').change().prop('checked',false);
 
+    $date = $('#OvertimeDate').val();
+
 	$.ajax({
-            type: "GET",
-            url: serverPath + "human_resource/employees/findbyDepartment/"+departmentId,
+            type: "POST",
+            url: serverPath + "human_resource/employees/findbyDepartment/"+$departmentId,
             dataType: "html",
+            data : {
+                'department_id' : $departmentId,
+                'date' : $date 
+            },
             success: function(data) {
             
 
@@ -135,25 +141,25 @@ $(document).ready(function(){
 
     }).trigger('change');
 
-    $body.on('submit','#ovetimeForm',function(e){
+    // $body.on('submit','#ovetimeForm',function(e){
    
-        $return = true;
+    //     $return = true;
         
-        if ($('.onoffswitch-checkbox:checked').length <= 0) {
+    //     if ($('.onoffswitch-checkbox:checked').length <= 0) {
 
-                 $('.selected-text').after('<label class="error appended-error" style="top:0;margin:0 10px;" >Please select employees to work.</label>');
+    //              $('.selected-text').after('<label class="error appended-error" style="top:0;margin:0 10px;" >Please select employees to work.</label>');
 
 
-            $('html, body').animate({
-                scrollTop: parseInt($('.error.appended-error').offset().top - 150 )
-            },300);
-              $return = false;
-              e.preventDefault();
-        }
+    //         $('html, body').animate({
+    //             scrollTop: parseInt($('.error.appended-error').offset().top - 150 )
+    //         },300);
+    //           $return = false;
+    //           e.preventDefault();
+    //     }
 
-        return $return;
+    //     return $return;
       
-    });
+    // });
 
 
     $body.on('change','.datetimepick',function(){
@@ -185,5 +191,103 @@ $(document).ready(function(){
         
         }
     });
+
+
+      $body.on('keyup','#SearchEmployee',function(e){
+
+      $container = $('#result-tale-employee');
+
+      $container.html('<img src="'+serverPath+'/img/loader.gif"/>');
+
+        $.ajax({
+                type: "GET",
+                url: serverPath + "human_resource/employees/searchEmployee?overtime=true" ,
+                dataType: "html",
+                data: { 'search' : $('#SearchEmployee').val(), 'date' : $('#OvertimeDate').val() },
+                success: function(data) {
+                   
+                   try {
+
+                      $container.html(data);
+
+                   } catch(e) {
+
+                        $container.html('<span class="error-appended" style="color:red">Error Loading Page</span>');
+                   } 
+                 //$append_cont.html(data)
+
+                },
+                error: function(){
+                }
+          });
+
+
+
+    });
+
+  // $('body').on('click','#printRequest',function(e){
+
+  //       window.open($(this).attr('href'),'Print Request','width = 800,height=500');
+
+  //       e.preventDefault();
+  // });
+  $('body').on('click','#selection .select_employee',function(){
+
+      
+    
+        if ($(this).is(':checked')) {
+
+                $count = $('#resultList .alert-success').size();
+
+               $(this).parent().find('.select_employee.attendance').attr('name','data[Attendance][id]['+ $count +']');
+
+               $(this).parent().find('.select_employee.employee').attr('name','data[Employee][id]['+ $count +']');
+
+                $clone = $(this).parent().html();
+             //  console.log( $clone );
+
+               var html  = '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="fa fa-check-circle fa-fw fa-lg"></i>';
+                 html  +=   '<b>' + $clone +'</b>';
+                 html  +=  '</div>';
+
+
+                $('#resultList').append(html);
+
+                $(this).parent().parent().fadeOut();
+
+        }
+          
+
+
+
+
+  });
+
+
+
+  $('body').on('click','#resultList .close',function(){
+  
+        $(this).parents('.alert-success').remove();
+  });
+
+
+//    function searchEmployee () {
+
+//    }     
+//     var timeout;
+
+// $('body').on('keypress','.searchEmployee',function(e){
+   
+//     if(timeout) {
+//         clearTimeout(timeout);
+//         timeout = null;
+//     }
+
+//     timeout = setTimeout(searchEmployee,450);
+
+//           e.preventDefault();
+// });
+
+
 
  });

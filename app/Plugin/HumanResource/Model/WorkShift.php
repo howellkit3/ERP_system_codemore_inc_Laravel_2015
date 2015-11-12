@@ -10,6 +10,8 @@ class WorkShift extends AppModel {
 
     public $actsAs = array('Containable');
 
+    public $useTable = 'work_shifts';
+
 
      public function bind($model = array('Group')){
 
@@ -58,7 +60,6 @@ class WorkShift extends AppModel {
 
 			$editWorkshift =  $this->find('first',array('conditions' => array('WorkShift.overtime_id' => $overtimeId )));
 		}
-
 
 		$workshift = array();
 

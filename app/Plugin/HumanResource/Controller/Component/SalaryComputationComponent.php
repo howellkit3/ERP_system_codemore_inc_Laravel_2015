@@ -23,8 +23,8 @@ class SalaryComputationComponent extends Component
         	$Adjustments = ClassRegistry::init('Adjustment');
 
 			$holidays = $Holidays->find('all',array(
-			'conditions' => array('Holiday.year' => date('Y',strtotime($customDate['start']))),
-			'fields' => array('id','name','start_date','end_date','year','type')
+				'conditions' => array('Holiday.year' => date('Y',strtotime($customDate['start']))),
+				'fields' => array('id','name','start_date','end_date','year','type')
 			));
 
 			$conditions = array(
@@ -71,15 +71,18 @@ class SalaryComputationComponent extends Component
         				$gross = $this->gross_pay($employee['Attendance'],$employee['Salary'],8,$models);
 
 
-        				if ($employee['Salary']['employee_salary_type'] == 'daily') {
+        				$models['Salary'] = $employee['Salary'];
 
-							$salary[$key] = $this->_dailyRate($employee,$models);
-						}
+
+
 						if ($employee['Salary']['employee_salary_type'] == 'monthly') {
 
 							$salary[$key] = $this->_monthlyRate($employee,$models,8,$workingDays,$payrollSettings);
-						}
+						} else {
 
+						$salary[$key] = $this->_dailyRate($employee,$models);
+
+						}
 
         				$salary[$key]['id'] = !empty($checkExisting['SalaryReport']['id']) ? $checkExisting['SalaryReport']['id'] : '';
         				$salary[$key]['employee_id'] = $employee['Employee']['id'];
@@ -101,6 +104,7 @@ class SalaryComputationComponent extends Component
 						
 						$salary[$key]['philhealth'] = $this->philhealth_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$salary[$key]['gross'],$models);
 						$salary[$key]['pagibig'] = $this->pagibig_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$salary[$key]['gross'] , $models );
+
         				} else {
 
 
@@ -129,9 +133,10 @@ class SalaryComputationComponent extends Component
 						// //additional income 
 						// $salary[$key]['total_pay'] = $gross['gross']; 
 
+				
 						$total_pay = 
 						$net_pay_no_tax = $salary[$key]['gross'];
-					
+						
 
 						$salary[$key]['gross_pay'] = ( $salary[$key]['ctpa'] + $salary[$key]['sea']);
 						$salary[$key]['gross_pay'] += $total_pay;
@@ -148,6 +153,9 @@ class SalaryComputationComponent extends Component
 						$salary[$key]['adjustment'] = $adjust['amount'];
 						$salary[$key]['adjustment_ids'] = $adjust['ids'];
 						$salary[$key]['total_earnings']  += !empty($salary[$key]['adjustment']) ? $salary[$key]['adjustment'] : 0.00;
+
+
+						//basic salary
 
 						//total night diff
 						$nightDiff = array(
@@ -186,13 +194,16 @@ class SalaryComputationComponent extends Component
 
 						$salary[$key]['total_deduction'] = $total_deduction; 
 						
-						$salary[$key]['total_deduction'] += $salary[$key]['sss'];
+						if (!empty($salary[$key]['sss']['sss_employees'])) {
+
+							$salary[$key]['total_deduction'] += $salary[$key]['sss']['sss_employees'];
+						}		
 
 						$salary[$key]['total_deduction'] += $salary[$key]['philhealth'];
 
 						$salary[$key]['total_deduction'] += $salary[$key]['pagibig'];
 						
-						//no tax
+						// //no tax
 						$taxType = !empty($payrollSettings['Setting']['tax_pay']) ? $payrollSettings['Setting']['tax_pay'] : '';
 
 						$salary[$key]['with_holding_tax'] = $this->computeTax($employee,$salary[$key]['gross_pay'],$taxType,$minimumWage);	
@@ -200,7 +211,6 @@ class SalaryComputationComponent extends Component
 						//add tax
 						$salary[$key]['total_deduction'] += $salary[$key]['with_holding_tax'];
 
-						$total_pay  -= $salary[$key]['total_deduction'];
 
 						$salary[$key]['net_pay'] = $total_pay;
 
@@ -212,19 +222,36 @@ class SalaryComputationComponent extends Component
 
 						$total_pay += $salary[$key]['adjustment'];
 
+						
+						$total_pay  -= $salary[$key]['total_deduction'];
+
 						//$total_pay  -= $salary[$key]['sss'];
 						$salary[$key]['total_pay'] = $total_pay;
 						$salary[$key]['Employee'] = $employee['Employee'];
 						$salary[$key]['Department'] = !empty($employee['Department']) ? $employee['Department'] : array();
 						$salary[$key]['Position']	= !empty($employee['Position']) ? $employee['Position'] : array();
 						$salary[$key]['EmployeeAdditionalInformation']	= !empty($employee['EmployeeAdditionalInformation']) ? $employee['EmployeeAdditionalInformation'] : array();
+
+						$salary[$key]['Salary']	= !empty($employee['Salary']) ? $employee['Salary'] : array();
         			
         		}
 
-
-        		return $salary;
+				
+				return $salary;
 			}
     }
+
+    public function is_date( $str ){ 
+	    $stamp = strtotime( $str ); 
+	    if (!is_numeric($stamp)) 
+	        return FALSE; 
+	    $month = date( 'm', $stamp ); 
+	    $day   = date( 'd', $stamp ); 
+	    $year  = date( 'Y', $stamp ); 
+	    if (checkdate($month, $day, $year)) 
+	        return TRUE; 
+	    return FALSE; 
+}
 
     private function workingDays($date = null) {
 
@@ -258,34 +285,153 @@ class SalaryComputationComponent extends Component
 
     private function _total_hours($data = null){ 
 
-    	$days['total_hours'] = 0.00;
+    	$days['total_hours'] = '0.00';
 
-		$workshiftFrom = date('Y-m-d',strtotime($data['Attendance']['in'])).' '.$data['WorkShift']['from'];
+		$workshiftFrom = date('Y-m-d',strtotime($data['Attendance']['in'])).' '.$data['MyWorkshift']['from'];
 
-		if (strtotime($data['Attendance']['in']) >= strtotime($workshiftFrom) ) {
-						
-			$from = new DateTime($data['Attendance']['in']);
+		$today = date('Y-m-d',strtotime($data['Attendance']['in']));
 
-			$to = new DateTime($data['Attendance']['out']);
+		$logout = date('Y-m-d',strtotime($data['Attendance']['out']));
 
-			if ($data['Attendance']['out'] > $data['WorkShift']['to']) {
-				
-				$to = new DateTime( $data['WorkShift']['to'] );
-			}
-						
-			$days['total_hours'] =  $from->diff($to)->format('%h.%i'); 
+		if (!empty($data['Attendance']['in']) && !empty($data['Attendance']['out'])) {
 
-			$days['total_hours'] -= 1;
+		$in = strtotime($today.' '.$data['MyWorkshift']['from']);
 
-			if (!empty($data['BreakTime']['id'])) {
+		if  (!empty($data['MyWorkshift']['to'])) {
 
-				if (strtotime($data['Attendance']['out']) >= strtotime($data['BreakTime']['from']) && strtotime($data['Attendance']['out']) >= strtotime($data['BreakTime']['to'])) {
+			$timeIn =  date('Y-m-d H:i:s',strtotime($data['Attendance']['in']));
+
+			$inToday = strtotime($data['Attendance']['in']);
 			
-					$days['total_hours'] -= 1;
-				}
+			$workSched = strtotime($today.' '.$data['MyWorkshift']['from']);
+
+			$workEndToday = strtotime($today.' '.$data['MyWorkshift']['to']);
+	
+
+			if ($inToday <= $workEndToday) {
+
+			
+			if (strtotime($timeIn) > $in ) {
+
+				$timeIn = date('Y-m-d H:i',strtotime($timeIn)).':00';
+
+			} else {
+
+				$timeIn = $today.' '.$data['MyWorkshift']['from'];
 			}
+
+
+			$timeOut = date('H:i:s',strtotime($data['Attendance']['out']));
+
+			if (strtotime($timeOut) > strtotime($data['MyWorkshift']['to'])) {
+
+				$timeOut = $logout.' '.$data['MyWorkshift']['to'];
+
+			} else {
+				
+				$timeOut = date('Y-m-d',strtotime($data['Attendance']['in'])).' '.date('H:i',strtotime($timeOut)).':00';
+			}
+
+			// pr($data['Attendance']);
+
+			// pr($timeIn);
+
+			//pr($data);
+
+
+		if (!empty($data['MyBreakTime']['id'])) {
+
+			//#4 2nd shift
+			// if ($data['MyWorkshift']['id'] != 4) {
+
+
+			// }
+
+			
+			//substract lunchbreaktime
+
+			$myBreakFrom = $today.' '. $data['MyBreakTime']['from'];
+			
+			$myBreakTo = $today.' '. $data['MyBreakTime']['to'];
+
+			$breakHour = strtotime($data['MyBreakTime']['from']) + 3600;
+
+			if (strtotime($timeOut) >= strtotime($myBreakFrom) && strtotime($timeOut) >= strtotime($myBreakTo)) {
+			
+					$timeOut = strtotime($timeOut) - 3600;
+					$timeOut = date('Y-m-d',strtotime($data['Attendance']['in'])).' '.date('H:i:s',$timeOut);
+
+			}
+
+				$todayBreak =  $today.' '.date('H:i:s',$breakHour);
+
+
+			if (strtotime($data['Attendance']['out']) >= strtotime($myBreakFrom) && strtotime($data['Attendance']['out']) <= strtotime($todayBreak)) {
+
+				$timeOut = $today.' '.date('H:',strtotime($data['Attendance']['out'])).'00:00';
+
+
+			}
+
+		} else{
+
+			if (strtotime($timeOut) > strtotime($data['MyWorkshift']['to'])) {
+				$timeOut = strtotime($timeOut) - 3600;
+				$timeOut = date('Y-m-d',strtotime($data['Attendance']['in'])).' '.date('H:i:s',$timeOut);
+			}
+		
+		}
+
+		
+
+
+		$date1 = new DateTime($timeIn);
+		$date2 = new DateTime($timeOut);
+
+		 $days['total_hours'] = $date1->diff($date2)->format('%h.%i'); 
+
+		//  pr($timeIn);
+		//  pr($days['total_hours']);
+
+		// // $days['total_ho`urs'] += $days['total_hours'];
+
+		// pr($days['total_hours']);
+	
+		} else {
+
+			//pr($data['Attendance']);
+		}
+
+
+		
+		//if (strtotime($data['Attendance']['in']) >= strtotime($workshiftFrom) ) {
+						
+			// $from = new DateTime($data['Attendance']['in']);
+
+			// $to = new DateTime($data['Attendance']['out']);
+
+
+			// if ($data['Attendance']['out'] > $data['MyWorkshift']['to']) {
+				
+			// 	$to = new DateTime( $data['MyWorkshift']['to'] );
+			// }
+						
+			// $days['total_hours'] =  $from->diff($to)->format('%h.%i'); 
+
+			// $days['total_hours'] -= 1;
+
+			// if (!empty($data['BreakTime']['id'])) {
+
+			// 	if (strtotime($data['Attendance']['out']) >= strtotime($data['MyBreakTime']['from']) && strtotime($data['Attendance']['out']) >= strtotime($data['MyBreakTime']['to'])) {
+			
+			// 		$days['total_hours'] -= 1;
+			// 	}
+			// }
 
 		}
+		
+		}
+		
 
     	return $days['total_hours'];
     }
@@ -295,65 +441,126 @@ class SalaryComputationComponent extends Component
     	$data['total_hours'] = 0;
     	$data['night_diff'] = 0;
     	$overtime = 0;
+    	$data['hours_ot'] = 0;
 
-    	if (!empty($days)) {
-
-				//check if OT
-				if (!empty($days['Attendance']['overtime_id'])) {
-
-						$Overtime = ClassRegistry::init('Overtime');
-
-						$overtime = $Overtime->read(null,$days['Attendance']['overtime_id']);
-
-					// //pr($days['Attendance']['overtime_id']);
-
-					if (!empty($days['WorkShift']['to'])) {
-
+    	if (!empty($days['Attendance']['overtime_id'])) {
+						
 					
-					if  ( $days['Attendance']['out'] >= $overtime['Overtime']['from'] ) {
-						
-						//add breatime before OT		
-						$from  =  new DateTime($overtime['Overtime']['from']);
-						
-						$to  =  new DateTime($days['Attendance']['out']);
+					$data['hours_ot'] = 0;
 
-						if (strtotime($days['Attendance']['out']) > strtotime($overtime['Overtime']['to'])) {
+					$Overtime = ClassRegistry::init('Overtime');
 
-							$to  =  new DateTime($overtime['Overtime']['to']);
+					//$overtime = $Overtime->read(null,$data['Attendance']['overtime_id']);
+
+					if (!empty($days['MyWorkshift']['to'] )) {
+
+
+					//if  ( strtotime($days['Attendance']['out']) >= strtotime($days['Overtime']['to']) ) {
+						
+						$workshift = $days['Overtime']['from'];
+
+						$from  =  $workshift; //new DateTime($workshift);
+
+						$overtimeDate = date('Y-m-d',strtotime($days['Overtime']['to']));
+
+						$overtimeIn = date('Y-m-d',strtotime($days['Attendance']['in']));
+
+						if ($overtimeDate == $overtimeIn) {
+
+						if (strtotime($days['Attendance']['out']) > strtotime($days['Overtime']['to'])) {
+
+						$to  =  $days['Overtime']['to']; //new DateTime($days['Overtime']['to']);
+
+						} else {
+
+							$to  =  $days['Attendance']['out']; // new DateTime($days['Attendance']['out']);	
 						}
 
-						$data['total_hours'] = $from->diff($to)->format('%h.%i'); 
-						//add breaktime
-						$data['total_hours'] -= 1;
+						
+						$from = new DateTime($from);
 
-					}
-					
-					//regular ot is 1.25
-					$data['total_hours'] = $data['total_hours'];
+						$to = new DateTime($to);
 
-					//night differential
 
-					$fromDate = date('Y-m-d',strtotime($days['Attendance']['date'])).' 22:00:00';
 
-					$from  =  new DateTime($fromDate);
-					$to  =  new DateTime($days['Attendance']['out']);
+						$data['total_hours'] =  $from->diff($to)->format('%h.%i');
 
-					if ($days['Attendance']['out'] > $fromDate) {
-
-						if (strtotime($days['Attendance']['out']) > strtotime($overtime['Overtime']['to'])) {
-
-							$to  =  new DateTime($overtime['Overtime']['to']);
 						}
+			
+					//}
+					
+					//regular ot is 1.25	
+						// if (!empty($data['hours_ot'])) {
+						// 	$data['OT'] = ($employee['Salary']['basic_pay'] * $data['hours_ot'] * 1.25 ) / $hours;
 
-						$data['night_diff'] = $from->diff($to)->format('%h.%i'); 
-						$data['night_diff'] -= 1;
+						// } else {
+						// 	$data['OT'] = 0;
+						// }
+					
 					}
 
-					}
-
-				}
 
 		}
+
+  //   	if (!empty($days)) {
+
+		// 		//check if OT
+		// 		if (!empty($days['Attendance']['overtime_id'])) {
+
+		// 				$Overtime = ClassRegistry::init('Overtime');
+
+		// 				$overtime = $Overtime->read(null,$days['Attendance']['overtime_id']);
+
+		// 			// //pr($days['Attendance']['overtime_id']);
+
+		// 			if (!empty($days['MyWorkShift']['to'])) {
+
+					
+		// 			if  ( $days['Attendance']['out'] >= $overtime['Overtime']['from'] ) {
+						
+		// 				//add breatime before OT		
+		// 				$from  =  new DateTime($overtime['Overtime']['from']);
+						
+		// 				$to  =  new DateTime($days['Attendance']['out']);
+
+		// 				if (strtotime($days['Attendance']['out']) > strtotime($overtime['Overtime']['to'])) {
+
+		// 					$to  =  new DateTime($overtime['Overtime']['to']);
+		// 				}
+
+		// 				$data['total_hours'] = $from->diff($to)->format('%h.%i'); 
+		// 				//add breaktime
+		// 				$data['total_hours'] -= 1;
+
+		// 			}
+					
+		// 			//regular ot is 1.25
+		// 			$data['total_hours'] = $data['total_hours'];
+
+		// 			//night differential
+
+		// 			$fromDate = date('Y-m-d',strtotime($days['Attendance']['date'])).' 22:00:00';
+
+		// 			$from  =  new DateTime($fromDate);
+		// 			$to  =  new DateTime($days['Attendance']['out']);
+
+		// 			if ($days['Attendance']['out'] > $fromDate) {
+
+		// 				if (strtotime($days['Attendance']['out']) > strtotime($overtime['Overtime']['to'])) {
+
+		// 					$to  =  new DateTime($overtime['Overtime']['to']);
+		// 				}
+
+		// 				$data['night_diff'] = $from->diff($to)->format('%h.%i'); 
+		// 				$data['night_diff'] -= 1;
+		// 			}
+
+		// 			}
+
+		// 		}
+
+		// }
+
 
 		return $data;
     }
@@ -362,22 +569,180 @@ class SalaryComputationComponent extends Component
     	
     	$data['night_diff'] = 0;
 
-    	if  ( $days['Attendance']['out'] > $days['WorkShift']['to'] ) {
-				
-			//starts from 10:00 pm
-			$fromDate = date('Y-m-d',strtotime($days['Attendance']['date'])).' 22:00:00';
-			$from  =  new DateTime($fromDate);
-			$to  =  new DateTime($days['Attendance']['out']);
 
-			if ($days['Attendance']['out'] > $fromDate) {
-				$data['night_diff'] = $from->diff($to)->format('%h.%i'); 
+    	if (!empty( $days['MyWorkshift']['to'])) {
+
+    	if  ( $days['Attendance']['out'] > $days['MyWorkshift']['to'] ) {
+			
+
+			$today = date('Y-m-d',strtotime($days['Attendance']['in']));	
+
+			$out = date('Y-m-d',strtotime($days['Attendance']['out']));	
+			//starts from 10:00 pm
+			$fromDate = $today .' 22:00:00';
+				
+			//$nighInn
+
+			$nightIn = strtotime($fromDate);
+
+			$timeIn =  date('Y-m-d H:i:s',strtotime($days['Attendance']['in']));
+
+			$inToday = strtotime($days['Attendance']['in']);
+			$outToday = strtotime($days['Attendance']['out']);
+			
+			$workSched = strtotime($today.' '.$days['MyWorkshift']['from']);
+
+			$dateOut = date('Y-m-d', strtotime($days['Attendance']['out']));
+
+			$workEndToday = strtotime($dateOut.' '.$days['MyWorkshift']['to']);
+			
+			if ($inToday <= $workEndToday && $outToday >= $nightIn) {
+
+				if (strtotime($timeIn) > strtotime($days['MyWorkshift']['from'])) {
+
+					$timeIn = date('Y-m-d H:i',strtotime($timeIn)).':00';
+
+				} else {
+
+					$timeIn = date('Y-m-d',strtotime($days['Attendance']['in'])).' '.$days['MyWorkshift']['from'];
+				}
+
+					$timeOut = date('H:i:s',strtotime($days['Attendance']['out']));
+
+				if (strtotime($timeOut) > strtotime($days['MyWorkshift']['to'])) {
+
+					$timeOut = $out.' '.$days['MyWorkshift']['to'];
+
+				} else {
+					
+					$timeOut =  $out.' '.date('H:i',strtotime($timeOut)).':00';
+				}
+
+				//$data['night_diff'] = $from->diff($timeOut)->format('%h.%i'); 
+
+						
+				$date1 = new DateTime($fromDate);
+				$date2 = new DateTime($timeOut);
+
+				$data['night_diff'] = $date1->diff($date2)->format('%h.%i'); 
+
+
 			}
+
 
 		}
 
+	}
+
 		return $data['night_diff'];
 				
-    }	
+    }
+
+
+   function addWorkTime($times = array()) {
+
+	$minutes = '';
+    // loop throught all the times
+    foreach ($times as $time) {
+        list($hour, $minute) = explode('.', $time);
+        $minutes += $hour * 60;
+        $minutes += $minute;
+    }
+
+    $hours = floor($minutes / 60);
+    $minutes -= $hours * 60;
+
+    // returns the time already formatted
+    return sprintf('%02d.%02d', $hours, $minutes);
+}
+
+
+	public function _getDifference($days) {
+
+		if (!empty($days)) {
+
+			$total = 0;
+
+			$today = date('Y-m-d',strtotime($days['Attendance']['in']));
+
+			if (!empty($days['MyWorkshift']['from']) && strtotime($days['Attendance']['in']) >= strtotime($today.' '.$days['MyWorkshift']['from']) ) {
+
+				$dateIn = date('Y-m-d h:i:00',strtotime($days['Attendance']['in']));
+
+				$timeIn = strtotime($dateIn); 
+				
+				$toTime = strtotime($today.' '.$days['MyWorkshift']['from']); 
+
+				$total = abs($toTime - $timeIn);
+
+				$total = round($total / 60);
+
+			}
+
+			return $total;
+
+		}
+	}
+
+	function _regularDays($days) {
+
+		if (!empty($days['Attendance']['in']) && !empty($days['Attendance']['out'])) {
+
+
+			$inToday = date('Y-m-d',strtotime($days['Attendance']['in']));
+			$outToday = date('Y-m-d',strtotime($days['Attendance']['out']));
+
+			$time1 = $days['Attendance']['in'];
+
+		if (strtotime($days['Attendance']['in']) <= strtotime($outToday.' '.$days['MyWorkshift']['from']) ) {
+
+
+			$time1 = $outToday.' '.$days['MyWorkshift']['from'];
+
+		}
+		$time2 = $days['Attendance']['out'];
+
+
+		if ($this->is_date($days['Attendance']['in']) && $this->is_date($days['Attendance']['out']) ) {
+
+				
+		$date = date('Y-m-d');
+		$date1 = new DateTime($time1);
+		$date2 = new DateTime($time2);
+
+		$interval = $date1->diff($date2)->format('%h');
+
+		if ($interval > 8) {
+			$interval = 8;
+		}
+
+			// if ($interval->d != 0){
+			// 	$days = ($interval->d > 1) ? 'days' : 'day';
+			// $difference	.= $interval->d  .' '.$days;
+			// }
+			// else{
+			// 	if ($interval->h != 0){
+			// 		$difference .= $interval->h  . 'h';
+			// 	} 
+			// }
+
+			// if ($interval->d == 0 && $interval->invert == 0 && $interval->i != 0) {
+			// 	if ($interval->h != 0) {
+			// 	  $difference .= ' & ';
+			// 	}
+			// 	$minutes = 'm';
+
+			// 	if ($interval->i > 1) {
+			// 		$minutes = 'm';
+			// 	}
+			// 	$difference .= $interval->i  .$minutes;
+			// }
+		return $interval;
+
+		}
+	}
+
+	}
 
     private function _dailyRate($employee = null, $models = array() ,$hours = 8, $workingDays = 26 ) {
 
@@ -414,6 +779,13 @@ class SalaryComputationComponent extends Component
 		$data['legal_holiday_work'] =  0;
 		$data['night_diff_legal_holiday'] =  0;
 		$data['night_diff_legal_holiday_work'] =  0;
+		$data['special_holiday_work_night_diff'] = 0;
+		$data['legal_holiday_work_night_diff_ot'] = 0;
+
+
+		$data['legal_holiday_work_night_diff'] = 0;
+		$data['legal_holiday_work_night_diff_ot'] = 0;
+
 		$data['special_holiday'] =  0;
 		$data['special_holiday_work'] =  0;
 		$data['special_holiday_work_ot'] =  0;
@@ -421,8 +793,8 @@ class SalaryComputationComponent extends Component
 		$data['night_diff_special_holiday_work'] =  0;
 		$data['sunday_work'] =  0;
 		$data['sunday_work_ot'] =  0;
-		$data['night_diff_sunday_work'] =  0;
-		$data['night_diff_sunday_work_ot'] =  0;
+		$data['sunday_work_night_diff'] =  0;
+		$data['sunday_work_night_diff_ot'] =  0;
 		$data['leave'] =  0;
 		$data['sunday_legal_holiday'] =  0;
 		$data['sunday_work_legal_holiday'] =  0;
@@ -435,6 +807,9 @@ class SalaryComputationComponent extends Component
 
     	$data['hours_sunday_work'] = 0;
     	$data['hours_sunday_work_ot'] = 0;
+
+    	$data['hours_sunday_work_night_diff'] = 0;
+    	$data['hours_sunday_work_night_diff_ot'] = 0;
 
     	$data['hours_sunday_night_diff'] = 0;
     	$data['hours_sunday_night_diff_ot'] = 0;
@@ -467,43 +842,30 @@ class SalaryComputationComponent extends Component
 	
     	$data['excess_ot'] = 0;
     	$data['hours_excess_ot'] = 0;
+    	$data['regular_OT'] = 0;
+
+    	$data['sunday_ctpa'] = 0;
+    	$data['sunday_sea'] = 0;
+
+    	$data['regular_days'] = 0;
 
     	if (!empty($employee)) {
 
 		$daysGet = array();
 
+		$times = array();
+
+		$differences = array();
+
+		$timeSunday = array();
+
     	foreach ($employee['Attendance'] as $key => $days) {
     				
-    			//$data['total_hours'] += $this->_total_hours($days);
-
-    			//check if OT
-				if (!empty($days['Attendance']['overtime_id'])) {
-					
-					$data['hours_ot'] = 0;
-
-					$Overtime = ClassRegistry::init('Overtime');
-
-					//$overtime = $Overtime->read(null,$data['Attendance']['overtime_id']);
-
-					if  ( $days['Attendance']['out'] > $data['WorkShift']['to'] ) {
-						
-						$from  =  new DateTime($data['WorkShift']['to']);
-						$to  =  new DateTime($data['Attendance']['out']);
-
-						$days['hours_ot'] =  $from->diff($to)->format('%h.%i'); 
-					}
-					
-					//regular ot is 1.25	
-					$data['OT'] = ($employee['Salary']['basic_pay'] * $days['hours_ot'] * 1.25 ) / $hours;
-
-				}
-
-				//holidays 
-				
-				//holidays 
-				$today = date('Y-m-d',strtotime($days['Attendance']['date']));
+    			//holidays 
+				$today = date('Y-m-d',strtotime($days['Attendance']['in']));
 
 				$legal_holiday_work = 0.00;
+				
 				$special_holiday_work = 0.00;
 
 				foreach ($models['Holiday'] as $holiday_key => $holiday) {
@@ -577,49 +939,101 @@ class SalaryComputationComponent extends Component
     			//check working days
 				if (!empty($days['Attendance']['in']) && !empty($days['Attendance']['out'])) {
 
-					$countDays++;
+					$timeIn =  date('Y-m-d H:i:s',strtotime($days['Attendance']['in']));
+
+					$inToday = strtotime($days['Attendance']['in']);
+
+					$workSched = strtotime($today.' '.$days['MyWorkshift']['from']);
+
+
+					$workEndToday = strtotime($today.' '.$days['MyWorkshift']['to']);
 
 				}
-    		
-    		//check if days is not holiday or sundays
+
+    			//check if days is not holiday or sundays
 				if (!in_array($today, $daysGet) && date("w",strtotime($today)) != 0) {
 
+					$inToday = date('Y-m-d',strtotime($days['Attendance']['in']));
+					
 					$data['hours_regular'] += $this->_total_hours($days);
+
+					//$data['hours_regular'] += $this->_getDifference($days);
+
+					$data['regular_days'] += $this->_regularDays($days);
+
+					$differences[$key]['minutes'] = $this->_getDifference($days);
+
+					$differences[$key]['in'] = $days['Attendance']['in'];
+
+
+					$differences[$key]['from'] = $inToday.' '.$days['MyWorkshift']['from'];
+
+					//$times[] = $this->_total_hours($days);
 					//regular_ot 
-					$overtime = $this->_checkOvertime($days);
-					$data['hours_ot'] += $overtime['total_hours'];
+					$over = $this->_checkOvertime($days);
+
+					$data['hours_ot'] += $over['total_hours'];
+
+					$data['regular_OT'] += $over['total_hours'];
+
 
 					//regular night differential
 
-					if (!empty($days['Attendance']['in']) && !empty($days['Attendance']['out'])) {
-						
-						$data['hours_night_diff'] += $this->_nightDiff($days);
+					if (!empty($days['Attendance']['in']) && !empty($days['Attendance']['out']) ) {
+							
+						$today = $days['MySchedule']['day'];
 
-						$data['hours_night_diff_ot'] += $overtime['night_diff'];
+						$fromDate = $today .' 22:00:00';
+						
+						$myShift = $today.' '.$days['MyWorkshift']['from'];
+
+						if (strtotime($myShift) >= $fromDate) {
+
+							$data['hours_night_diff'] += $this->_nightDiff($days);
+
+							$data['hours_night_diff_ot'] += $over['night_diff'];
+
+						}
+						
+					
+						$regular_days++;
+						// if () {
+
+						// }		
 					}
 
 
 		
 				}
+
 				//sunday work
-				if (date("w",strtotime($today)) == 0 && in_array($today, $daysGet)) {
-						
+				if (date("w",strtotime($today)) == 0 && !in_array($today, $daysGet)) {
+							
+
 					if (!empty($days['Attendance']['in']) && !empty($days['Attendance']['out'])) {
 
 						$sunday_days++;	
+
 						$data['hours_sunday_work'] += $this->_total_hours($days);
+
+						//$timeSunday[] =  $this->_total_hours($days);
+
+						//pr($data['hours_sunday_work']);
 						//sunday_work_ot 
 						$overtime = $this->_checkOvertime($days);
 						$data['hours_sunday_work_ot'] += $overtime['total_hours'];
 
 						if (!empty($days['Attendance']['in']) && !empty($days['Attendance']['out'])) {
 						
-							$data['hours_sunday_night_diff'] += $this->_nightDiff($days);
+							$data['hours_sunday_work_night_diff'] += $this->_nightDiff($days);
 
-							$data['hours_sunday_night_diff_ot'] += $overtime['night_diff'];
+							$data['hours_sunday_work_night_diff_ot'] += $overtime['night_diff'];
 						}
-			
 
+						$data['sunday_ctpa'] = !empty($models['Salary']['ctpa']) ? $models['Salary']['ctpa'] : 0;
+
+						$data['sunday_sea'] = !empty($models['Salary']['sea']) ? $models['Salary']['sea'] : 0;
+			
 					}
 				}	
 
@@ -628,22 +1042,28 @@ class SalaryComputationComponent extends Component
 
     	}
 
-		$data['regular'] = ($employee['Salary']['basic_pay'] * $data['hours_regular']) / $hours;
+    	$basicPay = $employee['Salary']['basic_pay'];
 
+		$data['regular'] = ($basicPay * $data['hours_regular']) / $hours;
+
+		// pr( $data['hours_regular'] );
+		// pr($employee['Salary']['basic_pay']);
+
+		// pr( $hours );
 		//sunday work
 		if ($data['hours_sunday_work'] > 0) {
 
-			$data['sunday_work'] = ($employee['Salary']['basic_pay'] * $data['hours_sunday_work'] * 1.3 ) / $hours;
+			$data['sunday_work'] = ($basicPay * $data['hours_sunday_work'] * 1.3 ) / $hours;
 
 			if ( $data['hours_sunday_work_ot'] > 0) {
 
-				$data['sunday_work_ot'] = ($employee['Salary']['basic_pay'] * $data['hours_sunday_work_ot'] * 1.3 * 1.3 ) / $hours;
+				$data['sunday_work_ot'] = ($basicPay * $data['hours_sunday_work_ot'] * 1.3 * 1.3 ) / $hours;
 
 			}
 
 			//sunday night diff	
-			if (  $data['hours_sunday_night_diff']  > 0) {
-					$data['sunday_night_diff'] = ($employee['Salary']['basic_pay'] * $data['hours_sunday_night_diff'] * 1.3 * 0.1 ) / $hours;
+			if (  $data['hours_sunday_work_night_diff']  > 0) {
+					$data['sunday_work_night_diff'] = ($basicPay * $data['hours_sunday_work_night_diff'] * 1.3 * 0.1 ) / $hours;
 			}
 		
 		}
@@ -651,26 +1071,36 @@ class SalaryComputationComponent extends Component
 		//legal holiday 
 		if ($legal_holiday_days > 0) {
 			
-			$data['legal_holiday'] = ($employee['Salary']['basic_pay'] * $hours ) / $hours; //($employee['Salary']['basic_pay'] * $legal_holiday_hours ) /  ($workingDays * $hours);
+			$data['legal_holiday'] = ($basicPay * $hours ) / $hours; //($employee['Salary']['basic_pay'] * $legal_holiday_hours ) /  ($workingDays * $hours);
 
-			$data['legal_holiday_work'] = ($employee['Salary']['basic_pay'] * $data['hours_legal_holiday_work'] ) / $hours;  //($employee['Salary']['basic_pay'] * $legal_holiday_work )  / ($workingDays * 8);
+			$data['legal_holiday_work'] = ($basicPay * $data['hours_legal_holiday_work'] ) / $hours;  //($employee['Salary']['basic_pay'] * $legal_holiday_work )  / ($workingDays * 8);
 
-			$data['legal_holiday_work_ot'] = ($employee['Salary']['basic_pay'] * $data['hours_legal_holiday_work_ot'] * 2.30 ) / $hours;
+			$data['legal_holiday_work_ot'] = ($basicPay * $data['hours_legal_holiday_work_ot'] * 2.30 ) / $hours;
 
 			if ($data['hours_legal_holiday_sunday_work']  > 0) {
 				
-			 	$data['legal_holiday_sunday_work'] = ($employee['Salary']['basic_pay'] * $data['hours_legal_holiday_sunday_work'] * 2 * 1.3 ) / $hours;
+			 	$data['legal_holiday_sunday_work'] = ($basicPay * $data['hours_legal_holiday_sunday_work'] * 2 * 1.3 ) / $hours;
 			}
 
 			if ($data['hours_legal_holiday_sunday_work_night_diff'] > 0) {
 				
-				$data['legal_holiday_sunday_work_night_diff'] = ($employee['Salary']['basic_pay'] * $data['hours_legal_holiday_sunday_work_night_diff'] * 2.0 * 0.1 ) / $hours;
+				$data['legal_holiday_sunday_work_night_diff'] = ($basicPay * $data['hours_legal_holiday_sunday_work_night_diff'] * 2.0 * 0.1 ) / $hours;
 			}
 			if ($data['hours_legal_holiday_sunday_work_night_diff_ot'] > 0) {
 
-				$data['legal_holiday_sunday_work_night_diff_ot'] = ($employee['Salary']['basic_pay'] * $data['hours_legal_holiday_sunday_work_night_diff'] * 2.0 * 1.3 * 1.1 ) / $hours; 
+				$data['legal_holiday_sunday_work_night_diff_ot'] = ($basicPay * $data['hours_legal_holiday_sunday_work_night_diff'] * 2.0 * 1.3 * 1.1 ) / $hours; 
 			}
-			
+
+			if ($data['hours_legal_holiday_work_night_diff']) {
+
+				$data['legal_holiday_work_night_diff'] = ($basicPay * $data['hours_legal_holiday_work_night_diff'] * 2.0 * 0.1 ) / $hours; 
+			}
+			//need yo change because it was the same as for regular night diff
+			if ($data['hours_legal_holiday_work_night_diff_ot'] > 0) {
+
+				$data['legal_holiday_work_night_diff_ot'] = ($basicPay * $data['hours_legal_holiday_work_night_diff'] * 2.0 * 0.1 ) / $hours; 
+		
+			}
 		
 		}	
 		//special holiday
@@ -680,47 +1110,90 @@ class SalaryComputationComponent extends Component
 			//$data['special_holiday_new'] = ($employee['Salary']['basic_pay'] * $special_holiday_hours ) /  ($workingDays * $hours);
 			if ( $data['special_holiday_work'] > 0 ) {
 
-				$data['special_holiday_work'] = ($employee['Salary']['basic_pay'] * $data['hours_special_holiday_work'] * 1.3 ) /  $hours; //($workingDays * $hours); $daily * $data['hours_special_holiday_work']; //($employee['Salary']['basic_pay'] * $special_holiday_work )  / ($workingDays * 8);
+				$data['special_holiday_work'] = ($basicPay * $data['hours_special_holiday_work'] * 1.3 ) /  $hours; //($workingDays * $hours); $daily * $data['hours_special_holiday_work']; //($employee['Salary']['basic_pay'] * $special_holiday_work )  / ($workingDays * 8);
 			}
 
 			if ( $data['hours_special_holiday_work_ot'] > 0 ) {
 
-				$data['special_holiday_work_ot'] = ($employee['Salary']['basic_pay'] * $data['hours_special_holiday_work_ot'] * 1.3  * 1.3) /  $hours; 
+				$data['special_holiday_work_ot'] = ($basicPay * $data['hours_special_holiday_work_ot'] * 1.3  * 1.3) /  $hours; 
 			}
 
 			if ( $data['hours_special_holiday_sunday_work'] > 0 ) {
 
-				$data['special_holiday_work_ot'] = ($employee['Salary']['basic_pay'] * $data['hours_special_holiday_work_ot'] * 1.3  * 1.3) /  $hours; 
+				$data['special_holiday_work_ot'] = ($basicPay * $data['hours_special_holiday_work_ot'] * 1.3  * 1.3) /  $hours; 
 			}
 			
 		
 			if ($data['hours_special_holiday_sunday_work']  > 0) {
 				
-				$data['special_holiday_sunday_work'] = ($employee['Salary']['basic_pay'] * $data['hours_special_holiday_work_ot'] * 1.5 ) /  $hours; 
+				$data['special_holiday_sunday_work'] = ($basicPay * $data['hours_special_holiday_work_ot'] * 1.5 ) /  $hours; 
 			}
 
 			if ($data['hours_special_holiday_sunday_work_night_diff'] > 0) {
 				
-				$data['special_holiday_sunday_work_night_diff'] = ($employee['Salary']['basic_pay'] * $data['hours_special_holiday_sunday_work_night_diff'] * 1.5 * 1.3 * 1.1 ) /  $hours; 
+				$data['special_holiday_sunday_work_night_diff'] = ($basicPay * $data['hours_special_holiday_sunday_work_night_diff'] * 1.5 * 1.3 * 1.1 ) /  $hours; 
 			}
 
 			if ($data['hours_special_holiday_sunday_work_night_diff_ot'] > 0) {
 
-				$data['special_holiday_sunday_work_night_diff_ot'] == ($employee['Salary']['basic_pay'] * $data['hours_special_holiday_sunday_work_night_diff'] * 2.6 * 1.3 * 1.1 ) /  $hours; 
+				$data['special_holiday_sunday_work_night_diff_ot'] == ($basicPay * $data['hours_special_holiday_sunday_work_night_diff'] * 2.6 * 1.3 * 1.1 ) /  $hours; 
 			}
-		
+			
+			if ($data['hours_special_holiday_work_night_diff']) {
+
+				$data['special_holiday_work_night_diff'] = ($basicPay* $data['hours_special_holiday_sunday_work_night_diff'] * 1.25 * 1.1 ) / $hours; 
+			}
+
+			//special holiday nightdiff ot
+			if ($data['hours_special_holiday_work_night_diff_ot']) {
+
+				$data['special_holiday_work_night_diff_ot'] = ( $basicPay * $data['hours_special_holiday_sunday_work_night_diff'] * 1.3 * 1.3 * 1.1 ) / $hours; 
+			}
 		}
  
 		foreach ($data as $pay_keys => $list) {
 			
-			if (in_array($pay_keys,array('regular','OT','legal_holiday','legal_holiday_work','night_diff_legal_holiday', 'night_diff_legal_holiday_work', 'special_holiday', 'special_holiday_work', 'night_diff_special_holiday', 'night_diff_special_holiday_work','sunday_work','sunday_work_ot','night_diff_sunday_work','night_diff_sunday_work_ot','leave'))) {
+			if (in_array($pay_keys,array(
+				'regular',
+				'OT',
+				'legal_holiday',
+				'legal_holiday_work',
+				'night_diff_legal_holiday',
+				'night_diff_legal_holiday_work',
+				'special_holiday',
+				'special_holiday_work',
+				'night_diff_special_holiday',
+				'night_diff_special_holiday_work',
+				'sunday_work',
+				'sunday_work_ot',
+				'sunday_work_night_diff',
+				'sunday_work_night_diff_ot',
+				'night_diff_sunday_work',
+				'night_diff_sunday_work_ot',
+				'leave',
+				'legal_holiday_work_night_diff',
+				'legal_holiday_work_night_diff_ot',
+				'special_holiday_work_night_diff',
+				'special_holiday_work_night_diff_ot',
+				'sunday_ctpa',
+				'sunday_sea'
+
+				))) {
 							
-						$data['gross'] += $list;
+					$data['gross'] += $list;
 				}
 		}
 
 
+		if ($data['hours_regular'] > 0) {
+				
+				$countDays++;
+		}
+
+
 		$data['days'] = $countDays;
+
+		//pr($data['hours_regular']);
 
 		//excess overtime
 		if ($data['hours_excess_ot'] > 0) {
@@ -729,9 +1202,28 @@ class SalaryComputationComponent extends Component
 		
 		}
 
-		$data['gross'] = $data['gross'];
+		//$data['gross'] = $data['gross'];
 
     	}
+
+
+    	//$data['hours_regular'] = ($regular_days * 8) - 0.127; //$this->addWorkTime($times);
+
+
+    	//$regularDays = ($regular_days * 8);
+
+    	$data['hours_regular'] = $data['regular_days'];
+
+
+    	foreach ($differences as $key => $value) {
+    	
+    		$data['hours_regular'] -= '0.'.$value['minutes'];
+
+    	}
+
+    	$data['sunday_days'] = $sunday_days;
+
+    	// $data['hours_sunday_work'] = $this->addWorkTime($timeSunday);
 
     	return $data;
     }
@@ -791,6 +1283,7 @@ class SalaryComputationComponent extends Component
 		$data['legal_holiday_work'] =  0;
 		$data['night_diff_legal_holiday'] =  0;
 		$data['night_diff_legal_holiday_work'] =  0;
+		$data['night_diff_legal_holiday_work_ot'] = 0;
 		$data['special_holiday'] =  0;
 		$data['special_holiday_work'] =  0;
 		$data['special_holiday_work_ot'] =  0;
@@ -846,6 +1339,13 @@ class SalaryComputationComponent extends Component
     	$data['excess_ot'] = 0;
     	$data['hours_excess_ot'] = 0;
 
+    	$data['regular_days'] = 0;
+		$data['regular_OT'] = 0;
+
+		$data['sunday_days'] = 0;
+
+
+    	$times = array();
 		
     	if (!empty($employee)) {
 
@@ -858,10 +1358,11 @@ class SalaryComputationComponent extends Component
 
     	foreach ($employee['Attendance'] as $key => $days) {
 
-    			$data['total_hours'] = $this->_total_hours($days);
+    			//$data['total_hours'] = $this->_total_hours($days);
 
     			//check working days
 				if (!empty($days['Attendance']['in']) && !empty($days['Attendance']['out'])) {
+					
 					$regular_days++;
 				}
 
@@ -869,17 +1370,16 @@ class SalaryComputationComponent extends Component
 				$today = date('Y-m-d',strtotime($days['Attendance']['date']));
 
 				$legal_holiday_work = 0.00;
+
 				$special_holiday_work = 0.00;
+
+
 
 				foreach ($models['Holiday'] as $holiday_key => $holiday) {
 
 					if ($today >= $holiday['Holiday']['start_date'] && $today <= $holiday['Holiday']['end_date']) {
 
 							$daysGet[] = $today;
-
-							// $data['regular'] = 0.0;
-							// $data['OT'] = 0.0;
-
 							//legal holiday
 							if ($holiday['Holiday']['type'] == 'regular') {
 								$legal_holiday_hours += $hours;
@@ -959,34 +1459,98 @@ class SalaryComputationComponent extends Component
 
 				}
 				
+
 				//check if days is not holiday or sundays
 				if (!in_array($today, $daysGet) && date("w",strtotime($today)) != 0) {
 
+					$inToday = date('Y-m-d',strtotime($days['Attendance']['in']));
+
 					$data['hours_regular'] += $this->_total_hours($days);
+
+					//$data['hours_regular'] += $this->_getDifference($days);
+
+					$data['regular_days'] += $this->_regularDays($days);
+
+					$differences[$key]['minutes'] = $this->_getDifference($days);
+
+					$differences[$key]['in'] = $days['Attendance']['in'];
+
+					$differences[$key]['from'] = $inToday.' '.$days['MyWorkshift']['from'];
+
+					//$times[] = $this->_total_hours($days);
 					//regular_ot 
-					$overtime = $this->_checkOvertime($days);
-					$data['hours_ot'] += $overtime['total_hours'];
+					$over = $this->_checkOvertime($days);
+
+					$data['hours_ot'] += $over['total_hours'];
+
+					$data['regular_OT'] += $over['total_hours'];
+
 
 					//regular night differential
 
-					if (!empty($days['Attendance']['in']) && !empty($days['Attendance']['out'])) {
-						
-						$data['hours_night_diff'] += $this->_nightDiff($days);
+					if (!empty($days['Attendance']['in']) && !empty($days['Attendance']['out']) ) {
+							
+						$today = $days['MySchedule']['day'];
 
-						$data['hours_night_diff_ot'] += $overtime['night_diff'];
+						$fromDate = $today .' 22:00:00';
+						
+						$myShift = $today.' '.$days['MyWorkshift']['from'];
+
+						if (strtotime($myShift) >= $fromDate) {
+
+							$data['hours_night_diff'] += $this->_nightDiff($days);
+
+							$data['hours_night_diff_ot'] += $over['night_diff'];
+
+						}
+						
+					
+						//$regular_days++;
+						// if () {
+
+						// }		
 					}
 
 
+		
 				}
-				//sunday work
-				if (date("w",strtotime($today)) == 0 && in_array($today, $daysGet)) {
-						
-					if (!empty($days['Attendance']['in']) && !empty($days['Attendance']['out'])) {
 
-						$sunday_days++;	
+				// //check if days is not holiday or sundays
+				// if (!in_array($today, $daysGet) && date("w",strtotime($today)) != 0) {
+
+				// 	$data['hours_regular'] += $this->_total_hours($days);
+
+				// 	$times[] = $this->_total_hours($days);
+				// 	//regular_ot 
+				// 	$overtime = $this->_checkOvertime($days);
+				// 	$data['hours_ot'] += $overtime['total_hours'];
+
+				// 	//regular night differential
+
+				// 	if (!empty($days['Attendance']['in']) && !empty($days['Attendance']['out'])) {
+						
+				// 		$data['hours_night_diff'] += $this->_nightDiff($days);
+
+				// 		$data['hours_night_diff_ot'] += $overtime['night_diff'];
+				// 	}
+
+
+				// }
+
+				//sunday work not holiday
+				if (date("w",strtotime($today)) == 0 && !in_array($today, $daysGet)) {
+							
+
+					if (!empty($days['Attendance']['in']) && !empty($days['Attendance']['out'])) {
+						
+
 						$data['hours_sunday_work'] += $this->_total_hours($days);
+
+						$data['sunday_days'] += $this->_regularDays($days);
+
 						//sunday_work_ot 
 						$overtime = $this->_checkOvertime($days);
+
 						$data['hours_sunday_work_ot'] += $overtime['total_hours'];
 
 						if (!empty($days['Attendance']['in']) && !empty($days['Attendance']['out'])) {
@@ -1001,8 +1565,8 @@ class SalaryComputationComponent extends Component
 				}
 		
 
-		//check excess_ot on regular days
-		$data['hours_excess_ot'] += $this->_excessOvertime($days);
+			//check excess_ot on regular days
+			$data['hours_excess_ot'] += $this->_excessOvertime($days);
 
     	}
 
@@ -1010,78 +1574,72 @@ class SalaryComputationComponent extends Component
     }
 
 
-    	$data['days'] = ($regular_days + $legal_holiday_days + $special_days);
+    	//$data['days'] = ($regular_days + $legal_holiday_days + $special_days);
 
 
     	if ($payrollSettings['Setting']['payment_type'] == 'month') {
 
+    		$getDaily = $employee['Salary']['basic_pay']  /  $workingDays;
+
 	    	//daily 
-			
-			$data['regular'] = ( $employee['Salary']['basic_pay']  /  ($workingDays * $hours) ) * $data['hours_regular'];
-			
-			$data['OT'] = ( $employee['Salary']['basic_pay']  /  ($workingDays * $hours) )  *  $data['hours_ot'] * 1.25; //($employee['Salary']['basic_pay'] * $data['hours_ot'] * 1.25 ) /  ($workingDays * $hours);
+			$data['regular'] = ( $getDaily ) * $data['hours_regular'] / $hours;
+		
+			//Overtime
+			$data['OT'] = ( $getDaily )  *  ( $data['hours_ot'] * 1.25) / $hours; //($employee['Salary']['basic_pay'] * $data['hours_ot'] * 1.25 ) /  ($workingDays * $hours);
 
-			//night differential
-			// if ( $data['hours_night_diff'] > 0) {
-
-			// 		$data['night_diff'] = $daily * 0.10 * $data['hours_night_diff'];
-			// 	}
-				
-			// if ( $data['hours_night_diff_ot'] > 0) {
-
-			// 	$data['night_diff_ot'] = $daily * 1.25 * 1.1 * $data['hours_night_diff_ot'];
-
-			// }
-
-
-				//sunday work
+			//sunday work
 			if ($sunday_days > 0) {
 
-				$data['sunday_work'] =  ( $employee['Salary']['basic_pay']  /  ($workingDays * $hours) )  * $data['hours_sunday_work'] * 1.3;  //($employee['Salary']['basic_pay'] * $data['hours_sunday_work'] * 1.3) /  ($workingDays * $hours);
+				$data['sunday_work'] =  ( $getDaily )  * ( $data['hours_sunday_work'] * 1.3 ) / $hours;  //($employee['Salary']['basic_pay'] * $data['hours_sunday_work'] * 1.3) /  ($workingDays * $hours);
 
-				$data['sunday_work_ot'] = ( $employee['Salary']['basic_pay']  /  ($workingDays * $hours) ) * $data['hours_sunday_work'] * 1.3 * 1.3;
+				$data['sunday_work_ot'] = ( $getDaily ) * ( $data['hours_sunday_work_ot'] * 1.3 * 1.3 ) / $hours; 
 
 				//sunday night diff
-				$data['sunday_night_diff'] = ( $employee['Salary']['basic_pay']  /  ($workingDays * $hours) ) * $data['hours_sunday_night_diff'] * 1.3 * 0.1;
+				$data['sunday_night_diff'] = ( $getDaily ) * ( $data['hours_sunday_night_diff'] * 1.3 * 0.1) / $hours;
 			}
 
 
 			if ($legal_holiday_days > 0) {
 			
-				$data['legal_holiday'] = ($employee['Salary']['basic_pay'] /  ($workingDays * $hours)) * $hours;
+				$data['legal_holiday'] = ( $getDaily ) *  $legal_holiday_hours / $hours;
 
-				$data['legal_holiday_work'] = ($employee['Salary']['basic_pay'] / ($workingDays * $hours)) * $data['hours_legal_holiday_work']; //($employee['Salary']['basic_pay'] * $legal_holiday_work )  / ($workingDays * 8);
+				$data['legal_holiday_work'] = $employee['Salary']['basic_pay'] / $workingDays *  ($data['hours_legal_holiday_work'] / $hours); //($employee['Salary']['basic_pay'] * $legal_holiday_work )  / ($workingDays * 8);
 
-				$data['legal_holiday_work_ot'] = ($employee['Salary']['basic_pay'] / ($workingDays * $hours)) * $data['hours_sunday_work_ot'] * 2.30;
+				$data['legal_holiday_work_ot'] = ( $getDaily ) * ($data['hours_sunday_work_ot'] * 2.30 ) / $hours;
 
 				//legal holiday sunday work
 				if ($data['hours_legal_holiday_sunday_work']  > 0) {
 					
-					$data['legal_holiday_sunday_work'] = ($employee['Salary']['basic_pay'] / ($workingDays * $hours)) * $data['hours_legal_holiday_sunday_work'] * 2 * 1.3;
+					$data['legal_holiday_sunday_work'] = ( $getDaily ) * ($data['hours_legal_holiday_sunday_work'] * 2 * 1.3) / $hours;
 				}
 				
 				//legal holiday sunday ot
 				if ($data['hours_legal_holiday_sunday_work_ot']  > 0) {
 					
-					$data['legal_holiday_sunday_work_ot'] = ($employee['Salary']['basic_pay'] / ($workingDays * $hours)) * $data['hours_legal_holiday_sunday_work_ot'] * 2.6 * 1.3;
+					$data['legal_holiday_sunday_work_ot'] =  ( $getDaily ) * ($data['hours_legal_holiday_sunday_work_ot'] * 2.6 * 1.3) / $hours;
 				}
 
 				//legal holiday work night diff
 				if ($data['hours_legal_holiday_work_night_diff'] > 0) {
 
-					$data['legal_holiday_work_night_diff'] = ($employee['Salary']['basic_pay'] / ($workingDays * $hours)) * $data['hours_legal_holiday_work_night_diff'] * 2.0 * 0.1;	
+					$data['legal_holiday_work_night_diff'] = ($getDaily) * ($data['hours_legal_holiday_work_night_diff'] * 2.0 * 0.1) / $hours;	
+				}
+
+				if ($data['hours_legal_holiday_work_night_diff_ot'] > 0) {
+
+					$data['legal_holiday_work_night_diff_ot'] = ($getDaily) * ($data['hours_legal_holiday_work_night_diff'] * 2.0 * 1.3 * 1.1) / $hours;	
 				}
 
 				//legal holiday sunday work night diff
 				if ($data['hours_legal_holiday_sunday_work_night_diff'] > 0) {
 
-					$data['legal_holiday_sunday_work_night_diff'] = ($employee['Salary']['basic_pay'] / ($workingDays * $hours)) *  $data['hours_legal_holiday_sunday_work_night_diff'] * 2.6 * 1.3 * 1.1;//$daily * 2.6 * 1.3 * 1.1 * $data['hours_legal_holiday_sunday_work_night_diff'];
+					$data['legal_holiday_sunday_work_night_diff'] = ($getDaily) * ( $data['hours_legal_holiday_sunday_work_night_diff'] * 2.6 * 1.3 * 1.1) / $hours;//$daily * 2.6 * 1.3 * 1.1 * $data['hours_legal_holiday_sunday_work_night_diff'];
 				}
 				
 				//legal holiday sunday work night diff ot	
 				if ($data['hours_legal_holiday_sunday_work_night_diff_ot'] > 0) {
 
-					$data['legal_holiday_sunday_work_night_diff_ot'] = ($employee['Salary']['basic_pay'] / ($workingDays * $hours)) *  $data['hours_legal_holiday_sunday_work_night_diff'] * 2.6 * 1.3 * 1.1;
+					$data['legal_holiday_sunday_work_night_diff_ot'] = ( $getDaily ) * ( $data['hours_legal_holiday_sunday_work_night_diff'] * 2.6 * 1.3 * 1.1 ) / $hours;
 				}
 			
 			//$data['legal_holiday_work_new'] = ($employee['Salary']['basic_pay'] * $legal_holiday_work )  / ($workingDays * 8);
@@ -1089,32 +1647,32 @@ class SalaryComputationComponent extends Component
 
 			if ($special_days > 0) {
 
-				$data['special_holiday'] = ($employee['Salary']['basic_pay'] /  ($workingDays * $hours)) * $hours;
+				$data['special_holiday'] = ( $getDaily ) * $special_holiday_hours / $hours;
 
 				//$data['special_holiday_new'] = ($employee['Salary']['basic_pay'] * $special_holiday_hours ) /  ($workingDays * $hours);
 
-				$data['special_holiday_work'] = ($employee['Salary']['basic_pay'] /  ($workingDays * $hours)) * $data['hours_special_holiday_work']; //($employee['Salary']['basic_pay'] * $special_holiday_work )  / ($workingDays * 8);
+				$data['special_holiday_work'] = ( $getDaily ) * $data['hours_special_holiday_work'] / $hours; //($employee['Salary']['basic_pay'] * $special_holiday_work )  / ($workingDays * 8);
 				
-				$data['special_holiday_work_ot'] = ($employee['Salary']['basic_pay'] / ($workingDays * $hours)) * $data['hours_special_holiday_work_ot'] * 1.3 * 1.3;
+				$data['special_holiday_work_ot'] = ( $getDaily ) * ( $data['hours_special_holiday_work_ot'] * 1.3 * 1.3) / $hours;
 
 				if ($data['hours_special_holiday_sunday_work']  > 0) {
 					
-					$data['special_holiday_sunday_work'] = ($employee['Salary']['basic_pay'] /  ($workingDays * $hours)) * $data['hours_special_holiday_sunday_work'] * 1.5;
+					$data['special_holiday_sunday_work'] =  ( $getDaily ) * ( $data['hours_special_holiday_sunday_work'] * 1.5) / $hours;
 				}
 
 				if ($data['hours_special_holiday_sunday_work_ot']  > 0) {
 					
-					$data['special_holiday_sunday_work_ot'] = ($employee['Salary']['basic_pay'] /  ($workingDays * $hours)) * $data['hours_special_holiday_sunday_work_ot'] * 1.3 * 1.3;
+					$data['special_holiday_sunday_work_ot'] = ( $getDaily ) * ($data['hours_special_holiday_sunday_work_ot'] * 1.3 * 1.3) / $hours;
 				}
 
 				if ($data['hours_special_holiday_sunday_work_night_diff'] > 0) {
 					
-					$data['special_holiday_sunday_work_night_diff'] = ($employee['Salary']['basic_pay'] /  ($workingDays * $hours)) *  $data['hours_special_holiday_sunday_work_night_diff'] * 1.3 * 0.1;
+					$data['special_holiday_sunday_work_night_diff'] = ( $getDaily ) *  ( $data['hours_special_holiday_sunday_work_night_diff'] * 1.3 * 0.1 ) / $hours;
 				}
 
 				if ($data['hours_special_holiday_sunday_work_night_diff_ot'] > 0) {
 
-					$data['legal_special_sunday_work_night_diff_ot'] = ($employee['Salary']['basic_pay'] /  ($workingDays * $hours)) * $data['hours_special_holiday_sunday_work_night_diff_ot'] * 1.5 * 1.3 * 1.1;
+					$data['legal_special_sunday_work_night_diff_ot'] = ( $getDaily ) * ( $data['hours_special_holiday_sunday_work_night_diff_ot'] * 1.5 * 1.3 * 1.1 ) / $hours;
 				}
 			}
 
@@ -1129,7 +1687,7 @@ class SalaryComputationComponent extends Component
 
 			//excess overtime
 			if ($data['hours_excess_ot'] > 0) {
-				$data['excess_ot']  = ($employee['Salary']['basic_pay'] /  ($workingDays * $hours) ) * $data['hours_excess_ot'] * 1.25;
+				$data['excess_ot']  = (  $getDaily ) * $data['hours_excess_ot'] * 1.25 / $hours;
 			}
 
  
@@ -1261,9 +1819,26 @@ class SalaryComputationComponent extends Component
 
     	}
 
+	//	$data['hours_regular'] = $this->addWorkTime($times);
+
     }
 
-    	return $data;
+	$data['hours_regular'] = $data['regular_days'];
+
+	if (!empty($differences)) {
+
+			foreach ($differences as $key => $value) {
+	
+		$data['hours_regular'] -= '0.'.$value['minutes'];
+
+	}
+
+
+	}
+
+
+
+	return $data;
     }
 
 
@@ -1331,6 +1906,7 @@ class SalaryComputationComponent extends Component
 
 		}
 
+
 		return $data;
 	}
 
@@ -1369,15 +1945,19 @@ class SalaryComputationComponent extends Component
 
 	if (!empty($data['Attendance']['in']) && !empty($data['Attendance']['out']) ) {
 
-		if (strtotime($data['Attendance']['in']) >= strtotime($data['WorkShift']['from'])) {
-						
+	
+		
+		if (strtotime($data['Attendance']['in']) >= strtotime($data['MyWorkshift']['from'])) {
+			
+			if ($this->is_date($data['Attendance']['in']) && $this->is_date($data['Attendance']['out'])) {
+					
 			$from = new DateTime($data['Attendance']['in']);
 
 			$to = new DateTime($data['Attendance']['out']);
 
-			if ($data['Attendance']['out'] > $data['WorkShift']['to']) {
+			if ($data['Attendance']['out'] > $data['MyWorkshift']['to']) {
 				
-				$to = new DateTime( $data['WorkShift']['to'] );
+				$to = new DateTime( $data['MyWorkshift']['to'] );
 
 			}
 						
@@ -1389,7 +1969,8 @@ class SalaryComputationComponent extends Component
 			
 					$days['total_hours'] -= 1;
 				}
-			}						
+			}	
+			}					
 		}
 
 		//sunday work is nonly for monthly employee
@@ -1442,9 +2023,9 @@ class SalaryComputationComponent extends Component
 
 				//$overtime = $Overtime->read(null,$data['Attendance']['overtime_id']);
 
-				if  ($data['Attendance']['out'] > $data['WorkShift']['to']) {
+				if  ($data['Attendance']['out'] > $data['MyWorkshift']['to']) {
 					
-					$from  =  new DateTime($data['WorkShift']['to']);
+					$from  =  new DateTime($data['MyWorkshift']['to']);
 					$to  =  new DateTime($data['Attendance']['out']);
 
 					$days['hours_ot'] =  $from->diff($to)->format('%h.%i'); 
@@ -1521,6 +2102,12 @@ class SalaryComputationComponent extends Component
 		$compensation = 0;
 		$pay = array();
 
+		$pay['sss_employees'] = 0;
+		$pay['sss_employer'] = 0;
+
+		$pay['sss_compensation'] = 0;
+
+
 		$government_record = array();
 
 		if  (!empty($models['GovernmentRecord'])) {
@@ -1530,7 +2117,7 @@ class SalaryComputationComponent extends Component
 			
 				if ($gov_values['agency_id'] == 1) {
 					
-					$government_record[$gov_values['id']] = $gov_values['value'];
+					$government_record[$gov_values['agency_id']] = $gov_values['value'];
 				
 				}
 			
@@ -1548,20 +2135,23 @@ class SalaryComputationComponent extends Component
 		3. second payroll
 		*/
 
+
+
 		if (!empty($models['Contibution'][1])) {
 
 			$SssRange = ClassRegistry::init('Payroll.SssRange');
 
+
 			switch ($models['Contibution'][1]) {
 				case '1':
-				
+
 				if ( $gross_pay != 0 && (!empty($government_record[1])) ) {
 						
 						$conditions = array('SssRange.credits <=' => $gross_pay );
 						
 						$range = $SssRange->find('first',array('conditions' => $conditions, 'order' => 'SssRange.credits DESC'));
-
-					//	$pay = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
+						
+						$pay['sss_employees'] = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
 				}	
 				break;
 
@@ -1573,7 +2163,7 @@ class SalaryComputationComponent extends Component
 						
 						$range = $SssRange->find('first',array('conditions' => $conditions ,'order' => 'SssRange.credits DESC'));
 
-						$pay = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
+							$pay['sss_employees'] = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
 				}
 				case '3':	
 				
@@ -1583,7 +2173,7 @@ class SalaryComputationComponent extends Component
 						
 						$range = $SssRange->find('first',array('conditions' => $conditions ,'order' => 'SssRange.credits DESC'));
 
-						$pay = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
+							$pay['sss_employees'] = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
 				}
 				case '4':	
 				
@@ -1593,31 +2183,30 @@ class SalaryComputationComponent extends Component
 						
 						$range = $SssRange->find('first',array('conditions' => $conditions ,'order' => 'SssRange.credits DESC'));
 
-						$pay = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
+							$pay['sss_employees'] = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
 				}
 			}
 		
 		}
 
-		$pay['sss_employees'] = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $employees;
+		 $pay['sss_employer'] = !empty($range['SssRange']['employers']) ? $range['SssRange']['employers'] : $employer;
 
-		$pay['sss_employer'] = !empty($range['SssRange']['employers']) ? $range['SssRange']['employers'] : $employer;
-
-		$pay['sss_compensation'] = !empty($range['SssRange']['employee_compensations']) ? $range['SssRange']['employee_compensations'] : $compensation;
+		 $pay['sss_compensation'] = !empty($range['SssRange']['employee_compensations']) ? $range['SssRange']['employee_compensations'] : $compensation;
 
 		foreach ($government_record as $key => $list) {
 			
-				$pay['sss_id'] = $key;
+			//
+			$pay['sss_id'] = $key;
 		
 		 //!empty($list['SssRange']['employee_compensations']) ? $range['SssRange']['employee_compensations'] : $compensation;
 		}
-		
+
 		return $pay;
 	}
 
 	public function philhealth_pay($attendance = null,$salaries = null,$sched = 'first',$gross_pay = 0 ,$models = array()){
 
-		//sss agency id = 2;
+		//sss agency id = ;
 
 		$pay = 0;
 		$government_record = array();
@@ -1625,7 +2214,9 @@ class SalaryComputationComponent extends Component
 		if  (!empty($models['GovernmentRecord'])) {
 
 			foreach ($models['GovernmentRecord'] as $key => $gov_values) {
+
 				$government_record[$gov_values['agency_id']] = $gov_values['value'];
+
 			}
 		}
 
@@ -1677,7 +2268,7 @@ class SalaryComputationComponent extends Component
 				// $pay = !empty($range['PhilHealthRange']['employee']) ? $range['PhilHealthRange']['employee'] : $pay;
 				// $pay = $range['PhilHealthRange']['employees'];
 
-			$pay = '100.00';
+			$pay = 100 / 2;
 		}
 
 		return $pay;
@@ -1778,11 +2369,12 @@ class SalaryComputationComponent extends Component
 			$Amortization = ClassRegistry::init('Payroll.Amortization');
 
 			$conditions = array(
-				'Deduction.from <=' => $customDate['start'],
-				'Deduction.to >=' => date('Y-m-t',strtotime($customDate['end'])),
+				'date(Deduction.to) BETWEEN ? AND ?' => array($customDate['start'],$customDate['end']), 
 				'Deduction.employee_id' => $employee_id,
 				'Deduction.is_deleted' => 0
 				);
+
+		
 
 			$Deduction->bind(array('Loan'));
 
@@ -1793,7 +2385,6 @@ class SalaryComputationComponent extends Component
 					)
 				);
 			
-
 			$my_deductions = array();
 
 			foreach ($deductions as $deduction_key => $deduct) {
@@ -1879,11 +2470,15 @@ class SalaryComputationComponent extends Component
 
 		$total_tax = 0;
 
+		$minimumWage['Wage']['amount'] = !empty($minimumWage) ? $minimumWage : '315.00';
+
 		if (!empty($minimumWage)) {
 
-		if ($data['Salary']['basic_pay'] > $minimumWage['Wage']['amount']) {
 
-				$code = 'Z';
+		if ($data['Salary']['basic_pay'] >= $minimumWage['Wage']['amount']) {
+
+				//default is 
+				$code = 'S_ME';
 
 				if (in_array($taxStatus,array('S','M'))) {
 					$code = 'S_ME';
@@ -1915,11 +2510,12 @@ class SalaryComputationComponent extends Component
 
 				for ($i=1; $i < 8 ; $i++) { 
 						
-						//pr($taxes['Tax']['taxes_'.$i]);
+					//pr($taxes['Tax']['taxes_'.$i]);
 					if ( ( $grossPay >= $taxes['Tax']['taxes_'.$i] ) && $grossPay > $taxes['Tax']['exempt_rate']) {
 						$range = $taxes['Tax']['taxes_'.$i];
 						$taxKey = $i;
 					}
+					
 				}
 
 				$conditions = array('TaxDeduction.type' => $type);

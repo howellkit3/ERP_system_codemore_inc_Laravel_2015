@@ -21,7 +21,7 @@ $totalremaining = 0;
 				<?php //foreach ($deliveryEdit as $deliveryDataList): ?>	
 
 					<?php // pr($clientsOrder); 
-                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'deliveries', 'action' => 'view', $clientsOrder['ClientOrderDeliverySchedule']['id'],$clientsOrder['QuotationDetail']['quotation_id'],$clientsOrder['ClientOrderDeliverySchedule']['uuid']),array('class' =>'btn btn-primary pull-right','escape' => false));
+                        echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'deliveries', 'action' => 'view', $clientsOrder['ClientOrderDeliverySchedule']['id'],$clientsOrder['QuotationDetail']['quotation_id'],$clientsOrder['ClientOrderDeliverySchedule']['uuid'],$deliveryEdit['Delivery']['clients_order_id']),array('class' =>'btn btn-primary pull-right','escape' => false));
                     ?>
 		
 				</header>
@@ -55,7 +55,7 @@ $totalremaining = 0;
         
 	        ?>
 
-		<?php echo $this->Form->create('Delivery',array('url'=>(array('controller' => 'deliveries','action' => 'delivery_edit',$deliveryEdit['Delivery']['dr_uuid'], $clientsOrder['ClientOrderDeliverySchedule']['uuid'],$deliveryEdit['Delivery']['schedule_uuid'] ))));?>			
+		<?php echo $this->Form->create('Delivery',array('url'=>(array('controller' => 'deliveries','action' => 'delivery_edit',$deliveryEdit['Delivery']['dr_uuid'], $clientsOrder['ClientOrderDeliverySchedule']['uuid'],$deliveryEdit['Delivery']['schedule_uuid'],$deliveryEdit['Delivery']['clients_order_id'] ))));?>			
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="main-box">

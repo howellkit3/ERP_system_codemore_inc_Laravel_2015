@@ -25,11 +25,18 @@
 						Client order view Specification
 					</h1>
 					<div class="filter-block pull-right">
-						<?php 
+						<?php  //pr($clientOrderData); exit;
 							echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Return to Sales ', array('controller' => 'sales_orders', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
-							
-							echo $this->Html->link('<i class="fa fa-location-arrow fa-lg"></i> Proceed to Job Ticket ', array('controller' => 'ticketing_systems', 'action' => 'index','plugin' => 'ticket'),array('class' =>'btn btn-primary pull-right','escape' => false));
 
+							if(!empty($productData['JobTicket'])){
+							
+								echo $this->Html->link('<i class="fa fa-location-arrow fa-lg"></i> Proceed to Job Ticket ', array('controller' => 'ticketing_systems', 'action' => 'view',$productData['Product']['uuid'], $productData['JobTicket']['id'], $productData['JobTicket']['client_order_id'],'plugin' => 'ticket'),array('class' =>'btn btn-primary pull-right','escape' => false));
+
+							}else{
+
+								echo $this->Html->link('<i class="fa fa-location-arrow fa-lg"></i> Proceed to Job Ticket', array('controller' => 'create_order', 'action' => 'create_ticket', $productData['Product']['id'], $clientOrderId, $clientOrderData['ClientOrder']['po_number'], $productData['Product']['uuid'], 'plugin' => 'sales'),array('class' =>'btn btn-primary pull-right','escape' => false));
+
+							}
 							//echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array('controller' => 'products','action' => 'print_specs',$productData['Product']['uuid']),array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
 						?>
 					</div>

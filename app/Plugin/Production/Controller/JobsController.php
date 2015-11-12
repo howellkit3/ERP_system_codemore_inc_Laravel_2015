@@ -6,6 +6,9 @@ class JobsController extends ProductionAppController {
 
     public function plans() {
 
+
+        $limit = 10;
+
         $this->loadModel('Ticket.JobTicket');
 
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
@@ -13,6 +16,11 @@ class JobsController extends ProductionAppController {
         $this->loadModel('Sales.Company');
 
         $this->loadModel('Production.Machine');
+
+        $this->loadModel('Production.ProcessDepartment');
+
+
+        $departmentProcess = $this->ProcessDepartment->find('list', array('fields' => array('id', 'name')));
 
         // $this->loadModel('Sales.ProductSpecificationProcess');
 
@@ -22,15 +30,63 @@ class JobsController extends ProductionAppController {
 
         $machineData = $this->Machine->find('list',array('fields' => array('id','name')));
 
-        $this->JobTicket->bindTicketJob(); 
+      //  $this->JobTicket->bindTicketJob(); 
 
-        //$this->JobTicket->bind(array('ClientOrder', 'Product', 'ClientOrderDeliverySchedule'));
+        $this->JobTicket->bind(array('ClientOrder', 'Product', 'ClientOrderDeliverySchedule','TicketProcessSchedule'));
 
-        $jobData = $this->JobTicket->find('all',array('order' => 'JobTicket.id DESC','conditions' => array('JobTicket.created >=' => date('Y-m-d'))));
+
+        $query = $this->request->query;
+
+    
+
+        if (!empty( $query['data']['date'])) {
+
+            $dateSplit = explode('-',$query['data']['date']);
+
+            $date1 =  date('Y-m-d',strtotime($dateSplit[0]));
+
+            $date2 =  date('Y-m-d',strtotime($dateSplit[1]));
+
+
+
+        $conditions =array('date(JobTicket.created) BETWEEN ? AND ?' => array($date1,$date2));
+
+
+        $dateSelected =  $query['data']['date'];    
+            
+        } else {
+
+
+        $date = date('Y-m-01');
+
+        $date2 = date('Y-m-d');
+
+        $conditions =array('date(JobTicket.created) BETWEEN ? AND ?' => array($date,$date2));
+
+        $dateSelected = date('Y/m/d',strtotime($date)).' - '.date('Y/m/d',strtotime($date2));
+
+
+        }
+
+
 
         $clientOrderUUID = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('client_order_id','uuid')));
 
         $clientOrderQuantity = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('client_order_id','quantity')));
+
+
+         $params =  array(
+                'conditions' => $conditions,
+                'limit' => $limit,
+                //'group' => array('Attendance.date'),
+                'order' => 'JobTicket.id DESC',
+        );
+
+        $this->paginate = $params;
+        
+        $jobData = $this->paginate('JobTicket');
+
+      //  $jobData = $this->JobTicket->find('all',array('order' => 'JobTicket.id DESC','conditions' => $conditions ));
 
         //pr($jobData ); exit;
         // foreach ($jobData as $key => $jobList) {
@@ -46,12 +102,71 @@ class JobsController extends ProductionAppController {
            
         // }
         //pr($jobData);exit();
-        $this->set(compact('jobData','companyData','machineData','processDepartmentData', 'clientOrderUUID', 'clientOrderQuantity'));
+        $this->set(compact('jobData','companyData','machineData','processDepartmentData', 'clientOrderUUID', 'clientOrderQuantity','dateSelected','departmentProcess'));
         
     }
 
+    public function view_process($id = null) {
+
+        if (!empty($id)) {
+
+            $limit = 10;
+
+            $this->loadModel('Production.ProcessDepartment');
+
+            $this->loadModel('Sales.Company');
+
+            $this->loadModel('Ticket.JobTicket');
+
+            $this->loadModel('Production.Machine');
+
+            $this->loadModel('Production.MachineLog');
+
+            $this->loadModel('Sales.Product');
+
+            $this->loadModel('Production.TicketProcess');
+
+            $companyData = $this->Company->find('list',array('fields' => array('id','company_name')));
+
+            $machineData = $this->Machine->find('list',array('fields' => array('id','name')));
+
+            $productName = $this->Product->find('list',array('fields' => array('id','name')));
+
+            $processDepartment = $this->ProcessDepartment->findById($id);
+
+            //process_department =
+
+            $machineScheduleData = $this->MachineLog->find('all');
+
+            $conditions = array('TicketProcessSchedule.department_process_id' => $id);
+            
+            $params =  array(
+                    'conditions' => $conditions,
+                    'limit' => $limit,
+                    //'group' => array('Attendance.date'),
+                    'order' => 'MachineLog.id DESC',
+            );
+
+            $this->paginate = $params;
+            
+            $this->MachineLog->bindTicket(); 
+
+            $machineScheduleData = $this->paginate('MachineLog');
+
+            //get Jobticket 
+            $machineScheduleData = $this->JobTicket->addTicket( $machineScheduleData );
+     
+            $this->set(compact('machineScheduleData','companyData','machineData','productName','processDepartment'));
+
+            $this->render('Jobs/processes/default');
+           
+        }
+    }
+
     public function sheeting(){
-       
+        
+        $limit = 10;
+
         $this->loadModel('Sales.Company');
 
         $this->loadModel('Ticket.JobTicket');
@@ -62,19 +177,39 @@ class JobsController extends ProductionAppController {
 
         $this->loadModel('Sales.Product');
 
+        $this->loadModel('Production.TicketProcess');
+
         $companyData = $this->Company->find('list',array('fields' => array('id','company_name')));
 
         $machineData = $this->Machine->find('list',array('fields' => array('id','name')));
 
         $productName = $this->Product->find('list',array('fields' => array('id','name')));
 
-        $this->MachineLog->bindTicket(); 
+
+        //process_department =
 
         $machineScheduleData = $this->MachineLog->find('all');
 
-        //calling data
-        //$machineScheduleData = $this->_find_machine_schedule_data(1);
-     //   pr($machineScheduleData);exit();
+         $conditions = array('TicketProcessSchedule.department_process_id' => 1);
+         $params =  array(
+                'conditions' => $conditions,
+                'limit' => $limit,
+                //'group' => array('Attendance.date'),
+                'order' => 'MachineLog.id DESC',
+        );
+
+        $this->paginate = $params;
+        
+        $this->MachineLog->bindTicket(); 
+
+        $machineScheduleData = $this->paginate('MachineLog');
+
+        pr( $machineScheduleData );
+        exit();
+
+        //get Jobticket 
+        $machineScheduleData = $this->JobTicket->addTicket( $machineScheduleData );
+ 
         $this->set(compact('machineScheduleData','companyData','machineData','productName'));
 
     }

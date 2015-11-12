@@ -20,6 +20,8 @@ class SalesOrdersController extends SalesAppController {
 	    	    
 	public function index() {
 
+    $this->loadModel('Sales.Product');
+
 		$userData = $this->Session->read('Auth');
 		
 		$this->Quotation->bind(array('ClientOrder'));
@@ -29,7 +31,7 @@ class SalesOrdersController extends SalesAppController {
 
     $limit = 10;
 
-    $conditions = array();
+    $conditions = array('ClientOrder.status_id' => null);
 
     if ($this->request->is('ajax')) {
 
@@ -38,27 +40,61 @@ class SalesOrdersController extends SalesAppController {
 
       if (!empty($query['name'])) {
 
-      $conditions = array_merge($conditions,array(
-        'OR' => array(
-           // 'ClientOrder.uuid like' => '%'. $query['name'] . '%',
-            'Company.company_name like' => '%'. $query['name'] . '%',
-            'Product.name like' => '%'. $query['name'] . '%',
-          )
-      ));
+        $this->loadModel('Sales.Product');
+        $this->Quotation->bind(array('ClientOrder'));
+        $this->Quotation->ClientOrder->bind(array('QuotationItemDetail','QuotationDetail','Company','Product'));
+        
 
-    }
+        // $clientOrder = $this->ClientOrder->find('all');
+       
+        // $conditions = array('ClientOrder.status_id' => null);
+        // $conditions = array_merge($conditions,array(
+        //   'OR' => array(
+        //       'ClientOrder.uuid like' => '%'. $query['name'] . '%',
+        //       //'Company.company_name like' => '%'. $query['name'] . '%',
+        //       'Product.name like' => '%'. $query['name'] . '%',
+        //     )
+        // ));
 
-    }
+        $conditions = array('ClientOrder.status_id' => null, 'OR' => array(
+                        array('ClientOrder.po_number LIKE' => '%' . $query['name'] . '%'),
+                        array('ClientOrder.uuid LIKE' => '%' . $query['name'] . '%'),
+                          array('Product.name LIKE' => '%' . $query['name'] . '%'),
+                          array('Company.company_name LIKE' => '%' . $query['name'] . '%')
+                          ));
 
-    $this->paginate = array(
+        $clientOrder = $this->ClientOrder->find('all',array(
+                      'group' => array('ClientOrder.id'),
+                      'conditions' => $conditions,
+                      'limit' => 10
+                      )); 
+
+
+        // $clientOrder = $this->ClientOrder->find('all',array(
+        //           'order' => 'ClientOrder.id DESC',
+        //           'conditions' => array(
+        //             'OR' => array(
+        //               array('ClientOrder.status_id' => null),
+        //               array('ClientOrder.uuid LIKE' => '%' .  $query['name'] . '%'),
+        //               array('Product.name LIKE' => '%' . $query['name'] . '%')
+        //               )
+        //             )
+        //         )
+        // );
+
+       
+      }
+
+    } else {
+        $this->paginate = array(
             'conditions' => $conditions,
             'limit' => $limit,
-            'order' => 'ClientOrder.uuid DESC',
+            'order' => 'ClientOrder.id DESC',
             'group' => 'ClientOrder.id'
         );
 
-    $clientOrder = $this->paginate('ClientOrder');
-
+        $clientOrder = $this->paginate('ClientOrder');
+    }
 
 		$this->loadModel('Sales.Company');
 
@@ -83,12 +119,6 @@ class SalesOrdersController extends SalesAppController {
       $noPermission = ' ';
     }
 		
-
-
-   // pr($clientOrder);
-    //exit();
-
-
 		$this->set(compact('clientOrder','quoteName','companyData','inquiryId','noPermission'));
 
      if ($this->request->is('ajax')) {
@@ -119,6 +149,8 @@ class SalesOrdersController extends SalesAppController {
             );
     }
 
+
+
     $currencies = $this->Currency->getList();
 
     $units = $this->Unit->getList();
@@ -127,11 +159,13 @@ class SalesOrdersController extends SalesAppController {
        
 		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','Product','ContactPerson'));
 
-		$this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
+		$this->ClientOrder->bind(array('ClientOrderDeliverySchedule', 'QuotationItemDetail'));
 
 		$clientOrderData = $this->ClientOrder->find('first',array('conditions' => array('ClientOrder.id' => $clientOrderId)));
 
 		$quotationData = $this->Quotation->findById($clientOrderData['ClientOrder']['quotation_id']);
+
+  // pr($clientOrderData); exit;
 
     $checkSpec = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $quotationData['QuotationDetail']['product_id'])));
     
@@ -139,15 +173,13 @@ class SalesOrdersController extends SalesAppController {
      													'fields' => array('id','company_name')
      												));
 
-		$quotationItemDetail = $this->Quotation->QuotationItemDetail->find('first',array('conditions' => array('QuotationItemDetail.id' => $clientOrderData['ClientOrder']['client_order_item_details_id'])));
+		//$quotationItemDetail = $this->Quotation->QuotationItemDetail->find('first',array('conditions' => array('QuotationItemDetail.id' => $clientOrderData['ClientOrder']['client_order_item_details_id'])));
       
 		$paymentTermData = $this->PaymentTermHolder->find('list',array('fields' => array('id','name')));
 					
     $noPermission = ' ';
 
 		$this->set(compact('noPermission','checkSpec','clientOrderData','quotationData','companyName','quotationItemDetail','paymentTermData','currencies','units'));
-
-    
 
 	}
 
@@ -190,7 +222,7 @@ class SalesOrdersController extends SalesAppController {
 
                             $this->request->data['ClientOrderDeliverySchedule']['quantity'] = $abc;
                            
-                            $this->ClientOrder->ClientOrderDeliverySchedule->saveClientOrderDeliverySchedule($result,$userData['User']['id'],$this->request->data['ClientOrderDeliverySchedule']['client_order_id']);
+                            $this->ClientOrder->ClientOrderDeliverySchedule->editClientOrderDeliverySchedule($result,$userData['User']['id'],$this->request->data['ClientOrderDeliverySchedule']['client_order_id']);
                                         
                         }else{
                          
@@ -211,7 +243,7 @@ class SalesOrdersController extends SalesAppController {
 
                       $result['ClientOrderDeliverySchedule'] = Set::classicExtract($this->request->data,'{s}');
                      
-                      $this->ClientOrder->ClientOrderDeliverySchedule->saveClientOrderDeliverySchedule($result,$userData['User']['id'],$this->request->data['ClientOrderDeliverySchedule']['client_order_id']);
+                      $this->ClientOrder->ClientOrderDeliverySchedule->editClientOrderDeliverySchedule($result,$userData['User']['id'],$this->request->data['ClientOrderDeliverySchedule']['client_order_id']);
                     
                       $this->Session->setFlash(__('Client order delivery details has been updated'), 'success');
 
@@ -262,16 +294,22 @@ class SalesOrdersController extends SalesAppController {
         //$this->set(compact('categoryData'));
     }
 
-    public function edit_PO() {
+    public function terminate($id = null) {
 
-     // pr($this->request->data);exit;
+     // pr('d'); exit;
 
-     
+      $userData = $this->Session->read('Auth');
 
-     
-      //pr($this->request->data); exit;
+      $this->ClientOrder->id = $id;
 
-       // $this->set(compact('supplierData'));
+      $this->ClientOrder->saveField('status_id', 1);
+
+      $this->Session->setFlash(__('Client Order has been removed'), 'success');
+      
+        $this->redirect( array(
+            'controller' => 'sales_orders',   
+            'action' => 'index'
+        ));  
 
     }
 	

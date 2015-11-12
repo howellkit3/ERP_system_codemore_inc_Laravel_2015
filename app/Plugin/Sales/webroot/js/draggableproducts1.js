@@ -297,7 +297,8 @@ $(document).ready(function() {
                 }
             });
             $("body").on('keyup','.rate'+varCounter, function(e){
-
+                
+                var quantitySpec = parseInt($('#ProductSpecificationQuantity').val());
                 var rateval = $(this).val();
 
                 if(rateval <= 0){
@@ -488,6 +489,21 @@ $(document).ready(function() {
       
     });
     //$( "#sortable" ).disableSelection();
+
+    //new code 
+    $('body').on("click",".click-multiple", function(e){ 
+        if ($(this).is(":checked")) {
+            $(this).parents('.input-group').find('.show-multiple').attr('readonly' ,false);
+
+            var name = $(this).parents('.input-group').find('.getname').val();
+           
+            $(this).parents('.input-group').find('.show-multiple').val(name);
+        }else{
+            $(this).parents('.input-group').find('.show-multiple').attr('readonly' ,true);
+
+            $(this).parents('.input-group').find('.show-multiple').val('');
+        }
+    });
    
 
 });

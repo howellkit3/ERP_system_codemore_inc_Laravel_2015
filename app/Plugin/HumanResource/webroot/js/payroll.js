@@ -59,6 +59,7 @@ $(document).ready(function(){
 
 		var url = $(this).attr('href');
 
+		console.log(url);
 		//$(this).attr('href',url+'?days='+range+'&&month='+month);
 
 		swal({   title: "Process Payroll",  

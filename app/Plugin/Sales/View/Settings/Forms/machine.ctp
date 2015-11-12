@@ -1,0 +1,97 @@
+<?php echo $this->Form->create('Machine',array('url'=>(array('controller' => 'settings','action' => 'add_machine')),'class' => 'form-horizontal'));?>
+                        <div class="form-group">
+                            <label for="inputEmail1" class="col-lg-2 control-label">  Name</label>
+                           
+                            <div class="col-lg-10">
+                                 <?php
+
+                                    echo $this->Form->input('id', array(
+                                        'alt' => 'type',
+                                        'label' => false,
+                                        'class' => 'form-control col-lg-4',
+                                        'data-name' => 'Address'
+                                    ));
+                              
+                                    echo $this->Form->input('name', array(
+                                        'alt' => 'type',
+                                        'label' => false,
+                                        'class' => 'form-control col-lg-4',
+                                        'data-name' => 'Name'
+                                    ));
+                                ?>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail1" class="col-lg-2 control-label">  Description </label>
+                           
+                            <div class="col-lg-10">
+                                <?php
+
+                                    echo $this->Form->input('description', array(
+                                        'alt' => 'type',
+                                        'label' => false,
+                                        'class' => 'form-control col-lg-4',
+                                        'data-name' => 'Description'
+                                    ));
+                                ?>
+                            </div>
+                        </div>
+
+                          <div class="form-group">
+                            <label for="inputEmail1" class="col-lg-2 control-label">  Plate </label>
+                           
+                            <div class="col-lg-10">
+                                <?php
+
+                                    echo $this->Form->input('plate', array(
+                                        'alt' => 'type',
+                                        'label' => false,
+                                        'class' => 'form-control col-lg-4',
+                                        'data-name' => 'Plate'
+                                    ));
+                                ?>
+                            </div>
+                        </div>
+
+                          <div class="form-group">
+                            <label for="inputEmail1" class="col-lg-2 control-label">  Paper Gripper</label>
+                           
+                            <div class="col-lg-10">
+                                <?php
+
+                                    echo $this->Form->input('paper_gripper', array(
+                                        'alt' => 'type',
+                                        'label' => false,
+                                        'class' => 'form-control col-lg-4',
+                                        'data-name' => 'Paper Gripper'
+                                    ));
+                                ?>
+                            </div>
+                        </div>
+
+                          <div class="form-group">
+                            <label for="inputEmail1" class="col-lg-2 control-label">  Plate Gripper </label>
+                           
+                            <div class="col-lg-10">
+                                <?php
+
+                                    echo $this->Form->input('plate_gripper', array(
+                                        'alt' => 'type',
+                                        'label' => false,
+                                        'class' => 'form-control col-lg-4',
+                                        'data-name' => 'Plate Gripper'
+                                    ));
+                                ?>
+                            </div>
+                        </div>
+                        <div id="result_container"></div>
+                        <div class="modal-footer">
+                             <button type="submit" class="btn btn-primary"> Submit</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            
+                        </div>
+
+                        
+                    </form>
+                        
