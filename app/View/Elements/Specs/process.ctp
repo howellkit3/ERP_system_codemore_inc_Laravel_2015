@@ -1,5 +1,4 @@
 <?php foreach ($dataSpecs['ProductSpecificationProcess']['ProcessHolder'] as $key => $processList) { $key++; 
-
     ?>
     <tr>
         <td class="td-heigth indent" style="width:85px;border:1px solid #EAEAEA;"> >>PP<?php echo $key ?></td>
@@ -39,6 +38,7 @@
                                 'data-ticket_id' => $ticketData['JobTicket']['id'],
                                 'data-toggle' => 'modal',
                                 'data-product' => !empty($product['foreign_key']) ? $product['foreign_key'] : '0',
+                                'data-component-name' => str_replace(' ','_',$componentName),
                                 'class' => 'process_link',
                                 'id' => 'processID-'.$processList['ProductSpecificationProcessHolder']['id'].'-'.$processList['ProductSpecificationProcessHolder']['sub_process_id']
                             )

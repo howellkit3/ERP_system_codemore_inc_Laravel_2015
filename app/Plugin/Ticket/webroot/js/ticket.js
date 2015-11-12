@@ -16,8 +16,11 @@ $(document).ready(function(){
 
 		$container = $('#result-table');
 
+    $component = $(this).data('component-name');
+
+
 		$.ajax({
-        url: serverPath + "ticket/ticketing_systems/find_process/"+$processId+'/'+$productId+'/'+$ticketUuid+'/'+$product+'/'+$id+'/'+ $ticketId,
+        url: serverPath + "ticket/ticketing_systems/find_process/"+$processId+'/'+$productId+'/'+$ticketUuid+'/'+$product+'/'+$id+'/'+ $ticketId+'/'+ $component,
         type: "GET",
         dataType: "html",
        // data : { 'processId' : $processId , 'subProcess' : $subProcess , 'ticketId' : $ticketUuid },

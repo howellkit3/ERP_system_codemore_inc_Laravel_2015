@@ -175,7 +175,7 @@
 					                                'options' => array($companyData),
 					                                'type' => 'select',
 					                                'label' => false,
-					                                'disabled' => 'disabled',
+					                               // 'disabled' => 'disabled',
 					                                'class' => 'form-control required contacpersonlist',
 					                                'empty' => '---Select Company---',
 					                                'id' => 'select_company'
@@ -183,14 +183,14 @@
 
 					                            ?>
 
-					                            <?php echo $this->Form->input('Quotation.company_id', array(
+					                           <!--  <?php echo $this->Form->input('Quotation.company_id', array(
 					                                'type' => 'hidden',
 					                                'class' => 'form-control required contacpersonlist',
 					                                'empty' => '---Select Company---',
 					                                'id' => 'select_company'
-					                                 )); 
+					                                 )); //
 
-					                            ?>
+					                            ?> -->
 
 											</div>
 										</div>

@@ -184,8 +184,10 @@
 										      		echo $this->element('Specs/component', array('formatDataSpecs' => $formatDataSpecs[$key],'key' => $componentCounter));
 										      		$componentCounter++;
 
-
 										      		$component = $formatDataSpecs[$key];
+
+										      		$componentName = $component['ProductSpecificationComponent']['name'];
+
 										      	}
 
 
@@ -214,7 +216,8 @@
 
 										      		echo $this->element('Specs/process', array('dataSpecs' => $formatDataSpecs[$key]
 										      			,'key' => $processCounter,
-										      			'product' => $product
+										      			'product' => $product,
+										      			'componentName' => $componentName
 										      			));
 
 
@@ -331,7 +334,7 @@
             </div>
             <div class="modal-body">
             	<div id="result-table">
-
+            			
             	</div>
             </div>
             

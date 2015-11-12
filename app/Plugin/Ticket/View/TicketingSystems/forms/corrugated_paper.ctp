@@ -1,5 +1,4 @@
     <?php 
-
         $productID = $parameter['product'];
 
     ?>
@@ -95,12 +94,14 @@
                             array(
                              'controller' => 'ticketing_systems','action' => 'print_process',
                             'productId' => !empty( $parameter['product']) ?  $parameter['product'] : '',
+                            'component' => !empty( $parameter['component']) ? $parameter['component'] : '',
                              $parameter['processId'],
                              $parameter['productId'],
                             $parameter['ticketuuId'],
                               0,
                               0,
-                              $parameter['ticketId']),
+                              $parameter['ticketId'],
+                               ),
                             array(
                              //'title' => 'Print '. $subProcess[$processList['ProductSpecificationProcessHolder']['sub_process_id']],
                                 'target' => '_blank',

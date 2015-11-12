@@ -239,7 +239,7 @@ class TicketingSystemsController extends TicketAppController {
 		return $this->redirect(array('controller' => 'ticketing_systems', 'action' => 'index'));
 	}
 
-    public function find_process($processId = null, $productId = null , $ticketuuId = null,$product = null, $formProcesId = null,$ticketId =null) {
+    public function find_process($processId = null, $productId = null , $ticketuuId = null,$product = null, $formProcesId = null,$ticketId =null,$component = null) {
 
         $query = $this->request->query;
 
@@ -259,6 +259,9 @@ class TicketingSystemsController extends TicketAppController {
             $parameter['product'] = $product;
 
             $parameter['formProcesId'] = $formProcesId;
+
+            $parameter['component'] = $component;
+
 
             $this->set(compact('parameter'));
 
@@ -301,7 +304,7 @@ class TicketingSystemsController extends TicketAppController {
                 $corrugated = $this->CorrugatedPaper->find('list',array('fields' => array('CorrugatedPaper.id','CorrugatedPaper.name' ),
                     'order' => 'CorrugatedPaper.name ASC'));
 
-                $this->set(compact('corrugated'));
+                $this->set(compact('corrugated','parameter'));
 
                 $this->render('TicketingSystems/forms/corrugated_paper', false);
 
@@ -315,7 +318,9 @@ class TicketingSystemsController extends TicketAppController {
     }
 
 
-    public function save_job_ticket_process($productId = null) {
+    public function save_job_ticket_process($productId = null, $componentName = null) {
+
+       // pr($componentName); exit;
 
         $this->loadModel('Ticket.WoodMoldJobTicket');
 
@@ -380,7 +385,8 @@ class TicketingSystemsController extends TicketAppController {
                             $model,
                             $lastID,
                             $data[$model]['ticket_id'],
-                            $productId    
+                            $productId,
+                            $componentName     
                             ));
                        
                     }
@@ -753,8 +759,8 @@ class TicketingSystemsController extends TicketAppController {
     }
 
 
-    public function print_process($processId = null,$productUuid = null,$ticketUuid = null, $model = null , $lastId = null,$ticketId = null, $productId = null) {
-
+    public function print_process($processId = null,$productUuid = null,$ticketUuid = null, $model = null , $lastId = null,$ticketId = null, $productId = null, $componentName = null) {
+      //  pr($componentName ); exit;
         if (!empty($processId) && !empty($productUuid)) {
 
         $userData = $this->Session->read('Auth');
@@ -844,7 +850,7 @@ class TicketingSystemsController extends TicketAppController {
         
         $formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
 
-       // pr($formatDataSpecs); exit;
+       //pr($formatDataSpecs); exit;
         
         $this->loadModel('SubProcess');
 
@@ -883,7 +889,10 @@ class TicketingSystemsController extends TicketAppController {
 
         $view->viewPath = 'TicketingSystem'.DS.'pdf';  
 
-        $view->set(compact('userData','ticketData','modelData','formatDataSpecs','productData','specs','companyData','part','unitData','subProcess','ticketUuid','delData','processId','processData',' modelData','part'));
+      //  pr($componentName); exit;
+        $component = !empty($this->params['named']['component']) ? $this->params['named']['component'] : '';
+
+        $view->set(compact('userData','ticketData','modelData','formatDataSpecs','productData','specs','companyData','part','unitData','subProcess','ticketUuid','delData','processId','processData',' modelData','part','component', 'componentName '));
         
 
         if (in_array($processId,array('11','61'))) {
@@ -928,7 +937,7 @@ class TicketingSystemsController extends TicketAppController {
                  }
             }
 
-          //  pr($part); exit;
+            //pr($formatDataSpecs); exit;
 
             $total = $specs['ProductSpecification']['quantity'] + $part['ProductSpecificationPart']['allowance'] ;
 
@@ -938,7 +947,7 @@ class TicketingSystemsController extends TicketAppController {
 
             $size2 = $part['ProductSpecificationPart']['size2'];
 
-            $view->set(compact('corrugatedJobTicket','corrugated','total','flutecombination', 'allowance', 'size2','size1'));
+            $view->set(compact('corrugatedJobTicket','corrugated','total','flutecombination', 'allowance', 'size2','size1', 'formatDataSpecs'));
 
             $output = $view->render('print_process_corrugated', false);
         

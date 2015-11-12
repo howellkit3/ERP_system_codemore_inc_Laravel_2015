@@ -1,4 +1,7 @@
-   <?php echo $this->Form->create('JobTicketProcess',array('url'=>(array('controller' => 'ticketing_systems','action' => 'save_job_ticket_process','type' => 'cutting')),'class' => 'form-horizontal'));?>
+  <?php $componentName = $parameter['component']; 
+        $holder = " ";?>
+
+   <?php echo $this->Form->create('JobTicketProcess',array('url'=>(array('controller' => 'ticketing_systems','action' => 'save_job_ticket_process',$holder, $componentName , 'type' => 'cutting')),'class' => 'form-horizontal'));?>
                 
                 <div class="form-group">
                         <label for="inputPassword1" class="col-lg-2 control-label"> Remarks </label>
@@ -38,6 +41,7 @@
                             array(
                               'controller' => 'ticketing_systems','action' => 'print_process',
                               'productId' => !empty( $parameter['product']) ?  $parameter['product'] : '',
+                               'component' => !empty( $parameter['component']) ? $parameter['component'] : '',
                               $parameter['processId'],
                               $parameter['productId'],
                               $parameter['ticketuuId'],

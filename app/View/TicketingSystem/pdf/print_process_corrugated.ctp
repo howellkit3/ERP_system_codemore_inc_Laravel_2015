@@ -45,7 +45,12 @@ Configure::write('debug',0);
 				</tr>
 				<tr>
 					<td>
-						<strong>ITEM</strong>&nbsp;&nbsp; <?php echo $productData['Product']['name']; ?>
+						<strong>ITEM</strong>&nbsp;&nbsp; <?php echo $productData['Product']['name']; ?> 
+
+						<?php if (!empty($component)) : 
+
+							echo '( '. Inflector::humanize($component)  .' )';
+						 endif; ?>
 					</td>
 					<td class="text-right">
 						<strong>DESCRIPTION</strong>&nbsp;&nbsp; <?php echo $productData['Product']['remarks']  ?>
