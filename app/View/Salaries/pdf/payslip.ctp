@@ -354,8 +354,7 @@ header("Content-type: application/pdf");
 								</table>
 							</td>
 						</tr>
-
-				</table>
+					</table>
 				<table class="container border">
 					<tr>
 						<td colspan="2"> <strong>Total Net Pay : </strong> </td> 

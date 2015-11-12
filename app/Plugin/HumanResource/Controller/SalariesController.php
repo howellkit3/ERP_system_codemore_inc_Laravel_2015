@@ -26,6 +26,7 @@ class SalariesController  extends HumanResourceAppController {
 	public function settings(){
 
 	}
+
 	public function employee_settings($id = null) {
 
 		$this->loadModel('HumanResource.Employee');
@@ -427,15 +428,21 @@ class SalariesController  extends HumanResourceAppController {
 				$type = $query['type'];
 			}
 
+
+			pr($type);
+			exit();
+
 			switch ($type) {
+
+			case 'word' :
+				$this->render('Salaries/payslip/payslip');
+			break;	
 
 			case 'payslip':
 			
 				//$this->render('Salaries/payslip/payslip');
 				
 				//$this->layout = 'pdf';
-
-
 
 				$view = new View(null, false);
 
@@ -469,8 +476,6 @@ class SalariesController  extends HumanResourceAppController {
 		        		
 		       //  		unlink($file_to_save);
 		       //  }
-
-
 				// Get the style section out of the HTML 
 				$styles = $doc->getElementsByTagName('style'); 
 				$style = $styles->item(0); 
@@ -513,7 +518,7 @@ class SalariesController  extends HumanResourceAppController {
 
                 break;
             
-        }
+        	}
 
 		}
 
@@ -2174,6 +2179,8 @@ class SalariesController  extends HumanResourceAppController {
 
 	public function export_salaries($payroll_id = null, $type = 'excel') {
 
+		Configure::write('debug',2);
+
 		$query = $this->request->query;
 
 		if (!empty($query)) {
@@ -2274,8 +2281,17 @@ class SalariesController  extends HumanResourceAppController {
 			ini_set('memory_limit', '1024M');
 
 			$this->set(compact('salaries','payroll','payrollDate','deductions'));
+			
+			//$type = 'payslip';
+
+			pr($salaries);
+			exit();
 
 			switch ($type) {
+
+				case 'word' :
+				$this->render('Salaries/payslip/payslip');
+				break;	
 
 				case 'payslip':
 

@@ -2149,10 +2149,7 @@ class SalaryComputationComponent extends Component
 						$conditions = array('SssRange.credits <=' => $gross_pay );
 						
 						$range = $SssRange->find('first',array('conditions' => $conditions, 'order' => 'SssRange.credits DESC'));
-
-
-
-
+						
 						$pay['sss_employees'] = !empty($range['SssRange']['employees']) ? $range['SssRange']['employees'] : $pay;
 				}	
 				break;
