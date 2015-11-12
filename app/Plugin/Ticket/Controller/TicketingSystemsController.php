@@ -845,7 +845,6 @@ class TicketingSystemsController extends TicketAppController {
 
         $formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
         
-     
         $this->loadModel('SubProcess');
 
         $subProcess = $this->SubProcess->find('list',
@@ -908,6 +907,8 @@ class TicketingSystemsController extends TicketAppController {
             $flutecombination = " ";
             $counter =  0;
 
+           // pr($corrugated); exit;
+
             foreach ($corrugated['ItemGroupLayer'] as $key => $layerList){
                 //pr($layerList); 
                 if(!empty($layerList['flute'] )){
@@ -930,7 +931,11 @@ class TicketingSystemsController extends TicketAppController {
 
             $allowance = $part['ProductSpecificationPart']['allowance'] ;
 
-            $view->set(compact('corrugatedJobTicket','corrugated', 'total', 'flutecombination', 'allowance'));
+            $size1 = $part['ProductSpecificationPart']['size1'];
+
+            $size2 = $part['ProductSpecificationPart']['size2'];
+
+            $view->set(compact('corrugatedJobTicket','corrugated','total','flutecombination', 'allowance', 'size2','size1'));
 
             $output = $view->render('print_process_corrugated', false);
         
