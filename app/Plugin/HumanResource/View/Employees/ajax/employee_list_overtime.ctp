@@ -4,7 +4,7 @@
         <div class="checkbox-nice">
             <input type="checkbox" name="data[Empl][id][<?php echo $KeyId ?>]" class="select_employee" value="<?php echo  $value['Employee']['id']; ?>" id="checkbox-<?php echo $KeyId; ?>">
 
-            <input type="hidden" name="data[Employee][id][<?php echo $KeyId ?>]" class="select_employee employee" value="<?php echo  $value['Employee']['id']; ?>" id="checkbox-<?php echo $KeyId; ?>">
+            <input type="hidden" disabled="disabled" name="data[Employee][id][<?php echo $KeyId ?>]" class="select_employee employee" value="<?php echo  $value['Employee']['id']; ?>" id="checkbox-<?php echo $KeyId; ?>">
 
             <input type="hidden" name="data[Attendance][id][<?php echo $KeyId ?>]" class="select_employee attendance" value="<?php echo $value['Attendance']['in'] ?>" id="checkbox-<?php echo $KeyId; ?>">
 

@@ -241,7 +241,7 @@ $(document).ready(function(){
 
                 $(this).parent().find('.select_employee.attendance').attr('name','data[Attendance][id]['+ $count +']');
 
-                $(this).parent().find('.select_employee.employee').attr('Ename','data[mployee][id]['+ $count +']').attr('disabled',false);
+                $(this).parent().find('.select_employee.employee').attr('name','data[Employee][id]['+ $count +']').attr('disabled',false);
 
                 $clone = $(this).parent().html();
              //  console.log( $clone );
