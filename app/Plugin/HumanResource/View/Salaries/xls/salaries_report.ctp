@@ -252,30 +252,41 @@
         $sheet->getStyle('C'.$counter)->applyFromArray($styleArrayBorder);
 
 
+           $monthly_rate = $daily_rate =  0;
            //check rate
           if ($emp['Salary']['employee_salary_type'] == 'monthly') {
 
-            $rate = $emp['Salary']['basic_pay'] / 2;
+           
+             $monthly_rate = $emp['Salary']['basic_pay'] / 2;
+             $daily_rate = $monthly_rate / 13;
+
 
           } else {
-             $rate = $emp['Salary']['basic_pay'] / 2;
+            $monthly_rate = 0;
+             $daily_rate =  $emp['Salary']['basic_pay'];
+
 
           }
           
-          $sheet->setCellValue('D'.$counter,  $rate );
+           
+          $sheet->setCellValue('D'.$counter,  $monthly_rate );
           $sheet->getStyle('D'.$counter)->applyFromArray($styleArrayBorder);
 
-          //hours regular
-          $sheet->setCellValue('E'.$counter,  $emp['hours_regular'] );
+          $sheet->setCellValue('E'.$counter,  $daily_rate );
           $sheet->getStyle('E'.$counter)->applyFromArray($styleArrayBorder);
+
+         
+          //hours regular
+          $sheet->setCellValue('F'.$counter,  $emp['hours_regular'] );
+          $sheet->getStyle('F'.$counter)->applyFromArray($styleArrayBorder);
 
           // days
           $days =  $emp['hours_regular'] / 8;
-          $sheet->setCellValue('F'.$counter,  $days  );
-          $sheet->getStyle('F'.$counter)->applyFromArray($styleArrayBorder);
-
-          $sheet->setCellValue('G'.$counter,  $emp['regular'] );
+          $sheet->setCellValue('G'.$counter,  $days  );
           $sheet->getStyle('G'.$counter)->applyFromArray($styleArrayBorder);
+
+          $sheet->setCellValue('H'.$counter,  $emp['regular'] );
+          $sheet->getStyle('H'.$counter)->applyFromArray($styleArrayBorder);
 
           //ctpa + sea days      
           if (empty($emp['ctpa']) && empty($emp['sea']) ) {
@@ -283,148 +294,148 @@
             $days = '-';
 
           }
-          $sheet->setCellValue('H'.$counter,$days);
-          $sheet->getStyle('H'.$counter)->applyFromArray($styleArrayBorder);
+          $sheet->setCellValue('I'.$counter,$days);
+          $sheet->getStyle('I'.$counter)->applyFromArray($styleArrayBorder);
           
            //ctpa + sea
           $additional = $emp['ctpa'] + $emp['sea'];
-          $sheet->setCellValue('I'.$counter, $additional);
-          $sheet->getStyle('I'.$counter)->applyFromArray($styleArrayBorder);
+          $sheet->setCellValue('J'.$counter, $additional);
+          $sheet->getStyle('J'.$counter)->applyFromArray($styleArrayBorder);
 
            //Total Basic
           $basic = $emp['regular'] + $additional;
-          $sheet->setCellValue('J'.$counter, $basic);
-          $sheet->getStyle('J'.$counter)->applyFromArray($styleArrayBorder);
-
-          //OVERTIME
-          $sheet->setCellValue('K'.$counter, $emp['hours_ot']);
+          $sheet->setCellValue('K'.$counter, $basic);
           $sheet->getStyle('K'.$counter)->applyFromArray($styleArrayBorder);
 
-          $sheet->setCellValue('L'.$counter, number_format($emp['OT'],2));
+          //OVERTIME
+          $sheet->setCellValue('L'.$counter, $emp['hours_ot']);
           $sheet->getStyle('L'.$counter)->applyFromArray($styleArrayBorder);
 
-          //night differential
-          $sheet->setCellValue('M'.$counter, $emp['hours_night_diff']);
+          $sheet->setCellValue('M'.$counter, number_format($emp['OT'],2));
           $sheet->getStyle('M'.$counter)->applyFromArray($styleArrayBorder);
 
-          $sheet->setCellValue('N'.$counter, $emp['night_diff']);
+          //night differential
+          $sheet->setCellValue('N'.$counter, $emp['hours_night_diff']);
           $sheet->getStyle('N'.$counter)->applyFromArray($styleArrayBorder);
 
-          //nightdiff OT
-          $sheet->setCellValue('O'.$counter, $emp['hours_night_diff_ot']);
+          $sheet->setCellValue('O'.$counter, $emp['night_diff']);
           $sheet->getStyle('O'.$counter)->applyFromArray($styleArrayBorder);
 
-          $sheet->setCellValue('P'.$counter, $emp['night_diff_ot']);
-          $sheet->getStyle('P'.$counter)->applyFromArray($styleArrayBorder); 
+          //nightdiff OT
+          $sheet->setCellValue('P'.$counter, $emp['hours_night_diff_ot']);
+          $sheet->getStyle('P'.$counter)->applyFromArray($styleArrayBorder);
+
+          $sheet->setCellValue('Q'.$counter, $emp['night_diff_ot']);
+          $sheet->getStyle('Q'.$counter)->applyFromArray($styleArrayBorder); 
 
           //legal holiday
-          $sheet->setCellValue('Q'.$counter, $emp['hours_legal_holiday_work']);
-          $sheet->getStyle('Q'.$counter)->applyFromArray($styleArrayBorder);
-
-          //legal holiday 
-          $lholiday = $emp['legal_holiday'] + $emp['legal_holiday_work'];
-          $sheet->setCellValue('R'.$counter, $lholiday );
-          $sheet->getStyle('R'.$counter)->applyFromArray($styleArrayBorder); 
+          $sheet->setCellValue('R'.$counter, $emp['hours_legal_holiday_work']);
+          $sheet->getStyle('R'.$counter)->applyFromArray($styleArrayBorder);
 
           //legal holiday 
           $lholiday = $emp['legal_holiday'] + $emp['legal_holiday_work'];
           $sheet->setCellValue('S'.$counter, $lholiday );
-          $sheet->getStyle('S'.$counter)->applyFromArray($styleArrayBorder);   
+          $sheet->getStyle('S'.$counter)->applyFromArray($styleArrayBorder); 
+
+          //legal holiday 
+          $lholiday = $emp['legal_holiday'] + $emp['legal_holiday_work'];
+          $sheet->setCellValue('T'.$counter, $lholiday );
+          $sheet->getStyle('T'.$counter)->applyFromArray($styleArrayBorder);   
 
           //special holiday
           $sholiday = $emp['special_holiday'] + $emp['special_holiday_work'];
 
-          $sheet->setCellValue('T'.$counter, $sholiday);
-          $sheet->getStyle('T'.$counter)->applyFromArray($styleArrayBorder);   
+          $sheet->setCellValue('U'.$counter, $sholiday);
+          $sheet->getStyle('U'.$counter)->applyFromArray($styleArrayBorder);   
 
           //special holiday work night diff
-          $sheet->setCellValue('U'.$counter, $emp['hours_special_holiday_work_night_diff']);
-          $sheet->getStyle('U'.$counter)->applyFromArray($styleArrayBorder);
-
-
-          $sheet->setCellValue('V'.$counter, $emp['special_holiday_work_night_diff']);
+          $sheet->setCellValue('V'.$counter, $emp['hours_special_holiday_work_night_diff']);
           $sheet->getStyle('V'.$counter)->applyFromArray($styleArrayBorder);
+
+
+          $sheet->setCellValue('W'.$counter, $emp['special_holiday_work_night_diff']);
+          $sheet->getStyle('W'.$counter)->applyFromArray($styleArrayBorder);
         
           //hours legal holiday work night diff
-          $sheet->setCellValue('W'.$counter, $emp['hours_legal_holiday_work_night_diff']);
-          $sheet->getStyle('W'.$counter)->applyFromArray($styleArrayBorder);
-
-          //hours for legal holiday night diff
-          $sheet->setCellValue('X'.$counter, $emp['legal_holiday_work_night_diff']);
+          $sheet->setCellValue('X'.$counter, $emp['hours_legal_holiday_work_night_diff']);
           $sheet->getStyle('X'.$counter)->applyFromArray($styleArrayBorder);
 
-          //hours for legal holiday night diff_ot
-          $sheet->setCellValue('Y'.$counter, $emp['hours_legal_holiday_work_night_diff_ot']);
+          //hours for legal holiday night diff
+          $sheet->setCellValue('Y'.$counter, $emp['legal_holiday_work_night_diff']);
           $sheet->getStyle('Y'.$counter)->applyFromArray($styleArrayBorder);
 
-          //for legal holiday night diff_ot
-          $sheet->setCellValue('Z'.$counter, $emp['legal_holiday_work_night_diff_ot']);
+          //hours for legal holiday night diff_ot
+          $sheet->setCellValue('Z'.$counter, $emp['hours_legal_holiday_work_night_diff_ot']);
           $sheet->getStyle('Z'.$counter)->applyFromArray($styleArrayBorder);
 
-          //sunday work hours
-          $sheet->setCellValue('AA'.$counter, $emp['hours_sunday_work']);
+          //for legal holiday night diff_ot
+          $sheet->setCellValue('AA'.$counter, $emp['legal_holiday_work_night_diff_ot']);
           $sheet->getStyle('AA'.$counter)->applyFromArray($styleArrayBorder);
 
-          //sunday work
-          $sheet->setCellValue('AB'.$counter, $emp['sunday_work']);
+          //sunday work hours
+          $sheet->setCellValue('AB'.$counter, $emp['hours_sunday_work']);
           $sheet->getStyle('AB'.$counter)->applyFromArray($styleArrayBorder);
 
-          //hours sunday work ot
-          $sheet->setCellValue('AC'.$counter, $emp['hours_sunday_work_ot']);
+          //sunday work
+          $sheet->setCellValue('AC'.$counter, $emp['sunday_work']);
           $sheet->getStyle('AC'.$counter)->applyFromArray($styleArrayBorder);
 
-          //sunday work ot
-          $sheet->setCellValue('AD'.$counter, $emp['sunday_work_ot']);
+          //hours sunday work ot
+          $sheet->setCellValue('AD'.$counter, $emp['hours_sunday_work_ot']);
           $sheet->getStyle('AD'.$counter)->applyFromArray($styleArrayBorder);
 
-          //hours sunday work night diff
-          $sheet->setCellValue('AE'.$counter, $emp['hours_sunday_work_night_diff']);
+          //sunday work ot
+          $sheet->setCellValue('AE'.$counter, $emp['sunday_work_ot']);
           $sheet->getStyle('AE'.$counter)->applyFromArray($styleArrayBorder);
 
-          //sunday work night diff
-          $sheet->setCellValue('AF'.$counter, $emp['sunday_work_night_diff']);
+          //hours sunday work night diff
+          $sheet->setCellValue('AF'.$counter, $emp['hours_sunday_work_night_diff']);
           $sheet->getStyle('AF'.$counter)->applyFromArray($styleArrayBorder);
 
-          //hours sunday work night diff ot
-          $sheet->setCellValue('AG'.$counter, $emp['hours_sunday_work_night_diff']);
+          //sunday work night diff
+          $sheet->setCellValue('AG'.$counter, $emp['sunday_work_night_diff']);
           $sheet->getStyle('AG'.$counter)->applyFromArray($styleArrayBorder);
 
-          //sunday work night diff ot
-          $sheet->setCellValue('AH'.$counter, $emp['sunday_work_night_diff']);
+          //hours sunday work night diff ot
+          $sheet->setCellValue('AH'.$counter, $emp['hours_sunday_work_night_diff']);
           $sheet->getStyle('AH'.$counter)->applyFromArray($styleArrayBorder);
 
-          //sunday ctpa + sea days
-          $sheet->setCellValue('AI'.$counter, $emp['sunday_days']);
+          //sunday work night diff ot
+          $sheet->setCellValue('AI'.$counter, $emp['sunday_work_night_diff']);
           $sheet->getStyle('AI'.$counter)->applyFromArray($styleArrayBorder);
+
+          //sunday ctpa + sea days
+          $sheet->setCellValue('AJ'.$counter, $emp['sunday_days']);
+          $sheet->getStyle('AJ'.$counter)->applyFromArray($styleArrayBorder);
         
           //sunday ctpa + sea days
           $cptasea = $emp['sunday_ctpa'] + $emp['sunday_sea'];
-          $sheet->setCellValue('AJ'.$counter, $cptasea);
-          $sheet->getStyle('AJ'.$counter)->applyFromArray($styleArrayBorder);
+          $sheet->setCellValue('AK'.$counter, $cptasea);
+          $sheet->getStyle('AK'.$counter)->applyFromArray($styleArrayBorder);
 
           //gross pay
-          $sheet->setCellValue('AK'.$counter, $emp['gross_pay']);
-          $sheet->getStyle('AK'.$counter)->applyFromArray($styleArrayBorder);
+          $sheet->setCellValue('AL'.$counter, $emp['gross_pay']);
+          $sheet->getStyle('AL'.$counter)->applyFromArray($styleArrayBorder);
           
           //philhealth
-          $sheet->setCellValue('AL'.$counter, $emp['philhealth']);
-          $sheet->getStyle('AL'.$counter)->applyFromArray($styleArrayBorder);
+          $sheet->setCellValue('AM'.$counter, $emp['philhealth']);
+          $sheet->getStyle('AM'.$counter)->applyFromArray($styleArrayBorder);
 
           //pagibig
-          $sheet->setCellValue('AM'.$counter, $emp['pagibig']);
-          $sheet->getStyle('AM'.$counter)->applyFromArray($styleArrayBorder); 
+          $sheet->setCellValue('AN'.$counter, $emp['pagibig']);
+          $sheet->getStyle('AN'.$counter)->applyFromArray($styleArrayBorder); 
 
           //sss
-          $sheet->setCellValue('AN'.$counter, $emp['sss']);
-          $sheet->getStyle('AN'.$counter)->applyFromArray($styleArrayBorder); 
+          $sheet->setCellValue('AO'.$counter, $emp['sss']);
+          $sheet->getStyle('AO'.$counter)->applyFromArray($styleArrayBorder); 
 
           //withholding tax
           $tax = !empty($emp['with_holding_tax']) ? number_format($emp['with_holding_tax'],2) : 0;
-          $sheet->setCellValue('AO'.$counter, $tax );
-          $sheet->getStyle('AO'.$counter)->applyFromArray($styleArrayBorder);   
+          $sheet->setCellValue('AP'.$counter, $tax );
+          $sheet->getStyle('AP'.$counter)->applyFromArray($styleArrayBorder);   
 
           //last porsition
-          $address = 'AP'.$counter;
+          $address = 'AQ'.$counter;
 
           $next_field = $address;
 

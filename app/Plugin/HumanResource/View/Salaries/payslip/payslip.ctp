@@ -152,6 +152,8 @@ $table->addRow(70);
 
 $days = $salary['hours_regular'] / 8;
 
+$sdays = $salary['sunday_days'] / 8;
+
 $fontStyle = array('align'=>'left','size' => 6,'align'=>'center');
 $paragraphStyle = array('valign' => 'center','spaceAfter'=>0,'lineHeight'=>1.8);
 
@@ -174,7 +176,7 @@ $earnings->addText("SUN ND",$fontStyle,$paragraphStyle);
 $earnings->addText("SUN ND OT",$fontStyle,$paragraphStyle);
 $earnings->addText("Vacation Leave",$fontStyle,$paragraphStyle);
 $earnings->addText("CTPA + SEA",$fontStyle,$paragraphStyle);
-$earnings->addText("SUN CTPA + SEA (days: 0)",$fontStyle,$paragraphStyle);
+$earnings->addText("SUN CTPA + SEA (days: ".number_format($sdays,2).")",$fontStyle,$paragraphStyle);
 
 
 $earnings->addText("Adjustments",array('bold'=>true, 'align' => 'center','color' => '#0000','size' => 6),$paragraphStyle);
@@ -183,6 +185,7 @@ $earnings->addText("Adjustment",$fontStyle,$paragraphStyle);
 
 $hours = $table->addCell(1000);
 $hours->addText($hours_regular,$fontStyle,$paragraphStyle); $total_hours += $hours_regular;
+$hours->addText('',$fontStyle,$paragraphStyle);
 $hours->addText($hours_ot,$fontStyle,$paragraphStyle); $total_hours += $hours_ot;
 $hours->addText($hours_sunday_work,$fontStyle,$paragraphStyle); $total_hours += $hours_sunday_work;
 $hours->addText($hours_sunday_work_ot,$fontStyle,$paragraphStyle); $total_hours += $hours_sunday_work_ot;
@@ -224,11 +227,97 @@ $hours->addText( '' ,$fontStyle, $paragraphStyle);
 
 $amount = $table->addCell(1000);
 $amount->addText(number_format($regular,2),$fontStyle,$paragraphStyle);
+$amount->addText('',$fontStyle,$paragraphStyle);
 $amount->addText(number_format($salary['OT'],2),$fontStyle,$paragraphStyle);
+
+$sunday_work = !empty($salary['sunday_work']) ? $salary['sunday_work'] : 0;
+$amount->addText(number_format($sunday_work,2),$fontStyle,$paragraphStyle);
+
+
+$sunday_work_ot = !empty($salary['sunday_work_ot']) ? $salary['sunday_work_ot'] : 0;
+$amount->addText(number_format($sunday_work_ot,2),$fontStyle,$paragraphStyle);
+
+$legal_holiday = !empty($salary['legal_holiday']) ? $salary['legal_holiday'] : 0;
+$amount->addText(number_format($legal_holiday,2),$fontStyle,$paragraphStyle);
+
+$legal_holiday_work = !empty($salary['legal_holiday_work']) ? $salary['legal_holiday_work'] : 0;
+$amount->addText(number_format($legal_holiday_work,2),$fontStyle,$paragraphStyle);
+
+$legal_holiday_work_ot = !empty($salary['legal_holiday_work_ot']) ? $salary['legal_holiday_work_ot'] : 0;
+$amount->addText(number_format($legal_holiday_work_ot,2),$fontStyle,$paragraphStyle);
+
+
+$legal_holiday_sunday_work = !empty($salary['legal_holiday_sunday_work']) ? $salary['legal_holiday_sunday_work'] : 0;
+$amount->addText(number_format($legal_holiday_sunday_work,2),$fontStyle,$paragraphStyle);
+
+$legal_holiday_sunday_work_ot = !empty($salary['legal_holiday_sunday_work_ot']) ? $salary['legal_holiday_sunday_work_ot'] : 0;
+$amount->addText(number_format($legal_holiday_sunday_work_ot,2),$fontStyle,$paragraphStyle);
+
+$special_holiday = !empty($salary['special_holiday']) ? $salary['special_holiday'] : 0;
+$amount->addText(number_format($special_holiday,2),$fontStyle,$paragraphStyle);
+
+
+$special_holiday_work = !empty($salary['special_holiday_work']) ? $salary['special_holiday_work'] : 0;
+$amount->addText(number_format($special_holiday_work,2),$fontStyle,$paragraphStyle);
+
+
+$special_holiday_work_ot = !empty($salary['special_holiday_work_ot']) ? $salary['special_holiday_work_ot'] : 0;
+$amount->addText(number_format($special_holiday_work_ot,2),$fontStyle,$paragraphStyle);
+
+
+$night_diff = !empty($salary['night_diff']) ? $salary['night_diff'] : 0;
+$amount->addText(number_format($night_diff,2),$fontStyle,$paragraphStyle);
+
+
+$night_diff_ot = !empty($salary['night_diff_ot']) ? $salary['night_diff_ot'] : 0;
+$amount->addText(number_format($night_diff_ot,2),$fontStyle,$paragraphStyle);
+
+$sunday_work_night_diff = !empty($salary['sunday_work_night_diff']) ? $salary['sunday_work_night_diff'] : 0;
+$amount->addText(number_format($sunday_work_night_diff,2),$fontStyle,$paragraphStyle);
+
+$sunday_work_night_diff_ot = !empty($salary['sunday_work_night_diff']) ? $salary['sunday_work_night_diff'] : 0;
+$amount->addText(number_format($sunday_night_diff,2),$fontStyle,$paragraphStyle);
+
+$leave = !empty($salary['sunday_work_night_diff']) ? $salary['sunday_work_night_diff'] : 0;
+$amount->addText(number_format($leave,2),$fontStyle,$paragraphStyle);
+
+//$leave = !empty($salary['sunday_work_night_diff']) ? $salary['sunday_work_night_diff'] : 0;
+$ctpa_sea = !empty($salary['ctpa']) ? $salary['ctpa'] : 0;
+$ctpa_sea .= !empty($salary['sea']) ? $salary['sea'] : 0;
+
+$amount->addText(number_format($ctpa_sea,2),$fontStyle,$paragraphStyle);
+
+//sunday ctpa & sea
+$ctpa_sea = !empty($salary['sunday_ctpa']) ? $salary['sunday_ctpa'] : 0;
+$ctpa_sea .= !empty($salary['sunday_sea']) ? $salary['sunday_sea'] : 0;
+
+$amount->addText(number_format($ctpa_sea,2),$fontStyle,$paragraphStyle);
+
+//ADJUSTMENTS
+
+$amount->addText('',$fontStyle,$paragraphStyle);
+
+$allowances = empty($salary['allowances']) ? $salary['allowances'] : 0;
+$amount->addText($allowances,$fontStyle,$paragraphStyle);
+
+$adjustments = empty($salary['adjustment']) ? $salary['adjustment'] : 0;
+$amount->addText($adjustments,$fontStyle,$paragraphStyle);
+
+
+// $table->addCell(2000,$styleCell)->addText('Earnings', $fontStyleBold);
+// $table->addCell(1000)->addText('Hours', $fontStyle,$paragraphStyle);
+// $table->addCell(1000)->addText('Amount', $fontStyle,$paragraphStyle);
+// $table->addCell(2000)->addText('Deductions', $fontStyleBold);
+// $table->addCell(1000)->addText('Amount', $fontStyle,$paragraphStyle);
+
+
+$deduct = $table->addCell(2000);
 
 $deductAmounts = $table->addCell(2000);
 
+
 foreach ($deductions as $deduction_key => $list) {
+
 	$deduct->addText($list['Loan']['name'],$fontStyle,$paragraphStyle);
 	
 	$index = str_replace(' ','_',strtolower($list['Loan']['name']));
