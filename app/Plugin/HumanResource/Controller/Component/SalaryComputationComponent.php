@@ -211,7 +211,6 @@ class SalaryComputationComponent extends Component
 						//add tax
 						$salary[$key]['total_deduction'] += $salary[$key]['with_holding_tax'];
 
-						$total_pay  -= $salary[$key]['total_deduction'];
 
 						$salary[$key]['net_pay'] = $total_pay;
 
@@ -222,6 +221,9 @@ class SalaryComputationComponent extends Component
 
 
 						$total_pay += $salary[$key]['adjustment'];
+
+						
+						$total_pay  -= $salary[$key]['total_deduction'];
 
 						//$total_pay  -= $salary[$key]['sss'];
 						$salary[$key]['total_pay'] = $total_pay;
@@ -1043,7 +1045,6 @@ class SalaryComputationComponent extends Component
     	$basicPay = $employee['Salary']['basic_pay'];
 
 		$data['regular'] = ($basicPay * $data['hours_regular']) / $hours;
-
 
 		// pr( $data['hours_regular'] );
 		// pr($employee['Salary']['basic_pay']);

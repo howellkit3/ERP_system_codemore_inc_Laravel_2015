@@ -2284,8 +2284,8 @@ class SalariesController  extends HumanResourceAppController {
 			
 			//$type = 'payslip';
 
-			pr($salaries);
-			exit();
+			// pr($salaries);
+			// exit();
 
 			switch ($type) {
 
