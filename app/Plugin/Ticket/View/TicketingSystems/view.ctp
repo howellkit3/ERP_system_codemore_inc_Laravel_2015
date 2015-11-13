@@ -186,16 +186,10 @@
 
 										      		$component = $formatDataSpecs[$key];
 
-										      		$componentName = $component['ProductSpecificationComponent']['name'];
-
 										      	}
-
-
 
 										      	if($specLists['ProductSpecificationDetail']['model'] == 'Part'){
 										      			
-
-										      		
 										      		echo $this->element('Specs/part', array('formatDataSpecs' => $formatDataSpecs[$key],
 										      			'key' => $partCounter,
 										      			'component' => $component,
@@ -208,10 +202,11 @@
 
 
 										      		}
-										      	
-
+										      		//pr($specLists); exit;
+										      		$componentName = $specLists['ProductSpecificationPart']['name'];
 										      		
 										      	}
+
 										      	if($specLists['ProductSpecificationDetail']['model'] == 'Process'){
 
 										      		echo $this->element('Specs/process', array('dataSpecs' => $formatDataSpecs[$key]
@@ -219,7 +214,6 @@
 										      			'product' => $product,
 										      			'componentName' => $componentName
 										      			));
-
 
 										      		$processCounter++;
 

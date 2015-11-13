@@ -1,9 +1,9 @@
     <?php 
         $productID = $parameter['product'];
-
+        $componentName = $parameter['component']; 
     ?>
 
-   <?php echo $this->Form->create('JobTicketProcess',array('url'=>(array('controller' => 'ticketing_systems','action' => 'save_job_ticket_process',$productID,'type' => 'corrugated')),'class' => 'form-horizontal'));?>
+   <?php echo $this->Form->create('JobTicketProcess',array('url'=>(array('controller' => 'ticketing_systems','action' => 'save_job_ticket_process',$productID, $componentName,'type' => 'corrugated')),'class' => 'form-horizontal'));?>
                
 
 <!--                     <div class="form-group">

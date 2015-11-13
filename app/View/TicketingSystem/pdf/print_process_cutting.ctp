@@ -1,4 +1,4 @@
-<?php
+<?php 
 // header("Content-disposition: attachment; filename="'this.pdf');
 // header("Content-type: application/pdf");
 
@@ -52,8 +52,9 @@ Configure::write('debug',0);
 
 							echo '( '. Inflector::humanize($component)  .' )';
 						 }else{
-
-						 	echo '( '. Inflector::humanize($componentName)  .' )';
+						 	if(!empty($componentName)){
+						 		echo '( '. Inflector::humanize($componentName)  .' )';
+							 }
 						 } ?>
 
 
@@ -135,12 +136,14 @@ Configure::write('debug',0);
 								<?php echo $part['ProductSpecificationPart']['size1']?> x
 								<?php echo $part['ProductSpecificationPart']['size2']?> >
 								<?php  
-								$outs = $po_quantity / $outs;  
-								echo round($outs); $total = $outs; ?> 
-								<?php //if(!empty($part['ProductSpecificationPart']['paper_quantity'])) : ?>
+
+								$paperQuantity =   $part['ProductSpecificationPart']['paper_quantity'];
+								$outPaper = $paperQuantity / $part['ProductSpecificationPart']['out1'];  
+								//echo round($outs); $total = $outs; ?> 
+								<?php if(!empty($part['ProductSpecificationPart']['paper_quantity'])) : ?>
 <!-- 								<!-- + --> 
-								<?php //echo $part['ProductSpecificationPart']['paper_quantity']; +  $total += $part['ProductSpecificationPart']['paper_quantity']?>  
-							<?php //endif; ?>
+								<?php echo $paperQuantity; +  $total += $part['ProductSpecificationPart']['paper_quantity']?>  
+							<?php endif; ?>
 								<?php if(!empty($part['ProductSpecificationPart']['allowance'])){ ?>
 								+ <?php echo $part['ProductSpecificationPart']['allowance']; 
 								$total += $part['ProductSpecificationPart']['allowance']?>

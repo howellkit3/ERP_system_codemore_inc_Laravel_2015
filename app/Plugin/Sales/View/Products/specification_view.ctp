@@ -82,6 +82,9 @@
 								echo !empty($specs['ProductSpecification']['size1']) ? $specs['ProductSpecification']['size3'] : '0';
 									
 							?>
+
+
+							
 						</div>
 						<div class="col-lg-4"></div>
 					</div>

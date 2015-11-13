@@ -52,7 +52,11 @@ class QuotationsController extends SalesAppController {
 
 		$limit = 10;
 
-		$conditions = array();
+		$conditions = array(
+        'NOT' => array(
+            'Quotation.status' => array(2, 3)
+        	)
+    	);
 
 		$this->paginate = array(
             'conditions' => $conditions,
@@ -1423,4 +1427,20 @@ class QuotationsController extends SalesAppController {
     	
     	return json_encode($colorData);
     }
+
+    public function remove($quotationId = null) {
+
+
+		$userData = $this->Session->read('Auth');
+
+		$this->Quotation->id = $quotationId;
+
+		$this->Quotation->saveField('status', 3);
+
+		$this->Session->setFlash(__('Quotation has been removed'), 'success');
+      
+        $this->redirect( array('controller' => 'quotations', 'action' => 'index'));  
+
+	}
+
 }

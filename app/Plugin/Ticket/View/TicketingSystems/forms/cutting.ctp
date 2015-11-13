@@ -1,7 +1,8 @@
   <?php $componentName = $parameter['component']; 
-        $holder = " ";?>
+        $productID = $parameter['product'];
+       // $holder = 'cutting';?>
 
-   <?php echo $this->Form->create('JobTicketProcess',array('url'=>(array('controller' => 'ticketing_systems','action' => 'save_job_ticket_process',$holder, $componentName , 'type' => 'cutting')),'class' => 'form-horizontal'));?>
+   <?php echo $this->Form->create('JobTicketProcess',array('url'=>(array('controller' => 'ticketing_systems','action' => 'save_job_ticket_process',$productID, $componentName , 'type' => 'cutting')),'class' => 'form-horizontal'));?>
                 
                 <div class="form-group">
                         <label for="inputPassword1" class="col-lg-2 control-label"> Remarks </label>
