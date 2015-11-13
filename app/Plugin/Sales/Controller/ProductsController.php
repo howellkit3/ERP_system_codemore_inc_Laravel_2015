@@ -683,7 +683,7 @@ class ProductsController extends SalesAppController {
 
     }
 
-    public function specification($productId = null ){
+    public function specification($productId = null, $ifTicket =  null ){
 
     	$this->loadModel('ItemCategoryHolder');
 
@@ -732,6 +732,12 @@ class ProductsController extends SalesAppController {
             Cache::write('unitData', $unitData);
         }
        
+        if(empty($ifTicket)){
+
+        	$ifTicket = 0;
+
+        }
+
 		$this->Product->recursive = 1;
 
 		$product = $this->request->data =  $this->Product->findById($productId);
@@ -750,7 +756,7 @@ class ProductsController extends SalesAppController {
 
 		$noPermission = ' ';
 
-		$this->set(compact('noPermission','subProcess','processData','specs','formatDataSpecs','unitData','product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
+		$this->set(compact('ifTicket','noPermission','subProcess','processData','specs','formatDataSpecs','unitData','product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
 
 		if(!empty($formatDataSpecs)){
 			$this->render('specification_view');
@@ -855,7 +861,9 @@ class ProductsController extends SalesAppController {
 
     }
 
-    public function create_specification($productId){
+    public function create_specification($productId ){
+
+    	//pr($this->request->data); exit;
 
     	$userData = $this->Session->read('Auth');
 
@@ -1025,11 +1033,17 @@ class ProductsController extends SalesAppController {
 			if (!empty($saveArray)) {
 				$this->ProductSpecificationDetail->saveSpecDetail($saveArray,$userData['User']['id'],$this->request->data['Product']['uuid']);
 			}
-			
-			
-			$this->Session->setFlash(
+
+				$this->Session->setFlash(
                 __('Product specification successfully completed', 'success')
             );
+
+			if($this->request->data['Product']['jobticket'] == 1){
+
+			return $this->redirect(array('controller' => 'ticketing_systems', 'action' => 'index', 'plugin' => 'ticket'));
+
+			}
+		
 			return $this->redirect(array('controller' => 'products', 'action' => 'index'));
 			
 		}
@@ -1121,7 +1135,9 @@ class ProductsController extends SalesAppController {
         exit();
     }
 
-    public function specification_edit($productId = null ){
+    public function specification_edit($productId = null, $ifTicket = null ){
+
+    //	pr($ifTicket); exit;
 
     	$this->loadModel('ItemCategoryHolder');
 
@@ -1188,7 +1204,7 @@ class ProductsController extends SalesAppController {
 
 		$noPermission = ' ';
 
-		$this->set(compact('noPermission','subProcess','processData','specs','formatDataSpecs','unitData','product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
+		$this->set(compact('ifTicket','noPermission','subProcess','processData','specs','formatDataSpecs','unitData','product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
 
 		if(!empty($formatDataSpecs)){
 			$this->render('specification_edit');

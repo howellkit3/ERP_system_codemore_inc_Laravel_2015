@@ -1,5 +1,5 @@
 <?php echo $this->Html->script(array('ajax_pagination','tabs', 'category')); ?>
-<?php echo $this->element('setting_option');?><br><br>
+<?php  echo $this->element('setting_option');?><br><br>
 <?php 
 
 $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : 'tab-category';
@@ -116,14 +116,9 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									                ?>
                     								</div>
 												</div>
-
-
-										          
 											</div>
 										</div>
 									</div>
-
-
 								</div>
 							</div>
 						</div>
