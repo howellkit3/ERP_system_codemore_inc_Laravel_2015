@@ -202,9 +202,7 @@
 
 
 										      		}
-										      		$componentName = $specLists['ProductSpecificationPart']['material'] . " part" . $specLists['ProductSpecificationPart']['part'];
-										      		
-										      		//pr($componentName); exit;
+										      		$componentName = "part " . $specLists['ProductSpecificationPart']['part'];
 										      		
 										      	}
 
