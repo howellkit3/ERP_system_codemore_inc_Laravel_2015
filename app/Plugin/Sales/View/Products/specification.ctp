@@ -72,6 +72,9 @@
 		                                            								'class' => 'form-control item_type',
 								                                                    'label' => false));
 	                                            ?>
+
+	                                           
+
 											</div>
 										</div>
 
