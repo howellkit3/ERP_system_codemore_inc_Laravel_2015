@@ -1,6 +1,7 @@
 <?php if (!empty($quotationData)) { ?>
     <?php foreach ($quotationData as $quotationList): 
-        if($quotationList['Quotation']['status'] != 2 ){ ?>
+        if($quotationList['Quotation']['status'] != 2 ){ 
+            if($quotationList['Quotation']['status'] != 3 ){ ?>
         
             <tr class="">
                  <td class="">
@@ -57,11 +58,17 @@
                                 <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Review </font></span>
                                 </span> ', array('controller' => 'quotations', 'action' => 'view',$quotationList['Quotation']['id'],!empty($quotationList['Quotation']['company_id']) ? $quotationList['Quotation']['company_id'] : $inquiryId[$quotationList['Quotation']['inquiry_id']]),array('class' =>' table-link not-active','escape' => false,'title'=>'Review Quotation'));
                     } 
+
+                    echo $this->Html->link('<span class="fa-stack">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-trash fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Remove </font></span>
+                        </span>', array('controller' => 'quotations', 'action' => 'remove',$quotationList['Quotation']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information','confirm' => 'Do you want to remove this Quotation?'));
+
                     ?>
                 </td>
             </tr>
         
-    <?php } 
+    <?php } }
     endforeach; ?> 
 <?php }else{
     echo "<font color='red'><b>No result..</b></font>";
