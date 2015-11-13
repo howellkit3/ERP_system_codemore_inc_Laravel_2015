@@ -2383,3 +2383,18 @@ ALTER TABLE `request_items` CHANGE COLUMN `remarks` `remarks` VARCHAR(300) NULL 
 ALTER TABLE `koufu_purchasing`.`purchasing_items` ADD COLUMN `purpose` VARCHAR(300) NULL AFTER `unit_price_unit_id`;
 ALTER TABLE `koufu_purchasing`.`purchasing_items` ADD COLUMN `remarks` VARCHAR(300) NULL AFTER `purpose`;
 
+
+/* add production output */
+CREATE TABLE `outputs` (
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`ticket_process_schedule_id` int(11) NULL ,
+`machine_log_id` int(11) NULL ,
+`job_ticket_id`  int(11) NULL ,
+`good`  varchar(255) NULL ,
+`reject`  varchar(255) NULL ,
+`created_by`  int(11) NULL ,
+`modified_by`  int(11) NULL ,
+`created`  int(11) NULL ,
+`modified`  int(11) NULL ,
+PRIMARY KEY (`id`)
+);
