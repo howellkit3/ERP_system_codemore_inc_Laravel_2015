@@ -48,8 +48,11 @@ Configure::write('debug',0);
 						<strong>ITEM</strong>&nbsp;&nbsp; <?php echo $productData['Product']['name']; ?> 
 
 						<?php if (empty($componentName)) {
+							if(!empty($component)){
 
 							echo '( '. Inflector::humanize($component)  .' )';
+
+							}
 						 }else{
 
 						 	echo '( '. Inflector::humanize($componentName)  .' )';
