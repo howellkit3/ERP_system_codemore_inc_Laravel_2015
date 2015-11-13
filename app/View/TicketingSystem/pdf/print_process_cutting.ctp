@@ -136,11 +136,11 @@ Configure::write('debug',0);
 								<?php echo $part['ProductSpecificationPart']['size2']?> >
 								<?php  
 								$outs = $po_quantity / $outs;  
-								echo round($outs); $total = $outs; ?> 
-								<?php //if(!empty($part['ProductSpecificationPart']['paper_quantity'])) : ?>
+								//echo round($outs); $total = $outs; ?> 
+								<?php if(!empty($part['ProductSpecificationPart']['paper_quantity'])) : ?>
 <!-- 								<!-- + --> 
-								<?php //echo $part['ProductSpecificationPart']['paper_quantity']; +  $total += $part['ProductSpecificationPart']['paper_quantity']?>  
-							<?php //endif; ?>
+								<?php echo $part['ProductSpecificationPart']['paper_quantity']; +  $total += $part['ProductSpecificationPart']['paper_quantity']?>  
+							<?php endif; ?>
 								<?php if(!empty($part['ProductSpecificationPart']['allowance'])){ ?>
 								+ <?php echo $part['ProductSpecificationPart']['allowance']; 
 								$total += $part['ProductSpecificationPart']['allowance']?>
