@@ -1,4 +1,4 @@
-<?php
+<?php 
 // header("Content-disposition: attachment; filename="'this.pdf');
 // header("Content-type: application/pdf");
 
@@ -47,10 +47,14 @@ Configure::write('debug',0);
 					<td>
 						<strong>ITEM</strong>&nbsp;&nbsp; <?php echo $productData['Product']['name']; ?> 
 
-						<?php if (!empty($component)) : 
+						<?php if (empty($componentName)) {
 
 							echo '( '. Inflector::humanize($component)  .' )';
-						 endif; ?>
+						 }else{
+
+						 	echo '( '. Inflector::humanize($componentName)  .' )';
+
+						 } ?>
 					</td>
 					<td class="text-right">
 						<strong>DESCRIPTION</strong>&nbsp;&nbsp; <?php echo $productData['Product']['remarks']  ?>
@@ -80,8 +84,6 @@ Configure::write('debug',0);
 									<td></td>
 								</tr>
 
-
-								
 								<tr>
 									<?php if($flutecombination == " "){ 
 
