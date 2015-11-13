@@ -36,6 +36,7 @@
 			</div>
 		</div>
 
+
 		<?php echo $this->Form->create('Product',array('url'=>(array('controller' => 'products', 'action' => 'create_specification')),'class' => 'test','method' => 'post'));?>			
 			<div class="row">
 				<div class="col-lg-12">
@@ -76,6 +77,14 @@
                     								'type' => 'hidden',
                     								'class' => 'form-control item_type',
                                                     'label' => false));
+                                            ?>
+
+                                            <?php 
+	                                            echo $this->Form->input('jobticket', array(
+                    								'type' => 'hidden',
+                    								'class' => 'form-control item_type',
+                                                    'label' => false,
+                                                    'value' => $ifTicket));
                                             ?>
 										</div>
 									</div>

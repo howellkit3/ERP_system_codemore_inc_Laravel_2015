@@ -165,7 +165,7 @@ class SalesOrdersController extends SalesAppController {
 
 		$quotationData = $this->Quotation->findById($clientOrderData['ClientOrder']['quotation_id']);
 
-  // pr($clientOrderData); exit;
+  //pr($clientOrderData); exit;
 
     $checkSpec = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $quotationData['QuotationDetail']['product_id'])));
     
