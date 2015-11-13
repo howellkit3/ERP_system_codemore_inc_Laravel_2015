@@ -214,7 +214,6 @@
 										      			'componentName' => $componentName
 										      			));
 
-
 										      		$processCounter++;
 
 										      	}
