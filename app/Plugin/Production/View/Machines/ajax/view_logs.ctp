@@ -8,8 +8,33 @@
 				</header>
 			</center>
 				
-			<?php echo $this->Form->create('MachineLog',array('url' => array('controller' => 'machine_logs','action' => 'save_logs'))); ?>	
-			<div class="main-box-body clearfix">	
+			<?php echo $this->Form->create('MachineLog',array('url' => array('controller' => 'machines','action' => 'save_logs'))); ?>	
+			<div class="main-box-body clearfix">
+				<div class="form-group">
+					<?php 
+						echo !empty($ticketData['JobTicket']['uuid']) ? 'SCH-'.ucfirst($ticketData['JobTicket']['uuid']) : '' ;
+						echo $this->Form->input('id',array(
+							'value' => $ticketData['JobTicket']['id'],
+							'type' => 'hidden'
+						));
+						echo $this->Form->input('Output.job_ticket_id',array(
+							'value' => $ticketData['JobTicket']['id'],
+							'type' => 'hidden'
+						));
+						echo $this->Form->input('Output.ticket_process_schedule_id',array(
+							'value' => $logs['TicketProcessSchedule']['id'],
+							'type' => 'hidden'
+						));
+						echo $this->Form->input('Output.machine_log_id',array(
+							'value' => $logs['MachineLog']['id'],
+							'type' => 'hidden'
+						));
+						echo $this->Form->input('Output.department_process_id',array(
+							'value' => $logs['TicketProcessSchedule']['department_process_id'],
+							'type' => 'hidden'
+						));
+					?>
+				</div>	
 					
 					<div class="form-group">
 						<div class="col-lg-5">
@@ -24,8 +49,9 @@
 							<?php echo !empty($productName[$ticketData['JobTicket']['product_id']]) ? $productName[$ticketData['JobTicket']['product_id']] : ''; ?>
 						</div>
 					</div>
-					<hr>
+					<div class="clearfix"></div>
 
+					<br>
 					<div class="form-group">
 						<div class="col-lg-2">
 								Quantity
@@ -35,7 +61,7 @@
 								<label class="col-lg-3 control-label"><span style="color:red">*</span> Good </label>
 	                                        <div class="col-lg-9">
 	                                        	
-	                                            <?php echo $this->Form->input('good',
+	                                            <?php echo $this->Form->input('Output.good',
 				                                         array('class' => 'form-control required',
 				                                        'placeholder' => '00',
 				                                        'type' => 'number',
@@ -50,7 +76,7 @@
 	                                        <label class="col-lg-3 control-label"><span style="color:red">*</span> Reject </label>
 	                                        
 	                                        <div class="col-lg-9">
-	                                        	<?php echo $this->Form->input('reject',
+	                                        	<?php echo $this->Form->input('Output.reject',
 				                                         array(
 				                                        'class' => 'form-control required',
 				                                        'placeholder' => '00',
@@ -80,7 +106,7 @@
 
 
 	                                        	<?php else : ?>
-	                                        			<a id="startTime" data-job-id="<?php echo $logs['MachineLog']['id']; ?>" class="btn btn-default">Click Here to START </a>
+	                                        			<a id="startTime" data-job-id="<?php echo $logs['MachineLog']['id']; ?>" class="btn btn-default timeButton">Click Here to START </a>
 	                                        			<?php  $class = 'form-control required timepicker hide'; ?>
 	                                        	<?php endif; ?>		
 
@@ -102,19 +128,21 @@
 	                                        
 	                                        <div class="col-lg-9">
 	                                        	
-	                                        	<?php if (!empty($logs['MachineLog']['reject'])) : ?>
+	                                        	<?php if (!empty($logs['MachineLog']['end'])) : ?>
 
-	                                        		<?php echo $this->Form->input('end',
-				                                         array('class' => 'form-control required',
-				                                         'placeholder' => '00:00:00',
-				                                        'value' => $logs['MachineLog']['end'],
-				                                        'label' => false)); ?>
-
+	                                        		<?php  $class = 'form-control required '; ?>
 
 	                                        	<?php else : ?>
-	                                        			<a id="endTime" data-job-id="<?php echo $logs['MachineLog']['id']; ?>" class="btn btn-default">End Process</a>
+	                                        			<a id="endTime" data-job-id="<?php echo $logs['MachineLog']['id']; ?>" class="btn btn-default timeButton">End Process </a>
 	                                        			<?php  $class = 'form-control required hide'; ?>
-	                                        	<?php endif; ?>		
+	                                        	<?php endif; ?>
+
+
+	                                        		<?php echo $this->Form->input('end',
+				                                         array('class' => $class,
+				                                        'placeholder' => '00:00:00',
+				                                        'value' => $logs['MachineLog']['end'],
+				                                        'label' => false)); ?>		
 
 				                           </div>
 	                             </div>
@@ -131,17 +159,17 @@
 	                                        <label class="col-lg-3 control-label"><span style="color:red">*</span> Start </label>
 	                                        <div class="col-lg-9">
 	                                        	
-	                                        	<?php if (!empty($logs['MachineLog']['start'])) : ?>
+	                                        	<?php if (!empty($logs['MachineLog']['dt_start'])) : ?>
 
 	                                        		<?php  $class = 'form-control required '; ?>
 
 
 	                                        	<?php else : ?>
-	                                        			<a id="startTime" data-job-id="<?php echo $logs['MachineLog']['id']; ?>" class="btn btn-default">Click Here to START </a>
+	                                        			<a id="startTime" data-job-id="<?php echo $logs['MachineLog']['id']; ?>" class="btn btn-default timeButton">Click Here to START </a>
 	                                        			<?php  $class = 'form-control required hide'; ?>
 	                                        	<?php endif; ?>		
 
-	                                        		<?php echo $this->Form->input('start',
+	                                        		<?php echo $this->Form->input('dt_start',
 				                                         array('class' => $class,
 				                                         'placeholder' => '00:00:00',
 				                                       	'value' => $logs['MachineLog']['start'],
@@ -159,19 +187,21 @@
 	                                        
 	                                        <div class="col-lg-9">
 	                                        	
-	                                        	<?php if (!empty($logs['MachineLog']['reject'])) : ?>
+	                                        	<?php if (!empty($logs['MachineLog']['dt_end'])) : ?>
 
-	                                        		<?php echo $this->Form->input('end',
-				                                         array('class' => 'form-control required',
-				                                        'placeholder' => '00:00:00',
-				                                        'value' => $logs['MachineLog']['end'],
-				                                        'label' => false)); ?>
-
+	                                        		<?php  $class = 'form-control required '; ?>
 
 	                                        	<?php else : ?>
-	                                        			<a id="endTime" data-job-id="<?php echo $logs['MachineLog']['id']; ?>" class="btn btn-default">End Process </a>
+	                                        			<a id="endTime" data-job-id="<?php echo $logs['MachineLog']['id']; ?>" class="btn btn-default timeButton">End Process </a>
 	                                        			<?php  $class = 'form-control required hide'; ?>
-	                                        	<?php endif; ?>		
+	                                        	<?php endif; ?>
+
+
+	                                        		<?php echo $this->Form->input('dt_end',
+				                                         array('class' => $class,
+				                                        'placeholder' => '00:00:00',
+				                                        'value' => $logs['MachineLog']['end'],
+				                                        'label' => false)); ?>		
 
 				                           </div>
 	                             </div>
@@ -193,32 +223,34 @@
 <script type="text/javascript">
 	$(function(){
 
-		$('body').on('click','#startTime',function(){
+
+
+			$('body').on('click','.timeButton',function(){
 
 				$timeNow = '<?php echo date("H:i:s"); ?>';
 
 				$(this).addClass('hide');
 
 				console.log($timeNow);
+
 				$(this).next().find('input').removeClass('hide').val($timeNow);
 
-					$('.timepicker').timepicker({
-					    minuteStep: 5,
-					    showSeconds: true,
-					    showMeridian: false,
-					    disableFocus: false,
-					    showWidget: true
-					});
+				$('.timepicker').timepicker();
 		});
 
-		$('.timepicker').timepicker({
-		    minuteStep: 5,
-		    showSeconds: true,
-		    showMeridian: false,
-		    disableFocus: false,
-		    showWidget: true
-		}).focus(function() {
-		    $(this).next().trigger('click');
+			$('body').on('click','#startTime',function(){
+
+				$timeNow = '<?php echo date("H:i:s"); ?>';
+
+				$(this).addClass('hide');
+
+				console.log($timeNow);
+
+				$(this).next().find('input').removeClass('hide').val($timeNow);
+
+				$('.timepicker').timepicker();
 		});
+
+		
 	});
 </script>
