@@ -19,6 +19,7 @@ class MachinesController extends ProductionAppController {
     	$auth = $this->Session->read('Auth.User');
 
         $this->loadModel('Production.ProcessDepartment');
+
         $processDepartmentData = $this->ProcessDepartment->find('list',array('fields' => array('id','name')));
 
 		if(!empty($this->request->data)){
@@ -145,10 +146,64 @@ class MachinesController extends ProductionAppController {
 
             $ticketData =$this->JobTicket->findById($logs['TicketProcessSchedule']['job_ticket_id']);
 
-
             $this->set(compact('ticketData','logs','productName','machineData','companyData'));
 
             $this->render('Machines/ajax/view_logs');
+        }
+    }
+
+    public function save_logs() {
+
+        if ($this->request->is('post')) {
+
+            $this->loadModel('Production.Output');
+
+            $this->loadModel('Production.MachineLog');
+
+            $this->loadModel('Production.TicketProcessSchedule');
+
+
+            $this->loadModel('Production.ProcessDepartment');
+
+
+            $auth = $this->Session->read('Auth.User');
+
+            $data = $this->request->data;
+
+
+            if ($this->MachineLog->save( $data )) {
+
+                //save Output
+                $this->Output->saveOutput( $data,$auth );
+
+                //$save
+                $this->Session->setFlash('Saving Log Succesfully','success');
+
+                $tab = '';
+
+               if (!empty($data['Output']['department_process_id'])) {
+
+                    $process = $this->ProcessDepartment->findById($data['Output']['department_process_id']);
+
+                    $tab = strtolower(Inflector::slug($process['ProcessDepartment']['name'], '-'));
+                }
+
+                $this->redirect(array(
+                    'controller' => 'jobs',
+                    'action' => 'view_process',
+                    $data['Output']['department_process_id'],
+                    'tab' => $tab 
+
+                ));
+
+            } else {
+
+                $this->Session->setFlash('There\'s an error saving process,error');
+
+            }
+
+            pr($this->request->data);
+            exit();
         }
     }
 }

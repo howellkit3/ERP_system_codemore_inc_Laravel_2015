@@ -1,5 +1,18 @@
 $(document).ready(function(){ 
 
+
+    $('.timepicker').timepicker({
+            minuteStep: 5,
+            showSeconds: true,
+            showMeridian: false,
+            disableFocus: false,
+            showWidget: true,
+            template: 'modal'
+        }).focus(function() {
+            $(this).next().trigger('click');
+        });
+
+        
 	$('body').on('submit','#updateMachineSchedule',function(e){
 
         $url = $(this).attr('action');
