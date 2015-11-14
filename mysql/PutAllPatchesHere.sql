@@ -2398,3 +2398,7 @@ CREATE TABLE `outputs` (
 `modified`  int(11) NULL ,
 PRIMARY KEY (`id`)
 );
+
+/* Howell kit production */
+
+UPDATE `job_tickets` SET `status_production_id` = 0 WHERE `status_production_id` IS NULL;

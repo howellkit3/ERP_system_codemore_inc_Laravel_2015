@@ -1,5 +1,7 @@
 <?php foreach ($ticketData as $ticketDataList): ?>
 
+    <?php if($ticketDataList['JobTicket']['status_production_id'] == 0){?>
+
         <tr class="">
 
             <td class="">
@@ -37,4 +39,4 @@
              </td>
         </tr>
 
-<?php endforeach; ?> 
+<?php } endforeach; ?> 

@@ -27,7 +27,8 @@ class TicketingSystemsController extends TicketAppController {
 
         $limit = 20;
 
-        $conditions = array();
+        $conditions = array('NOT' => array('JobTicket.status_production_id' => array(1)
+            ));
 
         $this->JobTicket->bindTicketSchedule();
 
@@ -44,7 +45,8 @@ class TicketingSystemsController extends TicketAppController {
                         'JobTicket.uuid like' => '%'.$query['name'].'%',
                         'JobTicket.po_number like' => '%'.$query['name'].'%',
                         //'ClientOrder.uuid like' => '%'.$query['name'].'%',
-                        )
+                        ),
+
                 ));
                
                 // $ticketData = $this->JobTicket->find('all',array(
@@ -62,6 +64,10 @@ class TicketingSystemsController extends TicketAppController {
             }
 
         }
+
+
+
+        
 
         $this->paginate = array(
             'conditions' => $conditions,
@@ -1264,6 +1270,20 @@ class TicketingSystemsController extends TicketAppController {
 
         $this->render('TicketingSystems/single_face');
 
+    }
+
+    public function terminate($id = null){
+        
+        $this->JobTicket->id = $id;
+
+        $this->JobTicket->saveField('status_production_id', 1);
+
+        $this->Session->setFlash(__('Job Ticket has been removed'), 'success');
+      
+        $this->redirect( array(
+            'controller' => 'ticketing_systems',   
+            'action' => 'index'
+        ));  
     }
 
 }
