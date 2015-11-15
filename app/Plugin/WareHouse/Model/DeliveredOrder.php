@@ -36,6 +36,7 @@ class DeliveredOrder extends AppModel {
 		}
 		$data['purchase_order_uuid'] = $deliveredItemsData['po_number'];
 		$data['modified_by'] = $auth;
+		$data['created_by'] = $auth;
 		$data['received_orders_id'] = $receivedOrdersId;
 		$data['purchase_orders_id'] = $purchaseId;
 		$data['dr_num'] = $deliveredItemsData['dr_num'];

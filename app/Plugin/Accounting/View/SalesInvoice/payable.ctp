@@ -1,5 +1,6 @@
 <?php $this->Html->addCrumb('Payable', array('controller' => 'sales_invoice', 'action' => 'payable')); ?>
 <?php  echo $this->Html->script('Accounting.date_range_payables');?>
+<?php  echo $this->Html->script('Accounting.company-filter');?>
 <?php echo $this->element('account_option'); ?>
 
 <div class="row">
@@ -22,9 +23,9 @@
 					<div class="main-box clearfix">
 						<div class="tabs-wrapper profile-tabs">
 							<ul class="nav nav-tabs">
-								<li class="active">
+							<!-- 	<li class="active">
 									<a href="#tab-summary" class="dr" data-toggle="tab">Payables</a>
-								</li>
+								</li> -->
 								
 							</ul>
 							<input name="report" type="hidden" value="1" class="form-control appendreport" >
@@ -42,7 +43,23 @@
 												<input placeholder="Date Filter" name="from_date" data="1" type="text" class="form-control myDateRange datepickerDateRange" id="datepickerDateRange" >
 											</div>
 										</div>
+
 										<button type="button" class="clear-date btn btn-success pull-left"><i class="fa fa-eraser fa-lg"></i> Clear</button>
+
+										<div class="form-group col-md-3 pull-left">
+											<div class="input-group">
+
+										<?php 
+												echo $this->Form->input('RequestItem.category', array(
+							                        'options' => $supplierName,  
+							                        'label' => false,
+							                        'class' => 'form-control company-filter',
+							                        'empty' => '---Select Category---'
+							                         )); 
+							                ?>
+							                </div>
+										</div>
+
 									<?php echo $this->Form->end(); ?>	
 		                            <br><br><br>
 
