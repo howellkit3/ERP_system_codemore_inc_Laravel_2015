@@ -1428,32 +1428,59 @@ class EmployeesController  extends HumanResourceAppController {
 
 				$this->loadModel('HumanResource.Attendance');
 
-				$this->loadModel('HumanResource.Employee');
+				// $this->loadModel('HumanResource.Employee');
 
-				$this->Attendance->bind(array('Employee'));
+				// $this->Attendance->bind(array('Employee'));
 
-				$attendance =  array_merge($conditions,array(
-  						'date(Attendance.date) BETWEEN ? AND ?' => array($query['date'],$query['date']), 
-  				));
+				// $attendance =  array_merge($conditions,array(
+  		// 				'date(Attendance.date) BETWEEN ? AND ?' => array($query['date'],$query['date']), 
+  		// 		));
+
+				// $attendances = $this->Attendance->find('all',array(
+				// 	'conditions' => $attendance
+				// ));
+
+			
+				$employees = $this->Employee->find('all',array(
+					'conditions' => $conditions,
+					'order' => array('Employee.code DESC'),
+					'fields' => array('Employee.id','Employee.full_name','Employee.first_name','Employee.last_name','Employee.middle_name'),
+					'group' => 'Employee.id',
+					'limit' => 5
+				));
 
 
-				$attendances = $this->Attendance->find('all',array(
-					'conditions' => $attendance
-				)
-				);
+				$employees = $this->Employee->find('all',array(
+					'conditions' => $conditions
+				));
+
+				$date = $this->request->query('date');
 
 
-				$this->set(compact('attendances'));	
+				foreach ($employees as $key => $employee) {
+						$conditions = array('Attendance.employee_id' => $employee['Employee']['id']);
+						$conditions = array_merge($conditions,array(
+		  						'date(Attendance.in) BETWEEN ? AND ?' => array($date,$date), 
+		  				));	
+
+		  			
+		  			$att =  $this->Attendance->find('first',array('conditions' => $conditions));
+
+					$employees[$key]['Attendance'] = !empty($att['Attendance']) ? $att['Attendance'] : array();
+
+				}
+
+				$this->set(compact('attendances','employees'));	
 
 			} else {
 
 
 				if (!empty($query['departmentId']) && $query['departmentId']) {
 
-				$conditions = array_merge($conditions,array('Employee.department_id' => $query['departmentId'] ));
+					$conditions = array_merge($conditions,array('Employee.department_id' => $query['departmentId'] ));
 				} 
 
-				$employees = $this->Employee->find('list',array(
+				$employees = $this->Employee->find('all',array(
 				'conditions' => $conditions,
 				'order' => array('Employee.code DESC'),
 				'fields' => array('Employee.id','Employee.full_name')

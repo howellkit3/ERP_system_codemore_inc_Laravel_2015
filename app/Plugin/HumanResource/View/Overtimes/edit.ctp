@@ -61,12 +61,12 @@ echo $this->Html->script(array(
                         //     'title'=>'Edit Information',
                         //     ));
 
-                        // echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Approved ', array('controller' => 'overtimes',
-                        //     'action' => 'process',
-                        //     $this->request->data['Overtime']['id'],'approved'),
-                        //     array('class' =>' table-link btn btn-primary pull-right overtime-process',
-                        //           'data-process' => 'approved',   
-                        //           'escape' => false));
+                        echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Approved ', array('controller' => 'overtimes',
+                            'action' => 'process',
+                            $this->request->data['Overtime']['id'],'approved'),
+                            array('class' =>' table-link btn btn-primary pull-right overtime-process',
+                                  'data-process' => 'approved',   
+                                  'escape' => false));
                                             
                         ?>
                         </div>
@@ -247,7 +247,7 @@ echo $this->Html->script(array(
      
             <input type="hidden" name="data[Employee][id][<?php echo $keys; ?>]" class="select_employee" value="<?php echo  $value['Employee']['id']; ?>" >
 
-            <input type="hidden" name="data[Attendance][id][<?php echo $keys; ?>]" class="select_employee" value="<?php echo $value['Attendance']['in'] ?>" >
+            <input type="hidden" name="data[Attendance][id][<?php echo $keys; ?>]" class="select_employee" value="<?php echo !empty($value['Attendance']['in']) ? $value['Attendance']['in'] : ''  ?>" >
 
             <span class="time-in"> <?php echo !empty( $value['Attendance']['in']) ? 'Time in ( '.date('h:i a',strtotime($value['Attendance']['in'])).' )' : ''; ?>  </span>
 

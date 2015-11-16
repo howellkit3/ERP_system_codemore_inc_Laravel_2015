@@ -203,7 +203,6 @@ class OvertimesController  extends HumanResourceAppController {
 
 			$this->Overtime->create();
 
-
 			$data = $this->Overtime->formatData($this->request->data,$auth['id']);
 	
 			if ($this->Overtime->save($data['Overtime'])) {
@@ -216,11 +215,46 @@ class OvertimesController  extends HumanResourceAppController {
 				$workshiftBreak = $this->WorkshiftBreak->createWorkshiftBreak($data,0,$overtime_id,$auth['id']);
 				
 				//update overtime in attendance
-				foreach ($data['Attendance']['id'] as $key => $value) {
-					//$updateOverTime = $this->Attendance->find('first',array('conditions' => array('Attendance.id' => $value)));
-					$this->Attendance->id = $value;
-					$this->Attendance->savefield('overtime_id' , $overtime_id);
-				}
+			
+
+			 		if (!empty($data['Attendance']['id'])) {
+			 			//update overtime in attendance
+						foreach ($data['Attendance']['id'] as $key => $value) {
+							//$updateOverTime = $this->Attendance->find('first',array('conditions' => array('Attendance.id' => $value)));
+							$this->Attendance->id = $value;
+							$this->Attendance->savefield('overtime_id' , $overtime_id);
+						}
+			 		} else  {
+
+			 			$date = date('Y-m-d',strtotime($data['Overtime']['from']));
+
+			 			$date2 = date('Y-m-d',strtotime($data['Overtime']['to']));
+			 			
+
+			 			$conditions = array();
+
+			 			foreach ($data['Employee']['id'] as $key => $value) {
+			 				
+				 			$conditions = array_merge($conditions,array(
+		  						'date(Attendance.in) BETWEEN ? AND ?' => array($date,$date2),
+		  						'Attendance.employee_id' => $value 
+	  						));
+
+
+				 			$attendance = $this->Attendance->find('first',array(
+				 				'conditions' => $conditions
+				 			));
+
+						 	if ($attendance) {
+
+						 			$this->Attendance->id = $attendance['Attendance']['id'];
+									$this->Attendance->savefield('overtime_id' , $overtime_id);
+						 	}
+
+
+			 			}
+
+			 		}
 			
 				if (!empty($overtime_id)) {
 				//workhift workschedule
@@ -324,7 +358,7 @@ class OvertimesController  extends HumanResourceAppController {
 
 			$data = $this->Overtime->formatData($this->request->data,$auth['id']);
 
-		
+	
 			if ($this->Overtime->save($data)) {
 
 					$overtime = $this->Overtime->findById($id);
@@ -354,12 +388,41 @@ class OvertimesController  extends HumanResourceAppController {
 						}
 			 		}
 
-			 		//update overtime in attendance
-					foreach ($data['Attendance']['id'] as $key => $value) {
-						//$updateOverTime = $this->Attendance->find('first',array('conditions' => array('Attendance.id' => $value)));
-						$this->Attendance->id = $value;
-						$this->Attendance->savefield('overtime_id' , $id);
-					}
+			 		if (!empty($data['Attendance']['id'])) {
+			 			//update overtime in attendance
+						foreach ($data['Attendance']['id'] as $key => $value) {
+							//$updateOverTime = $this->Attendance->find('first',array('conditions' => array('Attendance.id' => $value)));
+							$this->Attendance->id = $value;
+							$this->Attendance->savefield('overtime_id' , $id);
+						}
+			 		} else  {
+
+			 			$date = date('Y-m-d',strtotime($data['Overtime']['from']));
+
+			 			$date2 = date('Y-m-d',strtotime($data['Overtime']['to']));
+			 			
+
+			 			$conditions = array();
+
+			 			foreach ($data['Employee']['id'] as $key => $value) {
+			 				
+				 			$conditions = array_merge($conditions,array(
+		  						'date(Attendance.in) BETWEEN ? AND ?' => array($date,$date2),
+		  						'Attendance.employee_id' => $value 
+	  						));
+
+
+				 			$attendance = $this->Attendance->find('first',array(
+				 				'conditions' => $conditions
+				 			));
+
+				 			$this->Attendance->id = $attendance['Attendance']['id'];
+							$this->Attendance->savefield('overtime_id' , $id);
+
+			 			}
+
+			 		}
+			 		
 
 		 			$this->redirect( array(
                              'controller' => 'overtimes', 
@@ -400,6 +463,7 @@ class OvertimesController  extends HumanResourceAppController {
 
 			$selectedEmployee = (array)json_decode($this->request->data['Overtime']['employee_ids']);
 
+
 			$date = $this->request->data['Overtime']['date'];
 
 		}
@@ -415,15 +479,15 @@ class OvertimesController  extends HumanResourceAppController {
 
 		$conditions = array();
 
-		$conditions = array_merge($conditions,array('Attendance.date >=' => $date ));
+		// $conditions = array_merge($conditions,array('Attendance.date >=' => $date ));
 
 
-		$conditions = array_merge($conditions,array(
-  						'date(Attendance.in) BETWEEN ? AND ?' => array($date,$date), 
-  				));
+		// $conditions = array_merge($conditions,array(
+  // 						'date(Attendance.in) BETWEEN ? AND ?' => array($date,$date), 
+  // 				));
   				
 
-		$conditions = array_merge($conditions,array('Attendance.in !=' => ' '));
+		//$conditions = array_merge($conditions,array('Attendance.in !=' => ' '));
 		if (!empty( $this->request->data['Overtime']['department_id'])) {
 			//$conditions = array_merge($conditions,array('Employee.department_id' => $this->request->data['Overtime']['department_id']));
 
@@ -431,29 +495,49 @@ class OvertimesController  extends HumanResourceAppController {
 
 
 		if (!empty($selectedEmployee)) {
-			$conditions = array_merge($conditions,array('Attendance.employee_id' => $selectedEmployee ));
+			$conditions = array_merge($conditions,array('Employee.id' => $selectedEmployee ));
 
 		}
-		
-		$employees = $this->Attendance->find('all',array(
-					'conditions' => $conditions,
-					'order' => array('Employee.last_name','Employee.code'),
-						'fields' => array(
-					'id',
-					'Employee.first_name',
-					'Employee.last_name',
-					'Employee.middle_name',
-					'Employee.position_id',
-					'Employee.department_id',
-					'Employee.image',
-					'Attendance.schedule_id',
-					'Attendance.type',
-					'Attendance.in',
-					'Attendance.out'
-					//'Position.name'
-					),
 
-				));	
+		$employees = $this->Employee->find('all',array(
+			'conditions' => $conditions
+		));
+
+		foreach ($employees as $key => $employee) {
+				$conditions = array_merge($conditions,array(
+  						'date(Attendance.in) BETWEEN ? AND ?' => array($date,$date), 
+  				));	
+
+  			
+  			$att =  $this->Attendance->find('first',array('conditions' => $conditions));
+
+			$employees[$key]['Attendance'] = !empty($att['Attendance']) ? $att['Attendance'] : array();
+
+		}
+
+
+
+
+		
+		// $employees = $this->Attendance->find('all',array(
+		// 			'conditions' => $conditions,
+		// 			'order' => array('Employee.last_name','Employee.code'),
+		// 				'fields' => array(
+		// 			'id',
+		// 			'Employee.first_name',
+		// 			'Employee.last_name',
+		// 			'Employee.middle_name',
+		// 			'Employee.position_id',
+		// 			'Employee.department_id',
+		// 			'Employee.image',
+		// 			'Attendance.schedule_id',
+		// 			'Attendance.type',
+		// 			'Attendance.in',
+		// 			'Attendance.out'
+		// 			//'Position.name'
+		// 			),
+
+		// 		));	
 
 
 
