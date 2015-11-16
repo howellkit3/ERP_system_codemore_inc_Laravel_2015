@@ -8,7 +8,7 @@
                     <div class="filter-block pull-right">
                         <div class="form-group pull-left">
                             
-                                <input placeholder="Search..." class="form-control searchRequest "  />
+                                <input placeholder="Search..." class="form-control searchRequest " val ="3" />
                                 <i class="fa fa-search search-icon"></i>
                             
                         </div>

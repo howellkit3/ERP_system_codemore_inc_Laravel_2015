@@ -759,9 +759,9 @@ class RequestsController extends PurchasingAppController {
 
 	}
 
-	public function search_request($hint = null){
+	public function search_request($hint = null, $status = null){
 
-        $this->loadModel('Purchasing.Request');
+		$this->loadModel('Purchasing.Request');
 
 		$this->loadModel('StatusFieldHolder');
 
@@ -769,36 +769,104 @@ class RequestsController extends PurchasingAppController {
 
 		$this->loadModel('User');
 
-		$requestData = $this->Request->find('all', array('order' => array('Request.created' => 'DESC')));
-		
-		$userName = $this->User->find('list', array('fields' => array('id', 'fullname')
-															));
+		if($status == 1){
 
-		$statusData = $this->StatusFieldHolder->find('list', array('fields' => array('id', 'status'),
-															'order' => array('StatusFieldHolder.status' => 'ASC')
-															));
-		$type = $this->PurchasingType->find('list', array('fields' => array('id', 'name'),
-															'order' => array('PurchasingType.id' => 'ASC')
-															));
+			$userName = $this->User->find('list', array('fields' => array('id', 'fullname')
+																));
 
-        $requestData = $this->Request->find('all',array(
-                      'conditions' => array(
-                        'OR' => array(
-                        array('Request.uuid LIKE' => '%' . $hint . '%'),
-                        array('Request.name LIKE' => '%' . $hint . '%')
-                          )
-                        ),
-                      'limit' => 10
-                      )); 
+			$statusData = $this->StatusFieldHolder->find('list', array('fields' => array('id', 'status'),
+																'order' => array('StatusFieldHolder.status' => 'ASC')
+																));
+			$type = $this->PurchasingType->find('list', array('fields' => array('id', 'name'),
+																'order' => array('PurchasingType.id' => 'ASC')
+																));
+
+	        $requestData = $this->Request->find('all',array(
+	                      'conditions' => array(
+	                        'OR' => array(
+	                        array('Request.uuid LIKE' => '%' . $hint . '%'),
+	                        array('Request.name LIKE' => '%' . $hint . '%')
+	                          ), 'Request.status_id' => 8
+	                        ),
+	                      'limit' => 10
+	                      )); 
 
 
-       $this->set(compact('requestData', 'type','statusData', 'userName'));
+	       $this->set(compact('requestData', 'type','statusData', 'userName'));
 
-        if ($hint == ' ') {
-            $this->render('index');
-        }else{
-            $this->render('search_request');
-        }
+	        if ($hint == ' ') {
+	            $this->render('index');
+	        }else{
+	            $this->render('search_request');
+	        }
+
+  	  	}
+
+  	  	if($status == 2){
+
+			$userName = $this->User->find('list', array('fields' => array('id', 'fullname')
+																));
+
+			$statusData = $this->StatusFieldHolder->find('list', array('fields' => array('id', 'status'),
+																'order' => array('StatusFieldHolder.status' => 'ASC')
+																));
+			$type = $this->PurchasingType->find('list', array('fields' => array('id', 'name'),
+																'order' => array('PurchasingType.id' => 'ASC')
+																));
+
+	        $requestData = $this->Request->find('all',array(
+	                      'conditions' => array(
+	                        'OR' => array(
+	                        array('Request.uuid LIKE' => '%' . $hint . '%'),
+	                        array('Request.name LIKE' => '%' . $hint . '%')
+	                          ), 'Request.status_id' => 1
+	                        ),
+	                      'limit' => 10
+	                      )); 
+
+
+	       $this->set(compact('requestData', 'type','statusData', 'userName'));
+
+	        if ($hint == ' ') {
+	            $this->render('index');
+	        }else{
+	            $this->render('search_request');
+	        }
+
+  	  	}
+
+  	  	if($status == 3){
+
+			$userName = $this->User->find('list', array('fields' => array('id', 'fullname')
+																));
+
+			$statusData = $this->StatusFieldHolder->find('list', array('fields' => array('id', 'status'),
+																'order' => array('StatusFieldHolder.status' => 'ASC')
+																));
+			$type = $this->PurchasingType->find('list', array('fields' => array('id', 'name'),
+																'order' => array('PurchasingType.id' => 'ASC')
+																));
+
+	        $requestData = $this->Request->find('all',array(
+	                      'conditions' => array(
+	                        'OR' => array(
+	                        array('Request.uuid LIKE' => '%' . $hint . '%'),
+	                        array('Request.name LIKE' => '%' . $hint . '%')
+	                          ), 'Request.status_id' => 0
+	                        ),
+	                      'limit' => 10
+	                      )); 
+
+
+	       $this->set(compact('requestData', 'type','statusData', 'userName'));
+
+	        if ($hint == ' ') {
+	            $this->render('index');
+	        }else{
+	            $this->render('search_request');
+	        }
+
+  	  	}
     }
 
 
@@ -1006,9 +1074,6 @@ class RequestsController extends PurchasingAppController {
 			$this->render('request_purchased');
 
 		}
-
-
-		  
 
     } 
 
