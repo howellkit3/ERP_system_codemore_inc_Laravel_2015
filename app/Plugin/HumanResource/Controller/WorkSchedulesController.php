@@ -324,6 +324,17 @@ class WorkSchedulesController  extends HumanResourceAppController {
 		//$limit = 10;
 		$conditions = array('WorkSchedule.model' => 'Employee','WorkSchedule.foreign_key' => $id );
 
+		if (empty($this->request->data['date'])) {
+
+			$date =  date('Y-m-01');
+			$date2 = date('Y-m-t');
+
+	
+			$conditions =array_merge($conditions,array('date(WorkSchedule.day) BETWEEN ? AND ?' => array($date,$date2)));
+		
+
+		}
+
 		$params =  array(
 	            'conditions' => $conditions,
 	           // 'limit' => $limit,
@@ -524,7 +535,19 @@ class WorkSchedulesController  extends HumanResourceAppController {
 
 		$defaults = !empty($this->params['named']['default']) ? $this->params['named']['default'] : '';
 
-		$this->set(compact('employeeList','date','departments','departmentList','defaults'));
+		if (empty($this->request->data['date'])) {
+
+			$date =  date('Y-m-01');
+			$date2 = date('Y-m-t');
+
+	
+			$conditions =array_merge($conditions,array('date(WorkSchedule.day) BETWEEN ? AND ?' => array($date,$date2)));
+		
+
+		}
+
+
+		$this->set(compact('employeeList','date','departments','departmentList','defaults','date','date2'));
 
 		//schedules for productions
 

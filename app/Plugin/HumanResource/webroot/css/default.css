@@ -308,3 +308,8 @@ div.value {
 .deductions_th {
   min-width: 130px;
 }
+
+.border.total_hours {
+  clear: both;
+  padding: 11px;
+}

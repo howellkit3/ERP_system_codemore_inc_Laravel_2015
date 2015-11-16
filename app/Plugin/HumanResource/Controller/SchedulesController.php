@@ -129,6 +129,16 @@ class SchedulesController  extends HumanResourceAppController {
 
 		$conditions = array('WorkSchedule.model' => 'Employee','WorkSchedule.foreign_key' => current($employee) ,'WorkSchedule.overtime_id' => NULL);
 
+		if (empty($this->request->data['date'])) {
+
+			$date =  date('Y-m-01');
+			$date2 = date('Y-m-t');
+
+	
+			$conditions =array('date(WorkSchedule.day) BETWEEN ? AND ?' => array($date,$date2));
+		
+
+		}
 		$params =  array(
 	            'conditions' => $conditions,
 	           // 'limit' => $limit,
@@ -142,11 +152,9 @@ class SchedulesController  extends HumanResourceAppController {
 
 	    $workSchedules = $this->paginate('WorkSchedule');
 
-	    $date = date('Y-m-d');
-
 		$defaults = !empty($this->params['named']['default']) ? $this->params['named']['default'] : '';
 
-	    $this->set(compact('workSchedules','employeeList','workshiftList','date','empId','defaults'));
+	    $this->set(compact('workSchedules','employeeList','workshiftList','date','empId','defaults','date2'));
 	}
 
 	public function view($id,$user_id = null) {

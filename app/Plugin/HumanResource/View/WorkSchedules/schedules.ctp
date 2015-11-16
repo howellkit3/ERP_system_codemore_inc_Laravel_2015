@@ -124,7 +124,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 
 									<div class="form-group pull-left">
 										
-											<input type="text" name="to" id="changeDate" class="form-control datepick" value="<?php echo $date ?>">
+											<input type="text" name="to" id="changeDate" class="form-control datepick" value="<?php echo $date2; ?>">
 
 									    	<i class="fa fa fa-calendar calendar-icon"></i>
 
