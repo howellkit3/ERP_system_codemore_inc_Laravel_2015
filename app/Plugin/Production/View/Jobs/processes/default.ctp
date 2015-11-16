@@ -210,6 +210,20 @@
 																	<!-- 	<span class="post"><font size="1px"> view </font></span> -->
 																	</span>
 																</a>
+
+																<?php if (!empty($machineScheduleList['MachineLog']['status'])) : ?>
+																	<a data-id="<?php echo $machineScheduleList['JobTicket']['id']; ?>" data-toggle="modal" title="View" data-url="/outputs/view_schedules/<?php echo $machineScheduleList['Output']['id']; ?>" class="view_full_ticket_details table-link" href="#ticketDataFullDetails">
+											                       		<span class="fa-stack">
+																			<i class="fa fa-square fa-stack-2x"></i>
+																			<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+																		<!-- 	<span class="post"><font size="1px"> view </font></span> -->
+																		</span>
+																	</a>
+
+
+																<?php endif; ?>	
+																
+
 																
 									                        </td>
 									                    </tr>

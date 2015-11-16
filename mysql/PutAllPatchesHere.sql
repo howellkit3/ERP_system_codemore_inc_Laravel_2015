@@ -2407,3 +2407,7 @@ UPDATE `job_tickets` SET `status_production_id` = 0 WHERE `status_production_id`
 
 UPDATE `purchase_orders` SET `receive_item_status` = 0 WHERE `receive_item_status` IS NULL;
 UPDATE `purchase_orders` SET `status` = 11 WHERE `receive_item_status` = 1;
+
+/* aldrin added this nov-16-2015*/
+ALTER TABLE `outputs`
+ADD COLUMN `order`  int(11) NULL AFTER `job_ticket_id`;
