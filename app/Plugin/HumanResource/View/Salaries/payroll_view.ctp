@@ -794,8 +794,6 @@ $.ajax({
 						
 	}
 });			
-
-e.preventDefault();
 });
 	
 $('.searchEmployee').on('keyup', function(e) {

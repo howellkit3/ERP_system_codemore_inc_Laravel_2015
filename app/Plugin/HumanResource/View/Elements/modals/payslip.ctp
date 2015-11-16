@@ -103,6 +103,7 @@
                 </div>
    </div>
 </div>
+</div>
 
 
 <div class="modal fade" id="payrollDetails" role="dialog" data-id="" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -117,5 +118,6 @@
                                   
                     </div>
                 </div>
-   </div>
+            </div>
+    </div>
 </div>

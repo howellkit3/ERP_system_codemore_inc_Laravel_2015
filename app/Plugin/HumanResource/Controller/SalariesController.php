@@ -2701,7 +2701,7 @@ class SalariesController  extends HumanResourceAppController {
 
 			}
 
-			$employee = $this->Employee->findById($data['EmpId']);
+			$employee = $this->Employee->findById($data['empId']);
 
 			$attendances = $this->Attendance->find('all',array(
 				'conditions' => $conditions,
@@ -2715,6 +2715,8 @@ class SalariesController  extends HumanResourceAppController {
 					'attendances'
 			));
 			$this->render('Salaries/ajax/salary_details');
+
+			exit();
 	
 		}
 
