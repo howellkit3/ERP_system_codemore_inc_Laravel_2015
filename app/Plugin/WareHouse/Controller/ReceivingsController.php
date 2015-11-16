@@ -21,7 +21,7 @@ class ReceivingsController extends WareHouseAppController {
 
 		$this->PurchaseOrder->bind(array('Request'));
 
-		$purchaseOrderData = $this->PurchaseOrder->find('all', array('conditions' => array('PurchaseOrder.status' => 1, 'PurchaseOrder.receive_item_status' => null),
+		$purchaseOrderData = $this->PurchaseOrder->find('all', array('conditions' => array('PurchaseOrder.status' => 1, 'PurchaseOrder.receive_item_status' => 0),
 															'order' => array('PurchaseOrder.created' => 'DESC')
 															));
 		
@@ -345,7 +345,8 @@ class ReceivingsController extends WareHouseAppController {
 			if(!empty($this->request->data['Receivings']['receive_status']) || $totalRemaining <= 0){
 
 
-				$this->PurchaseOrder->saveField('receive_item_status', 1);
+				//$this->PurchaseOrder->saveField('receive_item_status', 1);
+				$this->PurchaseOrder->saveField('status', 11);
 
 			}
 

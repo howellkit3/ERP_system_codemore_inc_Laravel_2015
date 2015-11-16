@@ -3,7 +3,7 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/payables_print.xls");
+    $objTpl = PHPExcel_IOFactory::load("./img/Invoice.xlsx");
 
     $unitPrice = (float) $clientData['QuotationItemDetail']['unit_price'];
 

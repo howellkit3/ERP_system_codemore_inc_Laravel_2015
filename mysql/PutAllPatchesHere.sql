@@ -2402,3 +2402,8 @@ PRIMARY KEY (`id`)
 /* Howell kit production */
 
 UPDATE `job_tickets` SET `status_production_id` = 0 WHERE `status_production_id` IS NULL;
+
+/* Howell kit purchasing */
+
+UPDATE `purchase_orders` SET `receive_item_status` = 0 WHERE `receive_item_status` IS NULL;
+UPDATE `purchase_orders` SET `status` = 11 WHERE `receive_item_status` = 1;
