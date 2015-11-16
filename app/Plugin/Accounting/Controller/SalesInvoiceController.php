@@ -170,6 +170,8 @@ class SalesInvoiceController extends AccountingAppController {
                                             'conditions' => array($conditions
                                             )));
 
+       // pr($clientData); exit;
+
         $clientOrderId = $clientData['ClientOrder']['id'];
 
         $companyData = $clientData['Company']['company_name'];
@@ -571,7 +573,7 @@ class SalesInvoiceController extends AccountingAppController {
                                             )));
 
         
-        //pr($clientData); exit;
+        //pr($drData); exit;
         // $companyData = $this->Company->find('first', array(
         //                                     'conditions' => array('Company.id' => $drData['Delivery']['company_id']
         //                                     )));
@@ -1358,13 +1360,14 @@ class SalesInvoiceController extends AccountingAppController {
 
     public function search_order($hint = null, $view = null){
 
-        if($view == 'add'){
+        $this->loadModel('Sales.Company');
 
-            $this->loadModel('Delivery.Delivery');
+        $this->loadModel('Delivery.Delivery');
+
+        if($view == 'add'){
 
             $this->loadModel('Sales.ClientOrder');
 
-            $this->loadModel('Sales.Company');
             //$deliveryData = $this->Delivery->find('all');
 
             $deliveryData = $this->Delivery->find('all',array(
@@ -1380,8 +1383,7 @@ class SalesInvoiceController extends AccountingAppController {
 
             $poNumber = $this->ClientOrder->find('list', array('fields' => array('uuid', 'po_number')));
 
-            $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
-            $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData', 'companyData', 'poNumber'));
+            $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData',  'poNumber'));
             
             if ($hint == ' ') {
                 $this->render('index');
@@ -1393,18 +1395,33 @@ class SalesInvoiceController extends AccountingAppController {
 
             $userData = $this->Session->read('Auth');
 
-            $invoiceData = $this->SalesInvoice->find('all',array(
-                          'conditions' => array(
-                            'OR' => array(
-                            array('SalesInvoice.sales_invoice_no LIKE' => '%' . $hint . '%'),
-                              array('SalesInvoice.dr_uuid LIKE' => '%' . $hint . '%')
-                              )
-                            ),
-                          'limit' => 10
-                          )); 
+            $invoiceData = $this->SalesInvoice->query('SELECT *
+                FROM koufu_delivery.deliveries AS Delivery
+                INNER JOIN koufu_accounting.sales_invoices AS Invoice
+                ON Delivery.dr_uuid = Invoice.dr_uuid 
+                INNER JOIN koufu_sale.companies AS Company
+                ON Delivery.company_id = Company.id 
+                WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR Invoice.sales_invoice_no LIKE "%'.$hint.'%"
+                OR Company.company_name LIKE "%'.$hint.'%"');
 
 
-            $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay'));
+            // $invoiceData = $this->SalesInvoice->find('all',array(
+            //               'conditions' => array(
+            //                 'OR' => array(
+            //                 array('SalesInvoice.sales_invoice_no LIKE' => '%' . $hint . '%'),
+            //                   array('SalesInvoice.dr_uuid LIKE' => '%' . $hint . '%')
+            //                   )
+            //                 ),
+            //               'limit' => 10
+            //               )); 
+
+            //pr($invoiceData); exit;
+
+            $deliveryNumHolder = $this->Delivery->find('list',array('fields' => array('dr_uuid','company_id')));
+
+            $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
+
+            $this->set(compact('companyData','invoiceData','noPermissionReciv','noPermissionPay', 'deliveryNumHolder'));
 
             if ($hint == ' ') {
                 $this->render('index');

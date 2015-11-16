@@ -57,7 +57,7 @@
 
 	}
 
-    $words = explode(" ", $clientData['Address']['address1']);
+    $words = explode(" ", $drData['DeliveryDetail']['location']);
 
     if(count($words) > 3){
 
@@ -105,7 +105,7 @@
         }
     }else{
 
-        $Addresspart1 = $clientData['Address']['address1'];
+        $Addresspart1 = $drData['DeliveryDetail']['location'];
         $Addresspart2 = "";
         $Addresspart3 = "";
       
