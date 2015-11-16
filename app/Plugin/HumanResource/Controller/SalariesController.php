@@ -1735,6 +1735,7 @@ class SalariesController  extends HumanResourceAppController {
 
 			$salariesList = $this->_checkPayroll($payroll,false,$data['Payroll']['emp']);
 
+
 			$this->set(compact('payroll','salariesList','deductions'));
 
 			$this->render('Salaries/payroll_view');
@@ -1899,6 +1900,9 @@ class SalariesController  extends HumanResourceAppController {
 
 			
 		}
+
+		pr($salaries);
+		exit();
 		
 		$this->set(compact('salaries','payroll','pages','salarySplit','salariesList','deductions','departments'));
 
@@ -2022,6 +2026,8 @@ class SalariesController  extends HumanResourceAppController {
 		if (!empty($id)) {
 
             $this->loadModel('Payroll.Payroll');
+
+            $this->loadModel('Payroll.SalaryReport');
            	
            	//find payroll
            	$payroll = $this->Payroll->read(null,$id);
@@ -2659,5 +2665,59 @@ class SalariesController  extends HumanResourceAppController {
 			
 	}
 
+	}
+
+	public function checkDetails() {
+
+		if (!empty($this->request->data)) {
+
+			$data = $this->request->data;
+			//check attendance
+
+			$this->loadModel('HumanResource.Attendance');
+
+			$this->loadModel('HumanResource.Employee');
+
+			$conditions = array();
+
+			if (!empty($data['empID'])) {
+
+			$conditions = array_merge($conditions,array(
+				'Employee.employee_id' => $data['empID']
+			));
+
+			}
+
+			if (!empty($data['month'])) {
+
+			$date = explode('/',$data['month']);
+
+			$from = $date[0];
+			$to = $date[1]; 
+
+			$conditions = array_merge($conditions,array(
+				'date(Attendance.date) BETWEEN ? AND ?' => array($from,$to), 
+			));
+
+			}
+
+			$employee = $this->Employee->findById($data['EmpId']);
+
+			$attendances = $this->Attendance->find('all',array(
+				'conditions' => $conditions,
+				'order' => array('Attendance.date DESC')
+
+			));
+
+
+			$this->set(compact(
+					'employee',
+					'attendances'
+			));
+			$this->render('Salaries/ajax/salary_details');
+	
+		}
+
+		exit();
 	}
 }

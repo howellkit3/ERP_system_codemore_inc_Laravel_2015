@@ -863,7 +863,7 @@ class ProductsController extends SalesAppController {
 
     public function create_specification($productId ){
 
-    	//pr($this->request->data); exit;
+    	$this->loadModel('Ticket.Jobticket');
 
     	$userData = $this->Session->read('Auth');
 
@@ -885,6 +885,11 @@ class ProductsController extends SalesAppController {
 
     	$this->ProductSpecificationDetail->bind(array('Sales.ProductSpecificationComponent','Sales.ProductSpecificationPart','Sales.ProductSpecificationProcess'));
 				
+		// $jobTicketData = $this->Jobticket->find('first',array(
+  //   		'conditions' => array('Jobticket.product_id' => $this->request->data['Product']['id'])));
+
+		// pr($jobTicketData); exit;
+
 		if (!empty($this->request->data)) {
 			//pr($this->request->data);exit();
 			if(!empty($this->request->data['IdHolder'])){
