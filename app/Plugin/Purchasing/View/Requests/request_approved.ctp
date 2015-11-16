@@ -38,7 +38,7 @@
                             <tbody aria-relevant="all" aria-live="polite" class="requestFields" role="alert" >
                               
                                 <?php 
-                                    echo $this->element('approve_request_table'); 
+                                    echo $this->element('request_table');  
                                 ?>
                              
                             </tbody>

@@ -472,58 +472,162 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     }
 
-    public function search_order($hint = null){
+    public function search_order($hint = null, $status = null){
 
     	$this->loadModel('Supplier');
 
     	$this->loadModel('User');
 
-		$supplierData = $this->Supplier->find('list', array(
-														'fields' => array('Supplier.id', 'Supplier.name'),
-														));
+    	if($status == 1){
 
-        $joins = array(
+			$supplierData = $this->Supplier->find('list', array(
+															'fields' => array('Supplier.id', 'Supplier.name'),
+															));
 
-               array('table'=>'koufu_system.users', 
-                     'alias' => 'User',
-                     'type'=>'left',
-                     'conditions'=> array(
-                     'User.id = PurchaseOrder.created_by'
-               )),
+	        $joins = array(
 
-               array('table'=>'koufu_system.suppliers', 
-                     'alias' => 'Supplier',
-                     'type'=>'left',
-                     'conditions'=> array(
-                     'Supplier.id = PurchaseOrder.supplier_id'
-               )),
-        );
+	               array('table'=>'koufu_system.users', 
+	                     'alias' => 'User',
+	                     'type'=>'left',
+	                     'conditions'=> array(
+	                     'User.id = PurchaseOrder.created_by'
+	               )),
 
-        $this->PurchaseOrder->bind(array('User', 'Supplier'));
+	               array('table'=>'koufu_system.suppliers', 
+	                     'alias' => 'Supplier',
+	                     'type'=>'left',
+	                     'conditions'=> array(
+	                     'Supplier.id = PurchaseOrder.supplier_id'
+	               )),
+	        );
 
-        $purchaseOrderData = $this->PurchaseOrder->find('all',array(
-        			'joins'=>$joins,
-                  	'conditions' => array(
-                    'OR' => array(
-                    array('PurchaseOrder.po_number LIKE' => '%' . $hint . '%'),
-                    array('PurchaseOrder.name LIKE' => '%' . $hint . '%'),
-                    array('User.first_name LIKE' => '%' . $hint . '%'),
-                    array('User.last_name LIKE' => '%' . $hint . '%'),
-                    array('Supplier.name LIKE' => '%' . $hint . '%')
-                      )
-                    ),
-                //  'limit' => 10
-                  )); 
+	        $this->PurchaseOrder->bind(array('User', 'Supplier'));
 
-		$userName = $this->User->find('list', array('fields' => array('id', 'fullname')));
+	        $purchaseOrderData = $this->PurchaseOrder->find('all',array(
+	        			'joins'=>$joins,
+	                  	'conditions' => array(
+	                    'OR' => array(
+	                    array('PurchaseOrder.po_number LIKE' => '%' . $hint . '%'),
+	                    array('PurchaseOrder.name LIKE' => '%' . $hint . '%'),
+	                    array('User.first_name LIKE' => '%' . $hint . '%'),
+	                    array('User.last_name LIKE' => '%' . $hint . '%'),
+	                    array('Supplier.name LIKE' => '%' . $hint . '%')
+	                      ),  'PurchaseOrder.status' => 8
+	                    ),
+	                //  'limit' => 10
+	                  )); 
 
-     	$this->set(compact('purchaseOrderData','supplierData', 'userName'));
+			$userName = $this->User->find('list', array('fields' => array('id', 'fullname')));
 
-        if ($hint == ' ') {
-            $this->render('index');
-        }else{
-            $this->render('search_order');
-        }
+	     	$this->set(compact('purchaseOrderData','supplierData', 'userName'));
+
+	        if ($hint == ' ') {
+	            $this->render('index');
+	        }else{
+	            $this->render('search_order');
+	        }
+	    }
+
+	    if($status == 2){
+
+			$supplierData = $this->Supplier->find('list', array(
+															'fields' => array('Supplier.id', 'Supplier.name'),
+															));
+
+	        $joins = array(
+
+	               array('table'=>'koufu_system.users', 
+	                     'alias' => 'User',
+	                     'type'=>'left',
+	                     'conditions'=> array(
+	                     'User.id = PurchaseOrder.created_by'
+	               )),
+
+	               array('table'=>'koufu_system.suppliers', 
+	                     'alias' => 'Supplier',
+	                     'type'=>'left',
+	                     'conditions'=> array(
+	                     'Supplier.id = PurchaseOrder.supplier_id'
+	               )),
+	        );
+
+	        $this->PurchaseOrder->bind(array('User', 'Supplier'));
+
+	        $purchaseOrderData = $this->PurchaseOrder->find('all',array(
+	        			'joins'=>$joins,
+	                  	'conditions' => array(
+	                    'OR' => array(
+	                    array('PurchaseOrder.po_number LIKE' => '%' . $hint . '%'),
+	                    array('PurchaseOrder.name LIKE' => '%' . $hint . '%'),
+	                    array('User.first_name LIKE' => '%' . $hint . '%'),
+	                    array('User.last_name LIKE' => '%' . $hint . '%'),
+	                    array('Supplier.name LIKE' => '%' . $hint . '%')
+	                      ),'PurchaseOrder.status' => 1
+	                    ), 
+	                //  'limit' => 10
+	                  )); 
+
+			$userName = $this->User->find('list', array('fields' => array('id', 'fullname')));
+
+	     	$this->set(compact('purchaseOrderData','supplierData', 'userName'));
+
+	        if ($hint == ' ') {
+	            $this->render('index');
+	        }else{
+	            $this->render('search_order');
+	        }
+	    }
+
+	    if($status == 3){
+
+			$supplierData = $this->Supplier->find('list', array(
+															'fields' => array('Supplier.id', 'Supplier.name'),
+															));
+
+	        $joins = array(
+
+	               array('table'=>'koufu_system.users', 
+	                     'alias' => 'User',
+	                     'type'=>'left',
+	                     'conditions'=> array(
+	                     'User.id = PurchaseOrder.created_by'
+	               )),
+
+	               array('table'=>'koufu_system.suppliers', 
+	                     'alias' => 'Supplier',
+	                     'type'=>'left',
+	                     'conditions'=> array(
+	                     'Supplier.id = PurchaseOrder.supplier_id'
+	               )),
+	        );
+
+	        $this->PurchaseOrder->bind(array('User', 'Supplier'));
+
+	        $purchaseOrderData = $this->PurchaseOrder->find('all',array(
+	        			'joins'=>$joins,
+	                  	'conditions' => array(
+	                    'OR' => array(
+	                    array('PurchaseOrder.po_number LIKE' => '%' . $hint . '%'),
+	                    array('PurchaseOrder.name LIKE' => '%' . $hint . '%'),
+	                    array('User.first_name LIKE' => '%' . $hint . '%'),
+	                    array('User.last_name LIKE' => '%' . $hint . '%'),
+	                    array('Supplier.name LIKE' => '%' . $hint . '%')
+	                      ), 'PurchaseOrder.status' => 11
+	                    ),
+	                //  'limit' => 10
+	                  )); 
+
+			$userName = $this->User->find('list', array('fields' => array('id', 'fullname')));
+
+	     	$this->set(compact('purchaseOrderData','supplierData', 'userName'));
+
+	        if ($hint == ' ') {
+	            $this->render('index');
+	        }else{
+	            $this->render('search_order');
+	        }
+	    }
+	       
     }
 
     public function delete($id = null){
@@ -543,8 +647,105 @@ class PurchaseOrdersController extends PurchasingAppController {
             'action' => 'index'
         ));  
 
-
     }
+
+    public function index_status($status = null) {
+
+    	$this->loadModel('Supplier');
+
+		$this->loadModel('User');
+
+		if($status == 1){
+
+			$limit = 10;
+
+			$conditions = array('NOT' => array('PurchaseOrder.status' => 5), 'PurchaseOrder.status' => 8);
+
+			$params =  array(
+		            'conditions' => $conditions,
+		            'limit' => $limit,
+		            //'fields' => array('id', 'status','created'),
+		            'order' => 'PurchaseOrder.created DESC',
+		    );
+
+			$this->paginate = $params;
+
+			$purchaseOrderData = $this->paginate('PurchaseOrder');
+
+	    	$supplierData = $this->Supplier->find('list', array(
+															'fields' => array('Supplier.id', 'Supplier.name'),
+															));
+
+	    	$userName = $this->User->find('list', array('fields' => array('id', 'fullname')
+																));
+
+			$this->set(compact('purchaseOrderData','supplierData', 'userName'));
+
+			$this->render('purchase_order_waiting');
+
+		}
+
+		if($status == 2){
+
+			$limit = 10;
+
+			$conditions = array('NOT' => array('PurchaseOrder.status' => 5), 'PurchaseOrder.status' => 1);
+
+			$params =  array(
+		            'conditions' => $conditions,
+		            'limit' => $limit,
+		            //'fields' => array('id', 'status','created'),
+		            'order' => 'PurchaseOrder.created DESC',
+		    );
+
+			$this->paginate = $params;
+
+			$purchaseOrderData = $this->paginate('PurchaseOrder');
+
+	    	$supplierData = $this->Supplier->find('list', array(
+															'fields' => array('Supplier.id', 'Supplier.name'),
+															));
+
+	    	$userName = $this->User->find('list', array('fields' => array('id', 'fullname')
+																));
+
+			$this->set(compact('purchaseOrderData','supplierData', 'userName'));
+
+			$this->render('purchase_order_approved');
+
+		}
+
+		if($status == 3){
+
+			$limit = 10;
+
+			$conditions = array('NOT' => array('PurchaseOrder.status' => 5), 'PurchaseOrder.status' => 11);
+			$params =  array(
+		            'conditions' => $conditions,
+		            'limit' => $limit,
+		            //'fields' => array('id', 'status','created'),
+		            'order' => 'PurchaseOrder.created DESC',
+		    );
+
+			$this->paginate = $params;
+
+			$purchaseOrderData = $this->paginate('PurchaseOrder');
+
+	    	$supplierData = $this->Supplier->find('list', array(
+															'fields' => array('Supplier.id', 'Supplier.name'),
+															));
+
+	    	$userName = $this->User->find('list', array('fields' => array('id', 'fullname')
+																));
+
+			$this->set(compact('purchaseOrderData','supplierData', 'userName'));
+
+			$this->render('purchase_order_received');
+
+		}
+
+    } 
+
 
 
 }

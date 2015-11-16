@@ -27,11 +27,11 @@
                         echo "<span class='label label-default'>Waiting</span>";
                     }
 
-                    if($purchaseOrderDataList['PurchaseOrder']['status'] == 1){ 
+                    else if($purchaseOrderDataList['PurchaseOrder']['status'] == 1){ 
                         echo "<span class='label label-warning'>Approved</span>";
                     }
 
-                    if($purchaseOrderDataList['PurchaseOrder']['status'] == 11){ 
+                    else{
                         echo "<span class='label label-success'>Received</span>";
                     }
                 ?>

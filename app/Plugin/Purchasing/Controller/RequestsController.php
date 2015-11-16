@@ -1001,7 +1001,7 @@ class RequestsController extends PurchasingAppController {
 
 			$this->paginate = $params;
 
-			$waitingRequestData = $this->paginate('Request');
+			$requestData = $this->paginate('Request');
 
 			$userName = $this->User->find('list', array('fields' => array('id', 'fullname')
 															));
@@ -1010,7 +1010,7 @@ class RequestsController extends PurchasingAppController {
 															'order' => array('PurchasingType.id' => 'ASC')
 															));
 
-			$this->set(compact('waitingRequestData','type', 'userName'));  
+			$this->set(compact('requestData','type', 'userName'));  
 
 			$this->render('request_waiting');
 
@@ -1031,7 +1031,7 @@ class RequestsController extends PurchasingAppController {
 
 			$this->paginate = $params;
 
-			$approvedRequestData = $this->paginate('Request');
+			$requestData = $this->paginate('Request');
 
 			$userName = $this->User->find('list', array('fields' => array('id', 'fullname')
 															));
@@ -1040,7 +1040,7 @@ class RequestsController extends PurchasingAppController {
 															'order' => array('PurchasingType.id' => 'ASC')
 															));
 
-			$this->set(compact('approvedRequestData','type', 'userName'));  
+			$this->set(compact('requestData','type', 'userName'));  
 
 			$this->render('request_approved');
 
@@ -1060,7 +1060,7 @@ class RequestsController extends PurchasingAppController {
 
 			$this->paginate = $params;
 
-			$purchasedRequestData = $this->paginate('Request');
+			$requestData = $this->paginate('Request');
 
 			$userName = $this->User->find('list', array('fields' => array('id', 'fullname')
 															));
@@ -1069,7 +1069,7 @@ class RequestsController extends PurchasingAppController {
 															'order' => array('PurchasingType.id' => 'ASC')
 															));
 
-			$this->set(compact('purchasedRequestData','type', 'userName'));  
+			$this->set(compact('requestData','type', 'userName'));  
 
 			$this->render('request_purchased');
 
