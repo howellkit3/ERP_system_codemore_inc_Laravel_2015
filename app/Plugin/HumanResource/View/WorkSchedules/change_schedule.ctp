@@ -94,7 +94,8 @@ echo $this->element('hr_options');
                                                                 'class' => 'col-lg-6 required autocomplete',
                                                                 'label' => false,
                                                                 'options' => $employees,
-                                                                'empty' => '-- Select Employee --'
+                                                                'empty' => '-- Select Employee --',
+                                                                'default' => $empId
                                                                 ));
                                                     ?>
 

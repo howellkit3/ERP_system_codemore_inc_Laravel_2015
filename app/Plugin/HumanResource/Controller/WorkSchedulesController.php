@@ -388,7 +388,7 @@ class WorkSchedulesController  extends HumanResourceAppController {
 	}
 
 
-	public function change_schedule() {
+	public function change_schedule($empId = null) {
 
 
 		$this->loadModel('HumanResource.Employee');
@@ -407,6 +407,7 @@ class WorkSchedulesController  extends HumanResourceAppController {
 		$employees = $this->Employee->getList($conditions);
 
 		$conditions = array('overtime_id' => NULL);
+
 		$workshifts = $this->Workshift->getList($conditions);
 
 		$conditions = array('Holiday.year' => date('Y'));
@@ -462,7 +463,8 @@ class WorkSchedulesController  extends HumanResourceAppController {
 				   	$this->redirect( array(
 				         'controller' => 'schedules', 
 				         'action' => 'work_schedules',
-				         'tab'	=> 'work_schedules'
+				         'tab'	=> 'work_schedules',
+				         'default' => $this->request->data['WorkSchedule']['foreign_key']
 				    ));
 
 				   }
@@ -478,7 +480,7 @@ class WorkSchedulesController  extends HumanResourceAppController {
 			
 		}
 
-		$this->set(compact('employees','workshifts'));
+		$this->set(compact('employees','workshifts','empId'));
 
 	}
 

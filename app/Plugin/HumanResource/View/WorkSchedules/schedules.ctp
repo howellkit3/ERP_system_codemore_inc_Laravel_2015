@@ -294,9 +294,9 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
     
         jQuery(document).ready(function($){
               	
-              	  $('#selectEmployee').change();
+              $('#selectEmployee').change();
 
-               $("#WorkScheduleWorkSchedulesForm").validate();
+              $("#WorkScheduleWorkSchedulesForm").validate();
                
 
                $('#DepartmentList').change(function(){

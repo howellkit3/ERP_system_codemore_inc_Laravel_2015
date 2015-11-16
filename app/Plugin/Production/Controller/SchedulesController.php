@@ -31,8 +31,11 @@ class SchedulesController extends ProductionAppController {
     }
 
     public function find_data($id = null) {
+
 		$this->loadModel('Sales.Company');
+		
 		$this->layout = false;
+		
 		$this->Company->bind(array('Quotation','Inquiry'));
 		
 		$inquiryData = $this->Company->Inquiry->find('first', array(
@@ -49,6 +52,7 @@ class SchedulesController extends ProductionAppController {
 													));
 
 		echo json_encode($uniqueId);
+		
 		$this->autoRender = false;
 	}
 	 

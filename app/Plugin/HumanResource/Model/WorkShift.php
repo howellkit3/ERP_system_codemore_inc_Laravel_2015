@@ -45,12 +45,24 @@ class WorkShift extends AppModel {
 
 	public function getList($conditions = array()) {
 		
-		return $this->find('list',array(
+		$worklist =  $this->find('all',array(
 				'conditions' =>$conditions,
 				'order' => array('WorkShift.name ASC'),
 				'group' => array('WorkShift.id'),
-				//fields' => array('WorkShift.id','name')
+				'fields' => array('WorkShift.id','WorkShift.name','WorkShift.from','WorkShift.to')
 			));
+
+		$list = array();
+
+		foreach ($worklist as $key => $value) {
+
+			$from = date('H:i',strtotime($value['Workshift']['from']));
+			$to = date('H:i',strtotime($value['Workshift']['to']));
+
+			$list[$value['Workshift']['id']] = $value['Workshift']['name'].' ( '.$from.' - '. $to. ' )'; 
+		}
+	
+		return $list;
 	}
 
 	public function createWorkshift($data = null,$overtimeId = null,$auth_id = null) {

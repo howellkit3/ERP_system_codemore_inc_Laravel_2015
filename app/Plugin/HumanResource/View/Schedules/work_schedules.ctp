@@ -51,12 +51,17 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 				                            array('class' =>'btn btn-primary',
 				                                'escape' => false));
 
+				                   	$link = $this->Html->url('/');
 
 				                   	echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Change Sched', 
 				                            array('controller' => 'work_schedules', 
 				                                    'action' => 'change_schedule'),
-				                            array('class' =>'btn btn-primary',
-				                                'escape' => false));
+				                            array(
+				                            		'data-url' => $link . 'human_resource/work_schedules/change_schedule',
+				                            		'class' =>'btn btn-primary',
+				                                	'escape' => false,
+				                                	'id' => 'ChangeSched'
+				                                ));
 
 				                    ?> 
 				                  	
@@ -82,7 +87,8 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 				                 			'options' => $employeeList,
 				                 			'class' => 'autocomplete',
 				                 			'label' => false,
-				                 			'id' => 'selectEmployee'
+				                 			'id' => 'selectEmployee',
+				                 			'default' => $defaults
 				                 		)); ?>
 				                    </div>
 				                   
@@ -277,6 +283,9 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
         jQuery(document).ready(function($){
               
                $("#WorkScheduleWorkSchedulesForm").validate();
+
+	         	 $('#selectEmployee').change();
+  
                
         });
 

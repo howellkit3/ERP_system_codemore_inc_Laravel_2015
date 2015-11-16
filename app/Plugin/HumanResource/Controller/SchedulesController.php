@@ -112,7 +112,7 @@ class SchedulesController  extends HumanResourceAppController {
 
 	}
 
-	public function work_schedules() {
+	public function work_schedules($empId = null) {
 
 		$this->loadModel('HumanResource.WorkSchedule');
 
@@ -144,9 +144,9 @@ class SchedulesController  extends HumanResourceAppController {
 
 	    $date = date('Y-m-d');
 
-	    $this->set(compact('workSchedules','employeeList','workshiftList','date'));
+		$defaults = !empty($this->params['named']['default']) ? $this->params['named']['default'] : '';
 
-
+	    $this->set(compact('workSchedules','employeeList','workshiftList','date','empId','defaults'));
 	}
 
 	public function view($id,$user_id = null) {
