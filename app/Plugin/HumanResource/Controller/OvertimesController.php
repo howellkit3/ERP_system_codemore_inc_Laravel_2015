@@ -493,11 +493,13 @@ class OvertimesController  extends HumanResourceAppController {
 
 		}
 
+		$employees = array();
+		
 
 		if (!empty($selectedEmployee)) {
 			$conditions = array_merge($conditions,array('Employee.id' => $selectedEmployee ));
 
-		}
+		
 
 		$employees = $this->Employee->find('all',array(
 			'conditions' => $conditions
@@ -514,6 +516,8 @@ class OvertimesController  extends HumanResourceAppController {
 			$employees[$key]['Attendance'] = !empty($att['Attendance']) ? $att['Attendance'] : array();
 
 		}
+
+	}
 
 
 
@@ -701,31 +705,34 @@ class OvertimesController  extends HumanResourceAppController {
 		// 	$conditions = array_merge($conditions,array('Employee.department_id' => $this->request->data['Overtime']['department_id']));
 
 		// }
+		$employees = array();
 
 		if (!empty($selectedEmployee)) {
 			$conditions = array_merge($conditions,array('Attendance.employee_id' => $selectedEmployee ));
 
+		
+
+			$employees = $this->Attendance->find('all',array(
+						'conditions' => $conditions,
+						'order' => array('Employee.last_name','Employee.code'),
+						'fields' => array(
+						'id',
+						'Employee.first_name',
+						'Employee.last_name',
+						'Employee.middle_name',
+						'Employee.position_id',
+						'Employee.department_id',
+						'Employee.image',
+						'Attendance.schedule_id',
+						'Attendance.type',
+						'Attendance.in',
+						'Attendance.out'
+						//'Position.name'
+						),
+
+					));
+
 		}
-
-		$employees = $this->Attendance->find('all',array(
-					'conditions' => $conditions,
-					'order' => array('Employee.last_name','Employee.code'),
-					'fields' => array(
-					'id',
-					'Employee.first_name',
-					'Employee.last_name',
-					'Employee.middle_name',
-					'Employee.position_id',
-					'Employee.department_id',
-					'Employee.image',
-					'Attendance.schedule_id',
-					'Attendance.type',
-					'Attendance.in',
-					'Attendance.out'
-					//'Position.name'
-					),
-
-				));
 
 		$positionList = $this->Position->find('list',array('fields' => array('id','name')));
 	
