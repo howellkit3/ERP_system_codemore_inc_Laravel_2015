@@ -91,11 +91,12 @@ class RequestsController extends PurchasingAppController {
 
 		//$requestData = $this->Request->find('all', array('order' => array('Request.created' => 'DESC')));
 
+
+		//waiting status
+
 		$limit = 10;
 
-		$conditions = array('Request.status >' => 0);
-
-		//$conditions = "";
+		$conditions = array('Request.status_id' => 8);
 
 		$params =  array(
 	            'conditions' => $conditions,
@@ -107,6 +108,23 @@ class RequestsController extends PurchasingAppController {
 		$this->paginate = $params;
 
 		$requestData = $this->paginate('Request');
+
+		//approved status
+
+		$limit = 10;
+
+		$conditions = array('Request.status_id' => 1);
+
+		$params1 =  array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            //'fields' => array('id', 'status','created'),
+	            'order' => 'Request.created DESC',
+	    );
+
+		$this->paginate = $params1;
+
+		$approvedRequestData = $this->paginate('Request');
 		
 		$statusData = $this->StatusFieldHolder->find('list', array('fields' => array('id', 'status'),
 															'order' => array('StatusFieldHolder.status' => 'ASC')
@@ -119,7 +137,7 @@ class RequestsController extends PurchasingAppController {
 															'order' => array('PurchasingType.id' => 'ASC')
 															));
 
-		$this->set(compact('requestData','statusData','type', 'userName'));
+		$this->set(compact('requestData','statusData','type', 'userName', 'approvedRequestData'));
 		
 	}
 
@@ -127,7 +145,7 @@ class RequestsController extends PurchasingAppController {
 
     	//$this->bind->GeneralItem('ItemCategoryHolder','ItemTypeHolder');
 
-    		if($itemGroupId == 1) {
+    	if($itemGroupId == 1) {
     		$ModelName = 'GeneralItem';
     		$searchedProduct = $this->GeneralItem->find('all',array(
 											'order' => 'GeneralItem.name ASC',
@@ -866,5 +884,132 @@ class RequestsController extends PurchasingAppController {
 
     } 
 
+    public function test($id = null) {
+
+		$this->loadModel('Purchasing.Request');
+
+		$this->loadModel('StatusFieldHolder');
+
+		$this->loadModel('User');
+
+		$this->loadModel('Purchasing.PurchasingType');
+
+		$requestData = $this->Request->find('all', array('order' => array('Request.created' => 'DESC')));
+
+		$statusData = $this->StatusFieldHolder->find('list', array('fields' => array('id', 'status'),
+															'order' => array('StatusFieldHolder.status' => 'ASC')
+															));
+
+		$userName = $this->User->find('list', array('fields' => array('id', 'fullname')
+															));
+
+		$type = $this->PurchasingType->find('list', array('fields' => array('id', 'name'),
+															'order' => array('PurchasingType.id' => 'ASC')
+															));
+
+		$this->set(compact('requestData','statusData','type', 'userName', 'approvedRequestData'));    
+
+    } 
+
+    public function index_status($status = null) {
+
+    	$this->loadModel('Purchasing.Request');
+
+		$this->loadModel('User');
+
+		$this->loadModel('Purchasing.PurchasingType');
+
+		if($status == 1){
+
+			$limit = 10;
+
+			$conditions = array('Request.status_id' => 8);
+
+			$params =  array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            'order' => 'Request.created DESC',
+	   		);
+
+			$this->paginate = $params;
+
+			$waitingRequestData = $this->paginate('Request');
+
+			$userName = $this->User->find('list', array('fields' => array('id', 'fullname')
+															));
+
+			$type = $this->PurchasingType->find('list', array('fields' => array('id', 'name'),
+															'order' => array('PurchasingType.id' => 'ASC')
+															));
+
+			$this->set(compact('waitingRequestData','type', 'userName'));  
+
+			$this->render('request_waiting');
+
+		}
+
+
+		if($status == 2){
+
+			$limit = 10;
+
+			$conditions = array('Request.status_id' => 1);
+
+			$params =  array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            'order' => 'Request.created DESC',
+	   		);
+
+			$this->paginate = $params;
+
+			$approvedRequestData = $this->paginate('Request');
+
+			$userName = $this->User->find('list', array('fields' => array('id', 'fullname')
+															));
+
+			$type = $this->PurchasingType->find('list', array('fields' => array('id', 'name'),
+															'order' => array('PurchasingType.id' => 'ASC')
+															));
+
+			$this->set(compact('approvedRequestData','type', 'userName'));  
+
+			$this->render('request_approved');
+
+		}
+
+		if($status == 3){
+
+			$limit = 10;
+
+			$conditions = array('Request.status_id' => 0);
+
+			$params =  array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            'order' => 'Request.created DESC',
+	   		);
+
+			$this->paginate = $params;
+
+			$purchasedRequestData = $this->paginate('Request');
+
+			$userName = $this->User->find('list', array('fields' => array('id', 'fullname')
+															));
+
+			$type = $this->PurchasingType->find('list', array('fields' => array('id', 'name'),
+															'order' => array('PurchasingType.id' => 'ASC')
+															));
+
+			$this->set(compact('purchasedRequestData','type', 'userName'));  
+
+			$this->render('request_purchased');
+
+		}
+
+
+		  
+
+    } 
 
 }

@@ -1,4 +1,4 @@
-<?php  foreach ($waitingRequestData as $requestList ): ?>
+<?php  foreach ($approvedRequestData as $requestList ): ?>
 
 
         <tr class="">

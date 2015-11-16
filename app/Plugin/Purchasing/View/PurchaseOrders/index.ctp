@@ -4,7 +4,7 @@
 
 <?php echo $this->element('purchasings_option'); ?><br><br>
 
-<div class="row">
+<div class="row purchase-order">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
             <header class="main-box-header clearfix">
