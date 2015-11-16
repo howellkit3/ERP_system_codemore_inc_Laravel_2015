@@ -73,6 +73,8 @@
 
     });
 
+
+
     function selectStatus(purchasingStatus) {
 
 
@@ -109,6 +111,29 @@
 
         selectStatus(purchasingStatus);
 
+    });
+     $('body').on('click','#item_type_pagination a',function(e) {
+
+        $url = $(this).attr('href');
+
+
+        $.ajax({
+            type: "GET",
+            url: $url,
+            dataType: "html",
+            success: function(data) {
+
+                if(data){
+
+                    $('.requestStatusAppend').html(data);
+
+                } 
+                
+            }
+        });
+
+
+        e.preventDefault();
     });
 
 </script>
