@@ -122,6 +122,8 @@ class JobsController extends ProductionAppController {
 
             $this->loadModel('Production.MachineLog');
 
+            $this->loadModel('Production.Output');
+
             $this->loadModel('Sales.Product');
 
             $this->loadModel('Production.TicketProcess');
@@ -144,19 +146,22 @@ class JobsController extends ProductionAppController {
                     'conditions' => $conditions,
                     'limit' => $limit,
                     //'group' => array('Attendance.date'),
-                    'order' => 'MachineLog.id DESC',
+                    'order' => 'Output.id DESC',
             );
 
             $this->paginate = $params;
             
-            $this->MachineLog->bindTicket(); 
+          //  $this->MachineLog->bindTicket(); 
+            $this->Output->bind(array('TicketProcessSchedule','MachineLog')); 
 
-            $machineScheduleData = $this->paginate('MachineLog');
+            $outputs = $this->paginate('Output');
+
+   
 
             //get Jobticket 
-            $machineScheduleData = $this->JobTicket->addTicket( $machineScheduleData );
+            $outputs = $this->JobTicket->addTicket( $outputs );
      
-            $this->set(compact('machineScheduleData','companyData','machineData','productName','processDepartment'));
+            $this->set(compact('machineScheduleData','companyData','machineData','productName','processDepartment','outputs'));
 
             $this->render('Jobs/processes/default');
            

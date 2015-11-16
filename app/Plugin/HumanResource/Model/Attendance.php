@@ -203,8 +203,6 @@ class Attendance extends AppModel {
 			$this->create();
 
 
-
-
 			if (is_array($data) && !empty($data[0]['overtime_id'])) {
 
 				//check overtime 
@@ -557,6 +555,152 @@ class Attendance extends AppModel {
 
 	}	
 	
-  }
+
+	public function getWorkAttendance($params = array()) {
+		
+	 	$this->bind(array('Employee','MySchedule','MyWorkshift','MyWorkShiftBreak','MyWorkShiftBreak','MyBreakTime','Overtime'));
+		
+		$attendance = $this->find('all',$params);
+
+		$daysGet = array();
+
+		//chek regular days 
+		foreach ($attendance as $key => $list) {
+				
+		$today = date('Y-m-d',strtotime($list['Attendance']['in']));
+
+		$legal_holiday_work = 0.00;
+		
+		$special_holiday_work = 0.00;
+
+	
+			//check if days is not holiday or sundays
+			if (!in_array($today, $daysGet) && date("w",strtotime($today)) != 0) {
+
+				$attendance[$key]['Result']['type'] = 'regular';
+
+				$attendance[$key]['Result']['regular_hours'] = 'regular';
+
+				$inToday = date('Y-m-d',strtotime($list['Attendance']['in']));
+						
+				$totalHours = $this->_total_hours($list);
+
+				$attendance[$key]['Result']['regular_hours'] = $totalHours;
+			
+			}
+		}
+
+		return $attendance;
+	}
+
+
+
+    private function _total_hours($data = null){ 
+
+    	$days['total_hours'] = '0.00';
+
+		$workshiftFrom = date('Y-m-d',strtotime($data['Attendance']['in'])).' '.$data['MyWorkshift']['from'];
+
+		$today = date('Y-m-d',strtotime($data['Attendance']['in']));
+
+		$logout = date('Y-m-d',strtotime($data['Attendance']['out']));
+
+		if (!empty($data['Attendance']['in']) && !empty($data['Attendance']['out'])) {
+
+		$in = strtotime($today.' '.$data['MyWorkshift']['from']);
+
+		if  (!empty($data['MyWorkshift']['to'])) {
+
+			$timeIn =  date('Y-m-d H:i:s',strtotime($data['Attendance']['in']));
+
+			$inToday = strtotime($data['Attendance']['in']);
+			
+			$workSched = strtotime($today.' '.$data['MyWorkshift']['from']);
+
+			$workEndToday = strtotime($today.' '.$data['MyWorkshift']['to']);
+	
+
+			if ($inToday <= $workEndToday) {
+
+			
+			if (strtotime($timeIn) > $in ) {
+
+				$timeIn = date('Y-m-d H:i',strtotime($timeIn)).':00';
+
+			} else {
+
+				$timeIn = $today.' '.$data['MyWorkshift']['from'];
+			}
+
+
+			$timeOut = date('H:i:s',strtotime($data['Attendance']['out']));
+
+			if (strtotime($timeOut) > strtotime($data['MyWorkshift']['to'])) {
+
+				$timeOut = $logout.' '.$data['MyWorkshift']['to'];
+
+			} else {
+				
+				$timeOut = date('Y-m-d',strtotime($data['Attendance']['in'])).' '.date('H:i',strtotime($timeOut)).':00';
+			}
+
+
+		if (!empty($data['MyBreakTime']['id'])) {
+
+			//#4 2nd shift
+
+			$myBreakFrom = $today.' '. $data['MyBreakTime']['from'];
+			
+			$myBreakTo = $today.' '. $data['MyBreakTime']['to'];
+
+			$breakHour = strtotime($data['MyBreakTime']['from']) + 3600;
+
+			if (strtotime($timeOut) >= strtotime($myBreakFrom) && strtotime($timeOut) >= strtotime($myBreakTo)) {
+			
+					$timeOut = strtotime($timeOut) - 3600;
+					$timeOut = date('Y-m-d',strtotime($data['Attendance']['in'])).' '.date('H:i:s',$timeOut);
+
+			}
+
+				$todayBreak =  $today.' '.date('H:i:s',$breakHour);
+
+
+			if (strtotime($data['Attendance']['out']) >= strtotime($myBreakFrom) && strtotime($data['Attendance']['out']) <= strtotime($todayBreak)) {
+
+				$timeOut = $today.' '.date('H:',strtotime($data['Attendance']['out'])).'00:00';
+
+
+			}
+
+		} else{
+
+			if (strtotime($timeOut) > strtotime($data['MyWorkshift']['to'])) {
+				$timeOut = strtotime($timeOut) - 3600;
+				$timeOut = date('Y-m-d',strtotime($data['Attendance']['in'])).' '.date('H:i:s',$timeOut);
+			}
+		
+		}
+
+		$date1 = new DateTime($timeIn);
+		$date2 = new DateTime($timeOut);
+
+		 $days['total_hours'] = $date1->diff($date2)->format('%h.%i'); 
+	
+		} else {
+
+			//pr($data['Attendance']);
+		}
+
+
+
+		}
+		
+		}
+		
+
+    	return $days['total_hours'];
+    }
+
+}
 
 

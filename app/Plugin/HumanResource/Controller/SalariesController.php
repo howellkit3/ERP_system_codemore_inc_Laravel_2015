@@ -2676,15 +2676,31 @@ class SalariesController  extends HumanResourceAppController {
 
 			$this->loadModel('HumanResource.Attendance');
 
+			$this->loadModel('HumanResource.WorkSchedule');
+
+			$this->loadModel('HumanResource.WorkShift');
+
+			$this->loadModel('HumanResource.WorkShiftBreak');
+
+			$this->loadModel('HumanResource.BreakTime');
+
+			$this->loadModel('HumanResource.Overtime');
+
+			$this->loadModel('HumanResource.OvertimeExcess');
+
 			$this->loadModel('HumanResource.Employee');
+
+			$this->loadModel('Payroll.Deduction');
+
+			$this->loadModel('Payroll.Loan');
 
 			$conditions = array();
 
-			if (!empty($data['empID'])) {
+			if (!empty($data['empId'])) {
 
-			$conditions = array_merge($conditions,array(
-				'Employee.employee_id' => $data['empID']
-			));
+				$conditions = array_merge($conditions,array(
+					'Attendance.employee_id' => $data['empId']
+				));
 
 			}
 
@@ -2700,26 +2716,26 @@ class SalariesController  extends HumanResourceAppController {
 			));
 
 			}
-
+	
 			$employee = $this->Employee->findById($data['empId']);
 
-			$attendances = $this->Attendance->find('all',array(
+			$params = array(
 				'conditions' => $conditions,
-				'order' => array('Attendance.date DESC')
+				'order' => array('Attendance.date ASC')
 
-			));
-
+			);
+			$attendances = $this->Attendance->getWorkAttendance($params);
+			//compute_dates
+			$loans = $this->Loan->find('list',array('fields' => array('id','name')));
 
 			$this->set(compact(
 					'employee',
-					'attendances'
+					'attendances',
+					'loans'
 			));
 			$this->render('Salaries/ajax/salary_details');
 
-			exit();
-	
 		}
 
-		exit();
 	}
 }

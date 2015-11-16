@@ -16,7 +16,7 @@ echo $this->Html->script(array(
 
 echo $this->element('payroll_options');
 
-	$active_tab = 'sss_table';
+$active_tab = 'sss_table';
  ?>
 
  <div class="row">
@@ -729,7 +729,9 @@ echo $this->element('payroll_options');
 																					'title'=>'View Details',
 																					'data-empID' => $salary['Employee']['id'],
 																					'data-month' => $payroll['Payroll']['from'].'/'.$payroll['Payroll']['to'],
-																					'data-year' => $payroll['Payroll']['date'], 'data-toggle' => 'modal',
+																					'data-year' => $payroll['Payroll']['date'], 
+																					'data-payroll-id' => $payroll['Payroll']['id'],
+																					'data-toggle' => 'modal',
 																					'id' => 'CheckDetails'
 																					));
 
@@ -782,15 +784,18 @@ $('body').on('click','#CheckDetails',function(e){
 $employeeId = $(this).data('empid');
 $month = $(this).data('month');
 $year = $(this).data('period');
+
+$payrollId = $(this).data('payroll-id');
 $.ajax({
 	url: serverPath + "human_resource/salaries/checkDetails/",
 	type: "POST",
 	async: false,
-	data : {'empId' : $employeeId, 'month' : $month, 'year' : $year },
-	dataType: "json",
+	data : {'empId' : $employeeId, 'month' : $month, 'year' : $year,'payrollId':$payrollId},
+	dataType: "html",
 	success: function(data) {
 
-		$('.result-details').html(data);
+		console.log(data);
+		$('#payrollDetails .result-details').html(data);
 						
 	}
 });			

@@ -18,9 +18,12 @@ class TicketProcessSchedulesController extends ProductionAppController {
 
         $this->loadModel('Production.ProcessDepartment');
 
+        $this->loadModel('Production.Output');
+
     	if (!empty($this->request->data)) {
 
             $data = $this->request->data;
+
 
            // fin list department procee
 
@@ -34,10 +37,41 @@ class TicketProcessSchedulesController extends ProductionAppController {
             
             // $this->JobTicket->saveField('status_production_id',$departmentProcess);
 
+
             $TicketProcessScheduleID = $this->TicketProcessSchedule->saveTicketProcessSchedule($data,$auth['id']);
 
-            $this->MachineLog->saveMachineLog($TicketProcessScheduleID, $auth['id']);
 
+            $machine = array();
+
+            $outputs = array();
+
+            foreach ($TicketProcessScheduleID as $key => $value) {
+                
+                $this->MachineLog->create();
+
+                    $data['MachineLog']['ticket_process_schedule_id'] = $value;
+                    //$data['MachineLog']['start'] = $timeHolder;
+                    $data['MachineLog']['start_by'] = $auth['id'];
+                    //pr($data); exit;
+                    if ($this->MachineLog->save($data)) {
+
+                        //save outputs
+                        $outputs['id'] = '';
+
+                        $outputs['ticket_process_schedule_id'] = $value;
+                        
+                        $outputs['machine_log_id'] = $this->MachineLog->id;
+
+                        $outputs['job_ticket_id'] = $data['Ticket']['job_ticket_id'];
+
+                        //save output
+                        $this->Output->save($outputs);
+
+                    }
+
+            }
+
+         
             if ($this->request->is('ajax')) {
 
                 $ajaxData['JobTicket']['status'] = 1;
