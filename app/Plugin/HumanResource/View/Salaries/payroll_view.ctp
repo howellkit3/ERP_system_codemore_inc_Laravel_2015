@@ -115,6 +115,16 @@ echo $this->element('payroll_options');
                          	'id' => 'updatePayroll'
                          	 )
                          );
+
+                            echo $this->Html->link('<i class="fa fa-refresh"></i> Reload','#',
+                         	array(
+                         	'escape' => false,
+                         	'class' => 'ble-link btn btn-primary pull-right',
+                         	'id' => 'reloadPayroll'
+                         	 )
+                         );
+
+
                          endif;
 
                          ?>
@@ -305,6 +315,8 @@ echo $this->element('payroll_options');
 
 
 											<th><a href="#"><span>Remarks</span></a></th>
+
+											<th><a href="#"><span>Action</span></a></th>
 										</tr>
 										</thead>
 										<tbody aria-relevant="all" aria-live="polite" class="tbody_cont" role="alert">
@@ -704,8 +716,28 @@ echo $this->element('payroll_options');
 														                         <td class="">
 														                         <?php echo number_format($salary['total_pay'],2); ?>
 														                        </td>
-																				<td class="">
+														                        <td>
+
 														                        </td>
+																				<td class="">
+																					<?php 
+																					echo $this->Html->link('<span class="fa-stack">
+																					<i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span> ',
+																					'#payrollDetails', 
+																					array('class' =>' table-link',
+																					'escape' => false, 
+																					'title'=>'View Details',
+																					'data-empID' => $salary['Employee']['id'],
+																					'data-month' => $payroll['Payroll']['from'].'/'.$payroll['Payroll']['to'],
+																					'data-year' => $payroll['Payroll']['date'], 'data-toggle' => 'modal',
+																					'id' => 'CheckDetails'
+																					));
+
+
+																					?>
+														                        </td>
+
+																				
 														                   	 </tr>
 
 														                
@@ -740,6 +772,31 @@ echo $this->element('payroll_options');
 <?php echo $this->element('modals/payslip'); ?>
 
 <script type="text/javascript">
+
+$('#reloadPayroll').click(function() {
+    location.reload();
+});
+
+$('body').on('click','#CheckDetails',function(e){
+
+$employeeId = $(this).data('empid');
+$month = $(this).data('month');
+$year = $(this).data('period');
+$.ajax({
+	url: serverPath + "human_resource/salaries/checkDetails/",
+	type: "POST",
+	async: false,
+	data : {'empId' : $employeeId, 'month' : $month, 'year' : $year },
+	dataType: "json",
+	success: function(data) {
+
+		$('.result-details').html(data);
+						
+	}
+});			
+
+e.preventDefault();
+});
 	
 $('.searchEmployee').on('keyup', function(e) {
 
