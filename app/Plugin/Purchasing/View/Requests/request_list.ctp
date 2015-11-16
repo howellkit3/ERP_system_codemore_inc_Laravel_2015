@@ -34,9 +34,8 @@
     $("body").on('keyup','.searchRequest', function(e){
 
         var searchInput = $(this).val();
-    
-        
-      // alert(searchInput);
+        var status = $(this).attr("val");
+
         if(searchInput != ''){
 
             $('.requestFields').hide();
@@ -48,10 +47,10 @@
             $('.searchAppend').hide();
             //alert('show');
         }
-        
+  
         $.ajax({
             type: "GET",
-            url: serverPath + "purchasing/requests/search_request/"+searchInput,
+            url: serverPath + "purchasing/requests/search_request/"+searchInput+"/"+status, 
             dataType: "html",
             success: function(data) {
 
