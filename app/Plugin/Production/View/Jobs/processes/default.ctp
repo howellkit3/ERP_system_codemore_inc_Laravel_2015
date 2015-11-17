@@ -3,15 +3,15 @@
 <?php $this->Html->addCrumb('Sheeting / Cutting', array('controller' => 'jobs', 'action' => 'sheeting')); 
 	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
 ?>
-<?php echo $this->Html->css(array('HumanResource.default','Production.default','timepicker'));?>
+<?php echo $this->Html->css(array('timepicker'));?>
 <?php echo $this->Html->script(array(
 						'Sales.jquery-sortable',
 						'Sales.draggableproducts',
 						'jquery.maskedinput.min',
 						'HumanResource.custom',
                         'Production.machine_schedule',
-                        'timepicker'
 )); ?>
+
 
 			
 <?php 
@@ -216,7 +216,7 @@
 																<?php 
 
 																	$outputId = $machineScheduleList['Output']['id'];
-																	$tickeSchedule = $machineScheduleList['TicketProcessSchedule']['id'];;
+																	$tickeSchedule = !empty($machineScheduleList['TicketProcessSchedule']['id']) ? $machineScheduleList['TicketProcessSchedule']['id'] : '' ;
 																	$jobticketId = $machineScheduleList['JobTicket']['id'];;
 																	$next = $this->Output->findNext($outputId,$tickeSchedule,$jobticketId );
 

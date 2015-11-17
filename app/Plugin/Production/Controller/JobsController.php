@@ -164,7 +164,6 @@ class JobsController extends ProductionAppController {
 
             //get Jobticket 
             $outputs = $this->JobTicket->addTicket( $outputs );
-     
             $this->set(compact('machineScheduleData','companyData','machineData','productName','processDepartment','outputs','process'));
 
             $this->render('Jobs/processes/default');

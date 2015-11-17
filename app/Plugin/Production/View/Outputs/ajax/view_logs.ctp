@@ -1,4 +1,10 @@
+<?php //echo $this->Html->css(array('bootstrap-timepicker'));
 
+echo $this->Html->script(array(
+                        'bootstrap-timepicker.min.js'
+)); 
+
+?>
 <div class="row">
 	<div class="col-lg-12">
 		<div class="main-box">
@@ -107,23 +113,39 @@
 	                                        	
 	                                        	<?php if (!empty($output['MachineLog']['start'])) : ?>
 
-	                                        		<?php  $class = 'form-control required timepicker'; ?>
+	                                        		<?php  $class = ''; ?>
 
 
 	                                        	<?php else : ?>
 	                                        			<a id="startTime" data-job-id="<?php echo $output['MachineLog']['id']; ?>" class="btn btn-default timeButton">Click Here to START </a>
-	                                        			<?php  $class = 'form-control required timepicker hide'; ?>
+	                                        			<?php  $class = '  hide'; ?>
 	                                        	<?php endif; ?>		
 
-	                                        		<?php echo $this->Form->input('MachineLog.start',
-				                                         array('class' => $class,
-				                                        'placeholder' => '00:00:00',
-				                                        'value' => $output['MachineLog']['start'],
-				                                        'label' => false,
-				                                        )); ?>
+	                                        		<?php
+	                                        		 // echo $this->Form->input('MachineLog.start',
+				                                        //  array(
+				                                        // 'placeholder' => '00:00:00',
+				                                        // 'value' => $output['MachineLog']['start'],
+				                                        // 'label' => false,
+				                                        // 'id' => 'timepicker'
+				                                        // )); 
+
+				                                        ?>
+
+														<div class="form-group col-md-12 <?php echo $class; ?> timeFormat">
+															<!-- <label for="timepicker">Time picker</label> -->
+															<div class="input-group input-append bootstrap-timepicker">
+															<input type="text" name="data[MachineLog][start]" class="timepicker form-control" value="<?php echo $output['MachineLog']['start'] ; ?>"
+
+															<?php echo !empty($output['MachineLog']['start']) ? '' : 'disabled="disabled"' ?>
+															>
+															<span class="add-on input-group-addon"><i class="fa fa-clock-o"></i></span>
+															</div>
+														</div>
 
 
 	                                        </div>
+
 	                             </div>
 						</div>
 						<div class="col-lg-5">
@@ -135,20 +157,31 @@
 	                                        	
 	                                        	<?php if (!empty($output['MachineLog']['end'])) : ?>
 
-	                                        		<?php  $class = 'form-control required '; ?>
+	                                        		<?php  $class = ''; ?>
 
 	                                        	<?php else : ?>
 	                                        			<a id="endTime" data-job-id="<?php echo $output['MachineLog']['id']; ?>" class="btn btn-default timeButton">End Process </a>
-	                                        			<?php  $class = 'form-control required hide'; ?>
+	                                        			<?php  $class = 'hide';
+	                                        			 ?>
 	                                        	<?php endif; ?>
 
 
-	                                        		<?php echo $this->Form->input('MachineLog.end',
+	                                        	<div class="form-group col-md-12 <?php echo $class; ?> timeFormat">
+															<!-- <label for="timepicker">Time picker</label> -->
+															<div class="input-group input-append bootstrap-timepicker">
+															<input type="text" name="data[MachineLog][end]" class="timepicker form-control" <?php echo !empty($output['MachineLog']['end']) ? '' : 'disabled="disabled"' ?> value="<?php echo $output['MachineLog']['end'] ; ?>">
+															<span class="add-on input-group-addon"
+
+															><i class="fa fa-clock-o"></i></span>
+															</div>
+												</div>
+
+	                                        	<!-- 	<?php echo $this->Form->input('MachineLog.end',
 				                                         array('class' => $class,
 				                                        'placeholder' => '00:00:00',
 				                                        'value' => $output['MachineLog']['end'],
 				                                        'label' => false)); ?>		
-
+ -->
 				                           </div>
 	                             </div>
 						</div>
@@ -166,20 +199,29 @@
 	                                        	
 	                                        	<?php if (!empty($output['MachineLog']['dt_start'])) : ?>
 
-	                                        		<?php  $class = 'form-control required '; ?>
+	                                        		<?php  $class = ''; ?>
 
 
 	                                        	<?php else : ?>
 	                                        			<a id="startTime" data-job-id="<?php echo $output['MachineLog']['id']; ?>" class="btn btn-default timeButton">Click Here to START </a>
-	                                        			<?php  $class = 'form-control required hide'; ?>
+	                                        			<?php  $class = 'hide'; ?>
 	                                        	<?php endif; ?>		
 
-	                                        		<?php echo $this->Form->input('MachineLog.dt_start',
+	                                        	<!-- 	<?php echo $this->Form->input('MachineLog.dt_start',
 				                                         array('class' => $class,
 				                                         'placeholder' => '00:00:00',
 				                                       	'value' => $output['MachineLog']['dt_start'],
 				                                        'label' => false,
-				                                        )); ?>
+				                                        )); ?> -->
+
+			                                        	<div class="form-group col-md-12 <?php echo $class; ?> timeFormat">
+														<!-- <label for="timepicker">Time picker</label> -->
+															<div class="input-group input-append bootstrap-timepicker">
+															<input type="text" name="data[MachineLog][dt_start]" class="timepicker form-control" <?php echo !empty($output['MachineLog']['dt_start']) ? '' : 'disabled="disabled"' ?>  value="<?php echo $output['MachineLog']['dt_start'] ; ?>">
+															<span class="add-on input-group-addon"><i class="fa fa-clock-o"></i></span>
+														</div>
+														</div>
+
 
 
 	                                        </div>
@@ -194,19 +236,28 @@
 	                                        	
 	                                        	<?php if (!empty($output['MachineLog']['dt_end'])) : ?>
 
-	                                        		<?php  $class = 'form-control required '; ?>
+	                                        		<?php  $class = ''; ?>
 
 	                                        	<?php else : ?>
 	                                        			<a id="endTime" data-job-id="<?php echo $output['MachineLog']['id']; ?>" class="btn btn-default timeButton">End Process </a>
-	                                        			<?php  $class = 'form-control required hide'; ?>
+	                                        			<?php  $class = 'hide'; ?>
 	                                        	<?php endif; ?>
 
 
-	                                        		<?php echo $this->Form->input('MachineLog.dt_end',
+	                                        	<!-- 	<?php echo $this->Form->input('MachineLog.dt_end',
 				                                         array('class' => $class,
 				                                        'placeholder' => '00:00:00',
 				                                        'value' => $output['MachineLog']['dt_end'],
-				                                        'label' => false)); ?>		
+				                                        'label' => false)); ?>	 -->
+
+				                                        	<div class="form-group col-md-12 <?php echo $class; ?> timeFormat">
+														<!-- <label for="timepicker">Time picker</label> -->
+																<div class="input-group input-append bootstrap-timepicker">
+																<input type="text" name="data[MachineLog][dt_end]" class="timepicker form-control" <?php echo !empty($output['MachineLog']['dt_end']) ? '' : 'disabled="disabled"' ?> value="<?php echo $output['MachineLog']['dt_end'] ; ?>">
+																<span class="add-on input-group-addon"><i class="fa fa-clock-o"></i></span>
+																</div>	
+															</div>
+
 
 				                           </div>
 	                             </div>
@@ -257,23 +308,30 @@
 
 <script type="text/javascript">
 	$(function(){
+		
+		$('.timepicker').timepicker({
+			minuteStep: 5,
+			showSeconds: true,
+			showMeridian: false,
+			disableFocus: false,
+			showWidget: true
+		}).focus(function() {
+			$(this).next().trigger('click');
+		});
 
-
-
-			$('body').on('click','.timeButton',function(){
+		$('body').on('click','.timeButton',function(){
 
 				$timeNow = '<?php echo date("H:i:s"); ?>';
 
 				$(this).addClass('hide');
 
-				console.log($timeNow);
+				$(this).next().removeClass('hide').removeClass('hide').val($timeNow);
 
-				$(this).next().find('input').removeClass('hide').val($timeNow);
-
+					$(this).next().find('.timepicker').attr('disabled',false);
 				$('.timepicker').timepicker();
 		});
 
-			$('body').on('click','#startTime',function(){
+		$('body').on('click','#startTime',function(){
 
 				$timeNow = '<?php echo date("H:i:s"); ?>';
 
@@ -281,7 +339,9 @@
 
 				console.log($timeNow);
 
-				$(this).next().find('input').removeClass('hide').val($timeNow);
+				$(this).next().removeClass('hide').val($timeNow);
+
+					$(this).next().find('.timepicker').attr('disabled',false);
 
 				$('.timepicker').timepicker();
 		});

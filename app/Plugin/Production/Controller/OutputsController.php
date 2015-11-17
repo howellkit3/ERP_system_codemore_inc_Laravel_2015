@@ -60,7 +60,7 @@ class OutputsController extends ProductionAppController {
 
                 $data['Output']['status'] = $this->request->data['MachineLog']['status'];
             }
-
+            
             if ($this->Output->save( $data )) {
 
                 //save Output
@@ -79,7 +79,7 @@ class OutputsController extends ProductionAppController {
                 }
 
                 $this->TicketProcessSchedule->id = $data['Output']['ticket_process_schedule_id'];
-                 $this->TicketProcessSchedule->savefield('status' , $overtime_id);
+                $this->TicketProcessSchedule->savefield('status' , '1');
                 
 
                 $this->redirect(array(

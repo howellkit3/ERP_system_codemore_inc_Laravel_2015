@@ -2413,3 +2413,6 @@ ALTER TABLE `outputs`
 ADD COLUMN `order`  int(11) NULL AFTER `job_ticket_id`;
 
 ALTER TABLE `outputs`  ADD `status` VARCHAR(255) NOT NULL DEFAULT '' AFTER `reject`
+ALTER TABLE `outputs`
+ADD COLUMN `status`  varchar(255) NULL AFTER `modified`;
+
