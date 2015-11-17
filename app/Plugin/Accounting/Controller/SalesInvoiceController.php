@@ -909,7 +909,7 @@ class SalesInvoiceController extends AccountingAppController {
 
     public function payables_print($reportname = null) {
 
-       // pr($this->request->data); exit;
+       //pr($this->request->data); exit;
 
         $this->loadModel('WareHouse.ReceivedItem');
 
@@ -1121,7 +1121,7 @@ class SalesInvoiceController extends AccountingAppController {
         
     }
 
-    public function daterange_summary_payables($from = null, $to = null,$whatreport = null){
+    public function daterange_summary_payables($from = null, $to = null, $company = null){
 
         $this->loadModel('WareHouse.ReceivedItem');
 
@@ -1459,7 +1459,7 @@ class SalesInvoiceController extends AccountingAppController {
     //
      }
 
-        public function company_filter_payables($from = null, $to = null,$company = null){
+    public function company_filter_payables($from = null, $to = null,$company = null){
 
         $this->loadModel('WareHouse.ReceivedItem');
 
@@ -1471,20 +1471,32 @@ class SalesInvoiceController extends AccountingAppController {
 
         $this->ReceivedItem->bind('DeliveredOrder', 'PurchaseOrder');
 
+        $receivedItemData = $this->ReceivedItem->query('SELECT *
+                FROM dev_koufu_warehouse.received_items AS ReceivedItem
+                INNER JOIN dev_koufu_warehouse.delivered_orders AS DeliveredOrder
+                ON ReceivedItem.delivered_order_id = DeliveredOrder.id 
+                INNER JOIN dev_koufu_warehouse.received_orders AS ReceivedOrders
+                ON ReceivedItem.received_orders_id = ReceivedOrders.id
+                INNER JOIN dev_koufu_purchasing.purchase_orders AS PurchaseOrder
+                ON DeliveredOrder.purchase_orders_id = PurchaseOrder.id 
+                WHERE PurchaseOrder.supplier_id LIKE "%'.$company.'%"  
+                AND (DeliveredOrder.created BETWEEN "'.$from.' 00:00:00'.'" AND "'.$to.' 00:00:00'.'")'
+                );
+
+
+        //TIME(f.start_tid) between '12:00:00' AND '18:00:00'
+        
         // $receivedItemData = $this->ReceivedItem->find('all', array(
-        //         'order' => array('ReceivedItem.id DESC')));
+        //     'conditions' => array(
+        //         'AND' => array(
+        //             'DeliveredOrder.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')
+        //         ),
+        //             'PurchaseOrder.supplier_id' => $company
+        //     ),
+        //     'order' => 'ReceivedItem.id DESC'
+        // ));
 
-        $receivedItemData = $this->ReceivedItem->find('all', array(
-            'conditions' => array(
-                'AND' => array(
-                    'DeliveredOrder.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')
-                ),
-                    'PurchaseOrder.supplier_id' => $company
-            ),
-            'order' => 'ReceivedItem.id DESC'
-        ));
-
-        pr($receivedItemData); exit;
+        //pr($receivedItemData); exit;
 
         foreach ($receivedItemData as $key => $value) {
 
@@ -1531,6 +1543,8 @@ class SalesInvoiceController extends AccountingAppController {
 
         }
 
+     //   pr($receivedItemData); exit;
+
         $purchaseOrderSupplier = $this->PurchaseOrder->find('list', array('fields' => array('id', 'supplier_id')));
 
         $purchaseOrderPONum = $this->PurchaseOrder->find('list', array('fields' => array('id', 'po_number')));
@@ -1543,9 +1557,7 @@ class SalesInvoiceController extends AccountingAppController {
   
 
         $this->render('daterange_summary_payables');
-       
-
-        
+     
     }
 
 }
