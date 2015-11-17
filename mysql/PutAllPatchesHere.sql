@@ -2407,3 +2407,8 @@ UPDATE `job_tickets` SET `status_production_id` = 0 WHERE `status_production_id`
 
 UPDATE `purchase_orders` SET `receive_item_status` = 0 WHERE `receive_item_status` IS NULL;
 UPDATE `purchase_orders` SET `status` = 11 WHERE `receive_item_status` = 1;
+
+/* Howell kit product */
+
+ALTER TABLE `koufu_sale`.`products` ADD COLUMN `status_id` INT(11) DEFAULT NULL AFTER `name`;
+UPDATE `products` SET `status_id` = 0 WHERE `status_id` IS NULL;
