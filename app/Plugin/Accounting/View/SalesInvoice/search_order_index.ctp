@@ -17,6 +17,12 @@ foreach ($invoiceData as $invoiceDataList):
         <td class="">
             <?php echo $invoiceDataList['SalesInvoice']['dr_uuid'];?>
         </td>
+
+        <td class="">
+            <?php  
+
+            echo $companyData[$deliveryNumHolder[$invoiceDataList['SalesInvoice']['dr_uuid']]];?>
+        </td> 
         
         <td class="text-center">
             <?php 

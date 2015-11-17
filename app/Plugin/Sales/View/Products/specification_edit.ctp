@@ -79,6 +79,41 @@
                                                     'label' => false));
                                             ?>
 
+                                             <?php 
+	                                            echo $this->Form->input('Product.company_id', array(
+                    								'type' => 'hidden',
+                    								'class' => 'form-control item_type',
+                                                    'label' => false));
+                                            ?>
+
+                                            <?php 
+	                                            echo $this->Form->input('Product.item_category_holder_id', array(
+                    								'type' => 'hidden',
+                    								'class' => 'form-control item_type',
+                                                    'label' => false));
+                                            ?>
+
+                                            <?php 
+	                                            echo $this->Form->input('Product.item_type_holder_id', array(
+                    								'type' => 'hidden',
+                    								'class' => 'form-control item_type',
+                                                    'label' => false));
+                                            ?>
+
+                                            <?php 
+	                                            echo $this->Form->input('Product.name', array(
+                    								'type' => 'hidden',
+                    								'class' => 'form-control item_type',
+                                                    'label' => false));
+                                            ?>
+
+                                            <?php 
+	                                            echo $this->Form->input('Product.remarks', array(
+                    								'type' => 'hidden',
+                    								'class' => 'form-control item_type',
+                                                    'label' => false));
+                                            ?>
+
                                             <?php 
 	                                            echo $this->Form->input('jobticket', array(
                     								'type' => 'hidden',
@@ -86,6 +121,7 @@
                                                     'label' => false,
                                                     'value' => $ifTicket));
                                             ?>
+                                            
 										</div>
 									</div>
 
@@ -107,11 +143,18 @@
 										<div class="col-lg-2">
 											<?php 
 												//hidden id
-												echo $this->Form->input('ProductSpecification.id', array(
+												echo $this->Form->input('ProductSpecification.product_id', array(
                     								'class' => 'form-control item_type editMe',
                                                     'label' => false,
-                                                    'hidden' => 'hidden',
-                                                    'value' => $specs['ProductSpecification']['id']));
+                                                    'type' => 'hidden',
+                                                    'value' => $specs['ProductSpecification']['product_id']));
+
+												// echo $this->Form->input('ProductSpecification.id', array(
+            //         								'class' => 'form-control item_type editMe',
+            //                                         'label' => false,
+            //                                         'hidden' => 'hidden',
+            //                                         'disabled' => 'disabled',
+            //                                         'value' => $specs['ProductSpecification']['id']));
 	                                            echo $this->Form->input('ProductSpecification.size1', array(
                     								'class' => 'form-control item_type editMe',
                                                     'label' => false,

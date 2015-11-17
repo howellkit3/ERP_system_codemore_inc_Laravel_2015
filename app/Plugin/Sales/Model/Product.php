@@ -146,6 +146,7 @@ class Product extends AppModel {
 		$data['Product']['company_id'] = $data['Product']['companyId'];
 		$data['Product']['product_name'] = $data['Product']['productName'];
 		$data['Product']['created_by'] = $auth;
+		$data['Product']['status_id'] = 0;
 		$data['Product']['modified_by'] = $auth;
 		$data['Product']['uuid'] = $code;
 

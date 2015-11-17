@@ -279,18 +279,36 @@ echo $this->Html->script(array(
                                                         <label class="selected-text"></label>
                                                         <div class="clearfix"></div>
                                                         <div id="resultList">
-                                                                <?php 
+                                         <?php  foreach ($employees as $KeyId => $value) {
 
-
-                                                                foreach ($employees as $KeyId => $value) { ?>
+                                            $in  = !empty($value['Employee']['in']) ? $value['Employee']['in'] : '';
+                                            $out = !empty($value['Employee']['out']) ? $value['Employee']['out'] : '';
+                                            ?>
                                         <div class="alert alert-success"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="fa fa-check-circle fa-fw fa-lg"></i>
                                       
-                                        <input type="checkbox" name="data[Employee][id][<?php echo $KeyId ?>]" class="select_employee" value="<?php echo  $value['Employee']['id']; ?>" id="checkbox-<?php echo $KeyId; ?>">
+                                        <input type="checkbox" name="data[Employee][id][<?php echo $KeyId ?>]" class="select_employee" value="<?php echo $value['Employee']['id']; ?>" id="checkbox-<?php echo $KeyId; ?>">
 
-                                        <input type="hidden" name="data[Attendance][id][<?php echo $KeyId ?>]" class="select_employee" value="<?php echo $value['Attendance']['in'] ?>" id="checkbox-<?php echo $KeyId; ?>">
+                                        <input type="hidden" name="data[Attendance][id][<?php echo $KeyId ?>]" class="select_employee" value="<?php echo $in; ?>" id="checkbox-<?php echo $KeyId; ?>">
 
                                         <span class="time-in"> <?php echo !empty( $value['Attendance']['in']) ? 'Time in ( '.date('h:i a',strtotime($value['Attendance']['in'])).' )' : ''; ?>  </span>
                                         <label for="checkbox-<?php echo $KeyId; ?>">
+
+                                          <div class="profile">
+                                            <?php  $style = '';
+                                            $serverPath = $this->Html->url('/',true);  
+
+                                            if (!empty($employee['Employee']['image'])) {
+
+
+                                                $background =  $serverPath.'img/uploads/employee/'.$employee['Employee']['image'].'?d='.rand(0,1000).time();    
+                                            } else {
+
+                                                 $background =  $serverPath.'img/default-profile.png';   
+                                            }
+
+                                            ?>
+                                           <!--  <img src="<?php echo $background; ?>" width="35" height="35" /> -->
+                                          </div>  
                                         <?php 
                                         $name = $value['Employee']['first_name'];
 

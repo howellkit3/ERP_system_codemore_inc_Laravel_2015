@@ -3,21 +3,20 @@
 <?php $this->Html->addCrumb('Sheeting / Cutting', array('controller' => 'jobs', 'action' => 'sheeting')); 
 	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
 ?>
-<?php echo $this->Html->css(array('timepicker'));?>
+<?php echo $this->Html->css(array('HumanResource.default','Production.default','timepicker'));?>
 <?php echo $this->Html->script(array(
 						'Sales.jquery-sortable',
 						'Sales.draggableproducts',
 						'jquery.maskedinput.min',
 						'HumanResource.custom',
                         'Production.machine_schedule',
+                        'timepicker'
 )); ?>
-
 
 			
 <?php 
 	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
  	echo $this->element('tab/jobs',array('active_tab' => $active_tab)); 
-
  ?>
 
 <div class="row">
@@ -74,16 +73,14 @@
 
 												<th><a href="#" class="text-center"><span>DT Duration</span></a></th>
 
-												<th><a href="#" class="text-center"><span>Status</span></a></th>
-
 
 												<th><a href="#"><span>Action</span></a></th>
 											</tr>
 										</thead>
 
 										<?php //pr($machineScheduleData); 
-									        if(!empty($outputs)){
-									            foreach ($outputs as $key => $machineScheduleList): ?>
+									        if(!empty($machineScheduleData)){
+									            foreach ($machineScheduleData as $key => $machineScheduleList): ?>
 													<tbody aria-relevant="all" aria-live="polite" role="alert">
 														<tr class="">
 
@@ -96,16 +93,12 @@
 									                        </td>
 
 									                        <td class="quantity_input" >
-
 									                        	<?php 
 											                 			echo $this->Form->input('good',array(
 													                 		'class' => 'select-department-view form-control',
 													                 		'type' => 'number',
 													                 		'div' => 'col-lg-6',
-													                 		'placeholder' => '0',
-
-													                 		'disabled' => 'disabled',
-													                 		'value' => !empty($machineScheduleList['Output']['good']) ? $machineScheduleList['Output']['good'] : 0
+													                 		'placeholder' => '0'
 													                 		));  ?>
 
 									                        	<?php 
@@ -113,9 +106,7 @@
 													                 		'class' => 'select-department-view form-control',
 													                 		'type' => 'number',
 													                 		'div' => 'col-lg-6',
-													                 		'placeholder' => '0',
-													                 		'disabled' => 'disabled',
-													                 		'value' => !empty($machineScheduleList['Output']['reject']) ? $machineScheduleList['Output']['reject'] : 0
+													                 		'placeholder' => '0'
 													                 		));  ?>
 									                          
 									                        </td>
@@ -136,8 +127,8 @@
 
 																<div class="form-group col-md-12">
 																		<div class="input-group input-append bootstrap-timepicker">
-																	
-																			<?php echo !empty($machineScheduleList['MachineLog']['start']) ? $machineScheduleList['MachineLog']['start'] : '00:00:00'; ?>
+																		<input type="text" class="form-control timepicker" name="data[MachineLog][start]" value="<?php echo !empty($machineScheduleList['MachineLog']['start']) ? $machineScheduleList['MachineLog']['start'] : '00:00:00'; ?>">
+																		<span class="add-on input-group-addon"><i class="fa fa-clock-o"></i></span>
 																		</div>
 																</div>
 
@@ -148,21 +139,16 @@
 									                          
 									                           <div class="form-group col-md-12">
 																		<div class="input-group input-append bootstrap-timepicker">
-																		
-
-																			<?php echo !empty($machineScheduleList['MachineLog']['end']) ? $machineScheduleList['MachineLog']['start'] : '00:00:00'; ?>
+																		<input type="text" class="form-control timepicker" name="data[MachineLog][end]" value="<?php echo !empty($machineScheduleList['MachineLog']['end']) ? $machineScheduleList['MachineLog']['end'] : '00:00:00'; ?>">
+																		<span class="add-on input-group-addon"><i class="fa fa-clock-o"></i></span>
 																		</div>
 																</div>
 									                        </td>
 
 
-									                        <td class="time_input">
-										                        <div class="input-group input-append bootstrap-timepicker">
-																			
-										                           <?php //echo !empty($machineScheduleList['MachineLog']['end']) ? $machineScheduleList['MachineLog']['end'] : ''; ?>
-										                       </div>
+									                        <td class="">
+									                           <?php echo !empty($machineScheduleList['MachineLog']['end']) ? $machineScheduleList['MachineLog']['end'] : ''; ?>
 									                        </td>
-
 
 
 									                          <td class="time_input">
@@ -170,7 +156,8 @@
 
 																<div class="form-group col-md-12">
 																		<div class="input-group input-append bootstrap-timepicker">
-																				<?php echo !empty($machineScheduleList['MachineLog']['dt_start']) ? $machineScheduleList['MachineLog']['dt_start'] : '00:00:00'; ?>
+																		<input type="text" class="form-control timepicker" name="data[MachineLog][start]" value="<?php echo !empty($machineScheduleList['MachineLog']['dt_start']) ? $machineScheduleList['MachineLog']['dt_start'] : '00:00:00' ; ?>">
+																		<span class="add-on input-group-addon"><i class="fa fa-clock-o"></i></span>
 																		</div>
 																</div>
 
@@ -181,81 +168,40 @@
 									                          
 									                           <div class="form-group col-md-12">
 																		<div class="input-group input-append bootstrap-timepicker">
-																			<?php echo !empty($machineScheduleList['MachineLog']['dt_end']) ? $machineScheduleList['MachineLog']['dt_end'] : '00:00:00'; ?>
+																		<input type="text" class="form-control timepicker" name="data[MachineLog][end]" value="<?php echo !empty($machineScheduleList['MachineLog']['dt_end']) ? $machineScheduleList['MachineLog']['dt_end'] : '00:00:00'; ?>">
+																		<span class="add-on input-group-addon"><i class="fa fa-clock-o"></i></span>
 																		</div>
 																</div>
 									                        </td>
 
 									                        <td class="">
-									                           <div class="input-group input-append bootstrap-timepicker">
-
-									                           </div>
-									                        </td>
-									                        <td class="">
-									                           <div class="input-group input-append bootstrap-timepicker">
-									                           	<?php if(!empty($machineScheduleList['MachineLog']['status']) && $machineScheduleList['MachineLog']['status'] == 'full' ) : ?>
-									                           		<span class="label label-success">Full</span>
-									                           	<?php endif; ?>
-									                           	<?php if(!empty($machineScheduleList['MachineLog']['status']) && $machineScheduleList['MachineLog']['status'] == 'partial' ) : ?>
-									                           			<span class="label label-warning">Partial</span>
-									                           	<?php endif; ?>
-									                           </div>
 									                        </td>
 
 									                       	<td>
-										                       	<a data-id="<?php echo $machineScheduleList['JobTicket']['id']; ?>" data-toggle="modal" title="View" data-url="/outputs/view_schedules/<?php echo $machineScheduleList['Output']['id']; ?>" class="view_full_ticket_details table-link" href="#ticketDataFullDetails">
+										                       	<a data-id="<?php echo $machineScheduleList['JobTicket']['id']; ?>" data-toggle="modal" title="View" data-url="/machines/view_schedules/<?php echo $machineScheduleList['MachineLog']['id']; ?>" class="view_full_ticket_details table-link" href="#ticketDataFullDetails">
 										                       		<span class="fa-stack">
 																		<i class="fa fa-square fa-stack-2x"></i>
 																		<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
 																	<!-- 	<span class="post"><font size="1px"> view </font></span> -->
 																	</span>
 																</a>
-
-																<?php if (!empty($machineScheduleList['MachineLog']['status'])) : ?>
-																		
-																<?php 
-
-																	$outputId = $machineScheduleList['Output']['id'];
-																	$tickeSchedule = !empty($machineScheduleList['TicketProcessSchedule']['id']) ? $machineScheduleList['TicketProcessSchedule']['id'] : '' ;
-																	$jobticketId = $machineScheduleList['JobTicket']['id'];;
-																	$next = $this->Output->findNext($outputId,$tickeSchedule,$jobticketId );
-
-																	 ?>
-
-																	<a data-id="<?php echo $machineScheduleList['JobTicket']['id']; ?>" data-toggle="modal" title="View" data-url="/jobs/view_process/<?php echo $next['TicketProcessSchedule']['department_process_id']; ?>" class="view_full_ticket_details table-link" href="#ticketDataFullDetails">
-											                       		<span class="fa-stack">
+																<?php if (empty($machineScheduleList['MachineLog']['start'])) { ?>
+										                      		<a onclick="getTicketData(this,13)" data-id="13" data-toggle="modal" title="Time Out" class="add-timekeep table-link" href="#timeKeep">
+										                       			<span class="fa-stack">
 																			<i class="fa fa-square fa-stack-2x"></i>
-																			<i class="fa fa-share fa-stack-1x fa-inverse"></i>
-																		<!-- 	<span class="post"><font size="1px"> view </font></span> -->
-																		</span>
+																			<i class="fa fa-sign-out fa-stack-1x fa-inverse"></i>
+																		<!-- 	<span class="post"><font size="1px"> Start </font></span> -->
+																		</span> 
 																	</a>
-
-																	<?php 
-
-																	echo $this->Html->link('<span class="fa-stack">
+																<?php } else { ?>
+																	<a onclick="getTicketData(this,13)" data-id="13" data-toggle="modal" title="Time Out" class="add-timekeep table-link" href="#timeKeep">
+										                       			<span class="fa-stack">
 																			<i class="fa fa-square fa-stack-2x"></i>
-																			<i class="fa fa-share fa-stack-1x fa-inverse"></i>
-																		</span>',
-																		array(
-																				'controller' => 'jobs',
-																				'action' => 'view_process',
-																					$next['TicketProcessSchedule']['department_process_id']
-																			),
-																		array(
-																				'escape' => false,
-																				'confirm' => 'Proceed to '. $process[$next['TicketProcessSchedule']['department_process_id']]
-																			));
-
-
-																	?>
-
-																	<?php 
-
-																	?>
-																<?php endif; ?>	
-																
-
-																
+																			<i class="fa fa-sign-out fa-stack-1x fa-inverse"></i>
+																		<!-- 	<span class="post"><font size="1px">&nbsp; End </font></span> -->
+																		</span> 
+																	</a>
+																<?php } ?>
 									                        </td>
 									                    </tr>
 
