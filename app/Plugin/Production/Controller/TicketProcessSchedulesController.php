@@ -45,6 +45,8 @@ class TicketProcessSchedulesController extends ProductionAppController {
 
             $outputs = array();
 
+            $order = 1;
+
             foreach ($TicketProcessScheduleID as $key => $value) {
                 
                 $this->MachineLog->create();
@@ -64,8 +66,13 @@ class TicketProcessSchedulesController extends ProductionAppController {
 
                         $outputs['job_ticket_id'] = $data['Ticket']['job_ticket_id'];
 
+                        $outputs['order'] =  $order;
+
                         //save output
-                        $this->Output->save($outputs);
+                        if($this->Output->save($outputs)) {
+                             $order++;
+                        }
+
 
                     }
 

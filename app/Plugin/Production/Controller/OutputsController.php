@@ -56,7 +56,10 @@ class OutputsController extends ProductionAppController {
 
             $data = $this->request->data;
 
+            if (!empty($this->request->data['MachineLog']['status'])) {
 
+                $data['Output']['status'] = $this->request->data['MachineLog']['status'];
+            }
 
             if ($this->Output->save( $data )) {
 
@@ -74,6 +77,10 @@ class OutputsController extends ProductionAppController {
 
                     $tab = strtolower(Inflector::slug($process['ProcessDepartment']['name'], '-'));
                 }
+
+                $this->TicketProcessSchedule->id = $data['Output']['ticket_process_schedule_id'];
+                 $this->TicketProcessSchedule->savefield('status' , $overtime_id);
+                
 
                 $this->redirect(array(
                     'controller' => 'jobs',

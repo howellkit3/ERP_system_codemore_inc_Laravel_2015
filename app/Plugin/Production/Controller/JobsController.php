@@ -4,6 +4,9 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class JobsController extends ProductionAppController {
 
+    var $helpers = array('Production.Output');
+
+
     public function plans() {
 
 
@@ -68,8 +71,6 @@ class JobsController extends ProductionAppController {
 
         }
 
-
-
         $clientOrderUUID = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('client_order_id','uuid')));
 
         $clientOrderQuantity = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('client_order_id','quantity')));
@@ -85,6 +86,9 @@ class JobsController extends ProductionAppController {
         $this->paginate = $params;
         
         $jobData = $this->paginate('JobTicket');
+
+        // pr($jobData);
+        // exit();
 
       //  $jobData = $this->JobTicket->find('all',array('order' => 'JobTicket.id DESC','conditions' => $conditions ));
 
@@ -156,12 +160,12 @@ class JobsController extends ProductionAppController {
 
             $outputs = $this->paginate('Output');
 
-   
+            $process = $this->ProcessDepartment->find('list',array('fields' => array('id','name') ));
 
             //get Jobticket 
             $outputs = $this->JobTicket->addTicket( $outputs );
      
-            $this->set(compact('machineScheduleData','companyData','machineData','productName','processDepartment','outputs'));
+            $this->set(compact('machineScheduleData','companyData','machineData','productName','processDepartment','outputs','process'));
 
             $this->render('Jobs/processes/default');
            

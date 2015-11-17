@@ -13,24 +13,17 @@ class TicketProcessSchedule extends AppModel {
 
     public function bind($model = array('Group')){
 
-		// $this->bindModel(array(
-		// 	'belongsTo' => array(
-		// 		'JobTicket' => array(
-		// 			'className' => 'Ticket.JobTicket',
-		// 			'foreignKey' => 'job_ticket_id',
-		// 			'dependent' => true,
-		// 		),
-		// 		'MachineLog' => array(
-		// 			'className' => 'Production.MachineLog',
-		// 			'foreignKey' => false,
-		// 			'conditions' => 'MachineLog.machine_schedule_id = MachineSchedule.id' ,
-		// 			'dependent' => true,
-		// 		),
-				
-		// 	)
-		// ),false);
+		$this->bindModel(array(
+			'belongsTo' => array(
+				'ProcessDepartment' => array(
+					'className' => 'Production.ProcessDepartment',
+					'foreignKey' => 'department_process_id',
+					'dependent' => true,
+				)
+				)
+		),false);
 
-		// $this->contain($model);
+		$this->contain($model);
 	}
 
 	public function saveTicketProcessSchedule($data,$auth){

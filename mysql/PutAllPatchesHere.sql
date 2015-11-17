@@ -2411,3 +2411,5 @@ UPDATE `purchase_orders` SET `status` = 11 WHERE `receive_item_status` = 1;
 /* aldrin added this nov-16-2015*/
 ALTER TABLE `outputs`
 ADD COLUMN `order`  int(11) NULL AFTER `job_ticket_id`;
+
+ALTER TABLE `outputs`  ADD `status` VARCHAR(255) NOT NULL DEFAULT '' AFTER `reject`
