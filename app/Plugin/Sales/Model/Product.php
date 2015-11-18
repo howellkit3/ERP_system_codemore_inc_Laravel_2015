@@ -131,6 +131,7 @@ class Product extends AppModel {
 	);
 
 	public function addProduct($data,$auth){
+
 		
 		$month = date("m"); 
 	    $year = date("y");
@@ -142,14 +143,22 @@ class Product extends AppModel {
 	    $code =  $year. $month .$random;
 	    
 		$this->create();
-		$data['Product']['type_id'] = $data['Product']['item_type'];
+
+		//pr($data); exit;
+		$data['Product']['item_type_holder_id'] = $data['Product']['item_type'];
 		$data['Product']['company_id'] = $data['Product']['companyId'];
-		$data['Product']['product_name'] = $data['Product']['productName'];
+		$data['Product']['name'] = $data['Product']['productName'];
 		$data['Product']['created_by'] = $auth;
 		$data['Product']['status_id'] = 0;
 		$data['Product']['modified_by'] = $auth;
-		$data['Product']['uuid'] = $code;
 
+
+
+		if(empty($data['Product']['uuid'])){
+
+			$data['Product']['uuid'] = $code;
+
+		}
 		$this->save($data);
 
 		return $this->id;

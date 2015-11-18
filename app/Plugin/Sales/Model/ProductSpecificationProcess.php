@@ -26,6 +26,7 @@ class ProductSpecificationProcess extends AppModel {
 					'dependent' => true
 				)
 			),
+			
 			'belongsTo' => array(
 
 				'ProductSpecification' => array(
@@ -49,7 +50,7 @@ class ProductSpecificationProcess extends AppModel {
 		$this->contain($model);
 	}
 
-	public function saveProcess($processdata = null , $auth = null,$specId = null){
+	public function saveProcess($processdata = null , $auth = null,$specId = null, $productId = null){
 
 		$this->bind(array('Sales.ProductSpecificationProcessHolder'));
 		$Ids = array();
@@ -62,7 +63,8 @@ class ProductSpecificationProcess extends AppModel {
 			$processList['created_by'] = $auth;
 			$processList['modified_by'] = $auth;
 			$processList['product_specification_id'] = $specId;
-			$processList['product_id'] = $processdata['Product'];
+			$processList['product_id'] = $productId;
+			//$processList['product_id'] = $processdata['Product'];
 			
 			$this->save($processList);
 

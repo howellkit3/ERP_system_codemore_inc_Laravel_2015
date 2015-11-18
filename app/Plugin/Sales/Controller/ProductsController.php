@@ -46,7 +46,7 @@ class ProductsController extends SalesAppController {
 
 		$limit = 10;
 
-		$conditions = array();
+		$conditions =  array('NOT' => array('Product.status_id' => 1));
 			
 		$this->paginate = array(
             'conditions' => $conditions,
@@ -511,7 +511,7 @@ class ProductsController extends SalesAppController {
 
     	$productData = $this->Product->find('all',array(
     										'conditions' => array(
-											'Product.item_type_holder_id' => $itemtypeid),
+											'Product.item_type_holder_id' => $itemtypeid, 'Product.status_id'  => 0),
 											'fields' => array(
 											'id', 'name'),
 											'order' => array('Product.name' => 'ASC')
@@ -741,7 +741,7 @@ class ProductsController extends SalesAppController {
 		$this->Product->recursive = 1;
 
 		$product = $this->request->data =  $this->Product->findById($productId);
-		
+		//pr($product); exit;
 		//$specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productId)));
 		
 		$specs = $this->ProductSpecification->find('first',array(
@@ -866,7 +866,7 @@ class ProductsController extends SalesAppController {
 
     public function create_specification($productId ){
 
-    	//pr($this->request->data); exit;
+    	//pr('create speci'); exit;
 
     	$this->loadModel('Ticket.Jobticket');
 
@@ -886,17 +886,17 @@ class ProductsController extends SalesAppController {
 
     	$this->loadModel('Sales.ProductSpecificationProcessHolder');
 
-    	$this->Product->bind(array('Sales.ProductSpecificationDetail','Sales.ProductSpecification'));
+    	$this->loadModel('Sales.ProductSpecification');
 
     	$this->ProductSpecificationDetail->bind(array('Sales.ProductSpecificationComponent','Sales.ProductSpecificationPart','Sales.ProductSpecificationProcess'));
 				
+		$this->Product->bind(array('Sales.ProductSpecificationDetail','Sales.ProductSpecification'));		
 		// $jobTicketData = $this->Jobticket->find('first',array(
   //   		'conditions' => array('Jobticket.product_id' => $this->request->data['Product']['id'])));
 
-		// pr($jobTicketData); exit;
+		//pr($this->request->data); exit;
 
 		if (!empty($this->request->data)) {
-			pr($this->request->data);exit();
 			if(!empty($this->request->data['IdHolder'])){
 				
 				$this->Product->ProductSpecification->delete($this->request->data['ProductSpecification']['id']);
@@ -911,7 +911,7 @@ class ProductsController extends SalesAppController {
 
 			$this->request->data['ProductSpecification']['product_id'] = $productId;
 
-			$specId = $this->Product->ProductSpecification->saveSpec($this->request->data,$userData['User']['id']);
+			$specId = $this->ProductSpecification->saveSpec($this->request->data,$userData['User']['id']);
 			
 			//$mainPanelArray = array();
 			$componentArray = array();
@@ -960,7 +960,227 @@ class ProductsController extends SalesAppController {
 					$componentData['ProductSpecificationComponent'][$key]['order'] = $componentArray[$key];
 					
 				}
-				$componentData['Product'] = $this->request->data['Product']['id'];
+
+				if(!empty($componentData['Product']['idToBeDeleted'])){
+
+					$componentData['Product'] = $this->request->data['Product']['idToBeDeleted'];
+
+				}else{
+
+					$componentData['Product'] = $productId;
+
+				}
+				
+			}
+			
+			if (isset($this->request->data['ProductSpecificationPart'])) {
+
+				//pr(array_values($this->request->data['ProductSpecificationPart'])); exit;
+				$partData['ProductSpecificationPart'] = array_values($this->request->data['ProductSpecificationPart']);
+			//	$partData['ProductSpecificationPart']['product'] = $productId;
+				foreach ($partData['ProductSpecificationPart'] as $key => $value) {
+					
+					if (isset($partArray[$key])) {
+						
+						$partData['ProductSpecificationPart'][$key] = $value;
+						$partData['ProductSpecificationPart'][$key]['order'] = $partArray[$key];
+						
+					}
+					
+				}
+				
+				if(!empty($componentData['Product']['idToBeDeleted'])){
+
+					$componentData['Product'] = $this->request->data['Product']['idToBeDeleted'];
+
+				}else{
+
+					$componentData['Product'] = $productId;
+
+				}
+				
+			}
+			
+			if (!empty($this->request->data['ProductSpecificationProcess'])) {
+
+				$processData['ProductSpecificationProcess'] = array_values($this->request->data['ProductSpecificationProcess']);
+				
+				foreach ($processData['ProductSpecificationProcess'] as $key => $value) {
+
+					if (isset($processArray[$key])) {
+						
+						$processData['ProductSpecificationProcess'][$key] = $value;
+						$processData['ProductSpecificationProcess'][$key]['order'] = $processArray[$key];
+					}
+				}
+
+				if(!empty($componentData['Product']['idToBeDeleted'])){
+
+					$componentData['Product'] = $this->request->data['Product']['idToBeDeleted'];
+
+				}else{
+
+					$componentData['Product'] = $productId;
+
+				}
+
+			}
+
+			//pr($processData); pr($partData); exit;
+
+			$getIds = array();
+
+			// if (!empty($this->request->data['ProductSpecificationMainPanel'])) {
+
+			// 	$thisMainPanelIds = $this->ProductSpecificationMainPanel->saveMainPanel($mainPanelData,$userData['User']['id'],$specId);
+
+			// 	$getIds = array_merge($getIds,$thisMainPanelIds);
+			// }
+
+			if (!empty($this->request->data['ProductSpecificationComponent'])) {
+
+				$thisComponentIds = $this->ProductSpecificationComponent->saveComponent($componentData,$userData['User']['id'],$specId);
+
+				$getIds = array_merge($getIds,$thisComponentIds);
+			}
+			
+			if (!empty($this->request->data['ProductSpecificationPart'])) {
+
+				$thisPartIds = $this->ProductSpecificationPart->savePart($partData,$userData['User']['id'],$specId,$productId);
+				
+				$getIds = array_merge($getIds,$thisPartIds);
+
+			}
+
+			if (!empty($this->request->data['ProductSpecificationProcess'])) {
+
+				$thisProcessIds = $this->ProductSpecificationProcess->saveProcess($processData,$userData['User']['id'],$specId, $productId);
+				
+				$getIds = array_merge($getIds,$thisProcessIds);
+
+			}
+
+			$saveArray = array();
+			if (!empty($this->request->data['ProductSpecificationDetail'])) {
+				foreach ($this->request->data['ProductSpecificationDetail'] as $key => $data) {
+
+					if (!empty($getIds[$key])) {
+						$newdata = split('-', $getIds[$key]);
+						$saveArray[$key]['ProductSpecificationDetail']['model'] = $newdata[2];
+						$saveArray[$key]['ProductSpecificationDetail']['order'] = $newdata[1];
+						$saveArray[$key]['ProductSpecificationDetail']['foreign_key'] = $newdata[0];
+					}
+					
+				}
+			}
+
+			if (!empty($saveArray)) {
+				$this->ProductSpecificationDetail->saveSpecDetail($saveArray,$userData['User']['id'],$this->request->data['Product']['uuid']);
+			}
+
+				$this->Session->setFlash(
+                __('Product specification successfully completed', 'success')
+            );
+
+			if(!empty($this->request->data['Product']['jobticket'])){	
+
+				if($this->request->data['Product']['jobticket'] == 1){
+
+				return $this->redirect(array('controller' => 'ticketing_systems', 'action' => 'index', 'plugin' => 'ticket'));
+
+				}
+
+			}
+		
+			return $this->redirect(array('controller' => 'products', 'action' => 'index'));
+			
+		}
+
+    }
+
+    public function create_specification_edit($productId){
+
+    	//pr('create specification edit'); exit;
+
+    	$this->loadModel('Ticket.Jobticket');
+
+    	$userData = $this->Session->read('Auth');
+ 
+    	$this->loadModel('Sales.ProductSpecificationDetail');
+
+    	$this->loadModel('Sales.ProductSpecificationMainPanel');
+
+    	$this->loadModel('Sales.ProductSpecificationComponent');
+
+    	$this->loadModel('Sales.ProductSpecificationPart');
+
+    	$this->loadModel('Sales.ProductSpecificationProcess');
+
+    	$this->loadModel('Sales.Product');
+
+    	$this->loadModel('Sales.ProductSpecificationProcessHolder');
+
+    	$this->Product->bind(array('Sales.ProductSpecificationDetail','Sales.ProductSpecification'));
+
+    	$this->ProductSpecificationDetail->bind(array('Sales.ProductSpecificationComponent','Sales.ProductSpecificationPart','Sales.ProductSpecificationProcess'));
+
+    	if(!empty($this->request->data['IdHolder'])){
+				
+			//	$this->Product->ProductSpecification->delete($this->request->data['ProductSpecification']['id']);
+				$this->ProductSpecificationComponent->deleteData($this->request->data['IdHolder']);
+			   	$this->ProductSpecificationPart->deleteData($this->request->data['IdHolder']);
+				$this->ProductSpecificationProcess->deleteData($this->request->data['IdHolder']);
+				$this->ProductSpecificationProcessHolder->deleteData($this->request->data['IdHolder']);
+				$this->ProductSpecificationDetail->deleteData($this->request->data['IdHolder']);
+		}
+
+		unset($this->request->data['ProductSpecification']['id']);
+
+		//pr($this->request->data); exit;
+
+    	$productId = $this->Product->addProduct($this->request->data,$userData['User']['id']);
+    	 
+    	$this->request->data['Product']['id'] = $productId;
+
+    	$specId = $this->Product->ProductSpecification->saveSpecEdit($this->request->data,$userData['User']['id']);
+
+		$componentArray = array();
+
+		$partArray = array();
+
+		$processArray = array();
+
+			if (!empty($this->request->data['ProductSpecificationDetail'])) {
+			
+				foreach ($this->request->data['ProductSpecificationDetail'] as $key => $value) {
+					
+					// if($value == 'MainPanel'){
+					// 	array_push($mainPanelArray, $key);
+					// }
+					if($value == 'Component'){
+						array_push($componentArray, $key);
+					}
+					if($value == 'Part'){
+						array_push($partArray, $key);
+					}
+					if($value == 'Process'){
+						array_push($processArray, $key);
+					}
+				}
+			}
+			
+			if (isset($this->request->data['ProductSpecificationComponent'])) {
+				
+				$componentData['ProductSpecificationComponent'] = array_values($this->request->data['ProductSpecificationComponent']);
+				
+				foreach ($componentData['ProductSpecificationComponent'] as $key => $value) {
+					
+					$componentData['ProductSpecificationComponent'][$key] = $value;
+					$componentData['ProductSpecificationComponent'][$key]['order'] = $componentArray[$key];
+					
+				}
+
+				$componentData['Product'] = $productId;
 				
 			}
 			
@@ -978,7 +1198,8 @@ class ProductsController extends SalesAppController {
 					}
 					
 				}
-				$partData['Product'] = $this->request->data['Product']['id'];
+				
+				$partData['Product'] = $productId;
 				
 			}
 			
@@ -993,25 +1214,19 @@ class ProductsController extends SalesAppController {
 						$processData['ProductSpecificationProcess'][$key]['order'] = $processArray[$key];
 					}
 				}
-				$processData['Product'] = $this->request->data['Product']['id'];
+				$processData['Product'] = $productId;
 
 			}
 
 			$getIds = array();
 
-			// if (!empty($this->request->data['ProductSpecificationMainPanel'])) {
+		//	if (!empty($this->request->data['ProductSpecificationComponent'])) {
 
-			// 	$thisMainPanelIds = $this->ProductSpecificationMainPanel->saveMainPanel($mainPanelData,$userData['User']['id'],$specId);
-
-			// 	$getIds = array_merge($getIds,$thisMainPanelIds);
-			// }
-
-			if (!empty($this->request->data['ProductSpecificationComponent'])) {
 
 				$thisComponentIds = $this->ProductSpecificationComponent->saveComponent($componentData,$userData['User']['id'],$specId);
 
 				$getIds = array_merge($getIds,$thisComponentIds);
-			}
+		//	}
 			
 			if (!empty($this->request->data['ProductSpecificationPart'])) {
 
@@ -1047,47 +1262,19 @@ class ProductsController extends SalesAppController {
 				$this->ProductSpecificationDetail->saveSpecDetail($saveArray,$userData['User']['id'],$this->request->data['Product']['uuid']);
 			}
 
-				$this->Session->setFlash(
-                __('Product specification successfully completed', 'success')
-            );
+			$statusId = $this->request->data['Product']['idToBeDeleted'];
 
-			if($this->request->data['Product']['jobticket'] == 1){
+		$this->Product->id = $statusId;
 
-			return $this->redirect(array('controller' => 'ticketing_systems', 'action' => 'index', 'plugin' => 'ticket'));
+		$this->Product->saveField('status_id', 1);
 
-			}
-		
-			return $this->redirect(array('controller' => 'products', 'action' => 'index'));
-			
-		}
+    	$this->Session->setFlash(__('Products Specification has been Successfully Modified'));
 
-    }
-
-    public function create_specification_edit($productId ){
-
-    	$this->loadModel('Ticket.Jobticket');
-
-    	$userData = $this->Session->read('Auth');
-
-    	$this->loadModel('Sales.ProductSpecificationDetail');
-
-    	$this->loadModel('Sales.ProductSpecificationMainPanel');
-
-    	$this->loadModel('Sales.ProductSpecificationComponent');
-
-    	$this->loadModel('Sales.ProductSpecificationPart');
-
-    	$this->loadModel('Sales.ProductSpecificationProcess');
-
-    	$this->loadModel('Sales.Product');
-
-    	$this->loadModel('Sales.ProductSpecificationProcessHolder');
-
-    	$this->Product->bind(array('Sales.ProductSpecificationDetail','Sales.ProductSpecification'));
-
-    	$this->ProductSpecificationDetail->bind(array('Sales.ProductSpecificationComponent','Sales.ProductSpecificationPart','Sales.ProductSpecificationProcess'));
-			
-    	pr($this->request->data); exit;
+		$this->redirect( array(
+                                    'controller' => 'products', 
+                                    'action' => 'specification',
+                                    $productId, 1
+                             ));
 
 
 	}
@@ -1182,8 +1369,6 @@ class ProductsController extends SalesAppController {
 
     public function specification_edit($productId = null, $ifTicket = null ){
 
-    //	pr($ifTicket); exit;
-
     	$this->loadModel('ItemCategoryHolder');
 
         $this->loadModel('ItemTypeHolder');
@@ -1232,18 +1417,16 @@ class ProductsController extends SalesAppController {
 		$this->Product->recursive = 1;
 
 		$product = $this->request->data =  $this->Product->findById($productId);
-		
+		//pr($product); exit;
 		//$specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productId)));
 		
 		$specs = $this->ProductSpecification->find('first',array(
 			'conditions' => array('ProductSpecification.product_id' => $productId),
     		'order' => array('ProductSpecification.id DESC')));	
 
-		//pr($product); exit;
 
 		//find if product has specs
 		$formatDataSpecs = $this->ProductSpecificationDetail->findData($product['Product']['uuid']);
-
 
 		$companyData = $this->Company->read(null,$product['Product']['company_id']);
 		
@@ -1295,13 +1478,11 @@ class ProductsController extends SalesAppController {
 											array('Company.company_name LIKE' => '%' . $hint . '%'),
 											array('Product.uuid LIKE' => '%' . $hint . '%'),
 											array('Product.name LIKE' => '%' . $hint . '%')
-											)
+											),  array('NOT' => array('Product.status_id' => 1))
 										),
 									'limit' => 10
 									));
 
-
-	
 
 		//set to cache in first load
 		$companyData = Cache::read('companyData');
@@ -1327,16 +1508,7 @@ class ProductsController extends SalesAppController {
      										));
 
             Cache::write('typeData', $typeData);
-       // }
 
-            // $productData = $this->Product->find('list', array(
-     							// 				'fields' => array( 
-     							// 					'id','name')
-     							// 			));
-
-            // Cache::write('productData', $productData);
-
-		
 		$this->set(compact('companyData','productData', 'categoryData', 'typeData'));
 		//pr($quotationData);exit();
 		
@@ -1347,4 +1519,11 @@ class ProductsController extends SalesAppController {
     	}
     }
 
+    public function edit_specs_question($productId = null, $ifTicket = null){
+
+    	$this->redirect( array('controller' => 'products', 
+                                'action' => 'specification_edit',
+                                $productId, $ifTicket, $this->request->data['Edit']['Edit_Purpose']));
+    
+    }
 }

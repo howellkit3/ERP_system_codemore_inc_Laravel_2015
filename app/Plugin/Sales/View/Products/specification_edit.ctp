@@ -36,8 +36,24 @@
 			</div>
 		</div>
 
+		<?php if($this->params['pass']['2'] == 0) {
 
-		<?php echo $this->Form->create('Product',array('url'=>(array('controller' => 'products', 'action' => 'create_specification')),'class' => 'test','method' => 'post'));?>			
+			 echo $this->Form->create('Product',array('url'=>(array('controller' => 'products', 'action' => 'create_specification')),'class' => 'test','method' => 'post'));
+
+            echo $this->Form->input('Product.id', array(
+				'class' => 'form-control item_type',
+                'label' => false,
+				'value' => $product['Product']['id'],
+                'placeholder' => 'Product Name',
+                'fields' =>array('name')));
+
+
+		}else{
+
+			 echo $this->Form->create('Product',array('url'=>(array('controller' => 'products', 'action' => 'create_specification_edit')),'class' => 'test','method' => 'post'));
+
+		}?>			
+
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="main-box">
@@ -59,7 +75,8 @@
                                                     'disabled' => true));
                                             ?>
 										</div>
-									</div>									
+									</div>		
+
 									<div class="form-group">
 										<label class="col-lg-2 control-label">Item Number</label>
 										<input type="hidden" id="selected_type" value="<?php // echo $this->request->data['Product']['id']; ?>">
@@ -72,19 +89,24 @@
                                                     'placeholder' => 'Item Number',
                                                     'fields' =>array('name')));
                                             ?>
+
                                             <?php 
-	                                            echo $this->Form->input('Product.id', array(
+	                                             echo $this->Form->input('Product.idToBeDeleted', array(
                     								'type' => 'hidden',
+                    								'value' => $product['Product']['id'],
                     								'class' => 'form-control item_type',
                                                     'label' => false));
                                             ?>
 
                                              <?php 
-	                                            echo $this->Form->input('Product.company_id', array(
+	                                            echo $this->Form->input('Product.companyId', array(
                     								'type' => 'hidden',
+                    								'value' => $product['Product']['company_id'],
                     								'class' => 'form-control item_type',
                                                     'label' => false));
                                             ?>
+
+
 
                                             <?php 
 	                                            echo $this->Form->input('Product.item_category_holder_id', array(
@@ -94,18 +116,13 @@
                                             ?>
 
                                             <?php 
-	                                            echo $this->Form->input('Product.item_type_holder_id', array(
+	                                            echo $this->Form->input('Product.item_type', array(
                     								'type' => 'hidden',
                     								'class' => 'form-control item_type',
+                    								'value' => $product['Product']['item_type_holder_id'],
                                                     'label' => false));
                                             ?>
 
-                                            <?php 
-	                                            echo $this->Form->input('Product.name', array(
-                    								'type' => 'hidden',
-                    								'class' => 'form-control item_type',
-                                                    'label' => false));
-                                            ?>
 
                                             <?php 
 	                                            echo $this->Form->input('Product.remarks', array(
@@ -129,13 +146,15 @@
 										<label class="col-lg-2 control-label">Item Name</label>
 										<div class="col-lg-8">
 											<?php 
-	                                            echo $this->Form->input('Product.name', array(
+	                                            echo $this->Form->input('Product.productName', array(
                     								'class' => 'form-control item_type',
                                                     'label' => false,
-                                                    'disabled' => true,
+                    								'value' => $product['Product']['name'],
                                                     'placeholder' => 'Product Name',
                                                     'fields' =>array('name')));
                                             ?>
+
+                                             
 										</div>
 									</div>
 									<div class="form-group">
@@ -143,18 +162,19 @@
 										<div class="col-lg-2">
 											<?php 
 												//hidden id
-												echo $this->Form->input('ProductSpecification.product_id', array(
-                    								'class' => 'form-control item_type editMe',
-                                                    'label' => false,
-                                                    'type' => 'hidden',
-                                                    'value' => $specs['ProductSpecification']['product_id']));
-
-												// echo $this->Form->input('ProductSpecification.id', array(
+												// echo $this->Form->input('ProductSpecification.product_id', array(
             //         								'class' => 'form-control item_type editMe',
             //                                         'label' => false,
-            //                                         'hidden' => 'hidden',
-            //                                         'disabled' => 'disabled',
-            //                                         'value' => $specs['ProductSpecification']['id']));
+            //                                         'type' => 'hidden',
+            //                                         'value' => $specs['ProductSpecification']['product_id']));
+
+												echo $this->Form->input('ProductSpecification.id', array(
+                    								'class' => 'form-control item_type editMe',
+                                                    'label' => false,
+                                                    'hidden' => 'hidden',
+                                                   // 'disabled' => 'disabled',
+                                                    'value' => $specs['ProductSpecification']['id']));
+
 	                                            echo $this->Form->input('ProductSpecification.size1', array(
                     								'class' => 'form-control item_type editMe',
                                                     'label' => false,

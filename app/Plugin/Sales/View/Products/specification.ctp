@@ -21,7 +21,7 @@
 						<h1 class="pull-left">
 							Product Specifications
 						</h1>
-						<?php 
+						<?php
 							echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'products','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 
 	                    ?>
@@ -70,6 +70,30 @@
 		                                            echo $this->Form->input('Product.id', array(
 		                                            								'type' => 'hidden',
 		                                            								'class' => 'form-control item_type',
+								                                                    'label' => false));
+	                                            ?>
+
+	                                            <?php 
+		                                            echo $this->Form->input('Product.companyId', array(
+		                                            								'type' => 'hidden',
+		                                            								'class' => 'form-control item_type',
+		                                            								'value' => $product['Product']['company_id'], 
+								                                                    'label' => false));
+	                                            ?>
+	                                            
+	                                            <?php 
+		                                            echo $this->Form->input('Product.productName', array(
+		                                            								'type' => 'hidden',
+		                                            								'class' => 'form-control item_type',
+		                                            								'value' => $product['Product']['name'],
+								                                                    'label' => false));
+	                                            ?>
+
+	                                            <?php 
+		                                            echo $this->Form->input('Product.item_type', array(
+		                                            								'type' => 'hidden',
+		                                            								'class' => 'form-control item_type',
+		                                            								'value' => $product['Product']['item_type_holder_id'],
 								                                                    'label' => false));
 	                                            ?>
 

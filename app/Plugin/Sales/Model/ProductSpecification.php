@@ -53,10 +53,32 @@ class ProductSpecification extends AppModel {
 		
 		$this->create();
 
-		$specData[$this->name]['created_by'] = $auth;
-		$specData[$this->name]['modified_by'] = $auth;
-		$specData[$this->name]['product_id'] = $specData['Product']['id'];
-		$this->save($specData[$this->name]);
+		$specData['ProductSpecification']['created_by'] = $auth;
+		$specData['ProductSpecification']['modified_by'] = $auth;
+
+		if(!empty($specData['Product']['idToBeDeleted'])){
+
+			$specData['ProductSpecification']['product_id'] = $specData['Product']['idToBeDeleted'];
+			$this->save($specData[$this->name]);
+
+		}else{
+
+			$specData['ProductSpecification']['product_id'] = $specData['Product']['id'];
+			$this->save($specData[$this->name]);
+
+		}
+
+		return $this->id;
+	}
+
+	public function saveSpecEdit($specData = null,$auth = null){
+		
+		$this->create();
+
+		$specData['ProductSpecification']['product_id'] = $specData['Product']['id'];
+		$specData['ProductSpecification']['created_by'] = $auth;
+		$specData['ProductSpecification']['modified_by'] = $auth;
+		$this->save($specData['ProductSpecification']);
 
 		return $this->id;
 	}

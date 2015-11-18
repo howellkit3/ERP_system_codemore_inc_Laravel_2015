@@ -133,7 +133,7 @@
 	//     timeout = setTimeout(searchOrder,400)
 	// });
 		
-	 $("body").on('keyup','.searchOrder', function(e){
+	$("body").on('keyup','.searchOrder', function(e){
 
         var searchInput = $(this).val();
 

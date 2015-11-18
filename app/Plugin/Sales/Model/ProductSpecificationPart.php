@@ -36,7 +36,7 @@ class ProductSpecificationPart extends AppModel {
 		$this->contain($model);
 	}
 
-	public function savePart($partdata = null , $auth = null,$specId = null){
+	public function savePart($partdata = null , $auth = null,$specId = null,  $productId = null){
 		$Ids = array();
 			
 			if (!empty($partdata[$this->name])) {
@@ -47,7 +47,8 @@ class ProductSpecificationPart extends AppModel {
 					$partList['created_by'] = $auth;
 					$partList['modified_by'] = $auth;
 					$partList['product_specification_id'] = $specId;
-					$partList['product_id'] = $partdata['Product'];
+					$partList['product_id'] = $productId;
+					//$partList['product_id'] = $partdata['Product'];
 					
 					$this->save($partList);
 					if (!empty($partList['order'])) {
