@@ -1355,10 +1355,9 @@ class SalesInvoiceController extends AccountingAppController {
             echo "no Forms Yet";
         }
 
-
     }
 
-    public function search_order($hint = null, $view = null){
+    public function search_order($view = null, $hint = null){
 
         $this->loadModel('Sales.Company');
 
@@ -1395,15 +1394,16 @@ class SalesInvoiceController extends AccountingAppController {
 
             $userData = $this->Session->read('Auth');
 
-            $invoiceData = $this->SalesInvoice->query('SELECT *
+            $invoiceData = $this->SalesInvoice->query('SELECT SalesInvoice.id ,SalesInvoice.status , SalesInvoice.sales_invoice_no, Company.id, Company.company_name , Delivery.dr_uuid, Delivery.company_id, Delivery.dr_uuid, SalesInvoice.dr_uuid 
                 FROM koufu_delivery.deliveries AS Delivery
-                INNER JOIN koufu_accounting.sales_invoices AS Invoice
-                ON Delivery.dr_uuid = Invoice.dr_uuid 
+                INNER JOIN koufu_accounting.sales_invoices AS SalesInvoice
+                ON Delivery.dr_uuid = SalesInvoice.dr_uuid 
                 INNER JOIN koufu_sale.companies AS Company
                 ON Delivery.company_id = Company.id 
-                WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR Invoice.sales_invoice_no LIKE "%'.$hint.'%"
-                OR Company.company_name LIKE "%'.$hint.'%"');
+                WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR SalesInvoice.sales_invoice_no LIKE "%'.$hint.'%"
+                OR Company.company_name LIKE "%'.$hint.'%" LIMIT 10 ');
 
+             //  pr($invoiceData); exit;
 
             // $invoiceData = $this->SalesInvoice->find('all',array(
             //               'conditions' => array(
@@ -1415,7 +1415,7 @@ class SalesInvoiceController extends AccountingAppController {
             //               'limit' => 10
             //               )); 
 
-            //pr($invoiceData); exit;
+           // pr($invoiceData); exit;
 
             $deliveryNumHolder = $this->Delivery->find('list',array('fields' => array('dr_uuid','company_id')));
 
@@ -1499,6 +1499,7 @@ class SalesInvoiceController extends AccountingAppController {
         //pr($receivedItemData); exit;
 
         foreach ($receivedItemData as $key => $value) {
+
 
             if ($value['ReceivedItem']['model'] ==  "GeneralItem"){
 

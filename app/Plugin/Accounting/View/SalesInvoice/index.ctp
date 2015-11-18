@@ -120,6 +120,18 @@
 </div>
 
 <script>
+
+	// var timeout;
+
+	// $('.searchOrder').keypress(function() {
+
+	//     if(timeout) {
+	//         clearTimeout(timeout);
+	//         timeout = null;
+	//     }
+
+	//     timeout = setTimeout(searchOrder,400)
+	// });
 		
 	 $("body").on('keyup','.searchOrder', function(e){
 
@@ -142,7 +154,7 @@
         
         $.ajax({
             type: "GET",
-            url: serverPath + "accounting/sales_invoice/search_order/"+searchInput+"/"+view,
+            url: serverPath + "accounting/sales_invoice/search_order/"+view+"/"+searchInput,
             dataType: "html",
             success: function(data) {
 
