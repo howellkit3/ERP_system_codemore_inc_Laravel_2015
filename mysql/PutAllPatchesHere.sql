@@ -2408,8 +2408,18 @@ UPDATE `job_tickets` SET `status_production_id` = 0 WHERE `status_production_id`
 UPDATE `purchase_orders` SET `receive_item_status` = 0 WHERE `receive_item_status` IS NULL;
 UPDATE `purchase_orders` SET `status` = 11 WHERE `receive_item_status` = 1;
 
+<<<<<<< HEAD
+/* Howell kit product */
+
+ALTER TABLE `koufu_sale`.`products` ADD COLUMN `status_id` INT(11) DEFAULT NULL AFTER `name`;
+UPDATE `products` SET `status_id` = 0 WHERE `status_id` IS NULL;
+=======
 /* aldrin added this nov-16-2015*/
 ALTER TABLE `outputs`
 ADD COLUMN `order`  int(11) NULL AFTER `job_ticket_id`;
 
 ALTER TABLE `outputs`  ADD `status` VARCHAR(255) NOT NULL DEFAULT '' AFTER `reject`
+ALTER TABLE `outputs`
+ADD COLUMN `status`  varchar(255) NULL AFTER `modified`;
+
+>>>>>>> 45eee2e9ffa8b641b6db73437188fb85d4d191bf

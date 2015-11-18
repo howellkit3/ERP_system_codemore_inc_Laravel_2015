@@ -114,7 +114,7 @@
                     <h4 class="modal-title"> Payroll Details </h4>
                 </div>
                 <div class="modal-body">
-                    <div class="table-responsive result-details clearfix">
+                    <div class="table-responsive result-details">
                                   
                     </div>
                 </div>

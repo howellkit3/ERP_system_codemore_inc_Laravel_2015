@@ -10,9 +10,7 @@
                 <?php echo $poNumber[$deliveryDataList['Delivery']['clients_order_id']] ?>
                 
             </td>
-            <td class="">
-                <?php echo $companyData[$deliveryDataList['Delivery']['company_id']] ?>..
-            </td>
+            
             <td class="">
                 <?php echo $deliveryDataList['Delivery']['dr_uuid']; ?>
             </td>

@@ -4,9 +4,6 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class JobsController extends ProductionAppController {
 
-    var $helpers = array('Production.Output');
-
-
     public function plans() {
 
 
@@ -71,6 +68,8 @@ class JobsController extends ProductionAppController {
 
         }
 
+
+
         $clientOrderUUID = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('client_order_id','uuid')));
 
         $clientOrderQuantity = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('client_order_id','quantity')));
@@ -86,9 +85,6 @@ class JobsController extends ProductionAppController {
         $this->paginate = $params;
         
         $jobData = $this->paginate('JobTicket');
-
-        // pr($jobData);
-        // exit();
 
       //  $jobData = $this->JobTicket->find('all',array('order' => 'JobTicket.id DESC','conditions' => $conditions ));
 
@@ -126,8 +122,6 @@ class JobsController extends ProductionAppController {
 
             $this->loadModel('Production.MachineLog');
 
-            $this->loadModel('Production.Output');
-
             $this->loadModel('Sales.Product');
 
             $this->loadModel('Production.TicketProcess');
@@ -150,22 +144,19 @@ class JobsController extends ProductionAppController {
                     'conditions' => $conditions,
                     'limit' => $limit,
                     //'group' => array('Attendance.date'),
-                    'order' => 'Output.id DESC',
+                    'order' => 'MachineLog.id DESC',
             );
 
             $this->paginate = $params;
             
-          //  $this->MachineLog->bindTicket(); 
-            $this->Output->bind(array('TicketProcessSchedule','MachineLog')); 
+            $this->MachineLog->bindTicket(); 
 
-            $outputs = $this->paginate('Output');
-
-            $process = $this->ProcessDepartment->find('list',array('fields' => array('id','name') ));
+            $machineScheduleData = $this->paginate('MachineLog');
 
             //get Jobticket 
-            $outputs = $this->JobTicket->addTicket( $outputs );
+            $machineScheduleData = $this->JobTicket->addTicket( $machineScheduleData );
      
-            $this->set(compact('machineScheduleData','companyData','machineData','productName','processDepartment','outputs','process'));
+            $this->set(compact('machineScheduleData','companyData','machineData','productName','processDepartment'));
 
             $this->render('Jobs/processes/default');
            

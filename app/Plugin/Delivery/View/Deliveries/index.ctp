@@ -39,34 +39,35 @@
                                 <div class="tab-content">
                                     <div class="tab-pane fade  <?php echo ($active_tab == 'tab-waiting') ? 'in active' : '' ?>" id="tab-waiting">
                                          waiting
-
-                                        <?php //$tableHolder = "1"; ?>
-
-                                        <?php echo $this->element('index'); ?><br><br>
-
-
+                                         <?php $params = 1; ?>
+                                        <?php echo $this->element('index', array('params' => $params)); ?><br><br>
                                         
                                     </div>
 
                                     <div class="tab-pane fade  <?php echo ($active_tab == 'tab-due') ? 'in active' : '' ?>" id="tab-due">
-                                         due
-                                        <?php echo $this->element('index'); ?><br><br>
+                                        due
+                                        <?php $params = 2; ?>
+                                        <?php echo $this->element('index', array('params' => $params)); ?><br><br>
                                         
                                     </div>
 
                                      <div class="tab-pane fade  <?php echo ($active_tab == 'tab-approved') ? 'in active' : '' ?>" id="tab-approved">
                                          approved
-                                        <?php echo $this->element('index'); ?><br><br>
+                                        <?php $params = 3; ?>
+                                        <?php echo $this->element('index', array('params' => $params)); ?><br><br>
+
                                     </div>       
 
                                     <div class="tab-pane fade  <?php echo ($active_tab == 'tab-closed') ? 'in active' : '' ?>" id="tab-closed">
-                                         closed
-                                        <?php echo $this->element('index'); ?><br><br>
+                                        closed
+                                        <?php $params = 4; ?>
+                                        <?php echo $this->element('index', array('params' => $params)); ?><br><br>
                                     </div>
 
                                     <div class="tab-pane fade  <?php echo ($active_tab == 'tab-completed') ? 'in active' : '' ?>" id="tab-completed">
                                          completed
-                                        <?php echo $this->element('index'); ?><br><br>
+                                        <?php $params = 5; ?>
+                                        <?php echo $this->element('index', array('params' => $params)); ?><br><br>
                                     </div>
 
                                 </div>

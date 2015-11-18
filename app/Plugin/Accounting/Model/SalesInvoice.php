@@ -18,10 +18,16 @@ class SalesInvoice extends AppModel {
 		
 		$this->bindModel(array(
 			'belongsTo' => array(
-				'Delivery' => array(
+				'DeliveryDetail' => array(
 					'className' => 'Delivery.DeliveryDetail',
 					'foreignKey' => false,
 					'conditions' => array('DeliveryDetail.delivery_uuid = SalesInvoice.dr_uuid')
+				), 
+
+				'Delivery' => array(
+					'className' => 'Delivery.Delivery',
+					'foreignKey' => false,
+					'conditions' => array('Delivery.dr_uuid = SalesInvoice.dr_uuid')
 				), 
 				// 'ClientOrder' => array(
 				// 	'className' => 'Sales.ClientOrder',

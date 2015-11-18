@@ -13,22 +13,15 @@ class Output extends AppModel {
 
     public function bind($model = array('Group')){
 
-		$this->bindModel(array(
-			'belongsTo' => array(
-				'TicketProcessSchedule' => array(
-					'className' => 'Production.TicketProcessSchedule',
-					'foreignKey' => 'ticket_process_schedule_id',
-				),
-				'JobTicket' => array(
-					'className' => 'Ticket.JobTicket',
-					'foreignKey' => 'job_ticket_id',
-				),
-				'MachineLog'  => array(
-					'className' => 'Production.MachineLog',
-					'foreignKey' => 'machine_log_id',
-				),
-			)
-		),false);
+		// $this->bindModel(array(
+		// 	'hasMany' => array(
+		// 		'Department' => array(
+		// 			'className' => 'Production.Department',
+		// 			'foreignKey' => 'department_id',
+		// 			'dependent' => true,
+		// 		),
+		// 	)
+		// ),false);
 
 		$this->contain($model);
 	}

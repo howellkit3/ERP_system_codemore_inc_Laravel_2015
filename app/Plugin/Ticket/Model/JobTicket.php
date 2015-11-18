@@ -287,6 +287,7 @@ class JobTicket extends AppModel {
 	    $data[$this->name]['uuid'] = $code;
 	    $data[$this->name]['product_id'] = $clientData['Product']['id'];
 	    $data[$this->name]['client_order_id'] = $clientOrderId;
+	    $data[$this->name]['status_production_id'] = 0;
 	    $data[$this->name]['po_number'] = $clientData['ClientOrder']['po_number'];
 	    $data[$this->name]['created_by'] = $auth;
 	    $data[$this->name]['modified_by'] = $auth;
