@@ -2,7 +2,7 @@
 // header("Content-disposition: attachment; filename="'this.pdf');
 // header("Content-type: application/pdf");
 
-Configure::write('debug',0);
+Configure::write('debug',2);
 ?>
 <style>
 <?php include('word.css'); ?>
@@ -137,18 +137,27 @@ Configure::write('debug',0);
 								<?php echo $part['ProductSpecificationPart']['size2']?> >
 								<?php  
 
+							//	pr($part);
+									 	
+								$outs1 = $part['ProductSpecificationPart']['outs1'] > 0 ? $part['ProductSpecificationPart']['outs1'] : 1;
+								$outs2 = $part['ProductSpecificationPart']['outs2'] > 0 ? $part['ProductSpecificationPart']['outs2'] : 1;
+								$total_outs = floatval($outs1) * floatval($outs2);
 								$paperQuantity =   $part['ProductSpecificationPart']['paper_quantity'];
-								$outPaper = $paperQuantity / $part['ProductSpecificationPart']['out1'];  
-								//echo round($outs); $total = $outs; ?> 
+								$paperQuantity = ($paperQuantity / $total_outs );
+								//$outPaper = $paperQuantity / $part['ProductSpecificationPart']['outs1'];  
+								//echo round($outs); 
+								$total = $paperQuantity; ?> 
 								<?php if(!empty($part['ProductSpecificationPart']['paper_quantity'])) : ?>
 <!-- 								<!-- + --> 
-								<?php echo $paperQuantity; +  $total += $part['ProductSpecificationPart']['paper_quantity']?>  
+								<?php echo $paperQuantity;?>  
 							<?php endif; ?>
 								<?php if(!empty($part['ProductSpecificationPart']['allowance'])){ ?>
 								+ <?php echo $part['ProductSpecificationPart']['allowance']; 
 								$total += $part['ProductSpecificationPart']['allowance']?>
 
-								<?php } ?>
+								<?php } 
+
+								 ?>
 
 								<?php echo " = ".round($total); echo $unitData[$specs['ProductSpecification']['quantity_unit_id']]; ?>
 

@@ -17,18 +17,23 @@ class ItemScriptShell extends Shell
 
     	$items = $this->Item->find('all',array(
                 'conditions' => $conditions,
-                'limit' => 5
+                'limit' => 5,
+                'group' => 'Item.id'
+        )); 
 
-        ));
+           //  pr($items); exit();
 
- 
+
+      
         //save
         $saveData = array();
 
+        $count = 1;
+        
         foreach ($items as $key => $item) {
             $saveData['id'] = '';       
             $saveData['uuid'] = time();
-            $saveData['name'] = $item['Item']['name'];
+            $saveData['name'] = str_replace(';','',$item['Item']['name']);
 
             $saveData['manufacturer_id'] = $item['Item']['supplier'];
 
@@ -36,6 +41,10 @@ class ItemScriptShell extends Shell
          
                 case '2':
                 $saveData['category_id'] = 48;
+                case '1':
+                $saveData['category_id'] = 48;
+                
+                $saveData['type_id'] = 103;
                 default:
                 
                 $saveData['category_id'] = 35;
@@ -49,23 +58,29 @@ class ItemScriptShell extends Shell
             $saveData['width'] = $item['Item']['width'];
             $saveData['length'] = $item['Item']['length'];
 
-
-           // exit();
-
-           switch ($item['Item']['item_group']) {
-
-                case 'CorrugatedPaper':
-                    $model = $GeneralItem;
-                    $save = 'Corrugated Paper';
-                break;
-                default:
-                    $model =  $CorrugatedPaper;
-                    $save = 'General Item';
-                break;
+            if (!empty( $item['Item']['description'])) {
+                 $saveData['measure'] = $item['Item']['description'];
             }
 
-            if($model->save($saveData)) {
+           // // exit();
+           // switch ($item['Item']['item_group']) {
 
+           //      case 'CorrugatedPaper':
+           //          $model = $GeneralItem;
+           //          $save = 'Corrugated Paper';
+           //      break;
+           //      default:
+           //          $model =  $GeneralItem;
+           //          $save = 'General Item';
+           //      break;
+           //  }
+
+             $model =  $GeneralItem;
+
+             pr($saveData);
+             
+             if(  $GeneralItem->save($saveData)) {
+            //if($saveData) {
                 $this->out('#id '.$item['Item']['id'].' Item '. $item['Item']['name'].' has been saved to '.$save);
 
             } else  {
@@ -74,6 +89,9 @@ class ItemScriptShell extends Shell
 
             }
 
+            $this->out($count);
+
+            $count++;
         }
 
 
