@@ -237,34 +237,61 @@ echo $this->Html->script(array(
                                          
 
                                              <div class="form-group">
-                                                    <div class="col-lg-12">
+                                                    <div class="col-lg-12 main-box-body">
                                                         <label class="large-label"><span style="color:red;">*</span> <b>Employees </b> </label>
                                                         <label class="selected-text"></label>
                                                         <div class="clearfix"></div>
-                                                        <div id="resultList">
-                                                                <?php $keys = 0; foreach ($employees as $KeyId => $value) { ?>
-    <div class="alert alert-success"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="fa fa-check-circle fa-fw fa-lg"></i>
-     
-            <input type="hidden" name="data[Employee][id][<?php echo $keys; ?>]" class="select_employee" value="<?php echo  $value['Employee']['id']; ?>" >
+                                                        <div class="main-box feed"  >
+                                                          <ul id="resultList">
+                                                          <?php $keys = 0; foreach ($employees as $KeyId => $value) { 
+                                                             $in  = !empty($value['Employee']['in']) ? $value['Employee']['in'] : '';
+                                                             $out = !empty($value['Employee']['out']) ? $value['Employee']['out'] : '';
+                                                          ?>
+                                                          <li class="clearfix parent-li">
 
-            <input type="hidden" name="data[Attendance][id][<?php echo $keys; ?>]" class="select_employee" value="<?php echo !empty($value['Attendance']['in']) ? $value['Attendance']['in'] : ''  ?>" >
+                                                          <input type="hidden" name="data[Employee][id][<?php echo $KeyId ?>]" class="select_employee" value="<?php echo $value['Employee']['id']; ?>" id="checkbox-<?php echo $KeyId; ?>">
 
-            <span class="time-in"> <?php echo !empty( $value['Attendance']['in']) ? 'Time in ( '.date('h:i a',strtotime($value['Attendance']['in'])).' )' : ''; ?>  </span>
+                                                          <input type="hidden" name="data[Attendance][id][<?php echo $KeyId ?>]" class="select_employee" value="<?php echo $in; ?>" id="checkbox-<?php echo $KeyId; ?>">
 
-            <label for="checkbox-<?php echo $KeyId; ?>">
-                <?php 
-                $name = $value['Employee']['first_name'];
+                                                          <div class="img">
 
-                $name .= !empty($value['Employee']['middle_name']) ? ' '.$value['Employee']['middle_name'][0] : '';
-                $name .= !empty($value['Employee']['last_name']) ? ' '.$value['Employee']['last_name'] : '';
-                $name .= !empty($value['Employee']['suffix']) ? ' '.$value['Employee']['suffix'] : '';
+                                                          <?php  $style = '';
+                                                          $serverPath = $this->Html->url('/',true);  
 
-                echo ucwords($name); ?>  
-            </label>
-    </div>
+                                                          if (!empty($value['Employee']['image'])) {
+                                                            $background =  $serverPath.'img/uploads/employee/'.$value['Employee']['image'].'?d='.rand(0,1000).time();    
+                                                          } else {
+                                                            $background =  $serverPath.'img/default-profile.png';   
+                                                          }
 
-<?php $keys++; } ?>
-                                                        </div>
+                                                          ?>
+
+                                                          <img alt="" src="<?php echo $background?>">
+                                                          </div>
+                                                          <div class="title">
+                                                          <a href="#">
+
+                                                          <?php 
+                                                          $name = $value['Employee']['first_name'];
+
+                                                          $name .= !empty($value['Employee']['middle_name']) ? ' '.$value['Employee']['middle_name'][0] : '';
+                                                          $name .= !empty($value['Employee']['last_name']) ? ' '.$value['Employee']['last_name'] : '';
+                                                          $name .= !empty($value['Employee']['suffix']) ? ' '.$value['Employee']['suffix'] : '';
+
+                                                          echo ucwords($name); ?> 
+                                                          </a>
+                                                          </div>
+                                                          <div class="post-time">
+                                                          <span class="time-in"> <?php echo !empty( $value['Attendance']['in']) ? 'Time in ( '.date('h:i a',strtotime($value['Attendance']['in'])).' )' : ''; ?>  </span>
+                                                          </div>
+                                                          <div class="time-ago">
+                                                           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                                          </div>
+                                                          </li>
+
+                                                          <?php $keys++; } ?>
+                                                          </ul>                                                       
+                                                          </div>
 
                                                         <div class="clearfix"></div>
                                                     </div>

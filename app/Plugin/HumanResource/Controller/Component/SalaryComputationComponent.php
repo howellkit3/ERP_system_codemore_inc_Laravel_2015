@@ -70,10 +70,7 @@ class SalaryComputationComponent extends Component
         				$total_deduction = 0;
         				$gross = $this->gross_pay($employee['Attendance'],$employee['Salary'],8,$models);
 
-
         				$models['Salary'] = $employee['Salary'];
-
-
 
 						if ($employee['Salary']['employee_salary_type'] == 'monthly') {
 

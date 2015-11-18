@@ -2412,7 +2412,7 @@ UPDATE `purchase_orders` SET `status` = 11 WHERE `receive_item_status` = 1;
 
 ALTER TABLE `koufu_sale`.`products` ADD COLUMN `status_id` INT(11) DEFAULT NULL AFTER `name`;
 UPDATE `products` SET `status_id` = 0 WHERE `status_id` IS NULL;
-
+=======
 /* aldrin added this nov-16-2015*/
 ALTER TABLE `outputs`
 ADD COLUMN `order`  int(11) NULL AFTER `job_ticket_id`;
@@ -2421,8 +2421,11 @@ ALTER TABLE `outputs`  ADD `status` VARCHAR(255) NOT NULL DEFAULT '' AFTER `reje
 ALTER TABLE `outputs`
 ADD COLUMN `status`  varchar(255) NULL AFTER `modified`;
 
-/* howellkit added this nov-18-2015*/
-ALTER TABLE `koufu_sale`.`products` ADD COLUMN `status_id` INT(11) DEFAULT NULL AFTER `name`;
-UPDATE `products` SET `status_id` = 0 WHERE `status_id` IS NULL;
 
+/* aldrin added this 11-18-2015 */
+ALTER TABLE `corrugated_papers`
+ADD COLUMN `from_warehouse`  int(11) NULL DEFAULT 0 AFTER `modified`;
+
+ALTER TABLE `general_items`
+ADD COLUMN `from_warehouse`  int(11) NULL DEFAULT 0 AFTER `modified`;
 

@@ -397,4 +397,44 @@ class Employee extends AppModel {
 
 	}
 
+	public function checkContract($emp = array()) {
+
+		$dateNow = date('Y-m-d h:i:s');
+
+		if (!empty($emp)) {
+
+			$contractStart = array();
+			$startKey = 0;
+			foreach ($emp as $key => $list) {
+
+		    	$to = $list['Employee']['date_hired'];
+
+				$datetime1 = new DateTime($dateNow);
+
+				$datetime2 = new DateTime($to);
+				$interval = $datetime1->diff($datetime2);
+
+				// if ($) {
+
+				// }
+				//contractual or probi
+				$empStatus = array('1','2');
+
+				if ($interval->m >= 5 && in_array($list['Employee']['contract_id'],$empStatus)) {
+						$contractStart[$startKey] = $list;
+						$contractStart[$startKey]['date_hired'] = $list['Employee']['date_hired'];
+						$contractStart[$startKey]['end_contract'] =  date('Y-m-d', strtotime("+5 months", strtotime($list['Employee']['date_hired'])));
+						$contractStart[$startKey]['emp_status'] = $list['Employee']['contract_id'];
+				}
+
+			$startKey++;
+
+			}
+
+
+			return $contractStart;
+
+		}
+	}
+
 }

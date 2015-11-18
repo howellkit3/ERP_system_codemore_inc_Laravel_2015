@@ -313,3 +313,18 @@ div.value {
   clear: both;
   padding: 11px;
 }
+.feed li .time-ago {
+  color: #878787;
+  font-size: 0.875em;
+  position: absolute;
+  right: 13px;
+  top: 5px;
+}
+.parent-li .select_employee {
+  display: none;
+}
+.feed li .img {
+  float: left;
+  margin-left: 9px;
+  margin-right: 8px;
+}

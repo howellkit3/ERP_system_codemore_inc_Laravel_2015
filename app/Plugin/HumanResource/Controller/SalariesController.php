@@ -1725,6 +1725,7 @@ class SalariesController  extends HumanResourceAppController {
 
 			$payrollData['Payroll']['employeeIds'] = json_encode($data['Payroll']['emp']);
 
+
 			$payrollData['Payroll']['status'] = 3;
 
 			$this->Payroll->save($payrollData);
@@ -1771,10 +1772,15 @@ class SalariesController  extends HumanResourceAppController {
 			$employees = $this->Employee->find('all',array(
 				'conditions' => $conditions,
 				'order' => array('Employee.last_name ASC'),
-				'fields' => array('id','code','full_name')
+				'fields' => array('id','code','full_name','date_hired','status','contract_id'),
+				'limit' => 10,
 				));
 
-			$this->set(compact('employees','payroll'));
+
+			//check employee contract
+			$contracts = $this->Employee->checkContract($employees);
+
+			$this->set(compact('employees','payroll','contracts','id'));
 
 		}
 	}
@@ -1901,9 +1907,6 @@ class SalariesController  extends HumanResourceAppController {
 			
 		}
 
-		pr($salaries);
-		exit();
-		
 		$this->set(compact('salaries','payroll','pages','salarySplit','salariesList','deductions','departments'));
 
 		switch ($payroll['Payroll']['type']) {

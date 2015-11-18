@@ -10,6 +10,8 @@ class ItemsController extends WareHouseAppController {
 
 		$this->loadModel('WareHouse.Item');
 
+		$this->loadModel('GeneralItem');
+
 		$this->loadModel('WareHouse.Department');
 
 		$itemsCategory = $this->ItemCategory->find('list',array('conditions' => array('itemCategory.id NOT' => 2),'fields' => array('id','name') ,'order' => array('ItemCategory.name ASC')));
