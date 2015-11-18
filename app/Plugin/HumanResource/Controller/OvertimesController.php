@@ -690,14 +690,14 @@ class OvertimesController  extends HumanResourceAppController {
 
 		$conditions = array();
 
-		$conditions = array_merge($conditions,array('Attendance.date >=' => $date));
+		//$conditions = array_merge($conditions,array('Attendance.date >=' => $date));
 
-		$conditions = array_merge($conditions,array(
-  						'date(Attendance.in) BETWEEN ? AND ?' => array($date,$date), 
-  				));
+		// $conditions = array_merge($conditions,array(
+  // 						'date(Attendance.in) BETWEEN ? AND ?' => array($date,$date), 
+  // 				));
   				
 
-		$conditions = array_merge($conditions,array('Attendance.in !=' => ' '));
+		// $conditions = array_merge($conditions,array('Attendance.in !=' => ' '));
 
 		
 		// if (!empty( $this->request->data['Overtime']['department_id'])) {
@@ -708,29 +708,26 @@ class OvertimesController  extends HumanResourceAppController {
 		$employees = array();
 
 		if (!empty($selectedEmployee)) {
-			$conditions = array_merge($conditions,array('Attendance.employee_id' => $selectedEmployee ));
 
-		
+			$conditions = array_merge($conditions,array('Employee.id' => $selectedEmployee ));
 
-			$employees = $this->Attendance->find('all',array(
-						'conditions' => $conditions,
-						'order' => array('Employee.last_name','Employee.code'),
-						'fields' => array(
-						'id',
-						'Employee.first_name',
-						'Employee.last_name',
-						'Employee.middle_name',
-						'Employee.position_id',
-						'Employee.department_id',
-						'Employee.image',
-						'Attendance.schedule_id',
-						'Attendance.type',
-						'Attendance.in',
-						'Attendance.out'
-						//'Position.name'
-						),
 
-					));
+
+			$employees = $this->Employee->find('all',array(
+				'conditions' => $conditions
+			));
+
+			foreach ($employees as $key => $employee) {
+					$conditions = array_merge($conditions,array(
+								'date(Attendance.in) BETWEEN ? AND ?' => array($date,$date), 
+						));	
+
+					
+					$att =  $this->Attendance->find('first',array('conditions' => $conditions));
+
+				$employees[$key]['Attendance'] = !empty($att['Attendance']) ? $att['Attendance'] : array();
+
+			}
 
 		}
 
