@@ -50,6 +50,29 @@
 
 $(document).ready(function(){
 
+	$('.continue').click(function(e){
+
+    $url = $(this).attr('href');
+
+    swal({   
+        title: "Are you sure?",
+        text: "You want to continue", 
+        type: "info",   
+        showCancelButton: true,   
+        closeOnConfirm: false,   
+        showLoaderOnConfirm: true,
+        }, 
+        function(){   
+            setTimeout(
+                function(){     
+                  window.location.href = $url;
+                }, 2000); 
+        });
+
+    e.preventDefault();
+
+});
+
 
     $('.daterange').daterangepicker();
 

@@ -2,6 +2,14 @@
 
 class ItemScriptShell extends Shell
 {
+
+    function extract_numbers($string)
+    {
+        preg_match_all('/([\d]+)/', $string, $match);
+
+        return $match[0];
+    }
+
     public function main()
     {
 
@@ -17,14 +25,11 @@ class ItemScriptShell extends Shell
 
     	$items = $this->Item->find('all',array(
                 'conditions' => $conditions,
-                'limit' => 5,
+                //'limit' => 20,
                 'group' => 'Item.id'
         )); 
 
            //  pr($items); exit();
-
-
-      
         //save
         $saveData = array();
 
@@ -43,7 +48,6 @@ class ItemScriptShell extends Shell
                 $saveData['category_id'] = 48;
                 case '1':
                 $saveData['category_id'] = 48;
-                
                 $saveData['type_id'] = 103;
                 default:
                 
@@ -58,29 +62,42 @@ class ItemScriptShell extends Shell
             $saveData['width'] = $item['Item']['width'];
             $saveData['length'] = $item['Item']['length'];
 
+            //measurements
+            $saveData['measure']  = '';
+            $measures = array('For');
+
             if (!empty( $item['Item']['description'])) {
-                 $saveData['measure'] = $item['Item']['description'];
+
+                    $checkInt = $this->extract_numbers($item['Item']['description']);
+                
+                    if(!empty($checkInt) && count($checkInt) > 0) {
+                         $saveData['measure'] = $item['Item']['description'];
+                    }
             }
 
+            $saveData['modified'] = $item['Item']['length'];
+            $saveData['created'] = $item['Item']['width'];
+
            // // exit();
-           // switch ($item['Item']['item_group']) {
+           switch ($item['Item']['item_group']) {
 
-           //      case 'CorrugatedPaper':
-           //          $model = $GeneralItem;
-           //          $save = 'Corrugated Paper';
-           //      break;
-           //      default:
-           //          $model =  $GeneralItem;
-           //          $save = 'General Item';
-           //      break;
-           //  }
+                case 'CorrugatedPaper':
+                    $model = $CorrugatedPaper;
+                    $save = 'Corrugated Paper';
+                break;
+                default:
+                    $model =  $GeneralItem;
+                    $save = 'General Item';
+                break;
+            }
 
-             $model =  $GeneralItem;
+            // $model =  $GeneralItem;
 
-             pr($saveData);
+            $saveData['from_warehouse'] = '1';
+      
              
-             if(  $GeneralItem->save($saveData)) {
-            //if($saveData) {
+            if( $model->save($saveData) ) {
+           // if($saveData) {
                 $this->out('#id '.$item['Item']['id'].' Item '. $item['Item']['name'].' has been saved to '.$save);
 
             } else  {

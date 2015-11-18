@@ -2408,7 +2408,6 @@ UPDATE `job_tickets` SET `status_production_id` = 0 WHERE `status_production_id`
 UPDATE `purchase_orders` SET `receive_item_status` = 0 WHERE `receive_item_status` IS NULL;
 UPDATE `purchase_orders` SET `status` = 11 WHERE `receive_item_status` = 1;
 
-<<<<<<< HEAD
 /* Howell kit product */
 
 ALTER TABLE `koufu_sale`.`products` ADD COLUMN `status_id` INT(11) DEFAULT NULL AFTER `name`;
@@ -2422,4 +2421,11 @@ ALTER TABLE `outputs`  ADD `status` VARCHAR(255) NOT NULL DEFAULT '' AFTER `reje
 ALTER TABLE `outputs`
 ADD COLUMN `status`  varchar(255) NULL AFTER `modified`;
 
->>>>>>> 45eee2e9ffa8b641b6db73437188fb85d4d191bf
+
+/* aldrin added this 11-18-2015 */
+ALTER TABLE `corrugated_papers`
+ADD COLUMN `from_warehouse`  int(11) NULL DEFAULT 0 AFTER `modified`;
+
+ALTER TABLE `general_items`
+ADD COLUMN `from_warehouse`  int(11) NULL DEFAULT 0 AFTER `modified`;
+

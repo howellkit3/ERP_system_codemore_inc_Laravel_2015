@@ -10,7 +10,8 @@ echo $this->Html->script(array(
 					'HumanResource.moment',
 					'HumanResource.custom',
 					'HumanResource.payroll',
-					'HumanResource.select_employee'
+					'HumanResource.select_employee',
+					'HumanResource.jquery.playSound'
 
 )); 
 
@@ -20,11 +21,57 @@ echo $this->element('payroll_options');
 	$active_tab = 'sss_table';
  ?>
 
+<?php if(!empty($contracts)) : ?>
+<div class="alert alert-block alert-danger fade in">
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+<h4>Warning! There's some employees which is under end of contract!</h4>
+<p>See list: </p>
+<br>
+	<ul>
+<?php  foreach ($contracts as $key => $list) { ?>
+		<li><?php echo $list['Employee']['full_name']; ?> ( <?php echo date('F d, Y',strtotime($list['end_contract'])); ?>) </li>
+
+		<?php
+			//  if($key > 0) {
+			// 	echo $this->Html->link('View All',array('controller' => ''));
+   //        	    break;  // this will break both foreach loops
+      			
+			// }
+		 ?>
+<?php } ?>
+	</ul>
+	<br>
+<p>
+<?php 
+if(empty($this->params['named']['payroll'])) :
+
+	echo $this->Html->link('Press To Continue',array(
+		'controller' => 'salaries',
+		'action' => 'employee_select',
+		$id,
+		'payroll' => true	
+		),array(
+		'class' => 'btn btn-danger continue',
+		)); 
+
+endif;
+?>
+ <?php echo $this->Html->link('Back to Employee List',array(
+	'controller' => 'salaries',
+	'action' => 'employee_select',
+	$id	
+	),array(
+	'class' => 'btn btn-default'
+	)); ?>
+</p>
+</div>
+<?php endif; ?>
+<?php if (!empty($this->params['named']['payroll'])) : ?>
  <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
     		<?php echo $this->element('tab/salaries',array('active_tab' => $active_tab )); ?>
-		<div class="main-box-body clearfix">
+	<div class="main-box-body clearfix">
 		 
 			<div class="tabs-wrapper">
 				<div class="tab-content">
@@ -35,6 +82,7 @@ echo $this->element('payroll_options');
 			                <h2 class="pull-left"><b>Payroll Summary</b> </h2>
             			</header>
             			
+
             			<div class="filter-block pull-right">
 
             			 <button class="ProcessPayroll btn btn-success pull-right"> <i class="fa fa-floppy-o"></i> Process Payroll</button>
@@ -164,8 +212,7 @@ echo $this->element('payroll_options');
 			                <h2 class="pull-left"><b>Employee</b> </h2>
             			</header>
  -->
-
-			       		<div class="main-box-body clearfix">
+		<div class="main-box-body clearfix">
 			            	<div id="result-table">
 			            		  <div class="table-responsive overflow">
 		                                <div class="table-responsive">
@@ -290,6 +337,8 @@ echo $this->element('payroll_options');
 </div>
 <?php echo $this->element('modals/payslip'); ?>
 
+<?php endif; ?>
+
 <script type="text/javascript">
 	
 $('.searchEmployee').on('keyup', function(e) {
@@ -308,6 +357,15 @@ $('.searchEmployee').on('keyup', function(e) {
     } else {
         $('.table tbody').find('tr').show();
     }
+});
+
+$(document).ready(function(){
+	
+	if ($('.alert-block').length >= 1) {
+
+		$.playSound(serverPath + '/sounds/notification');
+	}
+
 });
 
 

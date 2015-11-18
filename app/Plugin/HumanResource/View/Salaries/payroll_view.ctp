@@ -9,7 +9,8 @@ echo $this->Html->script(array(
 					'jquery.maskedinput.min',
 					'HumanResource.moment',
 					'HumanResource.custom',
-					'HumanResource.payroll'
+					'HumanResource.payroll',
+					'HumanResource.jquery.playSound'
 
 )); 
 
