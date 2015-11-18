@@ -25,9 +25,11 @@
 						
 		                    echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'products','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 
-		                    echo $this->Html->link('<i class="fa fa-pencil fa-lg"></i> Edit ', array('controller' => 'products','action' => 'specification_edit',$product['Product']['id'],$ifTicket),array('class' =>'btn btn-primary pull-right','escape' => false));
+		                    // echo $this->Html->link('<i class="fa fa-pencil fa-lg"></i> Edit ', array('controller' => 'products','action' => 'specification_edit',$product['Product']['id'],$ifTicket),array('class' =>'btn btn-primary pull-right','escape' => false));
 
 		                ?>
+
+		                <a data-toggle="modal" href="#myModalEdit" class="btn btn-primary mrg-b-lg pull-right "><i class="fa fa-edit fa-lg"></i>Edit</a>
 
 		            </div>
 	                <br>
@@ -169,4 +171,42 @@
 		</div>
 	</div>
 </div>
+
+    <div class="modal fade" id="myModalEdit" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content margintop">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Edit Specification</h4>
+                </div>
+                <div class="modal-body">
+                    <?php  echo $this->Form->create('Edit',array('url'=>(array('controller' => 'products','action' => 'edit_specs_question',$product['Product']['id'],$ifTicket)),'class' => 'form-horizontal'))?>
+
+	               		<div class="form-group">
+							<label class="col-lg-2 control-label"><span style="color:red">*</span>Edit Type</label>
+							
+							<div class="col-lg-8">
+								<?php 
+									echo $this->Form->input('Edit_Purpose', array(
+		                                'options' => array('Edit Specification saved in this Job Ticket', 'Edit for Other Job Ticket Purposes'),  
+		                                'label' => false,
+		                                'class' => 'form-control required ',
+				                        'value' => 1));
+		                        ?>
+							</div>
+							
+						</div>
+                   
+                        <div class="modal-footer">
+                             <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            
+                        </div>
+                   
+                    <?php echo $this->Form->end(); ?>   
+                </div>
+                
+            </div>
+        </div>
+    </div> 
 
