@@ -45,7 +45,7 @@ jQuery(function($){
         var from = c.replace(/\s+/g, '');
         var to = d.replace(/\s+/g, '');
 
-        
+
         $.ajax({
             type: "GET",
             url: serverPath + "accounting/sales_invoice/company_filter_payables/"+from+"/"+to+"/"+company,
@@ -53,7 +53,7 @@ jQuery(function($){
             success: function(data) {
 
                 if(data){
-                    $('.'+thisReport).html(data);
+                    $('.dateRangeAppend-dr').html(data);
                 } else{
                     $('.'+thisReport).html('<font color="red"><b>No result..</b></font>');
                 }
@@ -67,6 +67,8 @@ jQuery(function($){
 
 
     $("body").on('click','.applyBtn', function(e){
+
+        company = $('.company-filter').val(); 
         
         var thisReport = ' ';
         var allReport = ' ';
@@ -96,7 +98,7 @@ jQuery(function($){
             success: function(data) {
 
                 if(data){
-                    $('.'+thisReport).html(data);
+                    $('.dateRangeAppend-dr').html(data);
                 } else{
                     $('.'+thisReport).html('<font color="red"><b>No result..</b></font>');
                 }

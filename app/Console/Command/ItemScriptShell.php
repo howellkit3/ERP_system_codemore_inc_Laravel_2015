@@ -86,6 +86,7 @@ class ItemScriptShell extends Shell
             } else  {
 
                  $this->out('There\'s an error saving. id '.$item['Item']['id']);
+
             }
 
             $this->out($count);

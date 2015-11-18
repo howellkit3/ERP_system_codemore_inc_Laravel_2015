@@ -121,26 +121,18 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 															<td class="text-center">
 									                           <?php 
 									                           		if (empty($jobList['TicketProcessSchedule'])) {
-									                           			echo "<span class='label label-default'> Waiting For Schedule </span>";
+									                           			echo "<span class='label label-default'>Waiting For Schedule</span>";
 									                           		}else{
 
 									                           			if (!empty($jobList['TicketProcessSchedule'])) {
-
-									                           				//find current
-
 
 									                           				$count = 0;
 
 									                           				foreach ($jobList['TicketProcessSchedule'] as $key => $list) {
 
+									                           						if ($list['status'] == 0 && $count ==0) {
 
-									                           						$tickeSchedule = $list['id'];
-										                           				$current = $this->Output->findCurrent($tickeSchedule,$jobList['JobTicket']['id']);
-
-									                           						if (!empty($current) && $count == 0) {
-
-
-									                           							echo  "<span class='label label-success'>".$current['ProcessDepartment']['name']."</span>";
+									                           							echo  "<span class='label label-success'>".$departmentProcess[$list['department_process_id']]."</span>";
 									                           							$count++;
 									                           							
 																					}

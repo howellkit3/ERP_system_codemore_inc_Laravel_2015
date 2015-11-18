@@ -42,7 +42,6 @@ class MachineLog extends AppModel {
 
 	public function saveMachineLog($ticketProcessScheduleID = null, $auth =null){
 
-		$ids = array();	
 		foreach ($ticketProcessScheduleID as $key => $value) {
 			
 			$this->create();
@@ -61,20 +60,7 @@ class MachineLog extends AppModel {
 
 		} 
 
-		return $ids;
-	}
-
-	public function saveLog($data,$auth){
-
-		$this->create();
-		 
-		$data['Machine']['created_by'] = $auth;
-		$data['Machine']['modified_by'] = $auth;
-		$this->save($data);
-
-		return $this->id;
-		
-
+		return $id;
 	}
 	
 }

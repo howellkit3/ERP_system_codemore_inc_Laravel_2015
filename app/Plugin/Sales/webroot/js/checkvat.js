@@ -26,7 +26,7 @@ function vatprice(whatsection, thisElement){
 } 
 
 function findValue($form, thisElement){
- 
+
     var $unit_value = thisElement.parents('.'+$form).find('.unitprice').val();
     var $vat_value = thisElement.parents('.'+$form).find('.vatIn').val();
 
@@ -81,6 +81,7 @@ function findValue($form, thisElement){
             console.log('check');
             console.log($vat_value);
             quotient = $vat_value / 1.12;
+            //total = (sum + parseFloat($unit_value));
             thisElement.parents('.quotationItemDetail').find('.unitprice').val(quotient);
 
          } else {
@@ -209,7 +210,7 @@ $('body').on('keyup','.unitprice',function(){
 $('body').on('change','.checkEx',function(){
     if($(this).is(":checked")) {
         var checkboxtext =  $('.checkEx').next('label').text();
-        $(this).parents('.form-horizontal').find('.checkEx').next('label').text('Check to disable VAT Price');
+        $(this).parents('.form-horizontal').find('.checkEx').next('label').text('Uncheck to disable VAT Price');
         //$(this).parents('.form-horizontal').find(".vatEx").prop('readonly', true);
         $(this).parents('.form-horizontal').find(".vatIn").prop('readonly', false);
         $(this).parents('.form-horizontal').find('.vatEx').val("");

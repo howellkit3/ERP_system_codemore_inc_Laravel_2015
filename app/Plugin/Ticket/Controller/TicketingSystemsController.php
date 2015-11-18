@@ -233,11 +233,8 @@ class TicketingSystemsController extends TicketAppController {
 
 		$this->loadModel('Sales.Product');
 
-		//$productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid)));
-		//pr($productData);exit();
 		$this->JobTicket->saveTicket($productUuid,$userData['User']['id']);
 
-		
 		$this->Session->setFlash(
             __('Create Job Ticket successfully completed', 'success')
         );
@@ -261,16 +258,13 @@ class TicketingSystemsController extends TicketAppController {
 
             $parameter['ticketId'] = $ticketId;
 
-
             $parameter['product'] = $product;
 
             $parameter['formProcesId'] = $formProcesId;
 
             $parameter['component'] = $component;
 
-
             $this->set(compact('parameter'));
-
 
             if (in_array($processId,array('11','61',))) {
 
@@ -295,12 +289,12 @@ class TicketingSystemsController extends TicketAppController {
                     )
                 ));
 
-
                 $this->set(compact('machines'));
                 
                 $this->render('TicketingSystems/forms/offset', false);
 
             } else if (in_array($processId,array('20'))) {
+
                  $this->render('TicketingSystems/forms/wood_mould', false);
 
             } else if (in_array($processId,array('13'))) {
@@ -409,7 +403,6 @@ class TicketingSystemsController extends TicketAppController {
                 $this->request->data['JobTicket']['client_order_id']));
                 }
             }
-
         }
     }
 
@@ -601,6 +594,14 @@ class TicketingSystemsController extends TicketAppController {
        
     }
 
+    public function test($id = null){
+    
+     //   pr($id); exit;
+
+        return('s');
+
+    }
+
     public function print_ticket_export($productUuid = null,$ticketUuid = null, $clientOrderId = null,$type = 'excel',$ticketId = null) {
         
         $userData = $this->Session->read('Auth');
@@ -629,6 +630,9 @@ class TicketingSystemsController extends TicketAppController {
 
         $ticketData = $this->JobTicket->find('first',array(
             'conditions' => array('JobTicket.uuid' => $ticketUuid,'JobTicket.id' => $ticketId )));
+
+
+        $this->test($ticketData['JobTicket']['id']);
 
         
         if (!empty($_GET['test'])) {
@@ -1053,10 +1057,8 @@ class TicketingSystemsController extends TicketAppController {
 
     public function prepress_ticket($productUuid = null,$ticketUuid = null) {
 
-
         if (!empty($productUuid)) {
-
-       
+ 
         $userData = $this->Session->read('Auth');
 
         $this->loadModel('Sales.ProductSpecification');
@@ -1145,14 +1147,10 @@ class TicketingSystemsController extends TicketAppController {
         }
 
         }
-        // }
-
-
     }
 
 
     public function save_process_to_ticket() {
-
 
         if (!empty($this->request->data)) {
 
@@ -1181,9 +1179,7 @@ class TicketingSystemsController extends TicketAppController {
                         $process['PlateMakingProcess']['machine_name'] = $machines[$process['PlateMakingProcess']['machine']];
 
                     }
-
-                    
-
+       
                     $process = array_merge($process, array('formProcessId' => $data['PlateMakingProcess']['FormId']));
 
                     echo json_encode(array('result' =>  $process));

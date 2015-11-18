@@ -45,57 +45,62 @@
 						</thead>
 						<?php 
 					        if(!empty($invoiceData)){ ?>
+
+					        	<?php //pr($invoiceData); ?>
 					           
+				            	<tbody aria-relevant="all" aria-live="polite" class="OrderFields" role="alert" >
 
-					            	<tbody aria-relevant="all" aria-live="polite" class="OrderFields" role="alert" >
+				            		<?php foreach ($invoiceData as $invoiceDataList): ?>
 
-					            		<?php foreach ($invoiceData as $invoiceDataList): ?>
+				                    <tr class="">
 
-					                    <tr class="">
+				                        <td class="">
+				                            <?php echo $invoiceDataList['SalesInvoice']['sales_invoice_no'];?> 
+				                        </td>
 
-					                        <td class="">
-					                            <?php echo $invoiceDataList['SalesInvoice']['sales_invoice_no'];?> 
-					                        </td>
+				                        <td class="">
+				                            <?php echo $invoiceDataList['SalesInvoice']['dr_uuid'];?>
+				                        </td>
 
-					                        <td class="">
-					                            <?php echo $invoiceDataList['SalesInvoice']['dr_uuid'];?>
-					                        </td>
+				                        <td class="">
+				                            <?php  
 
-					                        <td class="">
-					                            <?php  
+				                            echo $companyName[$deliveryNumHolder[$invoiceDataList['SalesInvoice']['dr_uuid']]];?>
+				                        </td> 
+				                        
+				                        <td class="text-center">
+				                            <?php 
+				                            	if ($invoiceDataList['SalesInvoice']['status'] == 1) {
 
-					                            echo $companyName[$deliveryNumHolder[$invoiceDataList['SalesInvoice']['dr_uuid']]];?>
-					                        </td> 
-					                        
-					                        <td class="text-center">
-					                            <?php 
-					                            	if ($invoiceDataList['SalesInvoice']['status'] == 1) {
-					                            		echo "<span class='label label-success'>Invoice</span>";
-					                            	} else if($invoiceDataList['SalesInvoice']['status'] == 5){
-					                            		echo "<span class='label label-danger'>Terminated</span>";
-					                            	}else{
-					                        			echo "<span class='label label-info'>Pre-Invoice</span>";
-					                            	}
-					                            ?>
-					                        </td>
+				                            		echo "<span class='label label-success'>Invoice</span>";
 
-					                       	<td>
-					                            <?php
+				                            	} else if($invoiceDataList['SalesInvoice']['status'] == 5){
 
-					                            	echo $this->Html->link('<span class="fa-stack">
-								                    <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span> ', array('controller' => 'sales_invoice', 'action' => 'view',$invoiceDataList['SalesInvoice']['id']), array('class' =>' table-link','escape' => false, 'title'=>'View Sales Invoice'
-								                    ));
-					        
-					                            ?>
-					                        </td>
-					                    </tr>
+				                            		echo "<span class='label label-danger'>Terminated</span>";
 
-					                <?php endforeach; } ?> 
+				                            	}else{
 
-					               </tbody>
-			                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" >
-			                        
-			                           </tbody>
+				                        			echo "<span class='label label-info'>Pre-Invoice</span>";
+				                            	}
+				                            ?>
+				                        </td>
+
+				                       	<td>
+				                            <?php
+
+				                            	echo $this->Html->link('<span class="fa-stack">
+							                    <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span> ', array('controller' => 'sales_invoice', 'action' => 'view',$invoiceDataList['SalesInvoice']['id']), array('class' =>' table-link','escape' => false, 'title'=>'View Sales Invoice'
+							                    ));
+				        
+				                            ?>
+				                        </td>
+				                    </tr>
+
+				                <?php endforeach; } ?> 
+
+				               	</tbody>
+		                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" >
+		                        </tbody>
 					        
 					</table>
 					<hr>

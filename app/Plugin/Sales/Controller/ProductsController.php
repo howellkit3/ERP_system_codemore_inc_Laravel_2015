@@ -742,8 +742,11 @@ class ProductsController extends SalesAppController {
 
 		$product = $this->request->data =  $this->Product->findById($productId);
 		
-		$specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productId)));
+		//$specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productId)));
 		
+		$specs = $this->ProductSpecification->find('first',array(
+			'conditions' => array('ProductSpecification.product_id' => $productId),
+    		'order' => array('ProductSpecification.id DESC')));
 		//find if product has specs
 		$formatDataSpecs = $this->ProductSpecificationDetail->findData($product['Product']['uuid']);
 		
@@ -863,6 +866,8 @@ class ProductsController extends SalesAppController {
 
     public function create_specification($productId ){
 
+    	//pr($this->request->data); exit;
+
     	$this->loadModel('Ticket.Jobticket');
 
     	$userData = $this->Session->read('Auth');
@@ -891,7 +896,7 @@ class ProductsController extends SalesAppController {
 		// pr($jobTicketData); exit;
 
 		if (!empty($this->request->data)) {
-			//pr($this->request->data);exit();
+			pr($this->request->data);exit();
 			if(!empty($this->request->data['IdHolder'])){
 				
 				$this->Product->ProductSpecification->delete($this->request->data['ProductSpecification']['id']);
@@ -902,6 +907,9 @@ class ProductsController extends SalesAppController {
 				$this->ProductSpecificationDetail->deleteData($this->request->data['IdHolder']);
 			}
 			
+			$productId = $this->Product->addProduct($this->request->data, $userData['User']['id']);
+
+			$this->request->data['ProductSpecification']['product_id'] = $productId;
 
 			$specId = $this->Product->ProductSpecification->saveSpec($this->request->data,$userData['User']['id']);
 			
@@ -1055,6 +1063,35 @@ class ProductsController extends SalesAppController {
 
     }
 
+    public function create_specification_edit($productId ){
+
+    	$this->loadModel('Ticket.Jobticket');
+
+    	$userData = $this->Session->read('Auth');
+
+    	$this->loadModel('Sales.ProductSpecificationDetail');
+
+    	$this->loadModel('Sales.ProductSpecificationMainPanel');
+
+    	$this->loadModel('Sales.ProductSpecificationComponent');
+
+    	$this->loadModel('Sales.ProductSpecificationPart');
+
+    	$this->loadModel('Sales.ProductSpecificationProcess');
+
+    	$this->loadModel('Sales.Product');
+
+    	$this->loadModel('Sales.ProductSpecificationProcessHolder');
+
+    	$this->Product->bind(array('Sales.ProductSpecificationDetail','Sales.ProductSpecification'));
+
+    	$this->ProductSpecificationDetail->bind(array('Sales.ProductSpecificationComponent','Sales.ProductSpecificationPart','Sales.ProductSpecificationProcess'));
+			
+    	pr($this->request->data); exit;
+
+
+	}
+
     public function print_specs($productUuid = null){
 
     	$userData = $this->Session->read('Auth');
@@ -1070,8 +1107,11 @@ class ProductsController extends SalesAppController {
     	$productData = $this->Product->find('first',array(
     		'conditions' => array('Product.uuid' => $productUuid)));
 
-    	$specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
+    	//$specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
 
+    	$specs = $this->ProductSpecification->find('first',array(
+			'conditions' => array('ProductSpecification.product_id' => $productData['Product']['id']),
+    		'order' => array('ProductSpecification.id DESC')));
     	//find if product has specs
 		$formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
 
@@ -1193,8 +1233,14 @@ class ProductsController extends SalesAppController {
 
 		$product = $this->request->data =  $this->Product->findById($productId);
 		
-		$specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productId)));
+		//$specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productId)));
 		
+		$specs = $this->ProductSpecification->find('first',array(
+			'conditions' => array('ProductSpecification.product_id' => $productId),
+    		'order' => array('ProductSpecification.id DESC')));	
+
+		//pr($product); exit;
+
 		//find if product has specs
 		$formatDataSpecs = $this->ProductSpecificationDetail->findData($product['Product']['uuid']);
 
