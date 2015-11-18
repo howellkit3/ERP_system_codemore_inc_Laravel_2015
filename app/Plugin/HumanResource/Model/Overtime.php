@@ -50,8 +50,11 @@ class Overtime extends AppModel {
         }
         }
         
+        $data['Overtime']['department_id'] = !empty($data['Overtime']['department_id']) ? $data['Overtime']['department_id'] : 0;
 
-
+        $data['Overtime']['status'] = !empty($data['Overtime']['status']) ? $data['Overtime']['status'] : '';
+        $data['Overtime']['approved_by'] = !empty($data['Overtime']['approved_by']) ? $data['Overtime']['approved_by'] : '';
+      
     	if (!empty($data['Employee'])) {
 
             $employeeIds = array_values($employeeIds);

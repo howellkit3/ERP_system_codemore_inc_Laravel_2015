@@ -73,11 +73,16 @@ echo $this->Html->script(array(
                                   'escape' => false));
                                             
 
+
                          }
 
-                       
+                          echo $this->Html->link('<i class="fa fa-pencil fa-lg"></i> Edit ', array('controller' => 'overtimes',
+                            'action' => 'edit',
+                            $this->request->data['Overtime']['id']),
+                            array('class' =>' table-link btn btn-primary pull-right',
+                                  'data-process' => 'approved',   
+                                  'escape' => false));
 
-                     
                         ?>
                         </div>
 
@@ -263,6 +268,9 @@ echo $this->Html->script(array(
 
                                                                             </li>
                                                                 <?php } ?>
+
+                                                                <li class="clearfix">
+
                                                             </ul>    
                                                         </div>
                                                     </div>
@@ -278,49 +286,65 @@ echo $this->Html->script(array(
                                                         <label class="large-label"><span style="color:red;">*</span> <b>Employees </b> </label>
                                                         <label class="selected-text"></label>
                                                         <div class="clearfix"></div>
-                                                        <div id="resultList">
-                                         <?php  foreach ($employees as $KeyId => $value) {
+                                                        <div class="main-box feed" id="resultList">
+
+
+                    <div class="main-box-body clearfix">
+                    <ul>
+                    <?php  foreach ($employees as $KeyId => $value) {
 
                                             $in  = !empty($value['Employee']['in']) ? $value['Employee']['in'] : '';
                                             $out = !empty($value['Employee']['out']) ? $value['Employee']['out'] : '';
                                             ?>
-                                        <div class="alert alert-success"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="fa fa-check-circle fa-fw fa-lg"></i>
-                                      
-                                        <input type="checkbox" name="data[Employee][id][<?php echo $KeyId ?>]" class="select_employee" value="<?php echo $value['Employee']['id']; ?>" id="checkbox-<?php echo $KeyId; ?>">
+                            <li class="clearfix parent-li">
+
+                                        <input type="hidden" name="data[Employee][id][<?php echo $KeyId ?>]" class="select_employee" value="<?php echo $value['Employee']['id']; ?>" id="checkbox-<?php echo $KeyId; ?>">
 
                                         <input type="hidden" name="data[Attendance][id][<?php echo $KeyId ?>]" class="select_employee" value="<?php echo $in; ?>" id="checkbox-<?php echo $KeyId; ?>">
 
-                                        <span class="time-in"> <?php echo !empty( $value['Attendance']['in']) ? 'Time in ( '.date('h:i a',strtotime($value['Attendance']['in'])).' )' : ''; ?>  </span>
-                                        <label for="checkbox-<?php echo $KeyId; ?>">
+                            <div class="img">
 
-                                          <div class="profile">
-                                            <?php  $style = '';
+                              <?php  $style = '';
                                             $serverPath = $this->Html->url('/',true);  
 
-                                            if (!empty($employee['Employee']['image'])) {
+                                            if (!empty($value['Employee']['image'])) {
 
 
-                                                $background =  $serverPath.'img/uploads/employee/'.$employee['Employee']['image'].'?d='.rand(0,1000).time();    
+                                                $background =  $serverPath.'img/uploads/employee/'.$value['Employee']['image'].'?d='.rand(0,1000).time();    
                                             } else {
 
                                                  $background =  $serverPath.'img/default-profile.png';   
                                             }
 
                                             ?>
-                                           <!--  <img src="<?php echo $background; ?>" width="35" height="35" /> -->
-                                          </div>  
-                                        <?php 
-                                        $name = $value['Employee']['first_name'];
 
-                                        $name .= !empty($value['Employee']['middle_name']) ? ' '.$value['Employee']['middle_name'][0] : '';
-                                        $name .= !empty($value['Employee']['last_name']) ? ' '.$value['Employee']['last_name'] : '';
-                                        $name .= !empty($value['Employee']['suffix']) ? ' '.$value['Employee']['suffix'] : '';
+                            <img alt="" src="<?php echo $background?>">
+                            </div>
+                            <div class="title">
+                                <a href="#">
+                                    
+                                     <?php 
+                                            $name = $value['Employee']['first_name'];
 
-                                        echo ucwords($name); ?>  
-                                        </label>
-                                        </div>
+                                            $name .= !empty($value['Employee']['middle_name']) ? ' '.$value['Employee']['middle_name'][0] : '';
+                                            $name .= !empty($value['Employee']['last_name']) ? ' '.$value['Employee']['last_name'] : '';
+                                            $name .= !empty($value['Employee']['suffix']) ? ' '.$value['Employee']['suffix'] : '';
 
-                                        <?php } ?>
+                                            echo ucwords($name); ?> 
+                                </a>
+                            </div>
+                            <div class="post-time">
+                            <span class="time-in"> <?php echo !empty( $value['Attendance']['in']) ? 'Time in ( '.date('h:i a',strtotime($value['Attendance']['in'])).' )' : ''; ?>  </span>
+                            </div>
+                            <div class="time-ago">
+                               <!--  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> -->
+                            </div>
+                            </li>
+                            <?php } ?>
+                    </ul>
+
+
+                                      
                                                         </div>
 
                                                         <div class="clearfix"></div>

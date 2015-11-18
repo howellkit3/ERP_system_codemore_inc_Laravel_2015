@@ -1,4 +1,6 @@
-<?php foreach ($employees as $KeyId => $value) { ?>
+<?php
+if (!empty($employees)) {
+foreach ($employees as $KeyId => $value) { ?>
     <li> 
 
         <div class="checkbox-nice">
@@ -10,4 +12,9 @@
 
 
     </li>
+<?php } ?>
+<?php } else { ?>
+		
+		<div style="color:red">No Result</div>
+	
 <?php } ?>

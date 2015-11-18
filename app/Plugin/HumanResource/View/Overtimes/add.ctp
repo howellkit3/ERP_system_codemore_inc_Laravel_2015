@@ -246,8 +246,11 @@ echo $this->element('hr_options');
                                                         </div> -->
 
                                                         <div class="clearfix"></div>
-                                                        <div id="resultList">
-<!-- 
+                                                           <div class="main-box feed"  >
+                                                                <ul id="resultList">
+                                                                </ul>
+
+<!--        
                                                             <table class="table table-border">
 
                                                                 
