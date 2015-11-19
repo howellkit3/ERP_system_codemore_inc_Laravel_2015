@@ -98,13 +98,15 @@ class SalaryComputationComponent extends Component
         				$salary[$key]['sss_compensation'] = !empty($contribution['sss_compensation']) ? $contribution['sss_compensation'] : 0;
 						$salary[$key]['sss_id'] = !empty($contribution['sss_id']) ? $contribution['sss_id'] : 0;
 
-						
-						$salary[$key]['philhealth'] = $this->philhealth_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$salary[$key]['gross'],$models);
+						//philhealth
+						$phContribution = $this->philhealth_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$salary[$key]['gross'],$models);
+				
+						$salary[$key]['philhealth'] = !empty($phContribution) ? $phContribution['philhealth'] : 0;
+						$salary[$key]['philhealth_employer'] = !empty($phContribution['employer']) ? $phContribution['employer'] : 0;
+						$salary[$key]['philhealth_id'] = !empty($phContribution['philheath_id']) ? $phContribution['philheath_id'] : 0;		
 						$salary[$key]['pagibig'] = $this->pagibig_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$salary[$key]['gross'] , $models );
 
         				} else {
-
-
         				//sss contribution
         			//	$contribution = $this->sss_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$salary[$key]['gross'], $models);	
         				$salary[$key]['sss'] = 0;
@@ -191,9 +193,9 @@ class SalaryComputationComponent extends Component
 
 						$salary[$key]['total_deduction'] = $total_deduction; 
 						
-						if (!empty($salary[$key]['sss']['sss_employees'])) {
+						if (!empty($salary[$key]['sss'])) {
 
-							$salary[$key]['total_deduction'] += $salary[$key]['sss']['sss_employees'];
+							$salary[$key]['total_deduction'] += $salary[$key]['sss'];
 						}		
 
 						$salary[$key]['total_deduction'] += $salary[$key]['philhealth'];
@@ -203,7 +205,10 @@ class SalaryComputationComponent extends Component
 						// //no tax
 						$taxType = !empty($payrollSettings['Setting']['tax_pay']) ? $payrollSettings['Setting']['tax_pay'] : '';
 
-						$salary[$key]['with_holding_tax'] = $this->computeTax($employee,$salary[$key]['gross_pay'],$taxType,$minimumWage);	
+
+						$gross_with_deduction = ( $total_pay - $salary[$key]['total_deduction'] ) ;
+				
+						$salary[$key]['with_holding_tax'] = $this->computeTax($employee,$gross_with_deduction,$taxType,$minimumWage);	
 
 						//add tax
 						$salary[$key]['total_deduction'] += $salary[$key]['with_holding_tax'];
@@ -2231,15 +2236,21 @@ class SalaryComputationComponent extends Component
 
 		$PhRange = ClassRegistry::init('Payroll.PhilHealthRange');
 
+		$share = array();
+		$share['philhealth'] = 0;
+		$share['employee_share'] = 0;
+		
 		if ( $gross_pay != 0 && (!empty($government_record[2])) ) {
 				
 				$conditions = array('PhilHealthRange.range_from >=' => $gross_pay);
 				$range = $PhRange->find('first',array('conditions' => $conditions ));
-				$pay = !empty($range['PhilHealthRange']['employee']) ? $range['PhilHealthRange']['employee'] : $pay;
-			
+				//$pay = !empty($range['PhilHealthRange']['employee']) ? $range['PhilHealthRange']['employee'] : $pay;
+				$share['philhealth'] = !empty($range['PhilHealthRange']['employee']) ? $range['PhilHealthRange']['employee'] : $pay;
+				$share['employer'] = !empty($range['PhilHealthRange']['employer']) ? $range['PhilHealthRange']['employer'] : $pay;
+				$share['philhealth_id'] = !empty($range['PhilHealthRange']['id']) ? $range['PhilHealthRange']['id'] : $pay;
 		}
 
-		return $pay;
+		return $share;
 
 	}
 
@@ -2458,7 +2469,6 @@ class SalaryComputationComponent extends Component
 
 	public function computeTax($data = null,$grossPay = null,$type = 'semi_monthly',$minimumWage = null) {
 
-		
 		$Tax = ClassRegistry::init('Tax');
 
 		$TaxDeduction = ClassRegistry::init('TaxDeduction');
@@ -2547,6 +2557,8 @@ class SalaryComputationComponent extends Component
 
 			foreach ($adjustments as $key => $list) {
 					
+					$list['Adjustment']['is_process'] = !empty($list['Adjustment']['is_process']) ? $list['Adjustment']['is_process'] : 0;
+
 					if ($list['Adjustment']['employee_id'] == $employee['Employee']['id'] && $list['Adjustment']['is_process'] == 0) {
 						
 						$adjust['amount'] += $list['Adjustment']['amount'];	

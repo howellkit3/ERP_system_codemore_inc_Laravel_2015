@@ -150,14 +150,26 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									                        </td>
 
 									                        <td class="">
-									                        	<a data-id="<?php echo $jobList['JobTicket']['id']; ?>" data-toggle="modal" title="Edit Information" data-url="/ticket_process_schedules/ticket_data_view/<?php echo $jobList['JobTicket']['id']; ?>" class="view_full_ticket_details table-link" href="#ticketDataFullDetails">
+									                        	<!-- <a data-id="<?php echo $jobList['JobTicket']['id']; ?>" data-toggle="modal" title="Edit Information" data-url="/ticket_process_schedules/ticket_data_view/<?php echo $jobList['JobTicket']['id']; ?>" class="view_full_ticket_details table-link" href="#ticketDataFullDetails">
 										                       		<span class="fa-stack">
 																		<i class="fa fa-square fa-stack-2x"></i>
 																		<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;
 																		<span class="post"><font size="1px"> View </font></span>
 																	</span>
-																</a>
-									                           <?php if (empty($jobList['JobTicket']['production_status'])) { ?>
+																</a> -->
+																<?php echo $this->Html->link('<span class="fa-stack">
+																		<i class="fa fa-square fa-stack-2x"></i>
+																		<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;
+																		<span class="post"><font size="1px"> View </font></span>
+																	</span>',
+																	array('controller' => 'jobs',
+																			'action' => 'view',
+																			$jobList['JobTicket']['id']			
+																			),
+																	array('escape' => false )
+																	);
+																	
+																	 if (empty($jobList['JobTicket']['production_status'])) { ?>
 									                           		<a data-id="<?php echo $jobList['JobTicket']['id']; ?>" data-toggle="modal" title="Edit Information" data-url="/ticket_process_schedules/ticket_data_view/<?php echo $jobList['JobTicket']['id']; ?>/schedule" class="view_full_ticket_details table-link" href="#ticketDataFullDetails">
 											                       		<span class="fa-stack">
 																			<i class="fa fa-square fa-stack-2x"></i>

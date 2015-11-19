@@ -1,5 +1,6 @@
 $(document).ready(function(){ 
 
+    $('.datepicker').datepicker();
 
     $('.timepicker').timepicker({
             minuteStep: 5,
@@ -103,6 +104,45 @@ $(document).ready(function(){
                    // }
                     thisMe.parents('.process-layer').find('.machine-append').append($option);
                 });         
+        }
+        });
+
+        e.preventDefault();
+
+    });
+
+    $('body').on('change','.select_process',function(e){
+
+        var thisMe = $(this);
+
+        var thisVal = $(this).val();
+
+        $('.load').remove();
+
+        $container = thisMe.parents('.parent-collapse');
+
+
+       thisMe.after('<img class="load" src="'+serverPath+'/img/loader.gif"/>');
+
+        $.ajax({
+            type: "GET",
+            url: serverPath + "production/machines/getMachineData/"+thisVal,
+            dataType: "json",
+            success: function(data) {
+                    
+                 $container.find(".machine_data").empty();
+                $container.find('.machine_data').append('<option value="">-- Select Machine --</option>');
+
+                $.each(data, function(key, value) { 
+                    //console.log(value);
+                    //if (value.Machine.id == selected) {
+                        $option = "<option class='option-append' value="+value.Machine.id+">"+value.Machine.no+"</option>";    
+                    //} else {
+                    //$option = "<option class='option-append'  value="+value.ItemTypeHolder.id+">"+value.ItemTypeHolder.name+"</option>";
+                   // }
+                     $container.find('.machine_data').append($option);
+                });  
+                $('.load').remove();       
         }
         });
 

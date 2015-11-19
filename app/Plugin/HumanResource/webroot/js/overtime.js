@@ -12,8 +12,6 @@ function openMultiplePrompts(element,url,status){
     //         }
     //     }
     // });
-
-
        //var data1 = 1;
         var data = $(element).attr('data');
         
@@ -33,13 +31,14 @@ function openMultiplePrompts(element,url,status){
 
             if (isConfirm) {
 
-                        swal("Successful!","Quotation "+status+".", "success");
-                        window.location.href = url;
-                 
-
+                    swal("Successful!","Quotation "+status+".", "success");
+                    window.location.href = url;
+            
             } else {
-                swal("Cancelled", "Transaction error.", "error");
+                    
+                    swal("Cancelled", "Transaction error.", "error");
             }
+
         });
 
 

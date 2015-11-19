@@ -33,6 +33,7 @@ class SalariesController  extends HumanResourceAppController {
 		
 		if (!empty($this->request->data)) {
 
+
 			if ($this->Salary->save($this->request->data['Salary'])) {
 
 				$this->Session->setFlash('Salary Setting is now updated','success');
@@ -1933,6 +1934,10 @@ class SalariesController  extends HumanResourceAppController {
 
 			$this->loadModel('Payroll.SalaryReport');
 
+			$this->loadModel('Payroll.SssReport');
+
+			$this->loadModel('Payroll.PhilHealthReport');
+
 			$this->loadModel('Payroll.Adjustment');
 
 			$payroll = $this->Payroll->findById($id);
@@ -1977,10 +1982,13 @@ class SalariesController  extends HumanResourceAppController {
 				} else {
 
 
+				
+					if( $this->SalaryReport->createMultipleReport($salaries,$auth) ) {
 
-					if( $this->SalaryReport->createMultipleReport($salaries,$auth)) {
+						$save = $this->SssReport->saveReport($salaries,$id,$auth);
 
-					
+						$save = $this->PhilHealthReport->saveReport($salaries,$id,$auth);
+
 						$payroll['Payroll']['status'] = 'process';
 
 						$json_data = json_encode($salaries);
@@ -1988,7 +1996,7 @@ class SalariesController  extends HumanResourceAppController {
 						$folder_path = WWW_ROOT.'/salaries/files/';
 
 						if (!file_exists($folder_path)) {
-						mkdir($folder_path, 0777, true);
+							mkdir($folder_path, 0777, true);
 						}
 
 						//update adjustments
