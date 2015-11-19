@@ -55,7 +55,7 @@
 
 		// }else{
 
-			 pr($ticketId); 
+			 //pr($ticketId); 
 
 			 echo $this->Form->create('Product',array('url'=>(array('controller' => 'products', 'action' => 'create_specification_edit', $ticketId)),'class' => 'test','method' => 'post'));
 
