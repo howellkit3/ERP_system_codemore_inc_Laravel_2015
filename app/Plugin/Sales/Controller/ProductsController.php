@@ -199,6 +199,8 @@ class ProductsController extends SalesAppController {
 
 		    $code =  $year. $month .$random;
         	$productDetails['Product']['uuid'] = $code;
+        	
+        	$productDetails['Product']['status_id'] = 0;
 
            if ($this->Product->save($productDetails)) {
 
@@ -865,8 +867,6 @@ class ProductsController extends SalesAppController {
     }
 
     public function create_specification($productId ){
-
-    	//pr('create speci'); exit;
 
     	$this->loadModel('Ticket.Jobticket');
 
