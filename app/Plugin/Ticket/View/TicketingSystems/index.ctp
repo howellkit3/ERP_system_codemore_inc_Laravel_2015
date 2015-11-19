@@ -32,6 +32,7 @@
                              <!--    <th class="table-header" >Product No.</th> -->
                                 <th class="table-header">PO No.</th>
                                 <th class="table-header">Item Name </th>
+                                <th class="table-header">Created </th>
                                 <th style="text-align:center">Action</th>
                             </tr>
                         </thead>

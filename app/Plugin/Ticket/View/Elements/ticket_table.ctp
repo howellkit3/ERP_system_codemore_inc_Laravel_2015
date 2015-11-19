@@ -25,8 +25,13 @@
             <td class="">
                 <?php echo $ticketDataList['JobTicket']['po_number'] ?> 
             </td>
+
             <td class="">
                 <?php echo substr($ticketDataList['Product']['name'],0,25); ?> ..
+            </td>
+
+            <td class="">
+                 <?php echo date('M d, Y', strtotime($ticketDataList['JobTicket']['created'])); ?>
             </td>
             
 
