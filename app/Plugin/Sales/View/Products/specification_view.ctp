@@ -5,7 +5,7 @@
 <?php echo $this->Html->script('Sales.jquery-sortable');?>
 <div style="clear:both"></div>
 
-<?php echo $this->element('sales_option');
+<?php  echo $this->element('sales_option');
 
 ?><br><br>
 <?php echo $this->Html->script('Sales.editableProductSpecs'); ?>
@@ -25,11 +25,11 @@
 						
 		                    echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'products','action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 
-		                    // echo $this->Html->link('<i class="fa fa-pencil fa-lg"></i> Edit ', array('controller' => 'products','action' => 'specification_edit',$product['Product']['id'],$ifTicket),array('class' =>'btn btn-primary pull-right','escape' => false));
+		                    echo $this->Html->link('<i class="fa fa-pencil fa-lg"></i> Edit ', array('controller' => 'products','action' => 'specification_edit',$product['Product']['id'],$ifTicket, $ticketId),array('class' =>'btn btn-primary pull-right','escape' => false));
 
 		                ?>
 
-		                <a data-toggle="modal" href="#myModalEdit" class="btn btn-primary mrg-b-lg pull-right "><i class="fa fa-edit fa-lg"></i>Edit</a>
+		                <!-- <a data-toggle="modal" href="#myModalEdit" class="btn btn-primary mrg-b-lg pull-right "><i class="fa fa-edit fa-lg"></i>Edit</a> -->
 
 		            </div>
 	                <br>
@@ -180,7 +180,7 @@
                     <h4 class="modal-title">Edit Specification</h4>
                 </div>
                 <div class="modal-body">
-                    <?php  echo $this->Form->create('Edit',array('url'=>(array('controller' => 'products','action' => 'edit_specs_question',$product['Product']['id'],$ifTicket)),'class' => 'form-horizontal'))?>
+                    <?php  echo $this->Form->create('Edit',array('url'=>(array('controller' => 'products','action' => 'edit_specs_question',$product['Product']['id'],$ifTicket, $ticketId)),'class' => 'form-horizontal'))?>
 
 	               		<div class="form-group">
 							<label class="col-lg-2 control-label"><span style="color:red">*</span>Edit Type</label>

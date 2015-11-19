@@ -199,7 +199,7 @@ class ProductsController extends SalesAppController {
 
 		    $code =  $year. $month .$random;
         	$productDetails['Product']['uuid'] = $code;
-        	
+
         	$productDetails['Product']['status_id'] = 0;
 
            if ($this->Product->save($productDetails)) {
@@ -685,7 +685,7 @@ class ProductsController extends SalesAppController {
 
     }
 
-    public function specification($productId = null, $ifTicket =  null ){
+    public function specification($productId = null, $ifTicket =  null, $ticketId = null ){
 
     	$this->loadModel('ItemCategoryHolder');
 
@@ -761,7 +761,7 @@ class ProductsController extends SalesAppController {
 
 		$noPermission = ' ';
 
-		$this->set(compact('ifTicket','noPermission','subProcess','processData','specs','formatDataSpecs','unitData','product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData'));
+		$this->set(compact('ifTicket','noPermission','subProcess','processData','specs','formatDataSpecs','unitData','product','productData','categoryData','nameTypeData','itemCategoryData', 'itemTypeData', 'companyData', 'ticketId'));
 
 		if(!empty($formatDataSpecs)){
 			$this->render('specification_view');
@@ -1098,9 +1098,9 @@ class ProductsController extends SalesAppController {
 
     }
 
-    public function create_specification_edit($productId){
+    public function create_specification_edit($ticketId = null){
 
-    	//pr('create specification edit'); exit;
+    	//pr($ticketId); exit;
 
     	$this->loadModel('Ticket.Jobticket');
 
@@ -1138,7 +1138,7 @@ class ProductsController extends SalesAppController {
 
 		//pr($this->request->data); exit;
 
-    	$productId = $this->Product->addProduct($this->request->data,$userData['User']['id']);
+    	$productId = $this->Product->addProductTicket($this->request->data,$userData['User']['id']);
     	 
     	$this->request->data['Product']['id'] = $productId;
 
@@ -1262,18 +1262,36 @@ class ProductsController extends SalesAppController {
 				$this->ProductSpecificationDetail->saveSpecDetail($saveArray,$userData['User']['id'],$this->request->data['Product']['uuid']);
 			}
 
-			$statusId = $this->request->data['Product']['idToBeDeleted'];
+		$statusId = $this->request->data['Product']['idToBeDeleted'];
 
-		$this->Product->id = $statusId;
+		if($ticketId != 0){
 
-		$this->Product->saveField('status_id', 1);
+			$this->Jobticket->id = $ticketId;
+
+			$this->Jobticket->saveField('product_id', $productId);
+
+		}
+
+		if(!empty($this->request->data['Product']['idStatus'])){ 
+
+			//pr($statusId); exit;
+
+			$this->Product->id = $statusId;
+
+			$this->Product->saveField('status_id', 1);
+
+			$this->Product->id = $productId;
+
+			$this->Product->saveField('status_id', 0);
+
+		}
 
     	$this->Session->setFlash(__('Products Specification has been Successfully Modified'));
 
 		$this->redirect( array(
-                                    'controller' => 'products', 
-                                    'action' => 'specification',
-                                    $productId, 1
+                                'controller' => 'products', 
+                                'action' => 'specification',
+                                $productId, 1 , $ticketId
                              ));
 
 
@@ -1519,11 +1537,16 @@ class ProductsController extends SalesAppController {
     	}
     }
 
-    public function edit_specs_question($productId = null, $ifTicket = null){
+    public function edit_specs_question($productId = null, $ifTicket = null, $ticketId = null){
+
+    	// $this->redirect( array('controller' => 'products', 
+     //                            'action' => 'specification_edit',
+     //                            $productId, $ifTicket, $this->request->data['Edit']['Edit_Purpose'], $ticketId));
 
     	$this->redirect( array('controller' => 'products', 
                                 'action' => 'specification_edit',
-                                $productId, $ifTicket, $this->request->data['Edit']['Edit_Purpose']));
+                                $productId, $ifTicket, $ticketId));
+    
     
     }
 }
