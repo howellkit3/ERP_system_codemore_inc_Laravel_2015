@@ -76,17 +76,16 @@
         </div>
 
         <?php 
-            $outs1  = !empty($formatDataSpecs['ProductSpecificationPart']['outs1']) ? $formatDataSpecs['ProductSpecificationPart']['outs1']  : 1;
+           $outs1  = !empty($formatDataSpecs['ProductSpecificationPart']['outs1']) ? $formatDataSpecs['ProductSpecificationPart']['outs1']  : 1;
             $outs2  = !empty($formatDataSpecs['ProductSpecificationPart']['outs2']) ? $formatDataSpecs['ProductSpecificationPart']['outs2']  : 1;
             $outProduct = $outs1 * $outs2; 
             $quantity = $specs['ProductSpecification']['quantity']; 
             $rate  = !empty($formatDataSpecs['ProductSpecificationPart']['rate']) ? $formatDataSpecs['ProductSpecificationPart']['rate']  : 1;
-            $stocks = $specs['ProductSpecification']['stock'];
+            $stocks = !empty($specs['ProductSpecification']['stock']) ? $specs['ProductSpecification']['stock']  : 0;
             
-            $product = $rate * $quantity;
-            $quotient =   ceil($quantity / $outProduct);
-            $paper = $quotient - $stocks; 
-
+            $quantitySubtracted = $quantity - $stocks; 
+            $product = $rate * $quantitySubtracted;
+            $paper  = ceil($product / $outProduct);
         ?>
 
         <label class="col-lg-1 control-label"><span style="color:red">*</span>Paper Qty</label>
