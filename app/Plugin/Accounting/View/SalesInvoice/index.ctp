@@ -151,10 +151,12 @@
             $('.searchAppend').hide();
             //alert('show');
         }
+
+        type = 0;
         
         $.ajax({
             type: "GET",
-            url: serverPath + "accounting/sales_invoice/search_order/"+view+"/"+searchInput,
+            url: serverPath + "accounting/sales_invoice/search_order/"+view+"/"+searchInput+"/"+type,
             dataType: "html",
             success: function(data) {
 
