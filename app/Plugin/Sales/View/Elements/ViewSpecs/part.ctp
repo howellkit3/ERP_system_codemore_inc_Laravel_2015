@@ -9,7 +9,7 @@
            // pr($allowance); 
             $product = $rate * $quantity;
             $quotient = ceil($quantity / $outProduct);
-            $paper = ($quotient + $stocks); 
+            $paper = ($quotient - $stocks); 
 
 ?>
 
@@ -35,8 +35,7 @@
         ?>
         <?php echo $formatDataSpecs['ProductSpecificationPart']['size1']?> x
         <?php echo $formatDataSpecs['ProductSpecificationPart']['size2']?> >>
-        <?php echo $outs ?> Outs >>
-        <?php echo $paper// $formatDataSpecs['ProductSpecificationPart']['paper_quantity'] ?> + 
+        <?php echo  $paper//$formatDataSpecs['ProductSpecificationPart']['paper_quantity'] ?> + 
         <?php echo $specs['ProductSpecification']['stock'] ?>
         <?php echo $unitData[$formatDataSpecs['ProductSpecificationPart']['quantity_unit_id']] ?>
     </td>

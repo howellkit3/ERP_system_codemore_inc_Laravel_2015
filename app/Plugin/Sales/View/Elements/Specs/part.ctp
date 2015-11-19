@@ -85,13 +85,13 @@
             
             $product = $rate * $quantity;
             $quotient =   ceil($quantity / $outProduct);
-            $paper = $quotient + $stocks; 
+            $paper = $quotient - $stocks; 
 
         ?>
 
         <label class="col-lg-1 control-label"><span style="color:red">*</span>Paper Qty</label>
         <div class="col-lg-2">
-            <input type="text" value="<?php echo $paper//$formatDataSpecs['ProductSpecificationPart']['paper_quantity'] ?>" class="allPaperQuantity paper_qtyMe form-control paper_qty<?php echo $plusCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counter ;?>][paper_quantity]" readonly />
+            <input type="text" value="<?php $paper //echo $formatDataSpecs['ProductSpecificationPart']['paper_quantity'] ?>" class="allPaperQuantity paper_qtyMe form-control paper_qty<?php echo $plusCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counter ;?>][paper_quantity]" readonly />
         </div>
     </div>
     <div class="form-group">
