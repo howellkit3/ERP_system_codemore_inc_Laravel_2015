@@ -39,7 +39,7 @@
 					        	array('class' =>'btn btn-info pull-right','target' => '_blank','escape' => false));
 
 							echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i>Edit Specs', array(
-					        	'controller' => 'products', 'action' => 'specification',$productData['Product']['id'] , '1',  'plugin' => 'sales'),
+					        	'controller' => 'products', 'action' => 'specification',$productData['Product']['id'] , '1',$ticketData['JobTicket']['id'],   'plugin' => 'sales'),
 					        	array('class' =>'btn btn-info pull-right','target' => '_blank','escape' => false));
 						?>
 
