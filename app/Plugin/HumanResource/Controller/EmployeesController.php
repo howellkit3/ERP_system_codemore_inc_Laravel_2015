@@ -1339,7 +1339,7 @@ class EmployeesController  extends HumanResourceAppController {
 					// $pdf->MultiCell( 40,4, trim(utf8_decode($addresscity)));
 
 
-					$pdf->SetXY(19.5, 42.5);
+					$pdf->SetXY(19.5, 40);
 					$pdf->MultiCell( 40, 4, trim(utf8_decode($addressprovince)));
 
 
