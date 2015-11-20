@@ -73,7 +73,7 @@ class ProductSpecificationDetail extends AppModel {
 		return $this->id;
 	}
 
-	public function findData($productUuid = null,$specificProcess = null){
+	public function findData($productUuid = null,$specificProcess = null , $productionSchedule = null) {
 		
 		$conditions = array('ProductSpecificationDetail.product_id' => $productUuid);	
 
@@ -125,6 +125,12 @@ class ProductSpecificationDetail extends AppModel {
 
 				
 				if($model == 'ProductSpecificationProcess'){
+
+
+					// if ( $productionSchedule == true) {
+
+					// 	$processHolder->bind(array('TicketProcessSchedule'));
+					// }
 					
 					$processData = $processHolder->find('all',array(
 										'conditions' => array(

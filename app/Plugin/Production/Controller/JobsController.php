@@ -137,6 +137,9 @@ class JobsController extends ProductionAppController {
 
             $this->loadModel('Production.TicketProcessSchedule');
 
+
+            $this->loadModel('Sales.ProductSpecificationProcessHolder');
+
             $this->loadModel('Sales.Product');
 
             $this->loadModel('Sales.ProductSpecificationDetail');
@@ -153,11 +156,13 @@ class JobsController extends ProductionAppController {
 
             $this->loadModel('SubProcess');
 
-            $this->JobTicket->bind(array('ClientOrder','TicketProcessSchedule'));
+            $this->JobTicket->bind(array('ClientOrder'));
 
 
             $jobData = $this->JobTicket->findById($jobId);
 
+
+            //pr($jobData);
 
             $schedules = $this->ClientOrderDeliverySchedule->find('all',array(
                     'conditions' => array(
@@ -184,6 +189,9 @@ class JobsController extends ProductionAppController {
                                                  )
                                                 ));
 
+
+
+
             $departmentProcess = $this->ProcessDepartment->find('list', array('fields' => array('id', 'name')));
 
             $companyData = $this->Company->find('list',array('fields' => array('id','company_name')));
@@ -197,7 +205,7 @@ class JobsController extends ProductionAppController {
            
             $specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
                 
-            $formatDataSpecs = $this->ProductSpecificationDetail->findData($productData['Product']['uuid']);
+            $formatDataSpecs = $this->ProductSpecificationDetail->findData($productData['Product']['uuid'],null,true);
 
             $unitData = Cache::read('unitData');
             
@@ -215,7 +223,7 @@ class JobsController extends ProductionAppController {
 
             // pr($productData);    
             
-    
+         //   exit();
             $this->set(compact('jobData','departmentProcess','companyData','subProcessData','machineData','productData','specs','unitData','schedules','RecievedTicket','formatDataSpecs','machines'));
         }
     }
