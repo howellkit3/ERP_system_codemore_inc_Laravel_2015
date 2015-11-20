@@ -2429,40 +2429,6 @@ ADD COLUMN `from_warehouse`  int(11) NULL DEFAULT 0 AFTER `modified`;
 ALTER TABLE `general_items`
 ADD COLUMN `from_warehouse`  int(11) NULL DEFAULT 0 AFTER `modified`;
 
-/* aldrin added this 11-19-15 */
-ALTER TABLE `salaries`
-ADD COLUMN `communication_allowances`  decimal(8,2) NULL AFTER `allowances`;
-
-
-CREATE TABLE `sss_reports` (
-`id`  int(11) NOT NULL AUTO_INCREMENT ,
-`employee_id`  int NULL ,
-`payroll_id`  int NULL ,
-`sss_id`  int NULL ,
-`employer`  decimal(8,2) NULL ,
-`employee`  decimal(8,2) NULL ,
-`compensation`  decimal(8,2) NULL ,
-`created_by`  int NULL ,
-`modified_by`  int NULL ,
-`created`  datetime NULL ,
-`modified`  datetime NULL,
-PRIMARY KEY (`id`) 
-);
-
-CREATE TABLE `philhealth_reports` (
-`id`  int(11) NOT NULL AUTO_INCREMENT ,
-`employee_id`  int NULL ,
-`payroll_id`  int NULL ,
-`philhealth_id`  int NULL ,
-`employer`  decimal(8,2) NULL ,
-`employee`  decimal(8,2) NULL ,
-`created_by`  int NULL ,
-`modified_by`  int NULL ,
-`created`  datetime NULL ,
-`modified`  datetime NULL ,
-PRIMARY KEY (`id`)
-);
-
-/* aldrin added this 11-20-2015 production database */
-ALTER TABLE `ticket_process_schedules`
-ADD COLUMN `production_date`  datetime NULL AFTER `order`;
+/* howellkit added this nov-18-2015*/
+ALTER TABLE `koufu_sale`.`products` ADD COLUMN `status_id` INT(11) DEFAULT NULL AFTER `name`;
+UPDATE `products` SET `status_id` = 0 WHERE `status_id` IS NULL;

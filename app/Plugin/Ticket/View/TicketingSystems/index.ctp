@@ -26,12 +26,13 @@
                     <table class="table table-striped table-hover sortable">
                         <thead>
                             <tr>
-                                <th class="table-header" >Ticket id</th>
+                                <th class="table-header" >Schedule No.</th>
                                 <th class="table-header">Company</th>
                                 <th class="table-header" >Client Order #</th>
                              <!--    <th class="table-header" >Product No.</th> -->
                                 <th class="table-header">PO No.</th>
                                 <th class="table-header">Item Name </th>
+                                <th class="table-header">Created </th>
                                 <th style="text-align:center">Action</th>
                             </tr>
                         </thead>

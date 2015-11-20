@@ -25,8 +25,13 @@
             <td class="">
                 <?php echo $ticketDataList['JobTicket']['po_number'] ?> 
             </td>
+
             <td class="">
                 <?php echo substr($ticketDataList['Product']['name'],0,25); ?> ..
+            </td>
+
+            <td class="">
+                 <?php echo date('M d, Y', strtotime($ticketDataList['JobTicket']['created'])); ?>
             </td>
             
 
@@ -41,7 +46,7 @@
                      echo $this->Html->link('<span class="fa-stack">
                     <i class="fa fa-square fa-stack-2x"></i>
                     <i class="fa fa-plus-square fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Specs </font></span>
-                    </span>', array('controller' => 'products', 'action' => 'specification',$ticketDataList['Product']['id'] , '1',  'plugin' => 'sales'),array('class' =>' table-link','escape' => false,'title'=>'Add Specifications'
+                    </span>', array('controller' => 'products', 'action' => 'specification',$ticketDataList['Product']['id'] , '1', $ticketDataList['JobTicket']['id'] , 'plugin' => 'sales'),array('class' =>' table-link','escape' => false,'title'=>'Add Specifications'
                         ));
 
                      echo $this->Html->link('<span class="fa-stack">

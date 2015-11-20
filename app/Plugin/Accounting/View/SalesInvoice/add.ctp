@@ -125,11 +125,11 @@
 	});
 
 
-	 $("body").on('keyup','.searchOrder', function(e){
+	   $("body").on('keyup','.searchOrder', function(e){
 
         var searchInput = $(this).val();
 
-        var view = "add";
+        var view = "index";
     
         //alert(searchInput);
         if(searchInput != ''){
@@ -143,10 +143,12 @@
             $('.searchAppend').hide();
             //alert('show');
         }
+
+        type = 1;
         
         $.ajax({
             type: "GET",
-            url: serverPath + "accounting/sales_invoice/search_order/"+searchInput+"/"+view,
+            url: serverPath + "accounting/sales_invoice/search_order/"+view+"/"+searchInput+"/"+type,
             dataType: "html",
             success: function(data) {
 
@@ -167,5 +169,6 @@
         });
 
     });
+
 
 </script>

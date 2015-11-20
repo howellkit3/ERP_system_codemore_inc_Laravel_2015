@@ -1,3 +1,19 @@
+
+<?php 
+            $outs1  = !empty($formatDataSpecs['ProductSpecificationPart']['outs1']) ? $formatDataSpecs['ProductSpecificationPart']['outs1']  : 1;
+            $outs2  = !empty($formatDataSpecs['ProductSpecificationPart']['outs2']) ? $formatDataSpecs['ProductSpecificationPart']['outs2']  : 1;
+            $outProduct = $outs1 * $outs2; 
+            $quantity = $specs['ProductSpecification']['quantity']; 
+            $rate  = !empty($formatDataSpecs['ProductSpecificationPart']['rate']) ? $formatDataSpecs['ProductSpecificationPart']['rate']  : 1;
+            $stocks = !empty($specs['ProductSpecification']['stock']) ? $specs['ProductSpecification']['stock']  : 0;
+            
+            $quantitySubtracted = $quantity - $stocks; 
+            $product = $rate * $quantitySubtracted;
+            $paper  = ceil($product / $outProduct);
+
+        ?>
+
+
 <tr>
     <td class="td-heigth indent" style="width:80px;border:1px solid #EAEAEA;">C<?php echo $key ?>-Part<?php echo $key ?></td>
     <td class="td-heigth" style="width:220px;border:1px solid #EAEAEA;font-family: arial;"><?php echo !empty($formatDataSpecs['ProductSpecificationPart']['name']) ? $formatDataSpecs['ProductSpecificationPart']['name'] : $formatDataSpecs['ProductSpecificationPart']['material'] ?></td>
@@ -22,7 +38,7 @@
         <?php echo $formatDataSpecs['ProductSpecificationPart']['size1']?> x
         <?php echo $formatDataSpecs['ProductSpecificationPart']['size2']?> >>
         <?php echo $outs ?> Outs >>
-        <?php $quantityOuts = $formatDataSpecs['ProductSpecificationPart']['quantity'] / $outs; ?>
+        <?php $quantityOuts = $formatDataSpecs['ProductSpecificationPart']['paper_quantity'] / $outs; ?>
         <?php echo // $formatDataSpecs['ProductSpecificationPart']['quantity'] 
         round($quantityOuts) ?> 
         +

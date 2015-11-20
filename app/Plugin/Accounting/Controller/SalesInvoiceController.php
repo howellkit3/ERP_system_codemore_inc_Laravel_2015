@@ -1357,37 +1357,59 @@ class SalesInvoiceController extends AccountingAppController {
 
     }
 
-    public function search_order($view = null, $hint = null){
+    public function search_order($view = null, $hint = null, $type = null){
+
+       // pr($type); exit;
 
         $this->loadModel('Sales.Company');
 
         $this->loadModel('Delivery.Delivery');
 
-        if($view == 'add'){
+        $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
+
+        if($type == '1'){
 
             $this->loadModel('Sales.ClientOrder');
 
-            //$deliveryData = $this->Delivery->find('all');
+             $deliveryData = $this->Delivery->query('SELECT ClientOrder.id ,ClientOrder.po_number , ClientOrder.uuid, Company.id, Company.company_name , Delivery.dr_uuid, Delivery.company_id, Delivery.dr_uuid, Delivery.clients_order_id , Delivery.status,  Delivery.id  
+                FROM koufu_delivery.deliveries AS Delivery
+                INNER JOIN koufu_sale.client_orders AS ClientOrder
+                ON Delivery.clients_order_id = ClientOrder.uuid 
+                INNER JOIN koufu_sale.companies AS Company
+                ON Delivery.company_id = Company.id 
+                WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR ClientOrder.po_number LIKE "%'.$hint.'%"
+                OR Company.company_name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%" LIMIT 10 ');
 
-            $deliveryData = $this->Delivery->find('all',array(
-                          'conditions' => array(
-                            'OR' => array(
-                            array('Delivery.clients_order_id LIKE' => '%' . $hint . '%'),
-                              array('Delivery.dr_uuid LIKE' => '%' . $hint . '%')
-                              )
-                            ),
-                          'limit' => 10
-                          )); 
+            // $deliveryData = $this->Delivery->find('all',array(
+            //               'conditions' => array(
+            //                 'OR' => array(
+            //                 array('Delivery.clients_order_id LIKE' => '%' . $hint . '%'),
+            //                   array('Delivery.dr_uuid LIKE' => '%' . $hint . '%')
+            //                   )
+            //                 ),
+            //               'limit' => 10
+            //               )); 
+
+            //pr($deliveryData); exit;
 
 
             $poNumber = $this->ClientOrder->find('list', array('fields' => array('uuid', 'po_number')));
 
-            $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData',  'poNumber'));
+            $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData',  'poNumber', 'companyData'));
             
             if ($hint == ' ') {
                 $this->render('index');
             }else{
-                $this->render('search_order');
+
+                if($type == 0){
+
+                    $this->render('search_order');
+
+                }else{
+
+                    $this->render('search_dr_order');
+
+                }
             }
 
         }else{
@@ -1403,23 +1425,8 @@ class SalesInvoiceController extends AccountingAppController {
                 WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR SalesInvoice.sales_invoice_no LIKE "%'.$hint.'%"
                 OR Company.company_name LIKE "%'.$hint.'%" LIMIT 10 ');
 
-             //  pr($invoiceData); exit;
-
-            // $invoiceData = $this->SalesInvoice->find('all',array(
-            //               'conditions' => array(
-            //                 'OR' => array(
-            //                 array('SalesInvoice.sales_invoice_no LIKE' => '%' . $hint . '%'),
-            //                   array('SalesInvoice.dr_uuid LIKE' => '%' . $hint . '%')
-            //                   )
-            //                 ),
-            //               'limit' => 10
-            //               )); 
-
-           // pr($invoiceData); exit;
 
             $deliveryNumHolder = $this->Delivery->find('list',array('fields' => array('dr_uuid','company_id')));
-
-            $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
 
             $this->set(compact('companyData','invoiceData','noPermissionReciv','noPermissionPay', 'deliveryNumHolder'));
 

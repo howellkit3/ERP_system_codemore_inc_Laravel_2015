@@ -36,23 +36,42 @@
 			</div>
 		</div>
 
-		<?php if($this->params['pass']['2'] == 0) {
+		<?php  $ticketId = 0;
 
-			 echo $this->Form->create('Product',array('url'=>(array('controller' => 'products', 'action' => 'create_specification')),'class' => 'test','method' => 'post'));
+		if(!empty($this->params['pass']['2'])){
+			
+			$ticketId = $this->params['pass']['2']; 
+		
+		}?>
 
-            echo $this->Form->input('Product.id', array(
+		 <?php //if($ticketId == 0) {
+
+		// 	 pr('create_specification'); 
+
+		// 	echo $this->Form->create('Product',array('url'=>(array('controller' => 'products', 'action' => 'create_specification')),'class' => 'test','method' => 'post'));
+
+  
+
+
+		// }else{
+
+			 //pr($ticketId); 
+
+			 echo $this->Form->create('Product',array('url'=>(array('controller' => 'products', 'action' => 'create_specification_edit', $ticketId)),'class' => 'test','method' => 'post'));
+
+			if($ticketId == 0) { 
+
+			 echo $this->Form->input('Product.idStatus', array(
 				'class' => 'form-control item_type',
                 'label' => false,
+                'type' => 'hidden',
 				'value' => $product['Product']['id'],
                 'placeholder' => 'Product Name',
                 'fields' =>array('name')));
 
+			}
 
-		}else{
-
-			 echo $this->Form->create('Product',array('url'=>(array('controller' => 'products', 'action' => 'create_specification_edit')),'class' => 'test','method' => 'post'));
-
-		}?>			
+		// }?>			
 
 			<div class="row">
 				<div class="col-lg-12">
