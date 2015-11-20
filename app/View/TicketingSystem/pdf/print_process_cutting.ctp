@@ -9,6 +9,20 @@ Configure::write('debug',2);
 
 </style>
 
+<?php 
+        $outs1  = !empty($formatDataSpecs['ProductSpecificationPart']['outs1']) ? $formatDataSpecs['ProductSpecificationPart']['outs1']  : 1;
+        $outs2  = !empty($formatDataSpecs['ProductSpecificationPart']['outs2']) ? $formatDataSpecs['ProductSpecificationPart']['outs2']  : 1;
+        $outProduct = $outs1 * $outs2; 
+        $quantity = $specs['ProductSpecification']['quantity']; 
+        $rate  = !empty($formatDataSpecs['ProductSpecificationPart']['rate']) ? $formatDataSpecs['ProductSpecificationPart']['rate']  : 1;
+        $stocks = !empty($specs['ProductSpecification']['stock']) ? $specs['ProductSpecification']['stock']  : 0;
+        
+        $quantitySubtracted = $quantity - $stocks; 
+        $product = $rate * $quantitySubtracted;
+        $paper  = ceil($product / $outProduct);
+
+?>
+
 <html>
 <head>
 	<title>Print Process</title>
@@ -149,7 +163,7 @@ Configure::write('debug',2);
 								$total = $paperQuantity; ?> 
 								<?php if(!empty($part['ProductSpecificationPart']['paper_quantity'])) : ?>
 <!-- 								<!-- + --> 
-								<?php echo round($paperQuantity);?>  
+								<?php echo $paper //round($paperQuantity);?>  
 							<?php endif; ?>
 								<?php if(!empty($part['ProductSpecificationPart']['allowance'])){ ?>
 								+ <?php echo $part['ProductSpecificationPart']['allowance']; 
