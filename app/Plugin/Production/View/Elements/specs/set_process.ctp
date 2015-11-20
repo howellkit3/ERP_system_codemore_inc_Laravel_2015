@@ -18,6 +18,8 @@
 				<div class="panel-body">
 					<?php echo $this->Form->create('TicketProcessSchedule',array('url' => array('controller' => 'ticket_process_schedules','action' => 'set_process')));
 					 echo $this->Form->input('job_ticket_id',array('value' => $jobData['JobTicket']['id'],'type' => 'hidden')); 
+					 echo $this->Form->input('product_specification_process_holder_id',array(
+					 	'value' => $processList['ProductSpecificationProcessHolder']['id'],'type' => 'hidden')); 
 					 ?>
 						<h1>Set Process</h1>
 						<div class="row parent-collapse">
