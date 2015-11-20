@@ -225,22 +225,13 @@ class TicketProcessSchedulesController extends ProductionAppController {
 
             $this->MachineLog->saveMachineLog($TicketProcessScheduleID, $auth['id']);
 
-            if ($this->request->is('ajax')) {
-
-                $ajaxData['JobTicket']['status'] = 1;
-                $ajaxData['JobTicket']['id'] = $data['Ticket']['job_ticket_id'];
-                $ajaxData['JobTicket']['process_name'] = $departmentName;
-
-                pr($ajaxData);
-                echo json_encode($ajaxData);
-                exit();
-            }
-
+            
             $this->Session->setFlash(__('Process/es has been logged to machine.'));
 
             $this->redirect( array(
                      'controller' => 'jobs', 
-                     'action' => 'plans'
+                     'action' => 'view',
+                     $data['TicketProcessSchedule']['job_ticket_id']
     
              ));
             

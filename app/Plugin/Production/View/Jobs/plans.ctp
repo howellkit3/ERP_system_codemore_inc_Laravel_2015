@@ -182,13 +182,13 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 																	);
 																	
 																	 if (empty($jobList['JobTicket']['production_status'])) { ?>
-									                           		<a data-id="<?php echo $jobList['JobTicket']['id']; ?>" data-toggle="modal" title="Edit Information" data-url="/ticket_process_schedules/ticket_data_view/<?php echo $jobList['JobTicket']['id']; ?>/schedule" class="view_full_ticket_details table-link" href="#ticketDataFullDetails">
+									                           	<!-- 	<a data-id="<?php echo $jobList['JobTicket']['id']; ?>" data-toggle="modal" title="Edit Information" data-url="/ticket_process_schedules/ticket_data_view/<?php echo $jobList['JobTicket']['id']; ?>/schedule" class="view_full_ticket_details table-link" href="#ticketDataFullDetails">
 											                       		<span class="fa-stack">
 																			<i class="fa fa-square fa-stack-2x"></i>
 																			<i class="fa fa-calendar fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;
 																			<span class="post"><font size="1px"> Sched </font></span>
 																		</span>
-																	</a>
+																	</a> -->
 																	
 						                        				<?php } else { ?>
 						                        					

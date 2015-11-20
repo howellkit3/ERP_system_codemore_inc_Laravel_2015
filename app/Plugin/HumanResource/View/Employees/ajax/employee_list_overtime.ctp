@@ -13,7 +13,7 @@
 
             <input type="hidden" name="data[Attendance][id][<?php echo $KeyId ?>]" class="select_employee attendance" value="<?php echo !empty($value['Attendance']['in']) ? $value['Attendance']['in']: '';  ?>" id="checkbox-<?php echo $KeyId; ?>">
 
-            <span class="time-in"> <?php echo !empty( $value['Attendance']['in']) ? 'Time in ( '.date('h:i a',strtotime($value['Attendance']['in'])).' )' : ''; ?>  </span>
+       
             <label for="checkbox-<?php echo $KeyId; ?>">
                 <?php 
                 $name = $value['Employee']['first_name'];
@@ -23,6 +23,9 @@
                 $name .= !empty($value['Employee']['suffix']) ? ' '.$value['Employee']['suffix'] : '';
 
                 echo ucwords($name); ?>  
+
+                     <span class="time-in"> <?php echo !empty( $value['Attendance']['in']) ? 'Time in ( '.date('h:i a',strtotime($value['Attendance']['in'])).' )' : ''; ?>  </span>
+                     
             </label>
 
 

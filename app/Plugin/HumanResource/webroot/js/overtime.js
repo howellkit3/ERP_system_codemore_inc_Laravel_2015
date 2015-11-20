@@ -252,7 +252,7 @@ $(document).ready(function(){
                  html  +=  '</li>';
                 $('#resultList').append(html);
 
-                $(this).parent().parent().fadeOut();
+                $(this).parent().parent().remove();
 
         }
           

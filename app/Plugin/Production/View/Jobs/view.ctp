@@ -3,7 +3,7 @@
 <?php $this->Html->addCrumb('Stripping', array('controller' => 'jobs', 'action' => 'stripping')); 
 	$active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : '';
 ?>
-<?php echo $this->Html->css(array('HumanResource.default'));?>
+<?php echo $this->Html->css(array('Production.default'));?>
 <?php echo $this->Html->script('Sales.jquery-sortable');?>
 <?php echo $this->Html->script('Sales.draggableproducts');?>
 <?php echo $this->Html->script(array(
@@ -137,10 +137,9 @@ echo $this->element('tab/jobs',array('active_tab' => $active_tab));
 		</div>
 	</div>
 </div>
-<?php if (!empty($RecievedTicket['RecievedTicket']['id']) && $RecievedTicket['RecievedTicket']['status']  == 'recieved') { ?> 
 <div class="row">
 	<div class="col-lg-12">
-		<div class="main-box">
+		<div class="main-box <?php echo (!empty($RecievedTicket['RecievedTicket']['id']) && $RecievedTicket['RecievedTicket']['status']  == 'recieved') ? '' : 'disabled' ?>">
 				
 			<div class="main-box-body clearfix">
 					<h2 class="pull-left">
@@ -217,7 +216,6 @@ echo $this->element('tab/jobs',array('active_tab' => $active_tab));
 		</div>
 	</div>
 </div>
-<?php } ?>
 <style type="text/css">
 	.fa-stack{
 		color: #03a9f4;
