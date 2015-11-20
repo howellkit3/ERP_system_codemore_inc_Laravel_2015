@@ -42,10 +42,10 @@
                               <?php  $style = '';
                                             $serverPath = $this->Html->url('/',true);  
 
-                                            if (!empty($employee['Employee']['image'])) {
+                                            if (!empty($value['Employee']['image'])) {
 
 
-                                                $background =  $serverPath.'img/uploads/employee/'.$employee['Employee']['image'].'?d='.rand(0,1000).time();    
+                                                $background =  $serverPath.'img/uploads/employee/'.$value['Employee']['image'].'?d='.rand(0,1000).time();    
                                             } else {
 
                                                  $background =  $serverPath.'img/default-profile.png';   

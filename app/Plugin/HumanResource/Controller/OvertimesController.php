@@ -878,7 +878,14 @@ class OvertimesController  extends HumanResourceAppController {
 		$output = $view->render('print_request', false);
 
 		$dompdf = new DOMPDF();
-        $dompdf->set_paper("A5", 'landscape');
+		$paperSize = "A5";
+		$display = "landscape";	
+		if (count($employees) >= 10) {
+			$paperSize = "A4";
+
+			$display = "portrait";	
+		}
+        $dompdf->set_paper($paperSize, $display);
         $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
         $dompdf->render();
         $canvas = $dompdf->get_canvas();
