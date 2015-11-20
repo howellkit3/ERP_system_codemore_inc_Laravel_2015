@@ -13,16 +13,47 @@ echo $this->Html->script(array(
 					'HumanResource.moment',
 					'HumanResource.custom',
                     'HumanResource.select2.min',
+                    'HumanResource.jquery.playSound'
 
 ));  
 ?>
 <div style="clear:both"></div>
 
+<div class="main-box-body clearfix">
+	<div class="row">
+		<?php if(!empty($contracts)) : ?>
+		<div class="alert alert-block alert-danger fade in" style="width:99%; margin:10px;">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		<h4>Warning! There's some employees which is under end of contract!</h4>
+		<p>See list: </p>
+		<br>
+			<ul>
+		<?php  foreach ($contracts as $key => $list) { ?>
+				<li><?php echo $list['Employee']['full_name']; ?> ( <?php echo date('F d, Y',strtotime($list['end_contract'])); ?>) </li>
+
+				<?php
+					//  if($key > 0) {
+					// 		echo $this->Html->link('View All',array('controller' => ''));
+		   			//  break;  // this will break both foreach loops
+		      			
+					// }
+				 ?>
+		<?php } ?>
+		</ul>
+	<?php endif; ?>
+
+	</div>
+	</div>
+</div>
+
 <div class="main-box">
+
 <header class="main-box-header clearfix">
 <h2 class="pull-left">Quick Launch</h2>
 </header>
+
 <div class="main-box-body clearfix">
+
 <div class="row">
 <div class="col-md-9">
 <?php 	echo $this->element('hr_options'); ?>
@@ -402,6 +433,15 @@ echo $this->Html->script(array(
 		updateTime();
 
 		}
+
+		$(document).ready(function(){
+	
+	if ($('.alert-block').length >= 1) {
+
+		$.playSound(serverPath + '/sounds/notification');
+	}
+
+});
 
 	}));
 </script>

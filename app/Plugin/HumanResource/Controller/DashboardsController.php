@@ -39,7 +39,28 @@ class DashboardsController  extends HumanResourceAppController {
 		
 		// pr($holidays);
 		// exit();
-		$this->set(compact('attendances','absences','holidays'));
+
+		$conditions = array();
+
+		if (!empty($departmentId)) {
+
+			$conditions = array_merge($conditions,array(
+					'Employee.department_id' => $departmentId
+			));
+		}
+
+		$employees = $this->Employee->find('all',array(
+			'conditions' => $conditions,
+			'order' => array('Employee.last_name ASC'),
+			'fields' => array('id','code','full_name','date_hired','status','contract_id'),
+			'limit' => 10,
+			));
+
+
+		//check employee contract
+		$contracts = $this->Employee->checkContract($employees);
+
+		$this->set(compact('attendances','absences','holidays','employees','contracts'));
 	}
 
 }

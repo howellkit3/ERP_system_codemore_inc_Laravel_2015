@@ -42,7 +42,11 @@ class JobTicket extends AppModel {
 					'foreignKey' => false,
 					'conditions' => 'TicketProcess.job_ticket_id = JobTicket.id'
 				),
-
+				// 'RecievedTicket' => array(
+				// 	'className' => 'Production.RecievedTicket',
+				// 	'foreignKey' => false,
+				// 	'conditions' => 'RecievedTicket.job_ticket_id = JobTicket.id'
+				// ),
 				// 'Company' => array(
 				// 	'className' => 'Sales.Company',
 				// 	'foreignKey' => false,
@@ -63,7 +67,8 @@ class JobTicket extends AppModel {
 					//'conditions' => 'TicketProcessSchedule.job_ticket_id = JobTicket.id'
 				),				
 
-			)
+			),
+		
 			
 		),false);
 

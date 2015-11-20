@@ -33,8 +33,8 @@ echo $this->element('payroll_options');
 
 		<?php
 			//  if($key > 0) {
-			// 	echo $this->Html->link('View All',array('controller' => ''));
-   //        	    break;  // this will break both foreach loops
+			// 		echo $this->Html->link('View All',array('controller' => ''));
+   			//  break;  // this will break both foreach loops
       			
 			// }
 		 ?>

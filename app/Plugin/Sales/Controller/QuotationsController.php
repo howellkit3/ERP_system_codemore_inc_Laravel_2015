@@ -1085,11 +1085,27 @@ class QuotationsController extends SalesAppController {
 			$email->subject($this->request->data['Quotation']['subject']);
 
 			$filename =  $this->request->data['Quotation']['pdf'];
-			
-			$attachment = $this->_createPdf($qouteId,$companyId,$filename);
+				
+			//find attachment
+			$files = WWW_ROOT.'pdf'.DS.'Quotation-'.$this->request->data['Quotation']['id'].'.pdf';
+			$attachment = 'pdf'.DS.'Quotation-'.$this->request->data['Quotation']['id'].'.pdf';
 
+			//$attachment = $this->_createPdf($qouteId,$companyId,$filename);
 
-			if ($attachment ) {
+		
+
+			if (!file_exists($files)) {
+
+					$attachment = $this->_createPdf($qouteId,$companyId,$filename);
+
+					if ($attachment) {
+						echo "save";
+					} else {
+						echo "there\'s an error saving the data";
+					}
+			} 	
+
+			if ( $attachment ) {
 
 					$email->attachments(array($attachment));
 					
@@ -1108,7 +1124,7 @@ class QuotationsController extends SalesAppController {
 
 					$file = new File(WWW_ROOT . DS . $attachment);
 					
-					$file->delete();
+					//$file->delete();
 					
 					$this->Session->setFlash(__('Quotation Successfully send.'),'success');
 					
@@ -1125,6 +1141,37 @@ class QuotationsController extends SalesAppController {
 		
 	}
 
+	public function ajaxCreatePdf($quotationId = null,$companyId = null, $filename = null) {
+		
+		//check if theres already a pdf
+
+		if (!empty($this->request->data)) {
+
+	
+			$data = $this->request->data;
+
+			if (!empty($data['quotation_id']) && !empty($data['company_id']) && !empty($data['filename']) ) {
+
+
+				$files = WWW_ROOT.'pdf'.DS.$data['filename'].'.pdf';
+
+				if (!file_exists($files)) {
+
+					$files = $this->_createPdf($data['quotation_id'],$data['company_id'],$data['filename']);
+					if ($files) {
+						echo "save";
+					} else {
+						echo "there\'s an error saving the data";
+					}
+				} 	
+
+				exit();
+			}
+		}
+
+
+
+	}
 	private function _createPdf($quotationId = null,$companyId = null, $filename = null) {
 
         $view = new View(null, false);

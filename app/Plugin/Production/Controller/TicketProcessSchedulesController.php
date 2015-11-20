@@ -189,10 +189,10 @@ class TicketProcessSchedulesController extends ProductionAppController {
 
             if (!empty($_GET['test'])) {
 
-            pr($jobTickets);
+                pr($jobTickets);
 
-            pr($formatDataSpecs);
-            exit();
+                pr($formatDataSpecs);
+                exit();
             }
 
 
@@ -202,6 +202,40 @@ class TicketProcessSchedulesController extends ProductionAppController {
                $this->render('schedule_process');
             }
        
+    }
+
+    public function set_process() {
+
+   
+        $auth = $this->Session->read('Auth.User');
+
+        //pr($auth); exit;
+
+        $this->loadModel('Ticket.JobTicket');
+
+        $this->loadModel('Production.MachineLog');
+
+        $this->loadModel('Production.ProcessDepartment');
+
+        if (!empty($this->request->data)) {
+
+            $data = $this->request->data;
+
+            $TicketProcessScheduleID = $this->TicketProcessSchedule->saveProcess($data,$auth['id']);
+
+            $this->MachineLog->saveMachineLog($TicketProcessScheduleID, $auth['id']);
+
+            
+            $this->Session->setFlash(__('Process/es has been logged to machine.'));
+
+            $this->redirect( array(
+                     'controller' => 'jobs', 
+                     'action' => 'view',
+                     $data['TicketProcessSchedule']['job_ticket_id']
+    
+             ));
+            
+        }
     }
    
     

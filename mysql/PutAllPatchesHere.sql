@@ -2412,7 +2412,7 @@ UPDATE `purchase_orders` SET `status` = 11 WHERE `receive_item_status` = 1;
 
 ALTER TABLE `koufu_sale`.`products` ADD COLUMN `status_id` INT(11) DEFAULT NULL AFTER `name`;
 UPDATE `products` SET `status_id` = 0 WHERE `status_id` IS NULL;
-=======
+
 /* aldrin added this nov-16-2015*/
 ALTER TABLE `outputs`
 ADD COLUMN `order`  int(11) NULL AFTER `job_ticket_id`;

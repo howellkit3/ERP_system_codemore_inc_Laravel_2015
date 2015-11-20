@@ -92,8 +92,9 @@ jQuery(function($) {
 
     });
     $("#quotation li").on("click", function(){
+       
         $("#position").val($(this).val());
-        console.log($(this).val());
+       
         $.ajax({
         url: serverPath + "sales/create_order/get_quotation_options",
         type: "POST",

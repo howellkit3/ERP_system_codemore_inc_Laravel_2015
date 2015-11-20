@@ -80,8 +80,8 @@ $active_tab = 'pendings';
                                             <th><a href="#"><span>Requested By</span></a></th>
                                             <th><a href="#" ><span>From</span></a></th>
                                             <th><a href="#" ><span>To</span></a></th>
-                                            <th><a href="#"><span>Status</span></a></th><!-- 
-                                            <th><a href="#"><span>Department</span></a></th> -->
+                                            <th><a href="#"><span>Status</span></a></th>
+                                            <th><a href="#"><span>Employees</span></a></th>
                                             <th><a href="#"><span>Actions</span></a></th> 
                                             <!-- 
                                             <th><a href="#"><span>Out</span></a></th>
@@ -112,6 +112,18 @@ $active_tab = 'pendings';
                                                             <?php  $to = (!empty($overtime['Overtime']['to']) && $overtime['Overtime']['to']  != '00:00:00') ? date('Y-m-d h:i a',strtotime($overtime['Overtime']['to'])) : '';
                                                             echo $to;
                                                              ?> 
+                                                        </td>
+                                                        <td>
+                                                         <?php 
+
+                                                            $employees = $this->Employees->overtimeEmployee($overtime['Overtime']['employee_ids']);
+
+                                                            if (!empty($employees)) {
+
+                                                                echo implode('<br>', $employees);
+                                                            }   
+
+                                                        ?>
                                                         </td>
                                                         <td > 
                                                             <?php echo !empty($overtime['Overtime']['status']) ? $overtime['Overtime']['status'] : '<span class="label label-default">Pending</span>'; ?>
@@ -167,6 +179,24 @@ $active_tab = 'pendings';
                                                                        'data-url' => '/absences/edit/'.$overtime['Overtime']['id'],
                                                                        'title'=>'Edit Information',
                                                                     ));
+                                                        
+                                                         echo $this->Html->link('<span class="fa-stack">
+                                                        <i class="fa fa-square fa-stack-2x"></i>
+                                                        <i class="fa fa-trash fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span>
+                                                        </span> ',array(
+                                                                    'controller' => 'overtimes',
+                                                                     'action' => 'delete',
+                                                                     $overtime['Overtime']['id']
+                                                                ),
+                                                                array(
+                                                                    'confirm' => 'Are you sure you want to delete this Request?',    
+                                                                    'class' =>'table-link',
+                                                                       'escape' => false,
+                                                                       'data-url' => '/absences/edit/'.$overtime['Overtime']['id'],
+                                                                       'title'=>'Edit Information',
+                                                                    ));
+
+
 
                                                         ?>
                                                         </td>

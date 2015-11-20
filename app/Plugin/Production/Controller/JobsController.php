@@ -4,6 +4,14 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class JobsController extends ProductionAppController {
 
+    public function index() {
+
+        $this->loadModel('Ticket.JobTicket');
+
+
+
+    }
+
     public function plans() {
 
 
@@ -18,6 +26,9 @@ class JobsController extends ProductionAppController {
         $this->loadModel('Production.Machine');
 
         $this->loadModel('Production.ProcessDepartment');
+
+
+        $this->loadModel('Production.RecievedTicket');
 
 
         $departmentProcess = $this->ProcessDepartment->find('list', array('fields' => array('id', 'name')));
@@ -37,7 +48,7 @@ class JobsController extends ProductionAppController {
 
         $query = $this->request->query;
 
-    
+
 
         if (!empty( $query['data']['date'])) {
 
@@ -57,13 +68,13 @@ class JobsController extends ProductionAppController {
         } else {
 
 
-        $date = date('Y-m-01');
+            $date = date('Y-m-01');
 
-        $date2 = date('Y-m-d');
+            $date2 = date('Y-m-d');
 
-        $conditions =array('date(JobTicket.created) BETWEEN ? AND ?' => array($date,$date2));
+            $conditions =array('date(JobTicket.created) BETWEEN ? AND ?' => array($date,$date2));
 
-        $dateSelected = date('Y/m/d',strtotime($date)).' - '.date('Y/m/d',strtotime($date2));
+            $dateSelected = date('Y/m/d',strtotime($date)).' - '.date('Y/m/d',strtotime($date2));
 
 
         }
@@ -86,6 +97,8 @@ class JobsController extends ProductionAppController {
         
         $jobData = $this->paginate('JobTicket');
 
+        $jobData = $this->RecievedTicket->checkStatus( $jobData);
+
       //  $jobData = $this->JobTicket->find('all',array('order' => 'JobTicket.id DESC','conditions' => $conditions ));
 
         //pr($jobData ); exit;
@@ -104,6 +117,140 @@ class JobsController extends ProductionAppController {
         //pr($jobData);exit();
         $this->set(compact('jobData','companyData','machineData','processDepartmentData', 'clientOrderUUID', 'clientOrderQuantity','dateSelected','departmentProcess'));
         
+    }
+
+    public function view($jobId = null) {
+
+        if (!empty($jobId)) {
+
+            $this->loadModel('Ticket.JobTicket');
+
+            $this->loadModel('Sales.ClientOrderDeliverySchedule');
+
+            $this->loadModel('Sales.Company');
+
+            $this->loadModel('Production.Machine');
+
+            $this->loadModel('Production.ProcessDepartment');
+
+            $this->loadModel('Production.RecievedTicket');
+
+            $this->loadModel('Production.TicketProcessSchedule');
+
+            $this->loadModel('Sales.Product');
+
+            $this->loadModel('Sales.ProductSpecificationDetail');
+
+            $this->loadModel('Sales.ProductSpecification');
+
+            $this->loadModel('Sales.ClientOrder');
+
+            $this->loadModel('Sales.ClientOrderDeliverySchedule');
+
+            $this->loadModel('Unit');
+
+            $this->loadModel('Machine');
+
+            $this->loadModel('SubProcess');
+
+            $this->JobTicket->bind(array('ClientOrder','TicketProcessSchedule'));
+
+
+            $jobData = $this->JobTicket->findById($jobId);
+
+
+            $schedules = $this->ClientOrderDeliverySchedule->find('all',array(
+                    'conditions' => array(
+                            'ClientOrderDeliverySchedule.client_order_id' =>  $jobData['JobTicket']['client_order_id']  
+                        )
+            ));
+
+            $RecievedTicket = $this->RecievedTicket->find('first',array('conditions' => array(
+                    'job_ticket_id' => $jobId
+            )));
+
+            $machines = $this->Machine->find('list', array('fields' => 
+                                                array('id',
+                                                    'name'
+                                                 )
+                                                ));
+
+
+
+            $subProcessData = $this->SubProcess->find('list',
+                                            array('fields' => 
+                                                array('SubProcess.id',
+                                                    'SubProcess.name'
+                                                 )
+                                                ));
+
+            $departmentProcess = $this->ProcessDepartment->find('list', array('fields' => array('id', 'name')));
+
+            $companyData = $this->Company->find('list',array('fields' => array('id','company_name')));
+
+            $machineData = $this->Machine->find('list',array('fields' => array('id','name')));
+            
+            $conditions = array('Product.id' => $jobData['JobTicket']['product_id']);
+
+            $productData = $this->Product->find('first',array('conditions' => $conditions ,'order' => 'Product.id DESC'));
+
+           
+            $specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
+                
+            $formatDataSpecs = $this->ProductSpecificationDetail->findData($productData['Product']['uuid']);
+
+            $unitData = Cache::read('unitData');
+            
+            if (!$unitData) {
+                
+                $unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
+                                                                'order' => array('Unit.unit' => 'ASC')
+                                                                ));
+                Cache::write('unitData', $unitData);
+            }
+
+
+            //find if product has specs
+            //$formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
+
+            // pr($productData);    
+            
+    
+            $this->set(compact('jobData','departmentProcess','companyData','subProcessData','machineData','productData','specs','unitData','schedules','RecievedTicket','formatDataSpecs','machines'));
+        }
+    }
+
+    public function recieved_tickets($id = null) {
+
+        if (!empty($id)) {
+
+            $this->loadModel('Production.RecievedTicket');
+
+            $auth = $this->Session->read('Auth.User');
+
+            $saveData = array();
+
+            $saveData['id'] = '';
+            $saveData['job_ticket_id'] = $id;
+            $saveData['status'] = 'recieved';
+            $saveData['recieved_by'] = $auth['id'];
+            $saveData['created_by'] = $auth['id'];
+            $saveData['modified_by'] = $auth['id'];
+
+            if ($this->RecievedTicket->save($saveData)) {
+
+              $this->Session->setFlash('Ticket has been recieved','success');
+
+            } else { 
+
+              $this->Session->setFlash('There\'s an error recieving tickets','error');
+
+            }
+            
+            return $this->redirect(array('controller' => 'jobs', 
+                        'action' => 'view',$id));
+
+        }
     }
 
     public function view_process($id = null) {
@@ -420,6 +567,15 @@ class JobsController extends ProductionAppController {
 
         return $machineScheduleData;
 
+    }
+
+    public function set_dates() {
+
+        if (!empty($this->request->data)) {
+
+            pr($this->request->data);
+            exit();
+        }
     }
 
 }

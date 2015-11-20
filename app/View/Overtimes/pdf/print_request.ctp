@@ -75,7 +75,14 @@
 							</table>
 
 						</td>
-						<td align = "center" style="border:1px solid black; width:35px; font-size:60%;"><b><?php echo $request['Overtime']['remarks']; ?></b></td>
+						<?php 
+						$fonsize = "font-size:60%";
+						if(strlen($request['Overtime']['remarks']) > 30)  {
+							$fonsize = "font-size:40%";
+							}
+						?>
+						<td align = "center" style="border:1px solid black; width:35px; <?php echo $fonsize; ?>"><b><?php 
+						echo $request['Overtime']['remarks']; ?></b></td>
 						<td align = "center" style="border:1px solid black; width:35px; font-size:60%;"><b></b></td>
 						<td align = "center" style="border:1px solid black; width:40px; font-size:60%;">
 								<table class="full-width text-center">

@@ -216,9 +216,9 @@
 							                                       <div class="clearfix"></div>
 
 							                                      <div class="form-group">
-							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> Incentives </label>
+							                                        <label for="inputEmail1" class="col-lg-2 control-label strong"> Comm Allowance </label>
 								                                      <div class="col-lg-7 value"> 
-								                                     		<?php echo $this->Form->input('incentives',array('label' => false,'class' => 'form-control')); ?>
+								                                     		<?php echo $this->Form->input('communication_allowances',array('label' => false,'class' => 'form-control')); ?>
 								                                       </div>
 							                                     </div>
 

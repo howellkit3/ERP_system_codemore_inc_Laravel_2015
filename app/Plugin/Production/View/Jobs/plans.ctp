@@ -92,6 +92,8 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 												<th><a href="#"><span>Customer</span></a></th>
 												<th><a href="#" class="text-center"><span>Product</span></a></th>
 												<th><a href="#" class="text-center"><span>Production Status</span></a></th>
+												<th><a href="#" class="text-center"><span>Status</span></a></th>
+												<th><a href="#" class="text-center"><span>Date Recieved</span></a></th>
 												<th><a href="#"><span>Remarks</span></a></th>
 												<th><a href="#"><span>Action</span></a></th>
 											</tr>
@@ -144,27 +146,49 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									                           		}
 									                           	?>
 									                        </td>
+									                        <td class="text-center">
+																<?php if (!empty($jobList['RecievedTicket']['id']) && $jobList['RecievedTicket']['status']  == 'recieved') { ?>
+																<span class="label label-success">Recieved</span>
+																<?php } else { ?>
 
+																<span class="label label-default">Pending</span>
+																<?php } ?>
+									                        </td>
+									                        <td class="text-center">
+									                        	<?php echo (!empty($jobList['RecievedTicket']['created'])) ? date('Y-m-d',strtotime($jobList['RecievedTicket']['created'])) : '' ?>
+									                        </td>
 									                        <td class="">
 									                           <?php echo $jobList['JobTicket']['remarks']; ?>
 									                        </td>
 
 									                        <td class="">
-									                        	<a data-id="<?php echo $jobList['JobTicket']['id']; ?>" data-toggle="modal" title="Edit Information" data-url="/ticket_process_schedules/ticket_data_view/<?php echo $jobList['JobTicket']['id']; ?>" class="view_full_ticket_details table-link" href="#ticketDataFullDetails">
+									                        	<!-- <a data-id="<?php echo $jobList['JobTicket']['id']; ?>" data-toggle="modal" title="Edit Information" data-url="/ticket_process_schedules/ticket_data_view/<?php echo $jobList['JobTicket']['id']; ?>" class="view_full_ticket_details table-link" href="#ticketDataFullDetails">
 										                       		<span class="fa-stack">
 																		<i class="fa fa-square fa-stack-2x"></i>
 																		<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;
 																		<span class="post"><font size="1px"> View </font></span>
 																	</span>
-																</a>
-									                           <?php if (empty($jobList['JobTicket']['production_status'])) { ?>
-									                           		<a data-id="<?php echo $jobList['JobTicket']['id']; ?>" data-toggle="modal" title="Edit Information" data-url="/ticket_process_schedules/ticket_data_view/<?php echo $jobList['JobTicket']['id']; ?>/schedule" class="view_full_ticket_details table-link" href="#ticketDataFullDetails">
+																</a> -->
+																<?php echo $this->Html->link('<span class="fa-stack">
+																		<i class="fa fa-square fa-stack-2x"></i>
+																		<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;
+																		<span class="post"><font size="1px"> View </font></span>
+																	</span>',
+																	array('controller' => 'jobs',
+																			'action' => 'view',
+																			$jobList['JobTicket']['id']			
+																			),
+																	array('escape' => false )
+																	);
+																	
+																	 if (empty($jobList['JobTicket']['production_status'])) { ?>
+									                           	<!-- 	<a data-id="<?php echo $jobList['JobTicket']['id']; ?>" data-toggle="modal" title="Edit Information" data-url="/ticket_process_schedules/ticket_data_view/<?php echo $jobList['JobTicket']['id']; ?>/schedule" class="view_full_ticket_details table-link" href="#ticketDataFullDetails">
 											                       		<span class="fa-stack">
 																			<i class="fa fa-square fa-stack-2x"></i>
 																			<i class="fa fa-calendar fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;
 																			<span class="post"><font size="1px"> Sched </font></span>
 																		</span>
-																	</a>
+																	</a> -->
 																	
 						                        				<?php } else { ?>
 						                        					

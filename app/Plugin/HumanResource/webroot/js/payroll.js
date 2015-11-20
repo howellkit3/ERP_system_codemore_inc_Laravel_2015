@@ -48,30 +48,30 @@
         });
 }
 
-$(document).ready(function(){
+	$(document).ready(function(){
 
-	$('.continue').click(function(e){
+		$('.continue').click(function(e){
 
-    $url = $(this).attr('href');
+	    	$url = $(this).attr('href');
 
-    swal({   
-        title: "Are you sure?",
-        text: "You want to continue", 
-        type: "info",   
-        showCancelButton: true,   
-        closeOnConfirm: false,   
-        showLoaderOnConfirm: true,
-        }, 
-        function(){   
-            setTimeout(
-                function(){     
-                  window.location.href = $url;
-                }, 2000); 
-        });
+		    swal({   
+		        title: "Are you sure?",
+		        text: "You want to continue", 
+		        type: "info",   
+		        showCancelButton: true,   
+		        closeOnConfirm: false,   
+		        showLoaderOnConfirm: true,
+		        }, 
+		        function(){   
+		            setTimeout(
+		                function(){     
+		                  window.location.href = $url;
+		                }, 2000); 
+		        });
 
-    e.preventDefault();
+		    e.preventDefault();
 
-});
+	});
 
 
     $('.daterange').daterangepicker();

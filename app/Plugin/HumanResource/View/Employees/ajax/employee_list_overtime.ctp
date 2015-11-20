@@ -13,7 +13,7 @@
 
             <input type="hidden" name="data[Attendance][id][<?php echo $KeyId ?>]" class="select_employee attendance" value="<?php echo !empty($value['Attendance']['in']) ? $value['Attendance']['in']: '';  ?>" id="checkbox-<?php echo $KeyId; ?>">
 
-            <span class="time-in"> <?php echo !empty( $value['Attendance']['in']) ? 'Time in ( '.date('h:i a',strtotime($value['Attendance']['in'])).' )' : ''; ?>  </span>
+       
             <label for="checkbox-<?php echo $KeyId; ?>">
                 <?php 
                 $name = $value['Employee']['first_name'];
@@ -23,6 +23,9 @@
                 $name .= !empty($value['Employee']['suffix']) ? ' '.$value['Employee']['suffix'] : '';
 
                 echo ucwords($name); ?>  
+
+                     <span class="time-in"> <?php echo !empty( $value['Attendance']['in']) ? 'Time in ( '.date('h:i a',strtotime($value['Attendance']['in'])).' )' : ''; ?>  </span>
+                     
             </label>
 
 
@@ -42,10 +45,10 @@
                               <?php  $style = '';
                                             $serverPath = $this->Html->url('/',true);  
 
-                                            if (!empty($employee['Employee']['image'])) {
+                                            if (!empty($value['Employee']['image'])) {
 
 
-                                                $background =  $serverPath.'img/uploads/employee/'.$employee['Employee']['image'].'?d='.rand(0,1000).time();    
+                                                $background =  $serverPath.'img/uploads/employee/'.$value['Employee']['image'].'?d='.rand(0,1000).time();    
                                             } else {
 
                                                  $background =  $serverPath.'img/default-profile.png';   

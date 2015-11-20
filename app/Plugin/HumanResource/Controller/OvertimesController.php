@@ -97,6 +97,8 @@ class OvertimesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Department');
 
+		$this->loadModel('HumanResource.Employee');
+
 		$this->loadModel('User');
 
 		$date = date('Y-m-d');
@@ -878,7 +880,14 @@ class OvertimesController  extends HumanResourceAppController {
 		$output = $view->render('print_request', false);
 
 		$dompdf = new DOMPDF();
-        $dompdf->set_paper("A5", 'landscape');
+		$paperSize = "A5";
+		$display = "landscape";	
+		if (count($employees) >= 10) {
+			$paperSize = "A4";
+
+			$display = "portrait";	
+		}
+        $dompdf->set_paper($paperSize, $display);
         $dompdf->load_html(utf8_decode($output), Configure::read('App.encoding'));
         $dompdf->render();
         $canvas = $dompdf->get_canvas();
@@ -906,5 +915,33 @@ class OvertimesController  extends HumanResourceAppController {
 		}
 	}
 
+
+public function delete($id = null) {
+
+
+		if (!empty($id)) {
+
+			if ($this->Overtime->delete($id)) {
+                $this->Session->setFlash(
+                    __('Request successfully deleted.', h($id))
+                );
+            } else {
+                $this->Session->setFlash(
+                    __('There\'s an error deleting your request ', h($id))
+                );
+            }
+
+            return  $this->redirect( array(
+                             'controller' => 'overtimes', 
+                             'action' => 'pendings',
+                             'tab' => 'pendings',
+                             'plugin' => 'human_resource'
+
+                        ));
+		}
+           
+           
+
+	}
 
 }

@@ -110,3 +110,33 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->  
+
+    <?php 
+    $quotationId = !empty($quotation['Quotation']['id']) ? $quotation['Quotation']['id'] : ''; 
+    $companyId = !empty($quotation['Quotation']['company_id']) ? $quotation['Quotation']['company_id'] : '';
+    $filename = !empty($quotation['Quotation']['id']) ? 'Quotation-'.$quotation['Quotation']['id'] : '';
+    ?>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        //
+        $.ajax({
+        url: serverPath + "sales/quotations/ajaxCreatePdf",
+        type: "POST",
+         data: {
+          "quotation_id": '<?php echo $quotationId; ?>',
+          "company_id": '<?php echo $companyId; ?>',
+          "filename" : '<?php echo $filename; ?>'
+        },
+        //dataType: "json",
+        success: function(data) {
+                console.log(data);
+                //alert(data);
+                $("#quotations").html(data);
+
+            }
+        });
+
+    });
+</script>
