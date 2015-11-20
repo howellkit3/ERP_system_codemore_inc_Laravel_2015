@@ -916,4 +916,32 @@ class OvertimesController  extends HumanResourceAppController {
 	}
 
 
+public function delete($id = null) {
+
+
+		if (!empty($id)) {
+
+			if ($this->Overtime->delete($id)) {
+                $this->Session->setFlash(
+                    __('Request successfully deleted.', h($id))
+                );
+            } else {
+                $this->Session->setFlash(
+                    __('There\'s an error deleting your request ', h($id))
+                );
+            }
+
+            return  $this->redirect( array(
+                             'controller' => 'overtimes', 
+                             'action' => 'pendings',
+                             'tab' => 'pendings',
+                             'plugin' => 'human_resource'
+
+                        ));
+		}
+           
+           
+
+	}
+
 }
