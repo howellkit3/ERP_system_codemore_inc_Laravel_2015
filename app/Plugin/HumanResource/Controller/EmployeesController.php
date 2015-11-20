@@ -1377,9 +1377,9 @@ class EmployeesController  extends HumanResourceAppController {
 			}
 
 			// Output the new PDF
-			//$pdfData = $pdf->Output($employee['Employee']['code'].'.pdf', 'D');
+			$pdfData = $pdf->Output($employee['Employee']['code'].'.pdf', 'D');
 
-			$pdf->Output();
+			//$pdf->Output();
 
 
 			//return true;
