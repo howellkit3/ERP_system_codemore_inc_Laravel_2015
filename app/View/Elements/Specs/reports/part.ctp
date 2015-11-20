@@ -12,7 +12,6 @@
 
         ?>
 
-
 <tr>
     <td class="td-heigth indent" style="border:1px solid #EAEAEA;">C<?php echo $key ?>-Part<?php echo $key ?></td>
     <td class="td-heigth" style="border:1px solid #EAEAEA;font-family: arial;"><?php echo !empty($formatDataSpecs['ProductSpecificationPart']['name']) ? $formatDataSpecs['ProductSpecificationPart']['name'] : $formatDataSpecs['ProductSpecificationPart']['material'] ?></td>
