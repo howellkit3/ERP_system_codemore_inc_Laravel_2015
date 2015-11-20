@@ -42,7 +42,7 @@ $totalremaining = 0;
                             <table class="table table-striped table-hover">
                                 <tbody>
                                     <tr>
-                                        <td>Client Order Number</td>
+                                        <td>Schedule Number</td>
                                         <td><?php echo  $clientsOrder['ClientOrder']['uuid']; ?></td>
                                     </tr>
 
@@ -81,7 +81,7 @@ $totalremaining = 0;
                                 <tbody>
 
                                     <tr>
-                                        <td>Schedule</td>
+                                        <td>Delivery Schedule</td>
                                         <td><?php echo date('M d, Y', strtotime($clientsOrder['ClientOrderDeliverySchedule']['schedule'])); ?></td>
                                     </tr>
                                      <tr>
@@ -268,7 +268,7 @@ $totalremaining = 0;
                     <thead>
                         <tr >
                             <th class=""><a href="#"><span>Delivery Receipt #</span></a>  </th>
-                            <th class=""><a href="#"><span>Schedule</span></a></th>
+                            <th class=""><a href="#"><span>Delivery Date</span></a></th>
                             <th class=""><a href="#"><span>P.O. Quantity</span></a></th>
                             <th class=""><a href="#"><span>Delivered</span></a></th>
                             <th class=""><a href="#"><span>Replaced</span></a></th>

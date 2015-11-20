@@ -2,7 +2,7 @@
     
         <tr class="">
             <td>
-                <?php  echo 'RCV' . $requestOrderDataList['DeliveredOrder']['uuid']  ?>  
+                <?php  echo  !empty($requestOrderDataList['DeliveredOrder']['uuid']) ? $requestOrderDataList['DeliveredOrder']['uuid'] : "From Color Tree" ?>  
             </td>
 
             <td >

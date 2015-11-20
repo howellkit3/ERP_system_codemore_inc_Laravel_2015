@@ -15,6 +15,8 @@ class DeliveredOrder extends AppModel {
 
 	public function saveDeliveredOrder($auth, $receivedOrdersId, $purchaseId, $deliveredItemsData = null){
 
+		//pr($deliveredItemsData['ReceivedOrder']['idholder']); exit;
+
 		$month = date("m"); 
 	    $year = date("y");
 	    $hour = date("H");
@@ -25,7 +27,7 @@ class DeliveredOrder extends AppModel {
 		$code =  $year. $month .$random;
 
 		$this->create();
-		//pr($deliveredItemsData); exit;
+		//pr($purchaseId); exit;
 		if(!empty($deliveredItemsData['purchase_orders_id'])){
 
 			$mystring = mb_substr($deliveredItemsData['uuid'],4,9);
@@ -38,13 +40,19 @@ class DeliveredOrder extends AppModel {
 		$data['modified_by'] = $auth;
 		$data['created_by'] = $auth;
 		$data['received_orders_id'] = $receivedOrdersId;
-		$data['purchase_orders_id'] = $purchaseId;
-		$data['dr_num'] = $deliveredItemsData['dr_num'];
-		$data['uuid'] = $deliveredItemsData['uuid'];
-		//pr($data); exit;
-		$this->save($data);
 
-		return $this->id;
+		if($purchaseId != 0){
+
+			$data['purchase_orders_id'] = $deliveredItemsData['idholder'];
+			$data['dr_num'] = $deliveredItemsData['dr_num'];
+			$data['si_num'] = $deliveredItemsData['si_num'];
+			$data['uuid'] = $deliveredItemsData['uuid'];
+		}	//pr($data); exit;
+			$this->save($data);
+
+			return $this->id;
+
+		
 
 	}
 
@@ -66,18 +74,13 @@ class DeliveredOrder extends AppModel {
 				),
 			),
 
-			'hasOne' => array(
+			'belongsTo' => array(
 				'ReceivedOrder' => array(
 					'className' => 'WareHouse.ReceivedOrder',
 					'foreignKey' => false,
 					'conditions' => 'ReceivedOrder.id = DeliveredOrder.received_orders_id'
 				),
 
-				'PurchaseOrder' => array(
-					'className' => 'Purchasing.PurchaseOrder',
-					'foreignKey' => false,
-					'conditions' => array('DeliveredOrder.purchase_orders_id = PurchaseOrder.id')
-				),
 			)
 		));
 	}

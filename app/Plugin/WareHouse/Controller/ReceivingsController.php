@@ -295,8 +295,6 @@ class ReceivingsController extends WareHouseAppController {
         
 		if (!empty($this->request->data)) {
 
-			//pr($this->request->data); exit;
-
 			if(empty($this->request->data['requestPurchasingItem'])){
         	
 	        	$this->Session->setFlash(__('No Items Selected'), 'error'); 
@@ -311,6 +309,8 @@ class ReceivingsController extends WareHouseAppController {
 			ksort($this->request->data['requestPurchasingItem']);
 
 			$receivedData = $this->ReceivedOrder->find('first', array('conditions' => array('ReceivedOrder.purchase_order_id' => $id)));
+
+			//pr($receivedData['ReceivedOrder']['id']); exit;
 				
 			$this->PurchaseOrder->id = $id;
 
@@ -320,13 +320,22 @@ class ReceivingsController extends WareHouseAppController {
 
 				$this->PurchaseOrder->saveField('status_id', 10);
 
+				$this->ReceivedOrder->saveField('supplier_id', $this->request->data['PurchaseOrder']['supplier']);
+
 			}else{
 
 				$itemId = $receivedData['ReceivedOrder']['id'];
 
+				$this->ReceivedOrder->id = $receivedData['ReceivedOrder']['id'];
+
+				$this->ReceivedOrder->saveField('supplier_id', $this->request->data['PurchaseOrder']['supplier']);
+
+
 			}
 
-			
+			$this->request->data['DeliveredOrders']['idholder'] = $this->request->data['PurchaseOrder']['idholder'];
+
+			//pr($this->request->data); exit;
 
 			$deliveryUUID = $this->DeliveredOrder->saveDeliveredOrder($userData['User']['id'], $itemId, $id, $this->request->data['DeliveredOrders']);
 
@@ -719,7 +728,7 @@ class ReceivingsController extends WareHouseAppController {
 		$this->DeliveredOrder->bind('ReceivedItem', 'PurchaseOrder', 'ReceivedOrder', 'ReceivedReceiptItem');
 
 		$receivedItemData = $this->DeliveredOrder->find('first', array('conditions' => array('DeliveredOrder.id' => $id)));
-		
+		//pr($receivedItemData); exit;
 		//$purchaseOrderData = $this->PurchaseOrder->find('first', array('conditions' => array('PurchaseOrder.id' => $receivedItemData[0]['DeliveredOrder']['purchase_orders_id'] )));
 		//pr($receivedItemData); exit;
 		$deliveredDataID = $receivedItemData['DeliveredOrder']['id'];
@@ -1145,6 +1154,8 @@ class ReceivingsController extends WareHouseAppController {
 
     public function in_record($id = null, $DeliveredOrderId = null, $purchaseOrderId = null, $supplierId = null) {
 
+    	//  pr($purchaseOrderId); exit;
+
     	$this->loadModel('WareHouse.DeliveredOrder');
 
     	$this->loadModel('Purchasing.PurchasingItem');
@@ -1312,6 +1323,8 @@ class ReceivingsController extends WareHouseAppController {
 				}
 
 			}
+
+			//pr($receiveDataHolder); exit;
 		
 			$this->Stock->saveStock($receiveDataHolder, $this->request->data, $userData['User']['id'], $supplierId, $stockData);
 
@@ -1358,6 +1371,12 @@ class ReceivingsController extends WareHouseAppController {
 
     	$this->loadModel('Purchasing.Address');
 
+    	$this->loadModel('Purchasing.PurchasingType');
+
+	 	$purchasingTypeData = $this->PurchasingType->find('list', array(
+														'fields' => array('PurchasingType.id', 'PurchasingType.name'),
+														));
+
 		$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name')
 																,'order' => array('Supplier.name' => 'ASC')
 															));
@@ -1386,7 +1405,9 @@ class ReceivingsController extends WareHouseAppController {
 
 			$itemId = $this->ReceivedOrder->saveReceivedOrders($this->request->data,$userData['User']['id'],$id);
 
-			$deliveryUUID = $this->DeliveredOrder->saveDeliveredOrder($userData['User']['id'], $itemId, $id, $this->request->data['DeliveredOrder']);
+			//pr($this->request->data); exit;
+
+			$deliveryUUID = $this->DeliveredOrder->saveDeliveredOrder($userData['User']['id'], $itemId, $id, $this->request->data['ReceiveReceipt']);
 
 			$this->ReceivedReceiptItem->saveReceivedReceiptItems($itemId, $this->request->data['ReceiveReceipt'], $deliveryUUID);
 
@@ -1399,7 +1420,7 @@ class ReceivingsController extends WareHouseAppController {
 
 		}
 
-		$this->set(compact('supplierData', 'unitData'));
+		$this->set(compact('supplierData', 'unitData', 'purchasingTypeData'));
 
     }
 
@@ -1443,6 +1464,40 @@ class ReceivingsController extends WareHouseAppController {
 
     }
 
+    public function test() {
+
+    	$this->loadModel('WareHouse.DeliveredOrder');
+
+    	$this->loadModel('Purchasing.PurchaseOrder');
+
+    	$this->DeliveredOrder->bind('ReceivedItem',  'ReceivedOrder', 'ReceivedReceiptItem');
+
+		$deliveredOrderData = $this->DeliveredOrder->find('all');
+
+		$purchasingData = $this->PurchaseOrder->find('all');
+
+		//pr($deliveredOrderData);  
+
+
+		foreach ($deliveredOrderData as $key => $deliveredOrdervalue) {
+
+			foreach ($purchasingData as $key => $purchaseDatavalue) {
+
+				if($deliveredOrdervalue['DeliveredOrder']['purchase_orders_id'] == $purchaseDatavalue['PurchaseOrder']['id'] ){
+
+					
+					$this->DeliveredOrder->ReceivedOrder->id = $deliveredOrdervalue['ReceivedOrder']['id'];
+
+					$this->DeliveredOrder->ReceivedOrder->saveField('supplier_id', $purchaseDatavalue['PurchaseOrder']['supplier_id']);
+
+				}
+
+			}
+			
+		}exit;
+
+		//pr($purchasingData); exit;
+   	}
 
     
 

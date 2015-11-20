@@ -63,8 +63,10 @@
                                                                             'label' => false,
                                                                             'disabled' => true,
                                                                             'fields' =>array('name'),
-                                                                            'value' => ucwords(empty($receivedItemData['ReceivedOrder']['supplier_id']) ? $supplierData[$receivedItemData['PurchaseOrder']['supplier_id']] : $supplierData[$receivedItemData['ReceivedOrder']['supplier_id']])));
+                                                                            'value' => ucwords($supplierData[$receivedItemData['ReceivedOrder']['supplier_id']])));
                                         ?>
+
+
                                     </div>
                                 </div>
 
@@ -380,9 +382,9 @@
 
                      $DeliveredOrderId = $receivedItemData['DeliveredOrder']['id'];
 
-
+                   //  pr($receivedItemData); 
                     echo $this->Form->create('InRecord',array(
-                        'url'=>(array('controller' => 'receivings','action' => 'in_record', $id, $DeliveredOrderId,$receivedItemData['DeliveredOrder']['purchase_orders_id'],$receivedItemData['PurchaseOrder']['supplier_id'] )),'class' => 'form-horizontal')); 
+                        'url'=>(array('controller' => 'receivings','action' => 'in_record', $id, $DeliveredOrderId,$receivedItemData['ReceivedOrder']['purchase_order_id'],$receivedItemData['ReceivedOrder']['supplier_id'] )),'class' => 'form-horizontal')); 
                 ?>
 
                     <div class="form-group" id="existing_items">

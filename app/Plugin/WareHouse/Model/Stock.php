@@ -18,7 +18,7 @@ class Stock extends AppModel {
 
 		$this->create();
 
-		$stock['supplier_id'] = $received['PurchaseOrder']['supplier_id'];
+		$stock['supplier_id'] = $received['ReceivedOrder']['supplier_id'];
 		$stock['location_id'] = $data['InRecord']['storekeeper'];
 		$stock['remarks'] = $data['InRecord']['remarks'];
 

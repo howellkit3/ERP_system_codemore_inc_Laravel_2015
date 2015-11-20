@@ -15,17 +15,29 @@ class ReceivedReceiptItem extends AppModel {
 
 	public function saveReceivedReceiptItems($id, $data, $uuid){
 
-		foreach ($data['itemdetails'] as $key => $value)
-		{
+		//pr($data); exit;
+
+		//foreach ($data['itemdetails'] as $key => $value)
+		//{
 
 			//pr( $value); exit;
 				$this->create();
 				$value['received_orders_id'] = $id;
 				$value['delivered_order_id'] = $uuid;
+				$value['model'] = $data['model'];
+				$value['item_type'] = $data['item_type'];
+				$value['item_type'] = $data['item_type'];
+				$value['foreign_key'] = $data['foreign_key'];
+				$value['quantity'] = $data['quantity'];
+				$value['quantity_unit_id'] = $data['quantity_unit_id'];
+				$value['lot'] = $data['lot'];
+				$value['number_of_boxes'] = $data['pack_quantity'];
+				$value['quantity_per_boxes'] = $data['quantity_per_box'];
+				$value['remarks'] = $data['remarks'];
 				//pr( $value); exit;
 		 		$this->save($value);
 
-		}
+		//}
 
 		return $this->id;
 	}

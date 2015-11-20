@@ -54,7 +54,7 @@
                                                                             'label' => false,
                                                                             'disabled' => true,
                                                                             'fields' =>array('name'),
-                                                                            'value' => ucwords(empty($receivedItemData['ReceivedOrder']['supplier_id']) ? $supplierData[$receivedItemData['PurchaseOrder']['supplier_id']] : $supplierData[$receivedItemData['ReceivedOrder']['supplier_id']])));
+                                                                            'value' => ucwords($supplierData[$receivedItemData['ReceivedOrder']['supplier_id']]) ));
                                         ?>
                                     </div>
                                 </div>

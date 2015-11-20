@@ -28,7 +28,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                     
                                     <div class="col-lg-8">
 
-                                        <?php 
+                                        <?php //pr($purchaseOrderData); 
 
                                             echo $this->Form->input('ReceivedItems.id', array(
                                                                             'class' => 'form-control item_type',
@@ -62,12 +62,19 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                     <label class="col-lg-2 control-label">Supplier</label>
                                     <div class="col-lg-8">
                                         <?php 
-                                            echo $this->Form->input('PurchaseOrder.supplier', array(
+                                            echo $this->Form->input('PurchaseOrder.suppliername', array(
                                                                             'class' => 'form-control item_type',
                                                                             'label' => false,
                                                                             'disabled' => true,
                                                                             'fields' =>array('name'),
                                                                             'value' => ucwords($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']])));
+
+                                             echo $this->Form->input('PurchaseOrder.supplier', array(
+                                                                            'class' => 'form-control item_type',
+                                                                            'label' => false,
+                                                                            'type' => 'hidden',
+                                                                            'fields' =>array('name'),
+                                                                            'value' => $purchaseOrderData['PurchaseOrder']['supplier_id']));
 
                                             echo $this->Form->input('PurchaseOrder.idholder', array(
                                                                             'class' => 'form-control item_type idholder',
@@ -89,6 +96,8 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                                             'fields' =>array('name')
                                                                             ));
                                         ?>
+
+
                                     </div>
                                 </div>      
 
