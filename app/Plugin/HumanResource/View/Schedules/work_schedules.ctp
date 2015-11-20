@@ -166,7 +166,7 @@ $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['ta
 									                        </td>
 									                       
 									                        <td class="text-center">
-									                           <?php echo $schedule['WorkShift']['name']; ?> 
+									                            <?php echo $schedule['WorkShift']['name']; ?> (<?php echo date('h:i a',strtotime($schedule['WorkShift']['from'])).' - '.date('h:i a',strtotime($schedule['WorkShift']['to'])) ?>) 
 									                        </td>
 
 									                         <td class="text-center">
