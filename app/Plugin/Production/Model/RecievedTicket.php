@@ -27,4 +27,21 @@ class RecievedTicket extends AppModel {
 		$this->contain($model);
 	}
 
+	public function checkStatus($data = array()) {
+
+		if (!empty($data)) {
+
+			foreach ($data as $key => $list) {
+						
+					$job_ticket_id = $list['JobTicket']['id'];
+
+					$ticket = $this->find('first',array('conditions' => array('RecievedTicket.job_ticket_id' => $job_ticket_id)));
+
+					$data[$key]['RecievedTicket'] = !empty($ticket['RecievedTicket']) ? $ticket['RecievedTicket'] : array();		
+			}
+
+			return $data;
+		}
+	}
+
 }

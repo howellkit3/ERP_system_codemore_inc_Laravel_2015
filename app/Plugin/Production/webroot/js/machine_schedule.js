@@ -1,6 +1,8 @@
 $(document).ready(function(){ 
 
-    $('.datepicker').datepicker();
+    $('.datepicker').datepicker({
+       format: 'yyyy-mm-dd'
+    });
 
     $('.timepicker').timepicker({
             minuteStep: 5,

@@ -2462,3 +2462,7 @@ CREATE TABLE `philhealth_reports` (
 `modified`  datetime NULL ,
 PRIMARY KEY (`id`)
 );
+
+/* aldrin added this 11-20-2015 production database */
+ALTER TABLE `ticket_process_schedules`
+ADD COLUMN `production_date`  datetime NULL AFTER `order`;

@@ -61,25 +61,31 @@ class TicketProcessSchedule extends AppModel {
 
 						$ticketData['id'] = !empty($innerValue['id']) ? $innerValue['id'] : '';
 
-						if( $this->save($ticketData) ) {
 
-							$idHolder = $this->id;
-							$ticketID[] = $idHolder;
-						}
+						pr($ticketData);
+						// if( $this->save($ticketData) ) {
+
+						// 	$idHolder = $this->id;
+						// 	$ticketID[] = $idHolder;
+						// }
 					
 					}
 
 					
 				}
 
+				exit();
+
 			} else {
 
 
-			if (!empty($data['department_process_id'])) {
-
+			if (!empty($data['TicketProcessSchedule']['department_process_id'])) {
+				$ticketData = $data['TicketProcessSchedule'];
 			 	$ticketData['job_ticket_id'] = $data['Ticket']['job_ticket_id'];
 				$ticketData['created_by'] = $auth;
 				$ticketData['modified_by'] = $auth;	
+
+				pr($ticketData);
 
 					if ($this->save($ticketData) ) {
 
@@ -97,6 +103,29 @@ class TicketProcessSchedule extends AppModel {
 		return $ticketID;
 		
 		
+	}
+
+	public function saveProcess($data = array(),$auth) {
+
+		$ticketData = array();
+		$lastId = array();
+		if (!empty($data)) {
+
+				$ticketData = $data['TicketProcessSchedule'];
+				$ticketData['created_by'] = $auth;
+				$ticketData['modified_by'] = $auth;	
+
+				
+				if ($this->save($ticketData)) {
+
+					$lastId[] = $this->id;
+
+				}
+
+
+		}
+
+		return $lastId;
 	}
 	
 }

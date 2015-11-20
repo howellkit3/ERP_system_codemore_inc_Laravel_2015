@@ -28,6 +28,9 @@ class JobsController extends ProductionAppController {
         $this->loadModel('Production.ProcessDepartment');
 
 
+        $this->loadModel('Production.RecievedTicket');
+
+
         $departmentProcess = $this->ProcessDepartment->find('list', array('fields' => array('id', 'name')));
 
         // $this->loadModel('Sales.ProductSpecificationProcess');
@@ -45,7 +48,7 @@ class JobsController extends ProductionAppController {
 
         $query = $this->request->query;
 
-    
+
 
         if (!empty( $query['data']['date'])) {
 
@@ -94,6 +97,8 @@ class JobsController extends ProductionAppController {
         
         $jobData = $this->paginate('JobTicket');
 
+        $jobData = $this->RecievedTicket->checkStatus( $jobData);
+
       //  $jobData = $this->JobTicket->find('all',array('order' => 'JobTicket.id DESC','conditions' => $conditions ));
 
         //pr($jobData ); exit;
@@ -130,6 +135,8 @@ class JobsController extends ProductionAppController {
 
             $this->loadModel('Production.RecievedTicket');
 
+            $this->loadModel('Production.TicketProcessSchedule');
+
             $this->loadModel('Sales.Product');
 
             $this->loadModel('Sales.ProductSpecificationDetail');
@@ -146,10 +153,11 @@ class JobsController extends ProductionAppController {
 
             $this->loadModel('SubProcess');
 
-            $this->JobTicket->bind(array('ClientOrder'));
+            $this->JobTicket->bind(array('ClientOrder','TicketProcessSchedule'));
 
 
             $jobData = $this->JobTicket->findById($jobId);
+
 
             $schedules = $this->ClientOrderDeliverySchedule->find('all',array(
                     'conditions' => array(

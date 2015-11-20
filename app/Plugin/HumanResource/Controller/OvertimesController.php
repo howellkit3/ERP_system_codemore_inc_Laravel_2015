@@ -97,6 +97,8 @@ class OvertimesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Department');
 
+		$this->loadModel('HumanResource.Employee');
+
 		$this->loadModel('User');
 
 		$date = date('Y-m-d');

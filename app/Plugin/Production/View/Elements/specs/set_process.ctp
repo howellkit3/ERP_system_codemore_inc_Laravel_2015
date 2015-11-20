@@ -16,25 +16,35 @@
 			</div>
 			<div class="panel-collapse collapse <?php echo ( $processKey == 1 ) ? 'in' : '';?>" id="collapse-<?php echo $key; ?>" >
 				<div class="panel-body">
-					<?php echo $this->Form->create('ProductionProcess',array('url' => array('controller' => 'jobs','action' => 'set_dates'))); ?>
+					<?php echo $this->Form->create('TicketProcessSchedule',array('url' => array('controller' => 'ticket_process_schedules','action' => 'set_process')));
+					 echo $this->Form->input('job_ticket_id',array('value' => $jobData['JobTicket']['id'],'type' => 'hidden')); 
+					 ?>
 						<h1>Set Process</h1>
 						<div class="row parent-collapse">
 							<div class="col-lg-5">
 
-								<div class="col-lg-9"> <?php echo $this->Form->input('production_date',array('class' => 'datepicker form-control','label' => 'Production Date')); ?> </div>
+								<div class="col-lg-9"> <?php echo $this->Form->input('production_date',array('class' => 'datepicker form-control','label' => 'Production Date','type' => 'text')); ?> </div>
 							</div>
 							<div class="col-lg-5">
-								<div class="col-lg-9"> <?php echo $this->Form->input('process',array('class' => 'select_process form-control','label' => 'Process',
+								<div class="col-lg-9"> <?php echo $this->Form->input('department_process_id',array('class' => 'select_process form-control','label' => 'Process',
 									'options' => $departmentProcess,
 									'empty' => '-- Select Process --',
 								)); ?> </div>
 							</div>
 							<div class="clearfix"></div>
 							<div class="col-lg-5">
-								<div class="col-lg-9">  </div>
+								<div class="col-lg-9"> 
+								<?php 
+									 echo $this->Form->input('remarks',array('type' => 'textarea','class' => 'form-control','label' => 'Notes'));
+								?> 
+								</div>
 							</div>
 								<div class="col-lg-5">
-								<div class="col-lg-9"> <?php echo $this->Form->input('machines',array('class' => 'form-control machine_data','label' => 'Machine')); ?> </div>
+								<div class="col-lg-9"> <?php echo $this->Form->input('machine_id',array(
+								'class' => 'form-control machine_data',
+								'label' => 'Machine',
+								'options' => $machines
+								)); ?> </div>
 							</div>
 								
 						</div>
@@ -45,7 +55,7 @@
 								</div>
 						</div>
 				
-						<?php $this->Form->end(); ?>
+						<?php echo $this->Form->end(); ?>
 				</div>
 			</div>
 		</div>
