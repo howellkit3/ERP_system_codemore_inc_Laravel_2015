@@ -163,7 +163,7 @@ Configure::write('debug',2);
 								$total = $paperQuantity; ?> 
 								<?php if(!empty($part['ProductSpecificationPart']['paper_quantity'])) : ?>
 <!-- 								<!-- + --> 
-								<?php echo $paper //round($paperQuantity);?>  
+								<?php echo round($paperQuantity);?>  
 							<?php endif; ?>
 								<?php if(!empty($part['ProductSpecificationPart']['allowance'])){ ?>
 								+ <?php echo $part['ProductSpecificationPart']['allowance']; 
