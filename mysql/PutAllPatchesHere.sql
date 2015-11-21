@@ -2432,3 +2432,21 @@ ADD COLUMN `from_warehouse`  int(11) NULL DEFAULT 0 AFTER `modified`;
 /* howellkit added this nov-18-2015*/
 ALTER TABLE `koufu_sale`.`products` ADD COLUMN `status_id` INT(11) DEFAULT NULL AFTER `name`;
 UPDATE `products` SET `status_id` = 0 WHERE `status_id` IS NULL;
+
+/* howellkit added this nov-20-2015*/
+
+CREATE TABLE `dr_holders` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `clients_order_id` INT(11) DEFAULT NULL,
+  `schedule_id` INT(11) DEFAULT NULL,
+  `status` VARCHAR(30) DEFAULT NULL,
+  `created_by` INT(11) DEFAULT NULL,
+  `modified_by` INT(11) DEFAULT NULL,
+  `created` DATETIME DEFAULT NULL,
+  `modified` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE `received_items`
+ADD COLUMN `purchasing_order_id`  INT(11) NULL DEFAULT 0 AFTER `received_orders_id`;

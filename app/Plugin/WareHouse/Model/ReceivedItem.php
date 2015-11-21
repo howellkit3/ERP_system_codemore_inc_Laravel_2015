@@ -58,6 +58,11 @@ class ReceivedItem extends AppModel {
 					'className' => 'WareHouse.ReceivedOrder',
 					'foreignKey' => 'received_orders_id'
 				),
+
+				'PurchaseOrder' => array(
+					'className' => 'Purchasing.PurchaseOrder',
+					'foreignKey' => 'purchasing_order_id'
+				),
 			)
 		));
 	}
