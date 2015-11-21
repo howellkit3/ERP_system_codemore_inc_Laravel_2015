@@ -28,47 +28,19 @@
                 <div class="col-lg-12">
                     <div class="main-box clearfix">
                         <ul class="nav nav-tabs">
-                                    <li class="<?php echo ($active_tab == 'tab-waiting') ? 'active' : '' ?>" alt="tab-waiting"><a href="#tab-waiting" data-toggle="tab">Waiting</a></li>
-                                    <li class="<?php echo ($active_tab == 'tab-due') ? 'active' : '' ?>" alt="tab-due"><a href="#tab-due" id = 'itemType' data-toggle="tab">Due</a></li>
-                                    <li class="<?php echo ($active_tab == 'tab-approved') ? 'active' : '' ?>" alt="tab-approved"><a href="#tab-approved" id = 'itemType' data-toggle="tab">Approved</a></li>
-                                    <li class="<?php echo ($active_tab == 'tab-closed') ? 'active' : '' ?>" alt="tab-closed"><a href="#tab-closed" id = 'itemType' data-toggle="tab">Closed</a></li>
-                                    <li class="<?php echo ($active_tab == 'tab-completed') ? 'active' : '' ?>" alt="tab-completed"><a href="#tab-completed" id = 'itemType' data-toggle="tab">Completed</a></li>
+                                    <li class="<?php echo ($active_tab == 'tab-waiting') ? 'active' : '' ?> statusclick" alt="tab-waiting" value = "1"><a href="#tab-waiting" data-toggle="tab">Waiting</a></li>
+                                    <li class="<?php echo ($active_tab == 'tab-due') ? 'active' : '' ?> statusclick" alt="tab-due" value = "2"><a href="#tab-due" id = 'itemType' data-toggle="tab">Due</a></li>
+                                    <li class="<?php echo ($active_tab == 'tab-approved') ? 'active' : '' ?> statusclick" alt="tab-approved" value = "3"><a href="#tab-approved" id = 'itemType' data-toggle="tab">Approved</a></li>
+                                    <li class="<?php echo ($active_tab == 'tab-closed') ? 'active' : '' ?> statusclick" alt="tab-closed" value = "4"><a href="#tab-closed" id = 'itemType' data-toggle="tab">Closed</a></li>
+                                    <li class="<?php echo ($active_tab == 'tab-completed') ? 'active' : '' ?> statusclick" alt="tab-completed" value = "5"><a href="#tab-completed" id = 'itemType' data-toggle="tab">Completed</a></li>
                                 </ul>
                         <div class="main-box-body clearfix">
                             <div class="tabs-wrapper">                  
                                 <div class="tab-content">
-                                    <div class="tab-pane fade  <?php echo ($active_tab == 'tab-waiting') ? 'in active' : '' ?>" id="tab-waiting">
-                                         waiting
-                                         <?php $params = 1; ?>
-                                        <?php echo $this->element('index', array('params' => $params)); ?><br><br>
-                                        
-                                    </div>
-
-                                    <div class="tab-pane fade  <?php echo ($active_tab == 'tab-due') ? 'in active' : '' ?>" id="tab-due">
-                                        due
-                                        <?php $params = 2; ?>
-                                        <?php echo $this->element('index', array('params' => $params)); ?><br><br>
-                                        
-                                    </div>
-
-                                     <div class="tab-pane fade  <?php echo ($active_tab == 'tab-approved') ? 'in active' : '' ?>" id="tab-approved">
-                                         approved
-                                        <?php $params = 3; ?>
-                                        <?php echo $this->element('index', array('params' => $params)); ?><br><br>
-
-                                    </div>       
-
-                                    <div class="tab-pane fade  <?php echo ($active_tab == 'tab-closed') ? 'in active' : '' ?>" id="tab-closed">
-                                        closed
-                                        <?php $params = 4; ?>
-                                        <?php echo $this->element('index', array('params' => $params)); ?><br><br>
-                                    </div>
-
-                                    <div class="tab-pane fade  <?php echo ($active_tab == 'tab-completed') ? 'in active' : '' ?>" id="tab-completed">
-                                         completed
-                                        <?php $params = 5; ?>
-                                        <?php echo $this->element('index', array('params' => $params)); ?><br><br>
-                                    </div>
+                                
+                                    <section class = "appendHere">
+                                    </section>
+                                    
 
                                 </div>
                             </div>
@@ -125,5 +97,63 @@
         });
 
     });
+
+     function selectStatus(deliveryStatus) {
+
+        $.ajax({
+            type: "GET",
+            url: serverPath + "delivery/deliveries/index_status/"+deliveryStatus,
+            dataType: "html",
+            success: function(data) {
+
+                if(data){
+
+                    $('.appendHere').html(data);
+
+                } 
+                
+            }
+        });
+    }
+
+    $( document ).ready(function() {
+
+        deliveryStatus = 1;
+
+        selectStatus(deliveryStatus);
+
+    });
+
+    $('.statusclick').click(function() {
+
+        deliveryStatus = $(this).val();
+
+        selectStatus(deliveryStatus);
+
+    });
+     $('body').on('click','#item_type_pagination a',function(e) {
+
+        $url = $(this).attr('href');
+
+
+        $.ajax({
+            type: "GET",
+            url: $url,
+            dataType: "html",
+            success: function(data) {
+
+                if(data){
+
+                    $('.appendHere').html(data);
+
+                } 
+                
+            }
+        });
+
+
+        e.preventDefault();
+    });
+
 
 </script>

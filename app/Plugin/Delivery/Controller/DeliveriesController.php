@@ -14,80 +14,80 @@ class DeliveriesController extends DeliveryAppController {
 
     public function index() {
 
-        $userData = $this->Session->read('Auth');
+         $userData = $this->Session->read('Auth');
 
-        $this->loadModel('Sales.ClientOrderDeliverySchedule');
+     //    $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
-     //   $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status'))); 
+     // //   $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status'))); 
         
-       // $this->ClientOrder->bindDelivery();
-        $clientsStatus = $this->ClientOrderDeliverySchedule->find('all',array( 'conditions' => array(
-                                        'ClientOrderDeliverySchedule.client_order_id' => 86
-                                        )));
+     //   // $this->ClientOrder->bindDelivery();
+     //    $clientsStatus = $this->ClientOrderDeliverySchedule->find('all',array( 'conditions' => array(
+     //                                    'ClientOrderDeliverySchedule.client_order_id' => 86
+     //                                    )));
 
-        $this->Delivery->bindDelivery();
-        $deliveryStatus = $this->Delivery->find('all');
+     //    $this->Delivery->bindDelivery();
+     //    $deliveryStatus = $this->Delivery->find('all');
 
-     //  pr($deliveryStatus); exit;
+     // //  pr($deliveryStatus); exit;
 
-      //  $orderList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'status')));
+     //  //  $orderList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'status')));
 
-       // $orderListHelper = $this->Delivery->find('list',array('fields' => array('clients_order_id', 'dr_uuid')));
+     //   // $orderListHelper = $this->Delivery->find('list',array('fields' => array('clients_order_id', 'dr_uuid')));
 
-        $orderDeliveryList = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid', 'uuid')));
+     //    $orderDeliveryList = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid', 'uuid')));
 
-        //$deliveryDetailList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'delivered_quantity')));
+     //    //$deliveryDetailList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'delivered_quantity')));
 
-        $this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product'));
+     //    $this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product'));
 
-        $this->ClientOrderDeliverySchedule->recursive = 1;
+     //    $this->ClientOrderDeliverySchedule->recursive = 1;
 
-        $limit = 10;
+     //    $limit = 10;
 
-        //$conditions = array('ClientOrder.status_id' => null);
+     //    //$conditions = array('ClientOrder.status_id' => null);
 
-        $conditions = "";
-        $this->paginate = array(
-            'conditions' => $conditions,
-            'limit' => $limit,
-            'fields' => array(
-                'ClientOrder.uuid',
-                'ClientOrder.po_number',
-                'ClientOrder.id',
-                'ClientOrder.status_id',
-                'Company.company_name',  
-                'Product.name', 
-                'ClientOrderDeliverySchedule.quantity', 
-                'ClientOrderDeliverySchedule.location', 
-                'ClientOrderDeliverySchedule.schedule',
-                'ClientOrderDeliverySchedule.uuid',
-                'ClientOrderDeliverySchedule.id',
-                'QuotationDetail.quotation_id'),
-            'order' => 'ClientOrder.id DESC',
-        );
+     //    $conditions = "";
+     //    $this->paginate = array(
+     //        'conditions' => $conditions,
+     //        'limit' => $limit,
+     //        'fields' => array(
+     //            'ClientOrder.uuid',
+     //            'ClientOrder.po_number',
+     //            'ClientOrder.id',
+     //            'ClientOrder.status_id',
+     //            'Company.company_name',  
+     //            'Product.name', 
+     //            'ClientOrderDeliverySchedule.quantity', 
+     //            'ClientOrderDeliverySchedule.location', 
+     //            'ClientOrderDeliverySchedule.schedule',
+     //            'ClientOrderDeliverySchedule.uuid',
+     //            'ClientOrderDeliverySchedule.id',
+     //            'QuotationDetail.quotation_id'),
+     //        'order' => 'ClientOrder.id DESC',
+     //    );
 
-        $clientsOrder = $this->paginate('ClientOrderDeliverySchedule');
+     //    $clientsOrder = $this->paginate('ClientOrderDeliverySchedule');
 
-        foreach ($clientsOrder as $key => $value){
+     //    foreach ($clientsOrder as $key => $value){
 
-            foreach ($deliveryStatus as $key1 => $valueofDelivery){
+     //        foreach ($deliveryStatus as $key1 => $valueofDelivery){
     
-                if($value['ClientOrderDeliverySchedule']['uuid'] == $valueofDelivery['Delivery']['schedule_uuid']){
+     //            if($value['ClientOrderDeliverySchedule']['uuid'] == $valueofDelivery['Delivery']['schedule_uuid']){
 
 
-                    $clientsOrder[$key]['DeliveryDetail']['quantity'] = $valueofDelivery['DeliveryDetail']['quantity'];
-                    $clientsOrder[$key]['DeliveryDetail']['delivered_quantity'] = $valueofDelivery['DeliveryDetail']['delivered_quantity'];
-                    $clientsOrder[$key]['Delivery']['status'] = $valueofDelivery['Delivery']['status'];
-                    $clientsOrder[$key]['Delivery']['dr_uuid'] = $valueofDelivery['Delivery']['dr_uuid'];
-                    $clientsOrder[$key]['DeliveryDetail']['status'] = $valueofDelivery['DeliveryDetail']['status'];
+     //                $clientsOrder[$key]['DeliveryDetail']['quantity'] = $valueofDelivery['DeliveryDetail']['quantity'];
+     //                $clientsOrder[$key]['DeliveryDetail']['delivered_quantity'] = $valueofDelivery['DeliveryDetail']['delivered_quantity'];
+     //                $clientsOrder[$key]['Delivery']['status'] = $valueofDelivery['Delivery']['status'];
+     //                $clientsOrder[$key]['Delivery']['dr_uuid'] = $valueofDelivery['Delivery']['dr_uuid'];
+     //                $clientsOrder[$key]['DeliveryDetail']['status'] = $valueofDelivery['DeliveryDetail']['status'];
 
 
-                }
+     //            }
 
-            }
-        }
+     //        }
+     //    }
 
-       // pr($clientsOrder); exit;
+     //   // pr($clientsOrder); exit;
 
         if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
 
@@ -97,7 +97,7 @@ class DeliveriesController extends DeliveryAppController {
             $noPermissionSales = ' ';
         }
 
-        $this->set(compact('noPermissionSales','clientsOrder','deliveryData', 'deliveryList', 'deliveryDetailList', 'clientsStatus', 'deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList'));
+         $this->set(compact('noPermissionSales','clientsOrder','deliveryData', 'deliveryList', 'deliveryDetailList', 'clientsStatus', 'deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList'));
     }
 
     public function add($deliveryScheduleId = null, $clientsOrderUuid = null){
@@ -1498,6 +1498,428 @@ class DeliveriesController extends DeliveryAppController {
 
                     ));  
         }
+    }
+
+
+    public function index_status($status = null) {
+
+        $userData = $this->Session->read('Auth');
+
+        $this->loadModel('Sales.ClientOrderDeliverySchedule');
+
+        // $clientsStatus = $this->ClientOrderDeliverySchedule->find('all',array( 'conditions' => array(
+        //                                 'ClientOrderDeliverySchedule.client_order_id' => 86
+        //                                 )));
+
+        $this->Delivery->bindDelivery();
+        $deliveryStatus = $this->Delivery->find('all');        
+
+        $orderDeliveryList = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid', 'uuid')));
+
+
+        if($status == 1){
+
+            $this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product'));
+
+            $this->ClientOrderDeliverySchedule->recursive = 1;
+
+            $limit = 10;
+           
+          //  pr('1'); exit;
+            //$conditions = array('ClientOrder.status_id' => null);
+
+            $conditions = "";
+            $this->paginate = array(
+                'conditions' => $conditions,
+                'limit' => $limit,
+                'fields' => array(
+                    'ClientOrder.uuid',
+                    'ClientOrder.po_number',
+                    'ClientOrder.id',
+                    'ClientOrder.status_id',
+                    'Company.company_name',  
+                    'Product.name', 
+                    'ClientOrderDeliverySchedule.quantity', 
+                    'ClientOrderDeliverySchedule.location', 
+                    'ClientOrderDeliverySchedule.schedule',
+                    'ClientOrderDeliverySchedule.uuid',
+                    'ClientOrderDeliverySchedule.id',
+                    'QuotationDetail.quotation_id'),
+                'order' => 'ClientOrder.id DESC',
+            );
+
+            $clientsOrder = $this->paginate('ClientOrderDeliverySchedule');
+
+            //pr($clientsOrder); exit;
+
+            foreach ($clientsOrder as $key => $value){
+
+                foreach ($deliveryStatus as $key1 => $valueofDelivery){
+        
+                    if($value['ClientOrderDeliverySchedule']['uuid'] == $valueofDelivery['Delivery']['schedule_uuid']){
+
+
+                        $clientsOrder[$key]['DeliveryDetail']['quantity'] = $valueofDelivery['DeliveryDetail']['quantity'];
+                        $clientsOrder[$key]['DeliveryDetail']['delivered_quantity'] = $valueofDelivery['DeliveryDetail']['delivered_quantity'];
+                        $clientsOrder[$key]['Delivery']['status'] = $valueofDelivery['Delivery']['status'];
+                        $clientsOrder[$key]['Delivery']['dr_uuid'] = $valueofDelivery['Delivery']['dr_uuid'];
+                        $clientsOrder[$key]['DeliveryDetail']['status'] = $valueofDelivery['DeliveryDetail']['status'];
+
+
+                    }
+
+                }
+            }
+
+           // pr($clientsOrder); exit;
+
+            if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
+
+                $noPermissionSales = 'disabled not-active';
+
+            }else{
+
+                $noPermissionSales = ' ';
+            }
+
+            $this->set(compact('noPermissionSales','clientsOrder','deliveryData', 'deliveryList', 'deliveryDetailList', 'clientsStatus', 'deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList'));
+
+            $this->render('index_waiting');
+
+        }
+
+        if($status == 2){
+
+            $this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product'));
+
+            $this->ClientOrderDeliverySchedule->recursive = 1;
+
+            $limit = 10;
+           
+          //  pr('1'); exit;
+            //$conditions = array('ClientOrder.status_id' => null);
+
+            $conditions = "";
+            $this->paginate = array(
+                'conditions' => $conditions,
+                'limit' => $limit,
+                'fields' => array(
+                    'ClientOrder.uuid',
+                    'ClientOrder.po_number',
+                    'ClientOrder.id',
+                    'ClientOrder.status_id',
+                    'Company.company_name',  
+                    'Product.name', 
+                    'ClientOrderDeliverySchedule.quantity', 
+                    'ClientOrderDeliverySchedule.location', 
+                    'ClientOrderDeliverySchedule.schedule',
+                    'ClientOrderDeliverySchedule.uuid',
+                    'ClientOrderDeliverySchedule.id',
+                    'QuotationDetail.quotation_id'),
+                'order' => 'ClientOrder.id DESC',
+            );
+
+            $clientsOrder = $this->paginate('ClientOrderDeliverySchedule');
+
+            //pr($clientsOrder); exit;
+
+            foreach ($clientsOrder as $key => $value){
+
+                foreach ($deliveryStatus as $key1 => $valueofDelivery){
+        
+                    if($value['ClientOrderDeliverySchedule']['uuid'] == $valueofDelivery['Delivery']['schedule_uuid']){
+
+
+                        $clientsOrder[$key]['DeliveryDetail']['quantity'] = $valueofDelivery['DeliveryDetail']['quantity'];
+                        $clientsOrder[$key]['DeliveryDetail']['delivered_quantity'] = $valueofDelivery['DeliveryDetail']['delivered_quantity'];
+                        $clientsOrder[$key]['Delivery']['status'] = $valueofDelivery['Delivery']['status'];
+                        $clientsOrder[$key]['Delivery']['dr_uuid'] = $valueofDelivery['Delivery']['dr_uuid'];
+                        $clientsOrder[$key]['DeliveryDetail']['status'] = $valueofDelivery['DeliveryDetail']['status'];
+
+
+                    }
+
+                }
+            }
+
+           // pr($clientsOrder); exit;
+
+            if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
+
+                $noPermissionSales = 'disabled not-active';
+
+            }else{
+
+                $noPermissionSales = ' ';
+            }
+
+            $this->set(compact('noPermissionSales','clientsOrder','deliveryData', 'deliveryList', 'deliveryDetailList', 'clientsStatus', 'deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList'));
+
+            $this->render('index_due');
+
+        }
+
+        if($status == 3){
+
+             $this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product'));
+
+            $this->ClientOrderDeliverySchedule->recursive = 1;
+
+            $limit = 10;
+           
+          //  pr('1'); exit;
+            //$conditions = array('ClientOrder.status_id' => null);
+
+            $conditions = "";
+            $this->paginate = array(
+                'conditions' => $conditions,
+                'limit' => $limit,
+                'fields' => array(
+                    'ClientOrder.uuid',
+                    'ClientOrder.po_number',
+                    'ClientOrder.id',
+                    'ClientOrder.status_id',
+                    'Company.company_name',  
+                    'Product.name', 
+                    'ClientOrderDeliverySchedule.quantity', 
+                    'ClientOrderDeliverySchedule.location', 
+                    'ClientOrderDeliverySchedule.schedule',
+                    'ClientOrderDeliverySchedule.uuid',
+                    'ClientOrderDeliverySchedule.id',
+                    'QuotationDetail.quotation_id'),
+                'order' => 'ClientOrder.id DESC',
+            );
+
+            $clientsOrder = $this->paginate('ClientOrderDeliverySchedule');
+
+            //pr($clientsOrder); exit;
+
+            foreach ($clientsOrder as $key => $value){
+
+                foreach ($deliveryStatus as $key1 => $valueofDelivery){
+        
+                    if($value['ClientOrderDeliverySchedule']['uuid'] == $valueofDelivery['Delivery']['schedule_uuid']){
+
+
+                        $clientsOrder[$key]['DeliveryDetail']['quantity'] = $valueofDelivery['DeliveryDetail']['quantity'];
+                        $clientsOrder[$key]['DeliveryDetail']['delivered_quantity'] = $valueofDelivery['DeliveryDetail']['delivered_quantity'];
+                        $clientsOrder[$key]['Delivery']['status'] = $valueofDelivery['Delivery']['status'];
+                        $clientsOrder[$key]['Delivery']['dr_uuid'] = $valueofDelivery['Delivery']['dr_uuid'];
+                        $clientsOrder[$key]['DeliveryDetail']['status'] = $valueofDelivery['DeliveryDetail']['status'];
+
+
+                    }
+
+                }
+            }
+
+           // pr($clientsOrder); exit;
+
+            if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
+
+                $noPermissionSales = 'disabled not-active';
+
+            }else{
+
+                $noPermissionSales = ' ';
+            }
+
+            $this->set(compact('noPermissionSales','clientsOrder','deliveryData', 'deliveryList', 'deliveryDetailList', 'clientsStatus', 'deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList'));
+
+            $this->render('index_approved');
+
+        }
+
+        if($status == 4){
+
+             $this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product'));
+
+            $this->ClientOrderDeliverySchedule->recursive = 1;
+
+            $limit = 10;
+           
+          //  pr('1'); exit;
+            //$conditions = array('ClientOrder.status_id' => null);
+
+            $conditions = "";
+            $this->paginate = array(
+                'conditions' => $conditions,
+                'limit' => $limit,
+                'fields' => array(
+                    'ClientOrder.uuid',
+                    'ClientOrder.po_number',
+                    'ClientOrder.id',
+                    'ClientOrder.status_id',
+                    'Company.company_name',  
+                    'Product.name', 
+                    'ClientOrderDeliverySchedule.quantity', 
+                    'ClientOrderDeliverySchedule.location', 
+                    'ClientOrderDeliverySchedule.schedule',
+                    'ClientOrderDeliverySchedule.uuid',
+                    'ClientOrderDeliverySchedule.id',
+                    'QuotationDetail.quotation_id'),
+                'order' => 'ClientOrder.id DESC',
+            );
+
+            $clientsOrder = $this->paginate('ClientOrderDeliverySchedule');
+
+            //pr($clientsOrder); exit;
+
+            foreach ($clientsOrder as $key => $value){
+
+                foreach ($deliveryStatus as $key1 => $valueofDelivery){
+        
+                    if($value['ClientOrderDeliverySchedule']['uuid'] == $valueofDelivery['Delivery']['schedule_uuid']){
+
+
+                        $clientsOrder[$key]['DeliveryDetail']['quantity'] = $valueofDelivery['DeliveryDetail']['quantity'];
+                        $clientsOrder[$key]['DeliveryDetail']['delivered_quantity'] = $valueofDelivery['DeliveryDetail']['delivered_quantity'];
+                        $clientsOrder[$key]['Delivery']['status'] = $valueofDelivery['Delivery']['status'];
+                        $clientsOrder[$key]['Delivery']['dr_uuid'] = $valueofDelivery['Delivery']['dr_uuid'];
+                        $clientsOrder[$key]['DeliveryDetail']['status'] = $valueofDelivery['DeliveryDetail']['status'];
+
+
+                    }
+
+                }
+            }
+
+           // pr($clientsOrder); exit;
+
+            if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
+
+                $noPermissionSales = 'disabled not-active';
+
+            }else{
+
+                $noPermissionSales = ' ';
+            }
+
+            $this->set(compact('noPermissionSales','clientsOrder','deliveryData', 'deliveryList', 'deliveryDetailList', 'clientsStatus', 'deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList'));
+
+            $this->render('index_closed');
+
+        }
+
+        if($status == 5){
+
+             $this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product'));
+
+            $this->ClientOrderDeliverySchedule->recursive = 1;
+
+            $limit = 10;
+           
+          //  pr('1'); exit;
+            //$conditions = array('ClientOrder.status_id' => null);
+
+            $conditions = "";
+            $this->paginate = array(
+                'conditions' => $conditions,
+                'limit' => $limit,
+                'fields' => array(
+                    'ClientOrder.uuid',
+                    'ClientOrder.po_number',
+                    'ClientOrder.id',
+                    'ClientOrder.status_id',
+                    'Company.company_name',  
+                    'Product.name', 
+                    'ClientOrderDeliverySchedule.quantity', 
+                    'ClientOrderDeliverySchedule.location', 
+                    'ClientOrderDeliverySchedule.schedule',
+                    'ClientOrderDeliverySchedule.uuid',
+                    'ClientOrderDeliverySchedule.id',
+                    'QuotationDetail.quotation_id'),
+                'order' => 'ClientOrder.id DESC',
+            );
+
+            $clientsOrder = $this->paginate('ClientOrderDeliverySchedule');
+
+            //pr($clientsOrder); exit;
+
+            foreach ($clientsOrder as $key => $value){
+
+                foreach ($deliveryStatus as $key1 => $valueofDelivery){
+        
+                    if($value['ClientOrderDeliverySchedule']['uuid'] == $valueofDelivery['Delivery']['schedule_uuid']){
+
+
+                        $clientsOrder[$key]['DeliveryDetail']['quantity'] = $valueofDelivery['DeliveryDetail']['quantity'];
+                        $clientsOrder[$key]['DeliveryDetail']['delivered_quantity'] = $valueofDelivery['DeliveryDetail']['delivered_quantity'];
+                        $clientsOrder[$key]['Delivery']['status'] = $valueofDelivery['Delivery']['status'];
+                        $clientsOrder[$key]['Delivery']['dr_uuid'] = $valueofDelivery['Delivery']['dr_uuid'];
+                        $clientsOrder[$key]['DeliveryDetail']['status'] = $valueofDelivery['DeliveryDetail']['status'];
+
+
+                    }
+
+                }
+            }
+
+           // pr($clientsOrder); exit;
+
+            if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
+
+                $noPermissionSales = 'disabled not-active';
+
+            }else{
+
+                $noPermissionSales = ' ';
+            }
+
+            $this->set(compact('noPermissionSales','clientsOrder','deliveryData', 'deliveryList', 'deliveryDetailList', 'clientsStatus', 'deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList'));
+
+            $this->render('index_complete');
+
+        }
+
+    } 
+
+
+    public function test($status = null) {
+
+        $userData = $this->Session->read('Auth');
+
+        $this->loadModel('Sales.ClientOrderDeliverySchedule');
+
+        $this->Delivery->bindDelivery();
+
+        $deliveryData = $this->Delivery->find('all');
+
+        $this->ClientOrderDeliverySchedule->bind(array('ClientOrder'));
+
+        $clientsOrder = $this->ClientOrderDeliverySchedule->find('all',array('fields' => array('ClientOrderDeliverySchedule.id','ClientOrderDeliverySchedule.uuid','ClientOrder.uuid', 'ClientOrder.id')));
+
+            foreach ($clientsOrder as $key => $value){
+
+                foreach ($deliveryData as $key1 => $valueofDelivery){
+        
+                    if($value['ClientOrderDeliverySchedule']['uuid'] == $valueofDelivery['Delivery']['schedule_uuid']){
+
+
+                        $clientsOrder[$key]['DeliveryDetail']['quantity'] = $valueofDelivery['DeliveryDetail']['quantity'];
+                        $clientsOrder[$key]['DeliveryDetail']['delivered_quantity'] = $valueofDelivery['DeliveryDetail']['delivered_quantity'];
+                        $clientsOrder[$key]['Delivery']['status'] = $valueofDelivery['Delivery']['status'];
+                        $clientsOrder[$key]['Delivery']['dr_uuid'] = $valueofDelivery['Delivery']['dr_uuid'];
+                        $clientsOrder[$key]['DeliveryDetail']['status'] = $valueofDelivery['DeliveryDetail']['status'];
+
+
+                    }
+
+                }
+            }
+
+       // pr($clientsOrder); exit;
+
+        $this->loadModel('Delivery.DrHolder');
+
+        //$this->Delivery->bindDelivery();
+
+       // $deliveryData = $this->Delivery->find('all');
+
+        $this->id = $this->DrHolder->saveDelivery($clientsOrder,$userData['User']['id']);
+
 
     }
+
+
 }

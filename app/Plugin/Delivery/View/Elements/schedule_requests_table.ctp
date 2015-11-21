@@ -1,7 +1,4 @@
-  <?php  
-                        if(!empty($clientsOrder)){
-                              
-?>
+  <?php  if(!empty($clientsOrder)){ ?>
                                 <?php foreach ($clientsOrder as $scheduleDataList): 
 
                                   if($scheduleDataList['ClientOrder']['status_id'] == null){ ?>
