@@ -553,7 +553,7 @@
 
 											<div class="col-lg-3 rolls">
 												<?php 
-													echo $this->Form->input('RequestItem.'.$key.'.unit_price_unit_id', array(
+													echo $this->Form->input('RequestItem.'.$key.'.roll_unit_id', array(
 								                        'options' => array($unitData),  
 								                        'label' => false,
 								                        'class' => 'form-control required',
