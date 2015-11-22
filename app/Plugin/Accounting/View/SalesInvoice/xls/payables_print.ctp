@@ -3,15 +3,22 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/payables_print.xls");
+    $objTpl = PHPExcel_IOFactory::load("./img/payables.xlsx");
 
 
-    $vat12 = "e";
 
-    $objTpl->setActiveSheetIndex(0)
-                ->setCellValue('K32', $vat12)
-                ->setCellValue('K33', $vat12);  
-              //  ->setCellValue('K33', 'd');      
+    
+
+    foreach ($receivedItemData as $key => $value) {
+        # code...
+        //pr($key);
+        $objTpl->setActiveSheetIndex(0)
+          ->setCellValue('C'.$key, '1');
+
+    }
+
+
+                    
     //prepare download
     $filename = mt_rand(1,100000).'.xlsx'; //just some random filename
     header('Content-Type: application/vnd.ms-office');

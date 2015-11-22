@@ -37,12 +37,12 @@
             $totalVat = $totalVat + $vat ;
             
             $objTpl->setActiveSheetIndex(0)
-                         ->setCellValue('A'.$counter, date('m/d/Y', strtotime($invoiceList['SalesInvoice']['created'])))
+                        ->setCellValue('A'.$counter, date('m/d/Y', strtotime($invoiceList['SalesInvoice']['created'])))
                         ->setCellValue('D'.$counter, $invoiceList['SalesInvoice']['dr_uuid'])
                         ->setCellValue('F'.$counter, $usdPrice)
                         ->setCellValue('G'.$counter, $phpPrice)
                         ->setCellValue('B'.$counter, $companyData[$invoiceList['SalesInvoice']['company_id']])
-                         ->setCellValue('H'.$counter, $vat)
+                        ->setCellValue('H'.$counter, $vat)
                         ->setCellValue('C'.$counter, $companyTinData[$invoiceList['SalesInvoice']['company_id']])
                         // ->setCellValue('I'.$counter, $invoiceList['SalesInvoice']['quantity'])
                         ->setCellValue('E'.$counter, $invoiceList['SalesInvoice']['sales_invoice_no']);
