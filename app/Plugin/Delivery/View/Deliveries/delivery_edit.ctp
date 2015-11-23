@@ -62,7 +62,24 @@ $totalremaining = 0;
 						<div class="top-space"></div>
 						<div class="main-box-body clearfix">
 							<div class="main-box-body clearfix">
-								<div class="form-horizontal">									
+								<div class="form-horizontal">	
+
+									<div class="form-group">
+	                                			<label class="col-lg-2 control-label">Customer Name</label>
+												<div class="col-lg-8">
+													<?php 
+			                                              echo $this->Form->input('DeliveryDetail.customername', array(
+			                                            								'label' => false,
+		                                                                                'required' => 'required',
+		                                                                                'disabled' => true,
+		                                                                                'class' => 'form-control item_type',
+		                                                                                'type' => 'text',
+									                                                    'value' => $scheduleInfo['Company']['company_name']));
+			                                        ?>
+                                        
+										</div>
+									</div>
+
 									<div class="form-group">
 										<label class="col-lg-2 control-label">Delivery Receipt Number</label>
 										<div class="col-lg-8">
