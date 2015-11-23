@@ -1,5 +1,97 @@
 $(document).ready(function(){ 
 
+    $('body').on('click','.btn-success',function(e){
+
+      $this = $(this);
+
+
+      $this.parents('form').submit(function(e){
+
+      
+
+        if ($this.parents('form').find('.error:visible').length > 0) {
+
+        } else {
+
+         $processName = $this.parents('.panel-default').find('.panel-heading a').text();
+
+         $processName = $processName.trim();
+
+         $productionDate = $this.parents('form').find('input[name="data[TicketProcessSchedule][production_date]"]').val();
+
+         $process = $this.parents('form').find('select[name="data[TicketProcessSchedule][department_process_id]"] option:selected');
+
+         $machines  = $this.parents('form').find('select[name="data[TicketProcessSchedule][machine_id]"] option:selected');
+
+         $notes  = $this.parents('form').find('textarea[name="data[TicketProcessSchedule][remarks]"]').val();
+
+         $operator = $this.parents('form').find('select[name="data[TicketProcessSchedule][operator]"] option:selected');
+
+
+         if ( $machines.val() != '') {
+            $machines =  $machines.text();
+         } else {
+            $machines = '';
+         }
+        
+        if ( $process.val() != '') {
+            $process = $process.text();
+         } else {
+            $process = '';
+         }
+         if ( $operator.val() != '') {
+            $operator = $operator.text();
+         } else {
+            $operator = '';
+         }
+
+        swal({   
+            title: $processName ,   
+            text: "Production Date : "+ $productionDate +" \n Process : "+ $process +" \n Machine : "+ $machines +" \n Notes : "+  $notes +" \n Operator : "+  $operator  +"",   
+            type: "info",
+            showCancelButton: true,   
+            closeOnConfirm: false,   
+            showLoaderOnConfirm: true, 
+        }, function(){   
+
+                $url = $this.parents('form').attr('action');
+
+                  $.ajax({
+                    type: "POST",
+                    url: $url,
+                    data : $this.parents('form').serialize(),
+                    dataType: "json",
+                    success: function(data) {  
+
+                        if (data == 1) {
+
+                                 swal("Process Set Succefully");  
+                        }
+
+                    },
+                    error:function(data){
+
+                    }
+                });
+            });
+
+        }
+     
+
+        e.preventDefault();
+      });
+
+   
+
+
+     //   });
+
+       // e.preventDefault();
+
+    });
+   
+
+
     $('.datepicker').datepicker({
        format: 'yyyy-mm-dd'
     });

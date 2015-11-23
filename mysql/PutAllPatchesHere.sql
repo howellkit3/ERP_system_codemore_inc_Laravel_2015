@@ -2447,6 +2447,11 @@ CREATE TABLE `dr_holders` (
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
-
 ALTER TABLE `received_items`
 ADD COLUMN `purchasing_order_id`  INT(11) NULL DEFAULT 0 AFTER `received_orders_id`;
+
+ALTER TABLE `ticket_process_schedules`
+ADD COLUMN `product_specification_process_holder_id`  int(11) NULL AFTER `department_process_id`;
+
+ALTER TABLE `ticket_process_schedules`
+ADD COLUMN `operator_id`  int(11) NULL AFTER `machine_id`;

@@ -5,6 +5,7 @@ App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 class TicketProcessSchedule extends AppModel {
 
     public $useDbConfig = 'koufu_production';
+
     public $name = 'TicketProcessSchedule';
 
      public $recursive = -1;
@@ -13,24 +14,23 @@ class TicketProcessSchedule extends AppModel {
 
     public function bind($model = array('Group')){
 
-		// $this->bindModel(array(
-		// 	'belongsTo' => array(
-		// 		'JobTicket' => array(
-		// 			'className' => 'Ticket.JobTicket',
-		// 			'foreignKey' => 'job_ticket_id',
-		// 			'dependent' => true,
-		// 		),
-		// 		'MachineLog' => array(
-		// 			'className' => 'Production.MachineLog',
-		// 			'foreignKey' => false,
-		// 			'conditions' => 'MachineLog.machine_schedule_id = MachineSchedule.id' ,
-		// 			'dependent' => true,
-		// 		),
+		$this->bindModel(array(
+			'belongsTo' => array(
+				'ProductSpecificationProcessHolder' => array(
+					'className' => 'Sales.ProductSpecificationProcessHolder',
+					'foreignKey' => false,
+					'dependent' => 'ProductSpecificationProcessHolder.id = TicketProcessSchedule.department_process_id',
+				),
+				'JobTicket' => array(
+					'className' => 'Ticket.JobTicket',
+					'foreignKey' => 'job_ticket_id',
+					//'conditions' => 'JobTicket.id = TicketProcessSchedule.job_ticket_id'
+				),
 				
-		// 	)
-		// ),false);
+			)
+		),false);
 
-		// $this->contain($model);
+		$this->contain($model);
 	}
 
 	public function saveTicketProcessSchedule($data,$auth){

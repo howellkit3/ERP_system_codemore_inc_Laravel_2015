@@ -4,12 +4,13 @@ App::uses('SessionComponent', 'Controller/Component');
 
 class JobsController extends ProductionAppController {
 
+
+    var $helpers = array('Production.Process');
+    //,'HumanResource.Country'
+
     public function index() {
 
         $this->loadModel('Ticket.JobTicket');
-
-
-
     }
 
     public function plans() {
@@ -123,6 +124,11 @@ class JobsController extends ProductionAppController {
 
         if (!empty($jobId)) {
 
+
+            $this->loadModel('HumanResource.Employee');
+
+            $this->loadModel('HumanResource.Position');
+
             $this->loadModel('Ticket.JobTicket');
 
             $this->loadModel('Sales.ClientOrderDeliverySchedule');
@@ -136,7 +142,6 @@ class JobsController extends ProductionAppController {
             $this->loadModel('Production.RecievedTicket');
 
             $this->loadModel('Production.TicketProcessSchedule');
-
 
             $this->loadModel('Sales.ProductSpecificationProcessHolder');
 
@@ -158,11 +163,7 @@ class JobsController extends ProductionAppController {
 
             $this->JobTicket->bind(array('ClientOrder'));
 
-
             $jobData = $this->JobTicket->findById($jobId);
-
-
-            //pr($jobData);
 
             $schedules = $this->ClientOrderDeliverySchedule->find('all',array(
                     'conditions' => array(
@@ -174,14 +175,6 @@ class JobsController extends ProductionAppController {
                     'job_ticket_id' => $jobId
             )));
 
-            $machines = $this->Machine->find('list', array('fields' => 
-                                                array('id',
-                                                    'name'
-                                                 )
-                                                ));
-
-
-
             $subProcessData = $this->SubProcess->find('list',
                                             array('fields' => 
                                                 array('SubProcess.id',
@@ -190,25 +183,31 @@ class JobsController extends ProductionAppController {
                                                 ));
 
 
-
-
             $departmentProcess = $this->ProcessDepartment->find('list', array('fields' => array('id', 'name')));
 
             $companyData = $this->Company->find('list',array('fields' => array('id','company_name')));
 
-            $machineData = $this->Machine->find('list',array('fields' => array('id','name')));
+            $machines = $this->Machine->find('list',array('fields' => array('id','name')));
             
             $conditions = array('Product.id' => $jobData['JobTicket']['product_id']);
 
             $productData = $this->Product->find('first',array('conditions' => $conditions ,'order' => 'Product.id DESC'));
 
-           
             $specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
-                
+            
+            //get operators
+            $conditions = array();
+            $employees =  $this->Employee->getOperator('list',$conditions);   
+
+            //$this->ProductSpecificationProcessHolder->bind(array('TicketProcessSchedule'));
+
             $formatDataSpecs = $this->ProductSpecificationDetail->findData($productData['Product']['uuid'],null,true);
 
+            // pr( $formatDataSpecs );
+            // exit();
+
             $unitData = Cache::read('unitData');
-            
+
             if (!$unitData) {
                 
                 $unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
@@ -224,7 +223,7 @@ class JobsController extends ProductionAppController {
             // pr($productData);    
             
          //   exit();
-            $this->set(compact('jobData','departmentProcess','companyData','subProcessData','machineData','productData','specs','unitData','schedules','RecievedTicket','formatDataSpecs','machines'));
+            $this->set(compact('employees','jobData','departmentProcess','companyData','subProcessData','machineData','productData','specs','unitData','schedules','RecievedTicket','formatDataSpecs','machines'));
         }
     }
 
