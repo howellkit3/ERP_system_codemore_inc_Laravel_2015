@@ -37,7 +37,7 @@
         </div>
         <label class="col-lg-2 control-label"><span style="color:red">*</span>Rate</label>
         <div class="col-lg-3">
-            <input type="number" value="<?php echo $formatDataSpecs['ProductSpecificationPart']['rate'] ?>" class="rateMe form-control rate<?php echo $plusCounter ;?> editMe" name="data[ProductSpecificationPart][<?php echo $counter ;?>][rate]" disabled />
+            <input type="number" value="<?php echo !empty($formatDataSpecs['ProductSpecificationPart']['rate']) ? $formatDataSpecs['ProductSpecificationPart']['rate'] : 1; ?>" class="rateMe form-control rate<?php echo $plusCounter ;?> editMe" name="data[ProductSpecificationPart][<?php echo $counter ;?>][rate]" disabled />
         </div>
     </div>
     <div class="form-group">

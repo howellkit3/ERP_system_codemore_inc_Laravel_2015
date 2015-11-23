@@ -7,7 +7,7 @@ $(document).ready(function() {
         if (stockQuantity < 0) {
             alert('You must enter a positive number.!');
             $('.stockQuantity').focus();
-            $(this).val('');
+            $(this).val(0);
             return false;
         }else{
            
@@ -238,7 +238,7 @@ $(document).ready(function() {
                     //method for clicking radio trigger
                     $("body").on('change','.selectSpecProduct'+dynamicId, function(e){
                         var partName = $(this).val();
-                        console.log(partName);
+                       // console.log(partName);
                         if ($(this).is(":checked")) {
                             //part1 = decode_utf8(partName);
                             //part = encode_utf8(partName);
@@ -299,7 +299,10 @@ $(document).ready(function() {
             $("body").on('keyup','.rate'+varCounter, function(e){
                 
                 var quantitySpec = parseInt($('#ProductSpecificationQuantity').val());
-                var rateval = $(this).val();
+
+                if (quantitySpec != '') {
+
+                      var rateval = $(this).val();
 
                 if(rateval <= 0){
                     alert('You must enter a positive number');
@@ -312,7 +315,15 @@ $(document).ready(function() {
                
                 var paperqty = parseInt(paperQtyVal) / parseInt(outs);
                 $('.paper_qty'+varCounter).val(paperqty);
-                
+
+                } else {
+
+
+                    alert('Please add quantity on product details before changing the rate(s)');
+                    return false;
+
+                }
+              
 
             });
             $("body").on('keyup','.outs_1'+varCounter, function(e){

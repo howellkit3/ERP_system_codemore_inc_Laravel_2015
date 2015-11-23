@@ -36,8 +36,9 @@
                     <input type="text" value="<?php echo $varCounter ;?>" class="form-control" name="data[ProductSpecificationPart][<?php echo $counterData ;?>][part]" readonly />
                 </div>
                 <label class="col-lg-2 control-label"><span style="color:red">*</span>Rate</label>
-                <div class="col-lg-3">
-                    <input type="number" value="<?php echo $varCounter ;?>" class="form-control rate<?php echo $varCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counterData ;?>][rate]" />
+                <div class="col-lg-3"><!-- 
+                    <input type="number" value="<?php echo $varCounter ;?>" class="form-control rate<?php echo $varCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counterData ;?>][rate]" /> -->
+                     <input type="number" value="<?php echo !empty($this->request->data['ProductSpecificationPart'][$counterData]['rate']) ? $this->request->data['ProductSpecificationPart'][$counterData]['rate'] : 1 ;?>" class="form-control rate<?php echo $varCounter ;?>" name="data[ProductSpecificationPart][<?php echo $counterData ;?>][rate]" />
                 </div>
             </div>
             <div class="form-group">
