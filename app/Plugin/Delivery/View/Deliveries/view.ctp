@@ -4,8 +4,10 @@
 $pushRemaining  = array();
 $totaldifference = 0; 
 $totalremaining = 0;
+//pr($clientsOrder); exit;
 
 ?>
+
 <div class="row1">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
@@ -43,7 +45,7 @@ $totalremaining = 0;
                                 <tbody>
                                     <tr>
                                         <td>Schedule Number</td>
-                                        <td><?php echo  $clientsOrder['ClientOrder']['uuid']; ?></td>
+                                        <td><?php echo  $clientsOrder['JobTicket']['uuid']; ?></td>
                                     </tr>
 
                                     <tr>
@@ -446,7 +448,6 @@ $totalremaining = 0;
                                         <div class="modal-body">
 
                                             <?php 
-
                                                 echo $this->Form->create('ClientOrderDeliverySchedule',array(
                                                     'url'=>(array('controller' => 'deliveries','action' => 'delivery_return',$clientsOrder['ClientOrderDeliverySchedule']['id'], $clientsOrder['ClientOrderDeliverySchedule']['uuid'],$clientUuid) ),'class' => 'form-horizontal')); 
                                             ?>

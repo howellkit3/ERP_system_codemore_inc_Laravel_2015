@@ -5,7 +5,7 @@
                     <table class="table table-striped table-hover ">
                         <thead>
                             <tr >
-                                <th class="text-center"><a href="#"><span>Client Order</span></a></th>
+                                <th class="text-center"><a href="#"><span>Schedule Number</span></a></th>
                                 <th class="text-center"><a href="#"><span>P.O. Number</span></a></th>
                                 <th class="text-center"><a href="#"><span>Customer Name</span></a></th>
                                 <th class="text-center"><a href="#"><span>Item Name</span></a></th>
@@ -26,7 +26,7 @@
                                          <tr class="">
 
                                               <td class="text-center">
-                                                  <?php  echo $scheduleDataList['ClientOrder']['uuid']; ?>  
+                                                  <?php  echo !empty($jobTicketData[$scheduleDataList['ClientOrder']['id']]) ? $jobTicketData[$scheduleDataList['ClientOrder']['id']] : "No Job Ticket yet"; ?>  
                                               </td>
 
                                               <td class="text-center">
@@ -68,7 +68,7 @@
                                                         $IdClientsOrder = !empty($scheduleDataList['Delivery']['dr_uuid']) ? $scheduleDataList['Delivery']['dr_uuid'] : "";
 
                                                                       
-                                                          if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClients] && $value['Delivery']['clients_order_id'] == $scheduleDataList['ClientOrder']['uuid']){  
+                                                          if($value['Delivery']['schedule_uuid'] == $scheduleDataList['ClientOrderDeliverySchedule']['uuid'] && $value['Delivery']['clients_order_id'] == $scheduleDataList['ClientOrder']['uuid']){  
 
                                                             if($value['DeliveryDetail']['status'] == 3 && $value['Delivery']['status'] == 1){
                                               
@@ -108,7 +108,7 @@
 
                                                         $IdClientsOrder = !empty($scheduleDataList['Delivery']['dr_uuid']) ? $scheduleDataList['Delivery']['dr_uuid'] : "";
 
-                                                          if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClientsOrder] &&  $value['DeliveryDetail']['status'] == 3 ){  
+                                                          if($value['Delivery']['schedule_uuid'] == $scheduleDataList['ClientOrderDeliverySchedule']['uuid'] &&  $value['DeliveryDetail']['status'] == 3 ){  
 
                                                             if($value['DeliveryDetail']['status'] != 5){
                                                          
