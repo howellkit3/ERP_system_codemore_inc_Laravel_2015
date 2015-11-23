@@ -36,8 +36,8 @@
         <?php echo $formatDataSpecs['ProductSpecificationPart']['size2']?> >>
         <?php echo $outs ?> Outs >>
         <?php $quantityOuts = $formatDataSpecs['ProductSpecificationPart']['paper_quantity'] / $outs; ?>
-        <?php echo // $formatDataSpecs['ProductSpecificationPart']['quantity'] 
-        $paper ?> 
+        <?php echo  $formatDataSpecs['ProductSpecificationPart']['quantity'] 
+       // $paper ?> 
         +
         <?php 
 
