@@ -17,7 +17,7 @@
 					<div class="tab-content">
 						<div class="tab-pane active" id="tab-calendar">
 							<header class="main-box-header clearfix">
-				                <h2 class="pull-left"><b>On Going Tickets</b> </h2>
+				                <h2 class="pull-left"><b>Production Schedule</b> </h2>
 				                <div class="filter-block pull-right">
 <!-- 
 				                 	<div class="form-group pull-left">
@@ -41,60 +41,46 @@
 
 							<div class="main-box-body clearfix">
 				            	<div class="table-responsive">
-									<table class="table table-striped table-hover">
+									<table class="table table-bordered table-hover">
 										<thead>
 											<tr>
-												<th><a href="#"><span>Job Ticket No.</span></a></th>
-												<th><a href="#"><span>Product</span></a></th>
-												<th><a href="#" class="text-center"><span>Quantity</span></a></th>
-												<th><a href="#" class="text-center"><span>Schedule</span></a></th>
-												<th><a href="#" class="text-center"><span>Start</span></a></th>
-												<th><a href="#" class="text-center"><span>End</span></a></th>
-												<th><a href="#" class="text-center"><span>Duration</span></a></th>
-												<th><a href="#"><span>Action</span></a></th>
+												<th><a href="#"><span>Date Recieved.</span></a></th>
+												<th><a href="#"><span>Del Date</span></a></th>
+												<th><a href="#" class="text-center"><span>Production Date</span></a></th>
+												<th><a href="#" class="text-center"><span>Process</span></a></th>
+												<th><a href="#" class="text-center"><span>Machine</span></a></th>
+												<th><a href="#" class="text-center"><span>Material</span></a></th>
+												<th><a href="#" class="text-center"><span>Raw Materials</span></a></th>
+												<th><a href="#"><span>Cutting Size</span></a></th>
+												<th><a href="#"><span>PO Quantity</span></a></th>
+												<th><a href="#"><span> Quantity </span></a></th>
+												<th><a href="#"><span> UOM </span></a></th>
+												<th><a href="#"><span> OUTS </span></a></th>
 											</tr>
 										</thead>
 
 										<?php 
-									        if(!empty($machineScheduleData)){
-									            foreach ($machineScheduleData as $key => $machineScheduleList): ?>
+									        if(!empty($tickets)){
+									            foreach ($tickets as $key => $ticket): ?>
 													<tbody aria-relevant="all" aria-live="polite" role="alert">
 														<tr class="">
-
 															<td class="">
-									                           <?php echo $machineScheduleList['JobTicket']['uuid']; ?>
+									                           <?php echo !empty($ticket['RecievedTicket']['created']) ? date('Y-m-d',strtotime($ticket['RecievedTicket']['created'])) : '' ?>
 									                        </td>
-
 									                        <td class="">
-									                           <?php echo $machineScheduleList['JobTicket']['product_id']; ?>
+									                           <?php echo !empty($ticket['ClientOrderDeliverySchedule'][0]['schedule']) ? date('Y-m-d',strtotime($ticket['ClientOrderDeliverySchedule'][0]['schedule'])) : '' ?>
 									                        </td>
-
+									                         <td class="">
+									                           <?php echo !empty($ticket['TicketProcessSchedule']['production_date']) ? date('Y-m-d',strtotime($ticket['TicketProcessSchedule']['production_date'])) : '' ?>
+									                        </td>
 									                        <td class="">
-									                           <?php echo $machineScheduleList['MachineSchedule']['quantity']; ?>
+									                           <?php echo !empty($ticket['TicketProcessSchedule']['department_process_id']) ?  $departmentProcess[$ticket['TicketProcessSchedule']['department_process_id']] : '' ?>
 									                        </td>
-
 									                        <td class="">
-									                           <?php echo $machineScheduleList['MachineSchedule']['date'].' '.$machineScheduleList['MachineSchedule']['from'].'-'.$machineScheduleList['MachineSchedule']['to']; ?>
-									                        </td>
-
-									                        <td class="">
-									                           <?php echo !empty($machineScheduleList['MachineLog']['start']) ? $machineScheduleList['MachineLog']['start'] : ''; ?>
-									                        </td>
-
-									                        <td class="">
-									                           <?php echo !empty($machineScheduleList['MachineLog']['start']) ? $machineScheduleList['MachineLog']['end'] : ''; ?>
-									                        </td>
-
-															<td class="">
-									                           
-									                        </td>
-
-									                       	<td>
-									                      
+									                           <?php echo !empty($ticket['TicketProcessSchedule']['machine_id']) ?  $machineData[$ticket['TicketProcessSchedule']['machine_id']] : '' ?>
 									                        </td>
 									                    </tr>
-
-									                </tbody>
+													</tbody>
 									        <?php 
 									            endforeach; 
 									        } ?>

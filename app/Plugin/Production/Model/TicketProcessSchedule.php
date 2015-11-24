@@ -12,6 +12,51 @@ class TicketProcessSchedule extends AppModel {
      
     public $actsAs = array('Containable');
 
+    public $belongsTo = array(
+    // 			'ProductSpecificationProcessHolder' => array(
+				// 	'className' => 'Sales.ProductSpecificationProcessHolder',
+				// 	'foreignKey' => false,
+				// 	'dependent' => 'ProductSpecificationProcessHolder.id = TicketProcessSchedule.department_process_id',
+				// ),
+				'JobTicket' => array(
+					'className' => 'Ticket.JobTicket',
+					'foreignKey' => 'job_ticket_id',
+					//'conditions' => 'JobTicket.id = TicketProcessSchedule.job_ticket_id'
+				),
+				// 'ClientOrder' => array(
+				// 	'className' => 'Sales.ClientOrder',
+				// 	'foreignKey' => false,
+				// 	'conditions' => array('ClientOrder.id' => 'JobTicket.client_order_id')
+				// ),
+				'RecievedTicket' => array(
+					'className' => 'Production.RecievedTicket',
+					'foreignKey' => false,
+					'conditions' => 'RecievedTicket.job_ticket_id = TicketProcessSchedule.job_ticket_id'
+				),
+				'ProductSpecificationProcessHolder' => array(
+					'className' => 'Sales.ProductSpecificationProcessHolder',
+					'foreignKey' => 'product_specification_process_holder_id',
+					//'conditions' => array('ProductSpecificationProcessHolder.id' => 'TicketProcessSchedule.product_specification_process_holder_id'),
+					//'dependent' => true
+				),
+				'ProductSpecificationProcess' => array(
+					'className' => 'Sales.ProductSpecificationProcess',
+					//'foreignKey' => 'product_specification_process_id',
+					'conditions' => array('ProductSpecificationProcess.id = ProductSpecificationProcessHolder.product_specification_process_id'),
+					//'dependent' => true
+				)
+			);
+
+    // public $hasOne = array(
+				// 'ProductSpecificationProcessHolder' => array(
+				// 	'className' => 'Sales.ProductSpecificationProcessHolder',
+				// 	'foreignKey' => false,
+				// 	'conditions' => 'ProductSpecificationProcessHolder.id = TicketProcessSchedule.product_specification_process_holder_id',
+				// 	'dependent' => true
+				// )
+
+    // 	);
+
     public function bind($model = array('Group')){
 
 		$this->bindModel(array(
@@ -26,8 +71,20 @@ class TicketProcessSchedule extends AppModel {
 					'foreignKey' => 'job_ticket_id',
 					//'conditions' => 'JobTicket.id = TicketProcessSchedule.job_ticket_id'
 				),
+				'ClientOrder' => array(
+					'className' => 'Sales.ClientOrder',
+					'foreignKey' => false,
+					'conditions' => array('ClientOrder.id = JobTicket.client_order_id')
+				),
+				'RecievedTicket' => array(
+					'className' => 'Production.RecievedTicket',
+					'foreignKey' => false,
+					'conditions' => 'RecievedTicket.job_ticket_id = TicketProcessSchedule.job_ticket_id'
+				),
 				
-			)
+				
+				
+			),
 		),false);
 
 		$this->contain($model);

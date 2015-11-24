@@ -103,12 +103,8 @@ echo $this->element('ware_house_option');?>
                                             </div>
 
                                     </div>
+                                    <?php 
 
-
-                                   
-                     
-
-                                         <?php 
                                           if (!empty($this->request->data['ItemSpec'][0])) :  ?>
 
                                          <?php foreach ($this->request->data['ItemSpec']as $key => $value) :
@@ -136,15 +132,12 @@ echo $this->element('ware_house_option');?>
 
                                             <div class="col-lg-1"> 
 
-                                                       <?php 
-
-                                                            $items = array( 'inch' => 'Inch', 'mm' => 'mm');
-
-                                                            echo $this->Form->input('ItemSpec.'.$key.'.unit_width', array(
+                                                       <?php echo $this->Form->input('ItemSpec.'.$key.'.unit_width', array(
                                                                                         'class' => 'form-control required',
                                                                                         'alt' => 'type',
                                                                                         'label' => false,
-                                                                                        'options' => $items,
+                                                                                        'options' => $unitData,
+                                                                                         'default' => !empty($this->request->data['ItemSpec'][$key]['unit_width_id']) ? $this->request->data['ItemSpec'][$key]['unit_length_id'] : '',
                                                                                         'empty' => 'Unit'
                                                                                 ));
                                                         ?>
@@ -170,14 +163,14 @@ echo $this->element('ware_house_option');?>
                                             </div>
                                                <div class="col-lg-1"> 
 
-                                                       <?php $items = array( 'inch' => 'Inch', 'mm' => 'mm');
-
+                                                       <?php 
                                                             echo $this->Form->input('ItemSpec.'.$key.'.unit_length', array(
                                                                                         'class' => 'form-control',
                                                                                         'alt' => 'type',
                                                                                         'label' => false,
-                                                                                        'options' => $items,
-                                                                                        'empty' => 'Unit'
+                                                                                        'options' => $unitData,
+                                                                                        'empty' => 'Unit',
+                                                                                        'default' => !empty($this->request->data['ItemSpec'][$key]['unit_width_id']) ? $this->request->data['ItemSpec'][$key]['unit_length_id'] : '', 
                                                                                 ));
                                                         ?>
                                                     <span class="help-block" style= "color:white"> &nbsp </span>
@@ -221,7 +214,7 @@ echo $this->element('ware_house_option');?>
                                                                                         'class' => 'form-control required',
                                                                                         'alt' => 'type',
                                                                                         'label' => false,
-                                                                                        'options' => $items,
+                                                                                        'options' => $unitData,
                                                                                         'empty' => 'Unit'
                                                                                 ));
                                                         ?>
@@ -246,13 +239,15 @@ echo $this->element('ware_house_option');?>
                                             </div>
                                                 <div class="col-lg-1"> 
 
-                                                       <?php $items = array( 'inch' => 'Inch', 'mm' => 'mm');
+                                                       <?php 
+
+                                                        $items = array( 'inch' => 'Inch', 'mm' => 'mm');
 
                                                             echo $this->Form->input('ItemSpec.0.unit_length', array(
                                                                                         'class' => 'form-control',
                                                                                         'alt' => 'type',
                                                                                         'label' => false,
-                                                                                        'options' => $items,
+                                                                                        'options' => $unitData,
                                                                                         'empty' => 'Unit'
                                                                                 ));
                                                         ?>

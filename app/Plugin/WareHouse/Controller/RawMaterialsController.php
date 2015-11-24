@@ -49,6 +49,21 @@ class RawMaterialsController extends WareHouseAppController {
 
 		$this->loadModel('Supplier');
 
+		$this->loadModel('Unit');
+
+
+		 	  //set to cache in first load
+		$unitData = Cache::read('unitData');
+		
+		if (!$unitData) {
+			
+			$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
+															'order' => array('Unit.unit' => 'ASC')
+															));
+
+            Cache::write('unitData', $unitData);
+        }
+
 		if ($this->request->is('post')) {
 
 			$auth = $this->Session->read('Auth.User');
@@ -56,8 +71,6 @@ class RawMaterialsController extends WareHouseAppController {
 			$this->request->data['Item']['created_by'] = 
 			$this->request->data['Item']['modified_by'] = $auth['id'];
 				
-	
-
 			//check if others
 			if (!empty($this->request->data['Item']['department_id'] ) && $this->request->data['Item']['department_id'] == 'others' ) {
 
@@ -76,12 +89,12 @@ class RawMaterialsController extends WareHouseAppController {
 				$this->request->data['Item']['supplier'] = $supplierId;
 			}
 
-		
 
+		
 			if ($this->Item->save($this->request->data['Item'])) {
 
 				//check specs 
-			$specs = $this->ItemSpec->saveSpec($this->Item->id,$this->request->data);
+				$specs = $this->ItemSpec->saveSpec($this->Item->id,$this->request->data,$unitData);
 
 				$this->Session->setFlash('Raw Material successfully added!','success');
 		  		 $this->redirect( array('controller' => 'raw_materials', 'action' => 'index'));
@@ -105,7 +118,9 @@ class RawMaterialsController extends WareHouseAppController {
 		$supplierList['others'] = 'Others';
 		//consumebles items
 
-		$this->set(compact('itemsCategory','departments','suppliers','categoryDataDropList','supplierList'));
+
+
+		$this->set(compact('itemsCategory','departments','suppliers','categoryDataDropList','supplierList','unitData'));
 
 
 	}
@@ -168,6 +183,20 @@ class RawMaterialsController extends WareHouseAppController {
 
 		$this->loadModel('Supplier');
 
+		$this->loadModel('Unit');
+
+		//set to cache in first load
+		$unitData = Cache::read('unitData');
+		
+		if (!$unitData) {
+			
+			$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
+															'order' => array('Unit.unit' => 'ASC')
+															));
+
+            Cache::write('unitData', $unitData);
+        }
+
 		if ($this->request->is('put')) {
 
 			$auth = $this->Session->read('Auth.User');
@@ -177,7 +206,7 @@ class RawMaterialsController extends WareHouseAppController {
 
 
 			//check if others
-			if ($this->request->data['Item']['department_id'] == 'others' ) {
+			if (!empty($this->request->data['Item']['department_id']) && $this->request->data['Item']['department_id'] == 'others' ) {
 
 				$data['name'] = $this->request->data['Item']['department_id_others'];
 
@@ -203,10 +232,9 @@ class RawMaterialsController extends WareHouseAppController {
 
 
 				//check specs 
-				$specs = $this->ItemSpec->saveSpec($this->Item->id,$this->request->data);
+				$specs = $this->ItemSpec->saveSpec($this->Item->id,$this->request->data,$unitData);
 
 		
-
 				$this->Session->setFlash('Item updated!','success');
 					
 					if (!empty($this->params['named']['page'])) {
@@ -247,13 +275,11 @@ class RawMaterialsController extends WareHouseAppController {
 
 		$supplierList = $this->Supplier->find('list',  array('order' => 'Supplier.name ASC'));
 
-
-
 		$supplierList['others'] = 'Others';
 
 		//consumebles items
 
-		$this->set(compact('itemsCategory','departments','supplierList','categoryDataDropList'));
+		$this->set(compact('itemsCategory','departments','supplierList','categoryDataDropList','unitData'));
 	}
 
 	public function delete($id = null){
