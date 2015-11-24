@@ -22,7 +22,7 @@
                                     'controller' => 'deliveries',
                                     'action' => 'add_schedule', 
                                     !empty($deliveryEdit[0]['Delivery']['id']) ? $deliveryEdit[0]['Delivery']['id'] : '',
-                                    !empty( $scheduleInfo['ClientOrderDeliverySchedule']['id']) ? $scheduleInfo['ClientOrderDeliverySchedule']['id'] : '',
+                                    !empty( $clientsOrder['ClientOrderDeliverySchedule']['id']) ? $clientsOrder['ClientOrderDeliverySchedule']['id'] : '',
                                     $clientsOrderUuid,
                                     $clientUuid
                                     )),'class' => 'form-horizontal')); ?>
@@ -63,11 +63,11 @@
 
                                           if($totaldifference != 0){                
                                            
-                                          $totalremaining =  $scheduleInfo['ClientOrderDeliverySchedule']['quantity'] - $totaldifference;
+                                          $totalremaining =  $clientsOrder['ClientOrderDeliverySchedule']['quantity'] - $totaldifference;
 
                                           }else{
 
-                                          $totalremaining = $scheduleInfo['ClientOrderDeliverySchedule']['quantity'];
+                                          $totalremaining = $clientsOrder['ClientOrderDeliverySchedule']['quantity'];
                                           }
 
 
@@ -90,7 +90,7 @@
                                                 'type' => 'hidden',
                                                 'class' => 'form-control item_type',
                                                 'label' => false,
-                                                'value' => $scheduleInfo['ClientOrderDeliverySchedule']['uuid'],
+                                                'value' => $clientsOrder['ClientOrderDeliverySchedule']['uuid'],
                                                     )); 
                                 ?>
 
@@ -98,7 +98,7 @@
                                                 'type' => 'hidden',
                                                 'class' => 'form-control item_type',
                                                 'label' => false,
-                                                'value' => $scheduleInfo['ClientOrder']['uuid'],
+                                                'value' => $clientsOrder['ClientOrder']['uuid'],
                                                     )); 
                                 ?>
 
@@ -184,7 +184,7 @@
                                     echo $this->Form->input('DeliveryDetail.location', array(
                                                                     'empty' => '--Select Location--',
                                                                     'class' => 'form-control item_type editable addquantityLimit',
-                                                                    'options' => array(!empty($scheduleInfo['ClientOrder']['company_id'])) ? $companyAddress[$scheduleInfo['ClientOrder']['company_id']] : "" ,
+                                                                    'options' => array(!empty($clientsOrder['ClientOrder']['company_id'])) ? $companyAddress[$clientsOrder['ClientOrder']['company_id']] : "" ,
                                                                     'type' => 'select',
                                                                     'required' => 'required',
                                                                     'label' => false,
@@ -216,7 +216,7 @@
                 </div>
                 <div class="modal-body">
                     <?php  echo $this->Form->create('Delivery',array('url'=>(array('controller' => 'deliveries', 
-                            'action' => 'add', $scheduleInfo['ClientOrderDeliverySchedule']['id'],$clientsOrderUuid,$clientUuid)),'class' => 'form-horizontal'))?>
+                            'action' => 'add', $clientsOrder['ClientOrderDeliverySchedule']['id'],$clientsOrderUuid,$clientUuid)),'class' => 'form-horizontal'))?>
                     
 
                         <div class="form-group" id="existing_items">
@@ -225,17 +225,17 @@
                                             <?php 
                                                 echo $this->Form->input('ClientOrderDeliverySchedule.id', array('class' => 'form-control item_type required',
                                                     'type' => 'hidden',
-                                                    'value' => $scheduleInfo['ClientOrderDeliverySchedule']['id']
+                                                    'value' => $clientsOrder['ClientOrderDeliverySchedule']['id']
                                                     ));
                                             ?>
 
-                                            <?php  if(!empty($quantityInfo[$scheduleInfo['QuotationDetail']['quotation_id']])){
+                                            <?php  if(!empty($quantityInfo[$clientsOrder['QuotationDetail']['quotation_id']])){
 
                                                 echo $this->Form->input('QuotationItemDetail.quantity', array(
                                                             'type' => 'select',
                                                             'class' => 'form-control item_type',
                                                             'label' => false,
-                                                            'value' => $quantityInfo[$scheduleInfo['QuotationDetail']['quotation_id']],
+                                                            'value' => $quantityInfo[$clientsOrder['QuotationDetail']['quotation_id']],
                                                             'id' => 'quantity'));
 
                                                 } ?> 
@@ -255,7 +255,7 @@
                                 <?php 
                                                 echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array('class' => 'form-control item_type required',
                                                     'type' => 'hidden',
-                                                    'value' => $scheduleInfo['ClientOrderDeliverySchedule']['quantity']
+                                                    'value' => $clientsOrder['ClientOrderDeliverySchedule']['quantity']
                                                     ));
                                             ?>
                             </div>
@@ -271,7 +271,7 @@
                                                                     'class' => 'form-control item_type editable addquantityLimit',
                                                                     'label' => false,
                                                                     'readonly' => 'readonly',
-                                                                     'value' => $scheduleInfo['ClientOrderDeliverySchedule']['quantity']
+                                                                     'value' => $clientsOrder['ClientOrderDeliverySchedule']['quantity']
                                                                     ));
                                 ?>
                             </div>
@@ -347,7 +347,7 @@
                 </div>
                 <div class="modal-body">
                     <?php  echo $this->Form->create('Delivery',array('url'=>(array('controller' => 'deliveries', 
-                            'action' => 'add', $scheduleInfo['ClientOrderDeliverySchedule']['id'],$clientsOrderUuid)),'class' => 'form-horizontal'))?>
+                            'action' => 'add', $clientsOrder['ClientOrderDeliverySchedule']['id'],$clientsOrderUuid)),'class' => 'form-horizontal'))?>
                     
 
                         <div class="form-group" id="existing_items">
@@ -356,7 +356,7 @@
                                             <?php 
                                                 echo $this->Form->input('ClientOrderDeliverySchedule.id', array('class' => 'form-control item_type required',
                                                     'type' => 'hidden',
-                                                    'value' => $scheduleInfo['ClientOrderDeliverySchedule']['id']
+                                                    'value' => $clientsOrder['ClientOrderDeliverySchedule']['id']
                                                     ));
                                             ?>
 
@@ -366,7 +366,7 @@
                                                             'type' => 'hidden',
                                                             'class' => 'form-control item_type',
                                                                 'label' => false,
-                                                                'value' => $quantityInfo[$scheduleInfo['QuotationDetail']['quotation_id']],
+                                                                'value' => $quantityInfo[$clientsOrder['QuotationDetail']['quotation_id']],
                                                                 'id' => 'quantity')); ?> -->
                             </div>
                         </div>
@@ -384,7 +384,7 @@
                                 <?php 
                                                 echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array('class' => 'form-control item_type required',
                                                     'type' => 'hidden',
-                                                    'value' => $scheduleInfo['ClientOrderDeliverySchedule']['quantity']
+                                                    'value' => $clientsOrder['ClientOrderDeliverySchedule']['quantity']
                                                     ));
                                             ?>
                             </div>

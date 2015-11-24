@@ -4,8 +4,10 @@
 $pushRemaining  = array();
 $totaldifference = 0; 
 $totalremaining = 0;
+//pr($clientsOrder); exit;
 
 ?>
+
 <div class="row1">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
@@ -43,6 +45,11 @@ $totalremaining = 0;
                                 <tbody>
                                     <tr>
                                         <td>Schedule Number</td>
+                                        <td><?php echo  $clientsOrder['JobTicket']['uuid']; ?></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Client Number</td>
                                         <td><?php echo  $clientsOrder['ClientOrder']['uuid']; ?></td>
                                     </tr>
 
@@ -175,12 +182,17 @@ $totalremaining = 0;
 
                                         </td>
                                     </tr>
+
+                                    <tr>
+                                        <td>Date Created</td>
+                                        <td>
+                                            <?php echo date('M d, Y', strtotime($clientsOrder['ClientOrderDeliverySchedule']['modified'])); ?></td>
+                                    </tr>
              
                                 </tbody>
                         
                             </table>
                         </div>
-                        <h9 class ='pull-right'>Date Created : <?php echo date('M d, Y', strtotime($clientsOrder['ClientOrderDeliverySchedule']['modified'])); ?> &nbsp;&nbsp;  </h9>
                     </div>
                 </div>
             </div>   
@@ -446,7 +458,6 @@ $totalremaining = 0;
                                         <div class="modal-body">
 
                                             <?php 
-
                                                 echo $this->Form->create('ClientOrderDeliverySchedule',array(
                                                     'url'=>(array('controller' => 'deliveries','action' => 'delivery_return',$clientsOrder['ClientOrderDeliverySchedule']['id'], $clientsOrder['ClientOrderDeliverySchedule']['uuid'],$clientUuid) ),'class' => 'form-horizontal')); 
                                             ?>

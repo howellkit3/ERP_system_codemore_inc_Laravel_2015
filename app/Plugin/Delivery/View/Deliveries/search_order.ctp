@@ -3,13 +3,20 @@
                        // if(!empty($clientsOrder)){
                          // pr($deliveryDetailsData); exit;
 ?>
-                                <?php foreach ($clientsOrder as $scheduleDataList): ?>
+                                <?php foreach ($clientsOrder as $scheduleDataList): 
 
+                                  if($scheduleDataList['ClientOrder']['status_id'] == null){ ?>
                               
                                     <tr class="">
 
                                         <td class="text-center">
-                                            <?php  echo $scheduleDataList['ClientOrder']['uuid']; ?>  
+                                                  <?php  echo !empty($jobTicketData[$scheduleDataList['ClientOrder']['id']]) ? $jobTicketData[$scheduleDataList['ClientOrder']['id']] : "No Job Ticket yet"; ?>  
+                                        </td>
+
+                                        <td class="text-center">
+
+                                                  <?php  echo $scheduleDataList['ClientOrder']['uuid']; ?>  
+                                              
                                         </td>
 
                                         <td class="text-center">
@@ -27,8 +34,7 @@
 
                                         <td class="text-center">
                               
-                                           <?php echo substr($scheduleDataList['Product']['name'],0,20);  ?>  
-                                           <br>
+                                           <?php echo substr($scheduleDataList['Product']['name'],0,20);  ?>..
                                            
                                         </td>
 
@@ -50,7 +56,7 @@
 
                                                   $IdClientsOrder = $orderListHelper[$value['Delivery']['clients_order_id']];
   
-                                                    if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClients]  ){  
+                                                    if($value['Delivery']['schedule_uuid'] == $scheduleDataList['ClientOrderDeliverySchedule']['uuid']  ){  
 
                                                       if($value['DeliveryDetail']['status'] != 5){
                                                    
@@ -81,7 +87,7 @@
                                                   $IdClientsOrder = $orderListHelper[$value['Delivery']['clients_order_id']];
                                                  
   
-                                                    if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClientsOrder]){  
+                                                    if($value['Delivery']['schedule_uuid'] == $scheduleDataList['ClientOrderDeliverySchedule']['uuid']){  
                                                    
                                                       array_push($arr,$value['DeliveryDetail']['status']);
 
@@ -112,9 +118,11 @@
 
                                                   foreach ($deliveryStatus as $key => $value) {
 
-                                                  $DeliveredHolder = $deliveryDetailList[$value['Delivery']['dr_uuid']];
+                                                  //$DeliveredHolder = $deliveryDetailList[$value['Delivery']['dr_uuid']];
+
+                                                    $DeliveredHolder = $value['DeliveryDetail']['delivered_quantity'];
   
-                                                    if($value['Delivery']['schedule_uuid'] == $orderDeliveryList[$uuidClientsOrder] AND $value['DeliveryDetail']['status'] != 5 && $value['Delivery']['status'] != 2){  
+                                                    if($value['Delivery']['schedule_uuid'] == $scheduleDataList['ClientOrderDeliverySchedule']['uuid'] AND $value['DeliveryDetail']['status'] != 5 && $value['Delivery']['status'] != 2){  
 
                                                       array_push($arrDelivered,$DeliveredHolder);
 
@@ -176,6 +184,6 @@
                                         </td>
                                     </tr>
 
-                        <?php 
+                        <?php }
                             endforeach; 
                         //} ?> 

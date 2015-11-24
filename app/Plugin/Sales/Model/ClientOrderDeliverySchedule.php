@@ -15,6 +15,8 @@ class ClientOrderDeliverySchedule extends AppModel {
 
 	public $name = 'ClientOrderDeliverySchedule';
 
+	public $alias = 'ClientOrderDeliverySchedule';
+
 	public $actsAs = array('Containable');
 
 	public $validate = array(
@@ -94,22 +96,107 @@ class ClientOrderDeliverySchedule extends AppModel {
 					'dependent' => true
 				),
 				
-				// 'hasOne' => array(
-
-				// 	'JobTicket' => array(
-				// 		'className' => 'Ticket.JobTicket',
-				// 		'foreignKey' => false,
-				// 		'conditions' => array('JobTicket.client_order_id = ClientOrderDeliverySchedule.client_order_id'),
-				// 		'dependent' => true
-				// 	),
-				// ),
-
 			),
+
+				'hasOne' => array(
+
+					'JobTicket' => array(
+						'className' => 'Ticket.JobTicket',
+						'foreignKey' => false,
+						'conditions' => array('JobTicket.client_order_id = ClientOrderDeliverySchedule.client_order_id'),
+						'dependent' => true
+					),
+				),
 			
 		));
 
 		$this->contain($model);
 	}
+
+	public function bindDelivery() {
+		$this->bindModel(array(
+			'belongsTo' => array(
+				'ClientOrder' => array(
+					'className' => 'Sales.ClientOrder',
+					'conditions' => array('ClientOrderDeliverySchedule.client_order_id = ClientOrder.id'),
+					'dependent' => true
+				),
+
+				'QuotationDetail' => array(
+					'className' => 'Sales.QuotationDetail',
+					'foreignKey' => false,
+					'conditions' => array('QuotationDetail.quotation_id = ClientOrder.quotation_id'),
+					'dependent' => true
+				),
+
+				'Quotation' => array(
+					'className' => 'Sales.Quotation',
+					'foreignKey' => false,
+					'conditions' => array('Quotation.id = QuotationDetail.quotation_id'),
+					'dependent' => true
+				),
+
+				'QuotationItemDetail' => array(
+					'className' => 'Sales.QuotationItemDetail',
+					'foreignKey' => false,
+					'conditions' => array('QuotationItemDetail.id = ClientOrder.client_order_item_details_id'),
+					'dependent' => true
+				),
+				'Product' => array(
+					'className' => 'Sales.Product',
+					'foreignKey' => false,
+					'conditions' => array('Product.id = QuotationDetail.product_id'),
+					'dependent' => true
+				),
+				'Company' => array(
+					'className' => 'Sales.Company',
+					'foreignKey' => false,
+					'conditions' => array('Company.id = ClientOrder.company_id'),
+					'dependent' => true
+				),
+				'Address' => array(
+					'className' => 'Sales.Address',
+					'foreignKey' => false,
+					'conditions' => array('Address.foreign_key = Company.id'),
+					'dependent' => true
+				),
+				
+			// ),
+
+			// 	'hasOne' => array(
+
+					// 'JobTicket' => array(
+					// 	'className' => 'Ticket.JobTicket',
+					// 	'foreignKey' => false,
+					// //	'conditions' => array('JobTicket.client_order_id = ClientOrderDeliverySchedule.client_order_id'),
+					// 	'dependent' => true
+					// ),
+				),
+		));
+		$this->recursive = 1;
+		//$this->contain($giveMeTheTableRelationship);
+	}
+
+	// public function howellKit() {
+	// 	$this->bindModel(array(
+	// 		'belongsTo' => array(
+	// 			'ClientOrder' => array(
+	// 				'className' => 'Sales.ClientOrder',
+	// 				'conditions' => array('ClientOrderDeliverySchedule.client_order_id = ClientOrder.id'),
+	// 				'dependent' => true
+	// 			),
+	// 			'JobTicket' => array(
+	// 				'className' => 'Ticket.JobTicket',
+	// 				'foreignKey' => false,
+	// 				'conditions' => array('ClientOrder.id = JobTicket.client_order_id'),
+	// 				'dependent' => true
+	// 			)
+	// 		)
+	// 	));
+	// 	$this->contain(array('ClientOrder', 'JobTicket'));
+	// 	//$this->recursive = 0;
+	// }
+
 
 	public function saveClientOrderDeliverySchedule($clientOrderData = null, $auth = null, $clientOrderId = null){
 
