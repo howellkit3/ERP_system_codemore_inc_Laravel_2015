@@ -27,38 +27,43 @@ function vatprice(whatsection, thisElement){
 
 function findValue($form, thisElement){
 
-    var $unit_value = thisElement.parents('.'+$form).find('.unitprice').val();
-    var $vat_value = thisElement.parents('.'+$form).find('.vatIn').val();
+    //var $unit_value = thisElement.parents('.'+$form).find('.unitprice2').val();
+    var $unit_value = thisElement.parents('.'+$form).find('.unitprice2').val();
+    var $vat_value = thisElement.parents('.'+$form).find('.vatIn2').val();
+    var $unit_value2 = thisElement.parents('.'+$form).find('.unitprice').val();
+    var $vat_value2 = thisElement.parents('.'+$form).find('.vatIn').val();
 
    // alert($form);
    
     if ($unit_value == '' && $vat_value == '' ){
          //alert($vat_value);
-        alert('Unit Price is Required.');
-        thisElement.parents('.'+$form).find('.unitprice').focus();
+        alert('Unit Price is Required');
+        thisElement.parents('.'+$form).find('.unitprice2').focus();
         thisElement.attr('checked',false);
 
     }else if($unit_value != '' && $form == 'quotationItemDetail'){
-         
+        //alert('s');
         var sum = 0;
         var index = 0;
         var total = 0;
 
         sum = $unit_value * .12;
         total = (sum + parseFloat($unit_value));
-        thisElement.parents('.'+$form).find('.vatprice').val(total);
+        thisElement.parents('.'+$form).find('.vatprice2').val(total);
 
          if (thisElement.is(":checked")) {
             console.log('check');
             sum = $unit_value * .12;
             total = (sum + parseFloat($unit_value));
             thisElement.parents('.quotationItemDetail').find('.vatprice').val(total);
+            thisElement.parents('.quotationItemDetail').find('.vatprice2').val(total.toFixed(4));
 
          } else {
             console.log('uncheck');
             sum = $unit_value * .12;
             total = (parseFloat($unit_value) - sum);
             thisElement.parents('.quotationItemDetail').find('.vatprice').val(' '); 
+            thisElement.parents('.quotationItemDetail').find('.vatprice2').val(' ');
          }
 
     }else if($vat_value != '' || $form == 'quotationItemDetails'){
@@ -77,18 +82,21 @@ function findValue($form, thisElement){
         thisElement.parents('.'+$form).find('.unitprice').val(quotient);
 
          if (thisElement.is(":checked")) {
-            var $vat_value = thisElement.parents('.'+$form).find('.vatIn').val();
+            var $vat_value = thisElement.parents('.'+$form).find('.vatIn2').val();
             console.log('check');
             console.log($vat_value);
             quotient = $vat_value / 1.12;
             //total = (sum + parseFloat($unit_value));
+            thisElement.parents('.quotationItemDetail').find('.unitprice2').val(quotient.toFixed(4));
             thisElement.parents('.quotationItemDetail').find('.unitprice').val(quotient);
 
          } else {
             console.log('uncheck');
             quotient = $vat_value / 1.12;
            // total = (parseFloat($unit_value) - sum);
-            thisElement.parents('.quotationItemDetail').find('.unitprice').val(quotient); 
+            thisElement.parents('.quotationItemDetail').find('.unitprice').val(quotient);
+            thisElement.parents('.quotationItemDetail').find('.unitprice2').val(quotient.toFixed(4)); 
+
          }
   
     }
@@ -190,7 +198,7 @@ $('body').on('keyup','.vatprice',function(){
     $parents = $(this).parents('.quotationItemDetail');
     
     if ($parents.find('.unitprice').val() != '' && $(this).val() != '' ) {
-         findValue($(this).data('section'),$parents.find('.vat-price'));
+         findValue($(this).data('section'),$parents.find('.vat-price2'));
 
     }
 
@@ -201,10 +209,34 @@ $('body').on('keyup','.unitprice',function(){
     $parents = $(this).parents('.quotationItemDetail');
     
     if ($parents.find('.vatprice').val() != '' && $(this).val() != '' ) {
-         findValue($(this).data('section'),$parents.find('.vat-price'));
+         findValue($(this).data('section'),$parents.find('.vat-price2'));
     }
 
     //console.log($(this).val());
+});
+
+$('body').on('keyup','.vatprice2',function(){
+
+    thisElement = $(this);
+
+    vat = $(this).val();
+
+    thisElement.parents('.form-horizontal').find('.vatprice').val(vat);
+
+   // alert(test); exit;
+
+});
+
+$('body').on('keyup','.unitprice2',function(){
+
+    thisElement = $(this);
+
+   unit = $(this).val();
+
+   thisElement.parents('.form-horizontal').find('.unitprice').val(unit);
+
+  //  alert(test); exit;
+    
 });
 
 $('body').on('change','.checkEx',function(){
@@ -212,15 +244,19 @@ $('body').on('change','.checkEx',function(){
         var checkboxtext =  $('.checkEx').next('label').text();
         $(this).parents('.form-horizontal').find('.checkEx').next('label').text('Uncheck to disable VAT Price');
         //$(this).parents('.form-horizontal').find(".vatEx").prop('readonly', true);
-        $(this).parents('.form-horizontal').find(".vatIn").prop('readonly', false);
+        $(this).parents('.form-horizontal').find(".vatIn2").prop('readonly', false);
         $(this).parents('.form-horizontal').find('.vatEx').val("");
+        $(this).parents('.form-horizontal').find('.vatIn2').val("");
         $(this).parents('.form-horizontal').find('.vatIn').val("");
+        $(this).parents('.form-horizontal').find('.unitprice2').val("");
+        $(this).parents('.form-horizontal').find('.unitprice').val("");
         $(".checkvat").attr("checked", false);
   
     }else{
         $(this).parents('.form-horizontal').find('.checkEx').next('label').text('Check to enable VAT Price');
         //$(this).parents('.form-horizontal').find(".vatEx").prop('readonly', false);
-        $(this).parents('.form-horizontal').find(".vatIn").prop('readonly', true);
+        $(this).parents('.form-horizontal').find(".vatIn2").prop('readonly', true);
+        $(this).parents('.form-horizontal').find('.vatIn2').val("");
         $(this).parents('.form-horizontal').find('.vatIn').val("");
         $(this).parents('.form-horizontal').find('.vatEx').val("");
         $(".checkvat").attr("checked", false);

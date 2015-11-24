@@ -324,8 +324,21 @@
                             								'class' => 'form-control item_type unitprice  prEx number  ',
 		                                                    'data' => 'unitprice',
 		                                                    'type' => 'text',
+		                                                    'type' => 'hidden',
 		                                                    'label' => false,
 		                                                    'value' => $itemDetailDetails['QuotationItemDetail']['unit_price'],
+		                                                    'name' => 'data[QuotationItemDetail]['.$key.'][unit_price]',
+		                                                    'data-section' => 'quotationItemDetail',
+		                                                    'placeholder' => 'Unit Price'));
+		                                            ?>
+
+		                                            <?php 
+			                                            echo $this->Form->input('QuotationItemDetail.0.unit_price_proxy', array(
+                            								'class' => 'form-control item_type unitprice2  prEx number  ',
+		                                                    'data' => 'unitprice',
+		                                                    'type' => 'text',
+		                                                    'label' => false,
+		                                                    'value' => round($itemDetailDetails['QuotationItemDetail']['unit_price'],2),
 		                                                    'name' => 'data[QuotationItemDetail]['.$key.'][unit_price]',
 		                                                    'data-section' => 'quotationItemDetail',
 		                                                    'placeholder' => 'Unit Price'));
@@ -403,8 +416,21 @@
 				                                            echo $this->Form->input('QuotationItemDetail.0.vat_price', array(
 	                            								'class' => 'form-control item_type vatIn vatprice '. $displayMe,
 			                                                    'type' => 'text',
+			                                                    'type' => 'hidden',
 			                                                    'label' => false,
 			                                                    'value' => $itemDetailDetails['QuotationItemDetail']['vat_price'],
+			                                                    'id' => 'QuotationItemDetail'.$key.'VatPrice',
+			                                                    'name' => 'data[QuotationItemDetail]['.$key.'][vat_price]',
+			                                                    'readonly' => 'readonly',
+			                                                    'placeholder' => 'Vat Price'));
+			                                            ?>
+
+			                                            <?php 
+				                                            echo $this->Form->input('QuotationItemDetail.0.vat_price_proxy', array(
+	                            								'class' => 'form-control item_type vatIn2 vatprice2 '. $displayMe,
+			                                                    'type' => 'text',
+			                                                    'label' => false,
+			                                                    'value' => round($itemDetailDetails['QuotationItemDetail']['vat_price'],2),
 			                                                    'id' => 'QuotationItemDetail'.$key.'VatPrice',
 			                                                    'name' => 'data[QuotationItemDetail]['.$key.'][vat_price]',
 			                                                    'readonly' => 'readonly',

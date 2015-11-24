@@ -46,7 +46,7 @@ class Stock extends AppModel {
 					$value['supplier_id'] = $supplierId;
 					$value['quantity'] = $value['quantity'];
 					$value['location_id'] = $data['InRecord']['location'];
-					$value['quantity_unit_id'] = $value['quantity_unit_id'];
+					$value['quantity_unit_id'] = !empty($value['quantity_unit_id']) ? $value['quantity_unit_id'] : 14 ;
 					$value['created_by'] = $auth;
 					$value['modified_by'] = $auth;
 
