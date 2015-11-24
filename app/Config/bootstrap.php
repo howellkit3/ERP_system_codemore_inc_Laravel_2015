@@ -106,6 +106,13 @@ Configure::write('Dispatcher.filters', array(
 	'CacheDispatcher'
 ));
 
+/* phpmailer settings */
+Configure::write('php_mail_host',"p3plcpnl0752.prod.phx3.secureserver.net");
+
+Configure::write('php_mail_username',"sales2@koufupackaging.com");
+
+Configure::write('php_mail_password',"W1FnA(E,7h1^");
+
 /**
  * Configures default file logging options
  */
