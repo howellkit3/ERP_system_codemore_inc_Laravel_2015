@@ -3,6 +3,9 @@ App::uses('AppController', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
 App::uses('CakeEmail', 'Network/Email');
 App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.php', false);
+
+App::import('Vendor', 'PHPMailer', true, array(), 'PHPMailer'.DS.'PHPMailerAutoload.php', false);
+
 App::import('Vendor','acl/Role');
 
 class QuotationsController extends SalesAppController {
@@ -1057,34 +1060,41 @@ class QuotationsController extends SalesAppController {
 
 				}
 		}
-		$to = $this->request->data['Quotation']['to'];
-	
+		//$to = $this->request->data['Quotation']['to'];
+		$to = $this->request->data['Quotation']['to']; //= 'thkim3@sambon.co.kr';
+
+
+		$mail = new PHPMailer;
+
+
+		$mail->isSMTP();                                      // Set mailer to use SMTP
+		$mail->Host = Configure::read('php_mail_host');
+		  // Specify main and backup SMTP servers
+		$mail->SMTPAuth = true;                               // Enable SMTP authentication
+		$mail->Username = Configure::read('php_mail_username');                 // SMTP username
+		$mail->Password = Configure::read('php_mail_password');                     // SMTP password
+		$mail->SMTPSecure = 'ssl';
+		$mail->Port = 465;                                  // TCP port to connect to
+
 		if (!empty($this->request->data['Quotation']['to']) && !filter_var($to, FILTER_VALIDATE_EMAIL) === false)  {
 			
-			$email = new CakeEmail('mandrill');
+		
+			$mail->setFrom($userData['User']['email']);
+			$mail->addAddress($to);     // Add a recipient
+			//$mail->addAddress('ellen@example.com');               // Name is optional
+			//	$mail->addReplyTo('info@example.com', 'Information');
 
-
-			//$email->IsSMTP();                                      // Set mailer to use SMTP
-			$email->Host = 'smtp.mandrillapp.com';                 // Specify main and backup server
-			$email->Port = 465;                                    // Set the SMTP port
-			$email->SMTPAuth = true;                               // Enable SMTP authentication
-			// $mail->Username = 'MANDRILL_USERNAME';                // SMTP username
-			// $mail->Password = 'MANDRILL_APIKEY';                  // SMTP password
-			$email->SMTPSecure = 'tls';       
-
-			//$email->Port = 587;465
-			//$email->Port = 587;
-			$email->from($userData['User']['email']);
-
-			$email->to($to);
+			//$mail->addBCC('bcc@example.com');
 			if (!empty($valid_email_cc)) {
 
-				$email->cc($valid_email_cc);
+				$mail->addCC($valid_email_cc);
+
+				//$email->cc($valid_email_cc);
 			}
 			
-			$email->subject($this->request->data['Quotation']['subject']);
+			//$email->subject($this->request->data['Quotation']['subject']);
 
-			$filename =  $this->request->data['Quotation']['pdf'];
+			$filename = $this->request->data['Quotation']['pdf'];
 				
 			//find attachment
 			$files = WWW_ROOT.'pdf'.DS.'Quotation-'.$this->request->data['Quotation']['id'].'.pdf';
@@ -1092,7 +1102,7 @@ class QuotationsController extends SalesAppController {
 
 			//$attachment = $this->_createPdf($qouteId,$companyId,$filename);
 
-		
+			
 
 			if (!file_exists($files)) {
 
@@ -1105,22 +1115,49 @@ class QuotationsController extends SalesAppController {
 					}
 			} 	
 
+			
+
 			if ( $attachment ) {
 
-					$email->attachments(array($attachment));
-					
+					$mail->addAttachment($attachment); 
+
+						//$email->attachments(array($attachment));
+
+					$mail->Subject = $this->request->data['Quotation']['subject'];
+
 					$message = $this->request->data['Quotation']['message'];
+
+					$body = '<div style="padding:10px;width:80%  ">';
+					$body .= nl2br($message);
+            		$body .= '</div>';
+
+           			$mail->Body = $body;
+
+           			$mail->IsHTML(true);
+					
+
+
+					if(!$mail->send()) {
+
+						$this->Session->setFlash(__('Sending emails failed, Please use valid email address'),'error');
+						
+					} else {
+
+						$this->Session->setFlash(__('Quotation Successfully send.'),'success');
+					}
+
+				
 					 
-					$email->viewVars(compact('message'));
+					// $email->viewVars(compact('message'));
 
-                    $email->template('simple_message');
+     //                $email->template('simple_message');
 
-                    if (isset($template)) {
-                         $Email->template($template);
-                    }
+     //                if (isset($template)) {
+     //                     $Email->template($template);
+     //                }
 
-                    $email->emailFormat('html');
-					$email->send();
+     //                $email->emailFormat('html');
+					// $email->send();
 
 					$file = new File(WWW_ROOT . DS . $attachment);
 					
@@ -1278,7 +1315,7 @@ class QuotationsController extends SalesAppController {
         $dompdf->render();
         $canvas = $dompdf->get_canvas();
         $font = Font_Metrics::get_font("helvetica", "bold");
-        $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
+       // $canvas->page_text(16, 800, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 8, array(0,0,0));
 
         $output = $dompdf->output();
         $random = rand(0, 1000000) . '-' . time();
