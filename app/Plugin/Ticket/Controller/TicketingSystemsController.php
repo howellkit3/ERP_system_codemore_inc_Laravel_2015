@@ -1272,7 +1272,11 @@ class TicketingSystemsController extends TicketAppController {
         
         $this->JobTicket->id = $id;
 
+        $userData = $this->Session->read('Auth');
+
         $this->JobTicket->saveField('status_production_id', 1);
+
+        $this->JobTicket->saveField('modified_by', $userData['User']['id']);
 
         $this->Session->setFlash(__('Job Ticket has been removed'), 'success');
       

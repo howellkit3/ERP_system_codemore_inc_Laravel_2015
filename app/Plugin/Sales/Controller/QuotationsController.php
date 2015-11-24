@@ -1514,12 +1514,13 @@ class QuotationsController extends SalesAppController {
 
     public function remove($quotationId = null) {
 
-
 		$userData = $this->Session->read('Auth');
 
 		$this->Quotation->id = $quotationId;
 
 		$this->Quotation->saveField('status', 3);
+
+		$this->Quotation->saveField('modified_by', $userData['User']['id']);
 
 		$this->Session->setFlash(__('Quotation has been removed'), 'success');
       
