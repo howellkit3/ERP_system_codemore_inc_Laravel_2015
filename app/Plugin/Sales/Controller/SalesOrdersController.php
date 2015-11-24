@@ -304,6 +304,8 @@ class SalesOrdersController extends SalesAppController {
 
       $this->ClientOrder->saveField('status_id', 1);
 
+      $this->ClientOrder->saveField('modified_by', $userData['User']['id']);
+
       $this->Session->setFlash(__('Client Order has been removed'), 'success');
       
         $this->redirect( array(
