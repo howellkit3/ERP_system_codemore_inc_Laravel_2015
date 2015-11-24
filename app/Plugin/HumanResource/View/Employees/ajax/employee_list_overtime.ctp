@@ -77,6 +77,14 @@
                             <div class="time-ago">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                             </div>
+                                <div class="clearfix"></div>
+                                <div class="reason col-lg-6">
+
+                                    <label class=""> Reason </label>
+
+                                     <input type="text" name="data[OvertimeDetail][reason][<?php echo $KeyId ?>]" class="form-control" value="" id="checkbox">
+
+                                </div>
                             </div>
         </div>
 
