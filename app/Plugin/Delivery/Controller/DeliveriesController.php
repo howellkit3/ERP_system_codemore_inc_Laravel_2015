@@ -203,9 +203,9 @@ class DeliveriesController extends DeliveryAppController {
         //                                       )));   
 
 
-        $this->ClientOrderDeliverySchedule->howellKit();
-        $holder = $this->ClientOrderDeliverySchedule->find('all');
-        pr($holder); die();
+        // $this->ClientOrderDeliverySchedule->howellKit();
+        // $holder = $this->ClientOrderDeliverySchedule->find('all');
+        // pr($holder); die();
 
         $clientsOrder = $this->ClientOrderDeliverySchedule->query('SELECT ClientOrder.id, ClientOrder.client_order_item_details_id,
             ClientOrder.po_number, ClientOrder.company_id, ClientOrder.quotation_id,  ClientOrder.uuid,

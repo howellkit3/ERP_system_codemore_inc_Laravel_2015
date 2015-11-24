@@ -13,9 +13,9 @@ class ClientOrderDeliverySchedule extends AppModel {
 	
 	public $recursive = -1;
 
-	public $name = 'Sales.ClientOrderDeliverySchedule';
+	public $name = 'ClientOrderDeliverySchedule';
 
-	public $alias = 'Sales.ClientOrderDeliverySchedule';
+	public $alias = 'ClientOrderDeliverySchedule';
 
 	public $actsAs = array('Containable');
 
@@ -165,37 +165,37 @@ class ClientOrderDeliverySchedule extends AppModel {
 
 			// 	'hasOne' => array(
 
-					'JobTicket' => array(
-						'className' => 'Ticket.JobTicket',
-						'foreignKey' => false,
-					//	'conditions' => array('JobTicket.client_order_id = ClientOrderDeliverySchedule.client_order_id'),
-						'dependent' => true
-					),
+					// 'JobTicket' => array(
+					// 	'className' => 'Ticket.JobTicket',
+					// 	'foreignKey' => false,
+					// //	'conditions' => array('JobTicket.client_order_id = ClientOrderDeliverySchedule.client_order_id'),
+					// 	'dependent' => true
+					// ),
 				),
 		));
 		$this->recursive = 1;
 		//$this->contain($giveMeTheTableRelationship);
 	}
 
-	public function howellKit() {
-		$this->bindModel(array(
-			'belongsTo' => array(
-				'ClientOrder' => array(
-					'className' => 'Sales.ClientOrder',
-					'conditions' => array('ClientOrderDeliverySchedule.client_order_id = ClientOrder.id'),
-					'dependent' => true
-				),
-				'JobTicket' => array(
-					'className' => 'Ticket.JobTicket',
-					'foreignKey' => false,
-					'conditions' => array('ClientOrder.id = JobTicket.client_order_id'),
-					'dependent' => true
-				)
-			)
-		));
-		$this->contain(array('ClientOrder', 'JobTicket'));
-		//$this->recursive = 0;
-	}
+	// public function howellKit() {
+	// 	$this->bindModel(array(
+	// 		'belongsTo' => array(
+	// 			'ClientOrder' => array(
+	// 				'className' => 'Sales.ClientOrder',
+	// 				'conditions' => array('ClientOrderDeliverySchedule.client_order_id = ClientOrder.id'),
+	// 				'dependent' => true
+	// 			),
+	// 			'JobTicket' => array(
+	// 				'className' => 'Ticket.JobTicket',
+	// 				'foreignKey' => false,
+	// 				'conditions' => array('ClientOrder.id = JobTicket.client_order_id'),
+	// 				'dependent' => true
+	// 			)
+	// 		)
+	// 	));
+	// 	$this->contain(array('ClientOrder', 'JobTicket'));
+	// 	//$this->recursive = 0;
+	// }
 
 
 	public function saveClientOrderDeliverySchedule($clientOrderData = null, $auth = null, $clientOrderId = null){
