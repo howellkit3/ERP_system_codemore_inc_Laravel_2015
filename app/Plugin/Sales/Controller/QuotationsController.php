@@ -90,19 +90,19 @@ class QuotationsController extends SalesAppController {
 		$companyData = Cache::read('companyData');
 		
 		//if (!$companyData) {
-			$companyData = $this->Company->find('list', array(
-     											'fields' => array( 
-     												'id','company_name')
-     										));
+		$companyData = $this->Company->find('list', array(
+ 											'fields' => array( 
+ 												'id','company_name')
+ 										));
 
-            Cache::write('companyData', $companyData);
+        Cache::write('companyData', $companyData);
        // }
 
         //set to cache in first load
 		$inquiryId = Cache::read('inquiryId');
 
 		//if (!$inquiryId) {
-			$inquiryId = $this->Company->Inquiry->find('list', array(
+		$inquiryId = $this->Company->Inquiry->find('list', array(
      													'fields' => array(
      														'id','company_id')
      													));
@@ -1087,8 +1087,16 @@ class QuotationsController extends SalesAppController {
 			//$mail->addBCC('bcc@example.com');
 			if (!empty($valid_email_cc)) {
 
-				$mail->addCC($valid_email_cc);
+			
 
+				if (!empty($valid_email_cc) && is_array($valid_email_cc)) {
+
+					foreach ($valid_email_cc as $key => $list) {
+					
+						$mail->addCC($list);
+					}
+				}
+				
 				//$email->cc($valid_email_cc);
 			}
 			
