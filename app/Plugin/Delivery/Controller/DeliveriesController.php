@@ -816,7 +816,7 @@ class DeliveriesController extends DeliveryAppController {
             INNER JOIN koufu_sale.products AS Product
             ON Product.id = JobTicket.product_id
             WHERE JobTicket.uuid LIKE "%'.$hint.'%" OR ClientOrder.po_number LIKE "%'.$hint.'%"
-            OR Company.company_name LIKE "%'.$hint.'%" OR Product.name LIKE "%'.$hint.'%" LIMIT 10 ');
+            OR Company.company_name LIKE "%'.$hint.'%" OR Product.name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%" LIMIT 10 ');
 
         // $conditions = array('ClientOrder.status_id' => null, 'OR' => array(
         //                 array('ClientOrder.po_number LIKE' => '%' . $hint . '%'),
@@ -1932,7 +1932,7 @@ class DeliveriesController extends DeliveryAppController {
 
             $this->set(compact('noPermissionSales','clientsOrder','deliveryData', 'deliveryList', 'deliveryDetailList', 'clientsStatus', 'deliveryStatus', 'orderList', 'orderListHelper', 'jobTicketData'));
 
-            $this->render('index_complete');
+            $this->render('index_completed');
 
         }
 

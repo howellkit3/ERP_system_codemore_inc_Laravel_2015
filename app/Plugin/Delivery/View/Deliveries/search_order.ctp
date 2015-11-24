@@ -10,7 +10,13 @@
 
                                         <td class="text-center">
                                                   <?php  echo !empty($jobTicketData[$scheduleDataList['ClientOrder']['id']]) ? $jobTicketData[$scheduleDataList['ClientOrder']['id']] : "No Job Ticket yet"; ?>  
-                                              </td>
+                                        </td>
+
+                                        <td class="text-center">
+
+                                                  <?php  echo $scheduleDataList['ClientOrder']['uuid']; ?>  
+                                              
+                                        </td>
 
                                         <td class="text-center">
 
@@ -27,8 +33,7 @@
 
                                         <td class="text-center">
                               
-                                           <?php echo substr($scheduleDataList['Product']['name'],0,20);  ?>  
-                                           <br>
+                                           <?php echo substr($scheduleDataList['Product']['name'],0,20);  ?>..
                                            
                                         </td>
 

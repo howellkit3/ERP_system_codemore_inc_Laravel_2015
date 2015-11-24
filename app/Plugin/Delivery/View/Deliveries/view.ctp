@@ -49,6 +49,11 @@ $totalremaining = 0;
                                     </tr>
 
                                     <tr>
+                                        <td>Client Number</td>
+                                        <td><?php echo  $clientsOrder['ClientOrder']['uuid']; ?></td>
+                                    </tr>
+
+                                    <tr>
                                         <td>Delivery Type</td>
                                         <td><?php echo  $clientsOrder['ClientOrderDeliverySchedule']['delivery_type']; ?></td>
                                     </tr>
@@ -177,12 +182,17 @@ $totalremaining = 0;
 
                                         </td>
                                     </tr>
+
+                                    <tr>
+                                        <td>Date Created</td>
+                                        <td>
+                                            <?php echo date('M d, Y', strtotime($clientsOrder['ClientOrderDeliverySchedule']['modified'])); ?></td>
+                                    </tr>
              
                                 </tbody>
                         
                             </table>
                         </div>
-                        <h9 class ='pull-right'>Date Created : <?php echo date('M d, Y', strtotime($clientsOrder['ClientOrderDeliverySchedule']['modified'])); ?> &nbsp;&nbsp;  </h9>
                     </div>
                 </div>
             </div>   
