@@ -3,8 +3,9 @@
                        // if(!empty($clientsOrder)){
                          // pr($deliveryDetailsData); exit;
 ?>
-                                <?php foreach ($clientsOrder as $scheduleDataList): ?>
+                                <?php foreach ($clientsOrder as $scheduleDataList): 
 
+                                  if($scheduleDataList['ClientOrder']['status_id'] == null){ ?>
                               
                                     <tr class="">
 
@@ -183,6 +184,6 @@
                                         </td>
                                     </tr>
 
-                        <?php 
+                        <?php }
                             endforeach; 
                         //} ?> 
