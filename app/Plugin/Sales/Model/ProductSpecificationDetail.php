@@ -124,12 +124,12 @@ class ProductSpecificationDetail extends AppModel {
 				$dataArray[$key][$model] = !empty($data[$model]) ? $data[$model] : array();  
 
 				
-				if($model == 'ProductSpecificationProcess'){
+				if($model == 'ProductSpecificationProcess') {
 
 
 					// if ( $productionSchedule == true) {
 
-					// 	$processHolder->bind(array('TicketProcessSchedule'));
+						
 					// }
 					
 					$processData = $processHolder->find('all',array(

@@ -437,4 +437,17 @@ class Employee extends AppModel {
 		}
 	}
 
+	public function getOperator($type = null,$conditions = array()) {
+
+		$this->bind(array('Position'));
+
+		$employees = $this->find($type,array(
+			'conditions' => array('Position.id' => array('52','75','76','77','78','111','112','113','114','118','119','120','121','122','123','124','125','126','127','128','129','130','131') ),
+			//'fields' => array('Employee.id','Employee.first_name','Employee.last_name','Employee.middle_name','Employee.fullname','Position.id','Position.name')
+			'fields' => array('Employee.id','Employee.fullname')
+			));
+
+		return $employees;
+	}
+
 }

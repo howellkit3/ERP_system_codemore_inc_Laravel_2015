@@ -21,3 +21,10 @@ div.disabled
   /* for "disabled" effect */
   opacity: 0.5;
   background: #CCC;
+
+}
+
+.sweet-alert.showSweetAlert > p {
+  font-weight: bold;
+  text-align: left;
+}

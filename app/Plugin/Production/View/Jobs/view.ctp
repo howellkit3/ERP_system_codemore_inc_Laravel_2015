@@ -155,10 +155,9 @@ echo $this->element('tab/jobs',array('active_tab' => $active_tab));
 								<table class="table table-bordered">
 									<thead>
 										<?php 
-										
-											$product = array();
 
-										foreach ($formatDataSpecs as $key => $specLists) { ?>
+											$product = array();
+											foreach ($formatDataSpecs as $key => $specLists) { ?>
 											
 											<?php
 

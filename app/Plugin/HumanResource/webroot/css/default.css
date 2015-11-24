@@ -328,3 +328,6 @@ div.value {
   margin-left: 9px;
   margin-right: 8px;
 }
+span.required {
+  color: red;
+}

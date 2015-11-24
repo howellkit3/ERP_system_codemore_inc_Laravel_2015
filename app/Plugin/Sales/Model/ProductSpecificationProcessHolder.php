@@ -19,12 +19,12 @@ class ProductSpecificationProcessHolder extends AppModel {
 					'foreignKey' => 'product_specification_process_id',
 					'dependent' => true
 				),
-				// 'TicketProcessSchedule' => array(
-				// 	'className' => 'Production.TicketProcessSchedule',
-				// 	'foreignKey' => false,
-				// 	'conditions' => 'TicketProcessSchedule.product_specification_process_holder_id = ProductSpecificationProcessHolder.id'
+				'TicketProcessSchedule' => array(
+					'className' => 'Production.TicketProcessSchedule',
+					'foreignKey' => false,
+					'conditions' => 'TicketProcessSchedule.id = ProductSpecificationProcessHolder.id'
 					
-				// ),
+				),
 				
 			)
 		));

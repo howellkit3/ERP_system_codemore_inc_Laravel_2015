@@ -217,6 +217,7 @@ class TicketProcessSchedulesController extends ProductionAppController {
 
         $this->loadModel('Production.ProcessDepartment');
 
+
         if (!empty($this->request->data)) {
 
             $data = $this->request->data;
@@ -225,7 +226,14 @@ class TicketProcessSchedulesController extends ProductionAppController {
 
             $this->MachineLog->saveMachineLog($TicketProcessScheduleID, $auth['id']);
 
-            
+            if ($this->request->is('ajax')) {
+
+                echo "1";
+                exit();
+
+
+            } else {
+
             $this->Session->setFlash(__('Process/es has been logged to machine.'));
 
             $this->redirect( array(
@@ -234,6 +242,9 @@ class TicketProcessSchedulesController extends ProductionAppController {
                      $data['TicketProcessSchedule']['job_ticket_id']
     
              ));
+
+            }
+            
             
         }
     }
