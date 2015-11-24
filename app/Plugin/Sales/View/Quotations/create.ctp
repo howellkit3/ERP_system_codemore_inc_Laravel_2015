@@ -210,16 +210,24 @@
 					                                'label' => false,
 					                                'class' => 'form-control required currency-option',
 					                                'empty' => '-Select Currency-'
-					                                 )); 
+					                                 ));  ?>
 
-					                            ?>
 												</div>
 
 												<div class="col-lg-3">
 													<?php 
-			                                            echo $this->Form->input('QuotationItemDetail.0.unit_price', array(
+			                                            echo $this->Form->input('QuotationItemDetail.0.unit_price_proxy', array(
                             								'class' => 'form-control item_type unitprice number required vatEx',
 		                                                    'data' => 'unitprice',
+		                                                    'type' => 'text',
+		                                                    'type' => 'hidden',
+		                                                    'label' => false,
+		                                                    'data-section' => 'quotationItemDetail',
+		                                                    'placeholder' => 'Unit Price'));
+
+			                                            echo $this->Form->input('QuotationItemDetail.0.unit_price', array(
+                            								'class' => 'form-control item_type unitprice2 number required vatEx',
+		                                                    'data' => 'unitprice2',
 		                                                    'type' => 'text',
 		                                                    'label' => false,
 		                                                    'data-section' => 'quotationItemDetail',
@@ -276,12 +284,24 @@
 			                                            echo $this->Form->input('QuotationItemDetail.0.vat_price', array(
                             								'class' => 'form-control item_type vatIn vatprice',
 		                                                    'type' => 'text',
+		                                                    'type' => 'hidden',
 		                                                    'label' => false,
 		                                                    'readonly' => 'readonly',
 		                                                    'data-section' => 'quotationItemDetails',
 		                                                    'placeholder' => 'Vat Price'));
 		                                            ?>
 													
+		                                            <?php 
+			                                            echo $this->Form->input('QuotationItemDetail.0.vat_price_proxy', array(
+                            								'class' => 'form-control item_type vatIn2 vatprice2',
+		                                                    'type' => 'text',
+		                                                    'label' => false,
+		                                                    'readonly' => 'readonly',
+		                                                    'data-section' => 'quotationItemDetails',
+		                                                    'placeholder' => 'Vat Price'));
+		                                            ?>
+
+
 												</div>
 											</div>
 												

@@ -2456,6 +2456,13 @@ ADD COLUMN `product_specification_process_holder_id`  int(11) NULL AFTER `depart
 ALTER TABLE `ticket_process_schedules`
 ADD COLUMN `operator_id`  int(11) NULL AFTER `machine_id`;
 
+/* howellkit added this nov-20-2015*/
+
+ALTER TABLE `client_order_delivery_schedules`
+ADD COLUMN `status_id`  INT(11) NULL AFTER `allowance`;
+UPDATE `client_order_delivery_schedules` SET `status_id` = 0 WHERE `status_id` IS NULL;
+
 ALTER TABLE `item_specs`
 ADD COLUMN `unit_length_id`  int(11) NULL AFTER `unit_length`,
 ADD COLUMN `unit_width_id`  int(11) NULL AFTER `unit_length_id`;
+
