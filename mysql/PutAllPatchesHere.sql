@@ -2455,3 +2455,7 @@ ADD COLUMN `product_specification_process_holder_id`  int(11) NULL AFTER `depart
 
 ALTER TABLE `ticket_process_schedules`
 ADD COLUMN `operator_id`  int(11) NULL AFTER `machine_id`;
+
+ALTER TABLE `item_specs`
+ADD COLUMN `unit_length_id`  int(11) NULL AFTER `unit_length`,
+ADD COLUMN `unit_width_id`  int(11) NULL AFTER `unit_length_id`;
