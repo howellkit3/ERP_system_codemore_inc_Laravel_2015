@@ -22,7 +22,7 @@
                              <?php  if(!empty($clientsOrder)){ ?>
                                     <?php foreach ($clientsOrder as $scheduleDataList): 
 
-                                        if($scheduleDataList['ClientOrder']['status_id'] == null){ ?>
+                                        if($scheduleDataList['ClientOrder']['status_id'] == null  && $scheduleDataList['ClientOrderDeliverySchedule']['status_id'] == 0){ ?>
 
                                          <tr class="">
 
@@ -169,15 +169,24 @@
                                                   <?php 
 
                                                       echo $this->Html->link('<span class="fa-stack">
-                                                                               <i class="fa fa-square fa-stack-2x"></i>
-                                                                            <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;
-                                                                                <span class ="post"><font size = "1px">View</font></span>
-                                                                                </span> ', array('controller' => 'deliveries', 
-                                                                                               'action' => 'view',
-                                                                               $scheduleDataList['ClientOrderDeliverySchedule']['id'], $scheduleDataList['ClientOrderDeliverySchedule']['uuid'], $scheduleDataList['ClientOrder']['uuid']),
-                                                                                array('class' =>' table-link small-link-icon '.$noPermissionSales,'escape' => false,'title'=>'Edit Information'
-                                                                           )); 
+                                                               <i class="fa fa-square fa-stack-2x"></i>
+                                                            <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;
+                                                                <span class ="post"><font size = "1px">View</font></span>
+                                                                </span> ', array('controller' => 'deliveries', 
+                                                                               'action' => 'view',
+                                                               $scheduleDataList['ClientOrderDeliverySchedule']['id'], $scheduleDataList['ClientOrderDeliverySchedule']['uuid'], $scheduleDataList['ClientOrder']['uuid']),
+                                                                array('class' =>' table-link small-link-icon '.$noPermissionSales,'escape' => false,'title'=>'Edit Information'
+                                                           )); 
                                                   ?>     
+
+                                                  <?php
+
+                                                      echo $this->Html->link('<span class="fa-stack">
+                                                          <i class="fa fa-square fa-stack-2x"></i>
+                                                          <i class="fa fa-trash fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px">  </font></span>
+                                                          </span>', array('controller' => 'deliveries', 'action' => 'terminate',$scheduleDataList['ClientOrderDeliverySchedule']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information','confirm' => 'Do you want to remove this client order delivery schedule in the list?'));
+
+                                                      ?>
 
                                                   <br>
                                                    
