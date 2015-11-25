@@ -114,44 +114,11 @@ class DeliveriesController extends DeliveryAppController {
 
     public function view($deliveryScheduleId = null, $clientsOrderUuid = null, $clientUuid = null) {
 
-      //  $this->layout = 'test';
-
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
         $this->loadModel('Sales.Address');
 
         $this->loadModel('Delivery.Measure');
-
-       // $this->ClientOrderDeliverySchedule->bind(array('ClientOrder','QuotationItemDetail','QuotationDetail','Product', 'Company', 'Address', 'JobTicket'));
-
-       //  $this->ClientOrderDeliverySchedule->bindDelivery(); 
-
-
-        // $params = array(
-        //     'ClientOrder' => array(
-        //         'contains' => array('JobTicket')
-        //         ),
-        //    // 'JobTicket'
-        // );
-
-        //$this->ClientOrderDeliverySchedule->ClientOrderGroup($params);
-
-        // $this->ClientOrderDeliverySchedule->recursive = 1;
-        // $clientsOrder = $this->ClientOrderDeliverySchedule->find('first', array(
-        //                                       'conditions' => array(
-        //                                             'ClientOrderDeliverySchedule.uuid' => $clientsOrderUuid,
-        //                                             'ClientOrder.uuid' => $clientUuid
-        //                                       ),
-        //                                       'contain' => array('ClientOrder' => 'JobTicket')
-        //                                       )
-
-        // );   
-
-        // pr($clientsOrder);
-
-        //$this->ClientOrderDeliverySchedule->howellKit();
-       // $holder = $this->ClientOrderDeliverySchedule->find('all');
-       // pr($holder); die();
 
         $clientsOrder = $this->ClientOrderDeliverySchedule->query('SELECT ClientOrder.id, ClientOrder.client_order_item_details_id,
             ClientOrder.po_number, ClientOrder.company_id, ClientOrder.quotation_id,  ClientOrder.uuid,
@@ -187,44 +154,24 @@ class DeliveriesController extends DeliveryAppController {
             -- ON Delivery.dr_uuid = DeliveryDetail.delivery_uuid 
             WHERE ClientOrder.uuid = "'.$clientUuid.'" AND ClientOrderDeliverySchedule.uuid = "'.$clientsOrderUuid.'" ');
 
-        // pr($clientsOrder); exit;
-
-        // foreach ($clientsOrder as $key => $value) {
+        foreach ($clientsOrder as $key => $value) {
             
-        //     $clientsOrder =  $value;
+            $clientsOrder =  $value;
 
-        // }
+        }
 
-       // $this->Delivery->bindDelivery();
+        $this->Delivery->bindDelivery();
 
-     //   $deliveryDetailsData = $this->Delivery->find('all',array('order' => 'Delivery.id DESC'));
+       $deliveryConditions = array('Delivery.schedule_uuid' => $clientsOrderUuid,
+                                               'Delivery.clients_order_id' => $clientUuid);
 
-//         $this->Delivery->bindDelivery();
-// //
-//        $deliveryConditions = array('Delivery.schedule_uuid' => $clientsOrderUuid,
-//                                                'Delivery.clients_order_id' => $clientUuid);
 
-//       // $deliveryConditions = array('DeliveryDetail.delivery_uuid' => $clientsOrder[0]['Delivery']['dr_uuid']);
 
-//        $deliveryEdit = $this->Delivery->find('all', array(
-//                                        'group' => 'Delivery.dr_uuid',
-//                                        'conditions' => $deliveryConditions ,
-//                                        'order' => 'Delivery.id DESC'
-//                                    ));
-
-        //pr($deliveryEdit); exit;
-
-        //$this->Delivery->bindDelivery();
-
-       // $drData = $this->Delivery->find('all');
-
-        //$deliveryList = $this->Delivery->find('list',array('fields' => array('schedule_uuid', 'dr_uuid')));  
-
-       // $quantityInfo = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid','quantity')));
-
-     //   $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status')));
-
-      //  $deliveryDataID = $this->Delivery->find('list',array('fields' => array('schedule_uuid','id')));
+       $deliveryEdit = $this->Delivery->find('all', array(
+                                       'group' => 'Delivery.dr_uuid',
+                                       'conditions' => $deliveryConditions ,
+                                       'order' => 'Delivery.id DESC'
+                                   ));
 
         $this->Delivery->bindDelivery();
         $deliveryStatus = $this->Delivery->find('all');

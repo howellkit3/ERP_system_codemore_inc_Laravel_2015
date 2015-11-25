@@ -83,7 +83,7 @@ class TicketingSystemsController extends TicketAppController {
         
         if (!empty($_GET['data'])) {
 
-            Configure::write('debug',2);
+            Configure::write('debug',0);
 
             pr( $ticketData );
         }
@@ -186,7 +186,7 @@ class TicketingSystemsController extends TicketAppController {
 
         if (!empty($_GET['data'])) {
 
-            Configure::write('debug',2);
+            Configure::write('debug',0);
 
             pr( $ticketData  );
 
@@ -639,7 +639,7 @@ class TicketingSystemsController extends TicketAppController {
 
 
             pr($companyData);
-            Configure::write('debug',2);
+            Configure::write('debug',0);
                    pr($ticketData);
 
         exit();
