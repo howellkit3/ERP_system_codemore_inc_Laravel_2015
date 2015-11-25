@@ -520,11 +520,11 @@ $(document).ready(function(){
      });
 
 
-    $('#AttendanceExportAttendanceForm,#AttendanceGetLatesForm').submit(function(e){
+    $('#AttendanceExportAttendanceForm').submit(function(e){
 
-        $('.hidden_date').val($('.myDateRange').val());
+        $('#hidden_date').val($('.myDateRange').val());
 
-        if ($('.hidden_search').val($('#selectEmployee').val())) {
+        if ($('#hidden_search').val($('#selectEmployee').val())) {
 
         } else {
             
@@ -533,14 +533,6 @@ $(document).ready(function(){
  
 
 
+
     });
-
-
-    $('#exportLate').click(function(e){
-
-        $('#hidden_late').val('true');
-
-       // e.preventDefault();
-    });
-
 });

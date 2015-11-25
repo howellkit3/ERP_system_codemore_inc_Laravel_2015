@@ -5,7 +5,7 @@ App::uses('SessionComponent', 'Controller/Component');
 class JobsController extends ProductionAppController {
 
 
-    var $helpers = array('Production.Process');
+  //  var $helpers = array('Production.Process');
     //,'HumanResource.Country'
 
     public function index() {

@@ -183,7 +183,15 @@ class ClientOrder extends AppModel {
 
 
 			foreach ($tickets as $key => $list) {
+
+				$tickets[$key]['ClientOrder'] = array();
+				$tickets[$key]['ClientOrderDeliverySchedule'] = array();
+
 			$this->bind(array('ClientOrderDeliverySchedule'));
+				
+				if (!empty($list['JobTicket']['client_order_id'])) {
+
+				
 				$conditions = array(
 						'ClientOrder.id' => $list['JobTicket']['client_order_id']
 					);
@@ -192,6 +200,7 @@ class ClientOrder extends AppModel {
 
 				$tickets[$key]['ClientOrder'] = $clientOrder['ClientOrder'];
 				$tickets[$key]['ClientOrderDeliverySchedule'] = !empty($clientOrder['ClientOrderDeliverySchedule']) ? $clientOrder['ClientOrderDeliverySchedule'] : array() ;
+				}
 			}
 
 			return $tickets;

@@ -9,7 +9,7 @@
 
 		//get process_date
 
-		$processData = $this->Process->getData($processList['ProductSpecificationProcessHolder']['id'],$jobData['JobTicket']['id']);
+		$processData = array(); //$this->Process->getData($processList['ProductSpecificationProcessHolder']['id'],$jobData['JobTicket']['id']);
 		
 	?>
    
