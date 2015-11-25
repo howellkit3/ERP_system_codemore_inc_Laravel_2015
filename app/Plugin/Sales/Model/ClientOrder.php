@@ -61,8 +61,12 @@ class ClientOrder extends AppModel {
 					'foreignKey' => 'id',
 					'dependent' => true
 				),
-				
-
+				'JobTicket' => array(
+					'className' => 'Ticket.JobTicket',
+					'foreignKey' => false,
+					'dependent' => array('JobTicket.id' => 'ClientOrde.job_ticket_id')
+				),
+			
 			),
 			'hasMany' => array(
 				
@@ -79,6 +83,7 @@ class ClientOrder extends AppModel {
 				),
 				
 			),
+			
 			
 		));
 
@@ -170,6 +175,27 @@ class ClientOrder extends AppModel {
 		$this->save($clientOrderData);
 
 		return $this->id;
+	}
+
+	public function getClientOrder($tickets = null) {
+
+		if (!empty($tickets)) {
+
+
+			foreach ($tickets as $key => $list) {
+			$this->bind(array('ClientOrderDeliverySchedule'));
+				$conditions = array(
+						'ClientOrder.id' => $list['JobTicket']['client_order_id']
+					);
+
+				$clientOrder = $this->find('first',array('conditions' => $conditions));
+
+				$tickets[$key]['ClientOrder'] = $clientOrder['ClientOrder'];
+				$tickets[$key]['ClientOrderDeliverySchedule'] = !empty($clientOrder['ClientOrderDeliverySchedule']) ? $clientOrder['ClientOrderDeliverySchedule'] : array() ;
+			}
+
+			return $tickets;
+		}
 	}
 
 }

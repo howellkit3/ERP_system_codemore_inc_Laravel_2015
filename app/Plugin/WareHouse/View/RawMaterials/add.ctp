@@ -116,13 +116,11 @@
 
                                                        <?php 
 
-                                                            $items = array( 'inch' => 'Inch', 'mm' => 'mm');
-
                                                             echo $this->Form->input('ItemSpec.0.unit_width', array(
                                                                                         'class' => 'form-control required',
                                                                                         'alt' => 'type',
                                                                                         'label' => false,
-                                                                                        'options' => $items,
+                                                                                        'options' => $unitData,
                                                                                         'empty' => 'Unit'
                                                                                 ));
                                                         ?>
@@ -153,7 +151,7 @@
                                                                                         'class' => 'form-control',
                                                                                         'alt' => 'type',
                                                                                         'label' => false,
-                                                                                        'options' => $items,
+                                                                                        'options' =>  $unitData,
                                                                                         'empty' => 'Unit'
                                                                                 ));
                                                         ?>

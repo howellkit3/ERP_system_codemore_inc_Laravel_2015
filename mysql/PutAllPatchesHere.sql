@@ -2466,3 +2466,14 @@ ALTER TABLE `item_specs`
 ADD COLUMN `unit_length_id`  int(11) NULL AFTER `unit_length`,
 ADD COLUMN `unit_width_id`  int(11) NULL AFTER `unit_length_id`;
 
+
+/*  aldrin added this 11 - 24 -15 koufu_human_resources */
+CREATE TABLE `overtime_details` (
+`id`  int(11) NULL ,
+`overtime_id`  int(11) NULL ,
+`employee_id`  int(11) NULL ,
+`reason`  text NULL ,
+`created`  datetime NULL ,
+`modified`  datetime NULL 
+);
+

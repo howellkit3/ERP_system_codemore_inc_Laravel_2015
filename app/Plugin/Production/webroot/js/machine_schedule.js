@@ -1,6 +1,6 @@
 $(document).ready(function(){ 
 
-    $('body').on('click','.btn-success',function(e){
+    $('body').on('click','#TicketProcessScheduleViewForm .btn-success',function(e){
 
       $this = $(this);
 
