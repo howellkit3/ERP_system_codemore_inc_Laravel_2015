@@ -2469,11 +2469,13 @@ ADD COLUMN `unit_width_id`  int(11) NULL AFTER `unit_length_id`;
 
 /*  aldrin added this 11 - 24 -15 koufu_human_resources */
 CREATE TABLE `overtime_details` (
-`id`  int(11) NULL ,
+`id` INT(11) NOT NULL AUTO_INCREMENT,
 `overtime_id`  int(11) NULL ,
 `employee_id`  int(11) NULL ,
 `reason`  text NULL ,
 `created`  datetime NULL ,
-`modified`  datetime NULL 
-);
+`modified`  datetime NULL ,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+ALTER TABLE `overtimes` CHANGE `approved_by` `approved_by` INT(11) NULL

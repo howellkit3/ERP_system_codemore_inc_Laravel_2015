@@ -60,8 +60,20 @@
 						<td align = "center" style="border:1px solid black; width:40px; font-size:60%;"><b>Total Time</b></td>
 						<td align = "center" style="border:1px solid black; width:40px; font-size:60%;"><b>Incharge Verification</b></td>
 					</tr>
-	
-				<?php $count = 1; foreach ($employees as $key => $list) { ?>
+						<?php 
+
+							if (!empty($request['OvertimeDetail'])) {
+
+								$overtimeDeatils = array();
+
+								foreach ($request['OvertimeDetail'] as $key => $overtime ) {
+
+									$overtimeDetails['OvertimeDetail'][$overtime['employee_id']] = $overtime; 
+
+								}
+							}
+						
+						 $count = 1; foreach ($employees as $key => $list) { ?>
 				
 					<tr >
 						<td align = "center" style="border:1px solid black; width:17px; font-size:70%;" ><b><?php echo $count; ?></b></td>
@@ -77,12 +89,20 @@
 						</td>
 						<?php 
 						$fonsize = "font-size:60%";
-						if(strlen($request['Overtime']['remarks']) > 30)  {
+
+                        $reason =  $request['Overtime']['remarks']; 
+
+						if (!empty($overtimeDetails['OvertimeDetail'][$list['Employee']['id']])) {
+
+							$reason = $overtimeDetails['OvertimeDetail'][$list['Employee']['id']]['reason'];
+						}
+
+						if(strlen($reason) > 30)  {
 							$fonsize = "font-size:40%";
 							}
 						?>
 						<td align = "center" style="border:1px solid black; width:35px; <?php echo $fonsize; ?>"><b><?php 
-						echo $request['Overtime']['remarks']; ?></b></td>
+						echo $reason; ?></b></td>
 						<td align = "center" style="border:1px solid black; width:35px; font-size:60%;"><b></b></td>
 						<td align = "center" style="border:1px solid black; width:40px; font-size:60%;">
 								<table class="full-width text-center">

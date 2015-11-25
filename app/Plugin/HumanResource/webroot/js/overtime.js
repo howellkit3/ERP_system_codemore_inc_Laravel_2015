@@ -230,10 +230,9 @@ $(document).ready(function(){
 
         e.preventDefault();
   });
+  
   $('body').on('click','#selection .select_employee',function(){
 
-      
-    
         if ($(this).is(':checked')) {
 
                 $count = $('#resultList .parent-li').size();
@@ -242,6 +241,11 @@ $(document).ready(function(){
 
                 $(this).parents('.checkbox-nice').find('.parent-li .select_employee.employee').attr('name','data[Employee][id]['+ $count +']').attr('disabled',false);
 
+                $(this).parents('.checkbox-nice').find('.parent-li .employee_reason').attr('name','data[OvertimeDetail]['+ $count +'][reason]').attr('disabled',false);
+
+                $(this).parents('.checkbox-nice').find('.parent-li .employee_id').attr('name','data[OvertimeDetail]['+ $count +'][employee_id]').attr('disabled',false);
+
+    
                 $clone = $(this).parents('.checkbox-nice').find('.parent-li').html();
 
                // var html  = '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="fa fa-check-circle fa-fw fa-lg"></i>';
