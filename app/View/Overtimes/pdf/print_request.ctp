@@ -92,7 +92,7 @@
 
                         $reason =  $request['Overtime']['remarks']; 
 
-						if (!empty($overtimeDetails['OvertimeDetail'][$list['Employee']['id']])) {
+						if (!empty($overtimeDetails['OvertimeDetail'][$list['Employee']['id']]['reason'])) {
 
 							$reason = $overtimeDetails['OvertimeDetail'][$list['Employee']['id']]['reason'];
 						}
