@@ -13,6 +13,9 @@ class OvertimesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Department');
 
+
+		$this->loadModel('HumanResource.OvertimeDetail');
+
 		$this->loadModel('HumanResource.Employee');
 
 		$date = date('Y-m-d');
@@ -98,6 +101,8 @@ class OvertimesController  extends HumanResourceAppController {
 		$this->loadModel('HumanResource.Department');
 
 		$this->loadModel('HumanResource.Employee');
+
+		$this->loadModel('HumanResource.OvertimeDetail');
 
 		$this->loadModel('User');
 
@@ -195,6 +200,8 @@ class OvertimesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Attendance');
 
+		$this->loadModel('HumanResource.OvertimeDetail');
+
 		$date = date('Y-m-d');
 		
 		$search = '';
@@ -203,6 +210,7 @@ class OvertimesController  extends HumanResourceAppController {
 
 		if ($this->request->is('post')) {
 
+			
 			$this->Overtime->create();
 
 			$data = $this->Overtime->formatData($this->request->data,$auth['id']);
@@ -210,6 +218,13 @@ class OvertimesController  extends HumanResourceAppController {
 			if ($this->Overtime->save($data['Overtime'])) {
 
 				$overtime_id = $this->Overtime->id;
+
+				//save overtime detail
+				if (!empty($this->request->data['OvertimeDetail'])) {
+
+					$this->OvertimeDetail->saveDetails($this->request->data,$overtime_id);
+					
+				}
 				//create worshift and schedule
 				//$workshift = $this->Workshift->createWorkshift($data,$overtime_id,$auth['id']);
 
@@ -246,8 +261,8 @@ class OvertimesController  extends HumanResourceAppController {
 
 						 	if ($attendance) {
 
-						 			$this->Attendance->id = $attendance['Attendance']['id'];
-									$this->Attendance->savefield('overtime_id' , $overtime_id);
+					 			$this->Attendance->id = $attendance['Attendance']['id'];
+								$this->Attendance->savefield('overtime_id' , $overtime_id);
 						 	}
 
 
@@ -332,6 +347,8 @@ class OvertimesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Overtime');
 
+		$this->loadModel('HumanResource.OvertimeDetail');
+
 		$date = date('Y-m-d');
 		
 		$search = '';
@@ -375,8 +392,7 @@ class OvertimesController  extends HumanResourceAppController {
 
 						}
 
-						
-
+					
 						if (!empty($id)) {
 						//workhift workschedule
 							$workSchedule = $this->WorkSchedule->createSchedule($overtime,$workshift['id'],$id,$auth['id']);
@@ -422,6 +438,15 @@ class OvertimesController  extends HumanResourceAppController {
 			 		}
 			 		
 
+
+				//save overtime detail
+				if (!empty($this->request->data['OvertimeDetail'])) {
+
+					$this->OvertimeDetail->saveDetails($this->request->data,$this->request->data['Overtime']['id']);
+					
+
+				}
+
 		 			$this->redirect( array(
                              'controller' => 'overtimes', 
                              'action' => 'edit',
@@ -444,9 +469,10 @@ class OvertimesController  extends HumanResourceAppController {
 
 		if (!empty($id)) {
 
-			//$this->Overtime->bind(array('WorkSchedule'));
+			$this->Overtime->bind(array('OvertimeDetail'));
 
 			$this->request->data = $this->Overtime->findById($id);
+
 
 			$this->WorkSchedule->bind(array('Employee','WorkShift'));
 
@@ -575,6 +601,8 @@ class OvertimesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Overtime');
 
+		$this->loadModel('HumanResource.OvertimeDetail');
+
 		$date = date('Y-m-d');
 		
 		$search = '';
@@ -654,8 +682,8 @@ class OvertimesController  extends HumanResourceAppController {
 
 		if (!empty($id)) {
 
-			Configure::write('debug',2);
-			//$this->Overtime->bind(array('WorkSchedule'));
+			//Configure::write('debug',2);
+			$this->Overtime->bind(array('OvertimeDetail'));
 
 			$this->request->data = $this->Overtime->findById($id);
 
@@ -853,6 +881,10 @@ class OvertimesController  extends HumanResourceAppController {
 		if (!empty($id)) {
 
 		$this->loadModel('HumanResource.Employee');
+
+		$this->loadModel('HumanResource.OvertimeDetail');
+
+		$this->Overtime->bind(array('OvertimeDetail'));
 
 		$request = $this->Overtime->findById($id);
 
