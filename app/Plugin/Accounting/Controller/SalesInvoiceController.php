@@ -269,7 +269,7 @@ class SalesInvoiceController extends AccountingAppController {
 
     public function add_invoice(){
 
-        $this->loadModel('Delivery.Delivery');
+       //$this->loadModel('Delivery.Delivery');
 
         $userData = $this->Session->read('Auth');
 
@@ -279,12 +279,15 @@ class SalesInvoiceController extends AccountingAppController {
 
         $DRdata = $this->SalesInvoice->find('first', array(
             'conditions' => array(
-                'SalesInvoice.dr_uuid' => $this->request->data['SalesInvoice']['dr_uuid'])
+                'SalesInvoice.dr_uuid' => $this->request->data['SalesInvoice']['dr_uuid']),
+                'order' => array('created DESC')
             ));
 
         //}
+//pr($DRdata); exit;
+        
 
-        if (!empty($DRdata)) {
+        if (!empty($DRdata && $DRdata['SalesInvoice']['status'] != 3)) {
 
             $this->Session->setFlash(__('This Delivery No. already have a Sales Invoice No. '), 'error');
             $this->redirect( array(
@@ -293,26 +296,27 @@ class SalesInvoiceController extends AccountingAppController {
                     ));
         }
 
-        if(!empty($this->request->data['SalesInvoice']['dr_uuid'])){
+     //   pr($DRdata); exit;
+        // if(!empty($this->request->data['SalesInvoice']['dr_uuid'])){
 
-            $findDRdata = $this->Delivery->find('first', array(
-                        'conditions' => array(
-                            'Delivery.dr_uuid' => $this->request->data['SalesInvoice']['dr_uuid'])
-                        ));
+        //     $findDRdata = $this->Delivery->find('first', array(
+        //                 'conditions' => array(
+        //                     'Delivery.dr_uuid' => $this->request->data['SalesInvoice']['dr_uuid'])
+        //                 ));
 
-        }
+        // }
     
-        if (!empty($findDRdata)) {
+       // if (!empty($findDRdata)) {
 
-            $this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id']);
+            // $this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id']);
 
-            $this->Session->setFlash(__(' Sales Invoice No. completed. '), 'success');
-            $this->redirect( array(
-                         'controller' => 'sales_invoice', 
-                         'action' => 'index'
-                    ));
+            // $this->Session->setFlash(__(' Sales Invoice No. completed. '), 'success');
+            // $this->redirect( array(
+            //              'controller' => 'sales_invoice', 
+            //              'action' => 'index'
+            //         ));
 
-        }else{
+       // }else{
 
             //pr($this->request->data ); exit;
 
@@ -331,7 +335,7 @@ class SalesInvoiceController extends AccountingAppController {
             //              'controller' => 'salesInvoice', 
             //              'action' => 'add'
             //         ));
-        }
+    //   }
         
 
     }
@@ -1380,7 +1384,7 @@ class SalesInvoiceController extends AccountingAppController {
                 INNER JOIN koufu_sale.companies AS Company
                 ON Delivery.company_id = Company.id 
                 WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR ClientOrder.po_number LIKE "%'.$hint.'%"
-                OR Company.company_name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%"  ');
+                OR Company.company_name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%"   ');
 
             // $deliveryData = $this->Delivery->find('all',array(
             //               'conditions' => array(
@@ -1439,6 +1443,26 @@ class SalesInvoiceController extends AccountingAppController {
             }
 
         }
+    }
+
+    public function cancel($invoiceId = null){
+
+        $userData = $this->Session->read('Auth');
+
+        $this->SalesInvoice->id = $invoiceId;
+
+        $this->SalesInvoice->saveField('status', 3);
+
+        $this->SalesInvoice->saveField('modified_by', $userData['User']['id']);
+
+        $this->Session->setFlash(__('Sales Invoice has been Cancelled'), 'success');
+      
+        $this->redirect( array(
+            'controller' => 'sales_invoice',   
+            'action' => 'index',
+            $invoiceId
+        ));  
+
     }
 
         public function change_vat_status($invoiceId = null){
