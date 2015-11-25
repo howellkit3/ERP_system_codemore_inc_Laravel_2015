@@ -189,28 +189,28 @@ class DeliveriesController extends DeliveryAppController {
 
         // pr($clientsOrder); exit;
 
-        // foreach ($clientsOrder as $key => $value) {
+        foreach ($clientsOrder as $key => $value) {
             
-        //     $clientsOrder =  $value;
+            $clientsOrder =  $value;
 
-        // }
+        }
 
        // $this->Delivery->bindDelivery();
 
      //   $deliveryDetailsData = $this->Delivery->find('all',array('order' => 'Delivery.id DESC'));
 
-//         $this->Delivery->bindDelivery();
-// //
-//        $deliveryConditions = array('Delivery.schedule_uuid' => $clientsOrderUuid,
-//                                                'Delivery.clients_order_id' => $clientUuid);
+        $this->Delivery->bindDelivery();
+//
+       $deliveryConditions = array('Delivery.schedule_uuid' => $clientsOrderUuid,
+                                               'Delivery.clients_order_id' => $clientUuid);
 
 //       // $deliveryConditions = array('DeliveryDetail.delivery_uuid' => $clientsOrder[0]['Delivery']['dr_uuid']);
 
-//        $deliveryEdit = $this->Delivery->find('all', array(
-//                                        'group' => 'Delivery.dr_uuid',
-//                                        'conditions' => $deliveryConditions ,
-//                                        'order' => 'Delivery.id DESC'
-//                                    ));
+       $deliveryEdit = $this->Delivery->find('all', array(
+                                       'group' => 'Delivery.dr_uuid',
+                                       'conditions' => $deliveryConditions ,
+                                       'order' => 'Delivery.id DESC'
+                                   ));
 
         //pr($deliveryEdit); exit;
 
