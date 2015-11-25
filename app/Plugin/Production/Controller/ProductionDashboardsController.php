@@ -6,7 +6,7 @@ class ProductionDashboardsController extends ProductionAppController {
 	
 	public function index() {
 
-        $this->layout = 'test';
+     //   $this->layout = 'test';
 
 		$this->loadModel('Production.TicketProcessSchedule');
 

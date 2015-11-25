@@ -65,7 +65,7 @@ echo $this->Html->script(array(
                             'title'=>'Edit Information',
                             ));
 
-                                 echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Approved ', array('controller' => 'overtimes',
+                            echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Approved ', array('controller' => 'overtimes',
                             'action' => 'process',
                             $this->request->data['Overtime']['id'],'approved'),
                             array('class' =>' table-link btn btn-primary pull-right overtime-process',
@@ -291,11 +291,41 @@ echo $this->Html->script(array(
 
                     <div class="main-box-body clearfix">
                     <ul>
-                    <?php  foreach ($employees as $KeyId => $value) {
+                    <?php
+                          $overtimeDetails = array();
+
+                       if (!empty($this->request->data['OvertimeDetail'])) {
+
+                              
+
+                                foreach ($this->request->data['OvertimeDetail'] as $key => $overtime ) {
+
+                                    $overtimeDetails['OvertimeDetail'][$overtime['employee_id']] = $overtime; 
+
+                                }
+                            }
+                        
+
+                       
+
+
+                      foreach ($employees as $KeyId => $value) {
 
                                             $in  = !empty($value['Employee']['in']) ? $value['Employee']['in'] : '';
                                             $out = !empty($value['Employee']['out']) ? $value['Employee']['out'] : '';
-                                            ?>
+
+
+                        $reason =  $this->request->data['Overtime']['remarks']; 
+
+                        if (!empty($overtimeDetails['OvertimeDetail'][$value['Employee']['id']]['reason'])) {
+
+                            $reason = $overtimeDetails['OvertimeDetail'][$value['Employee']['id']]['reason'];
+                            
+                        }
+
+
+
+                            ?>
                             <li class="clearfix parent-li">
 
                                         <input type="hidden" name="data[Employee][id][<?php echo $KeyId ?>]" class="select_employee" value="<?php echo $value['Employee']['id']; ?>" id="checkbox-<?php echo $KeyId; ?>">
@@ -339,6 +369,9 @@ echo $this->Html->script(array(
                             <div class="time-ago">
                                <!--  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> -->
                             </div>
+
+                             <label class=""> <span style="color:red">*</span> Reason </label>
+                            <?php echo  $reason ; ?>
                             </li>
                             <?php } ?>
                     </ul>

@@ -2468,12 +2468,16 @@ ADD COLUMN `unit_width_id`  int(11) NULL AFTER `unit_length_id`;
 
 
 /*  aldrin added this 11 - 24 -15 koufu_human_resources */
-CREATE TABLE `overtime_details` (
-`id`  int(11) NULL ,
-`overtime_id`  int(11) NULL ,
-`employee_id`  int(11) NULL ,
-`reason`  text NULL ,
-`created`  datetime NULL ,
-`modified`  datetime NULL 
-);
 
+ALTER TABLE `overtimes` CHANGE `approved_by` `approved_by` INT(11) NULL;
+
+/*  aldrin added this 11 - 24 -15 koufu_human_resources */
+CREATE TABLE IF NOT EXISTS `overtime_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `overtime_id` int(11) DEFAULT NULL,
+  `employee_id` int(11) DEFAULT NULL,
+  `reason` text,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;

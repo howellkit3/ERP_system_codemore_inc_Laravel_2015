@@ -27,12 +27,8 @@
                      <span class="time-in"> <?php echo !empty( $value['Attendance']['in']) ? 'Time in ( '.date('h:i a',strtotime($value['Attendance']['in'])).' )' : ''; ?>  </span>
                      
             </label>
-
-
-
-
-
-                        <div class="clearfix parent-li hide">
+                
+                <div class="clearfix parent-li hide">
                             
                             <input type="checkbox" name="data[Empl][id][<?php echo $KeyId ?>]" class="select_employee" value="<?php echo  $value['Employee']['id']; ?>" id="checkbox-<?php echo $KeyId; ?>">
 
@@ -82,7 +78,9 @@
 
                                     <label class=""> Reason </label>
 
-                                     <input type="text" name="data[OvertimeDetail][reason][<?php echo $KeyId ?>]" class="form-control" value="" id="checkbox">
+                                     <input type="text" disabled="disabled" name="data[OvertimeDetail][<?php echo $KeyId ?>][reason]" class="form-control employee_reason" value="" id="checkbox">
+                                     <input type="hidden" disabled="disabled" name="data[OvertimeDetail][<?php echo $KeyId ?>][employee_id]" class="form-control employee_id" value="<?php echo  $value['Employee']['id']; ?>" id="checkbox">
+
 
                                 </div>
                             </div>

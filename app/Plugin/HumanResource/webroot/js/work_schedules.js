@@ -1,21 +1,4 @@
- $(document).ready(function() {
-
-
-   $('#ChangeSched').click(function(e){
-
-                $empId = $('#selectEmployee').val();
-
-                $(this).attr('href',$(this).data('url'));
-
-                $link = $(this).attr('href');
-
-                if ($empId != '') {
-                    $(this).attr('href',$link+'/'+$empId);
-                } 
-
-     });
-
-
+ $(document).ready(function(){
   $('.employee-department input').attr('disabled',true);
 
   $('.category').click(function(){
@@ -84,7 +67,7 @@
                 }
           });
       }
-    }).trigger('change');
+    });
 
 
     $body.on('submit','#search_schedules',function(e){
@@ -142,8 +125,7 @@
 
       e.preventDefault();
 
-    });
-
+    })
 
 
 });

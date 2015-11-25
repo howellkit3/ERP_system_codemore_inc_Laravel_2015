@@ -234,9 +234,21 @@ echo $this->Html->script(array(
 
                                         </div>
                                          <div class="col-lg-6">
-                                         
+                                                  <?php 
 
-                                             <div class="form-group">
+                                                  if (!empty($this->request->data['OvertimeDetail'])) {
+
+                                                      $overtimeDeatils = array();
+
+                                                      foreach ($this->request->data['OvertimeDetail'] as $key => $overtime ) {
+                                                      
+                                                         $overtimeDetails['OvertimeDetail'][$overtime['employee_id']] = $overtime; 
+          
+                                                      }
+                                                    }
+
+                                                  ?>
+                                                  <div class="form-group">
                                                     <div class="col-lg-12 main-box-body">
                                                         <label class="large-label"><span style="color:red;">*</span> <b>Employees </b> </label>
                                                         <label class="selected-text"></label>
@@ -287,6 +299,29 @@ echo $this->Html->script(array(
                                                           <div class="time-ago">
                                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                                           </div>
+
+                                                           <div class="clearfix"></div>
+                                                          <div class="reason col-lg-6">
+
+                                                              <label class=""> <span style="color:red">*</span> Reason </label>
+                                                              <?php 
+
+                                                                $reason = !empty($overtimeDetails['OvertimeDetail'][$value['Employee']['id']]) ? $overtimeDetails['OvertimeDetail'][$value['Employee']['id']]['reason'] : '';
+
+                                                                $overtimeDetailId =  !empty($overtimeDetails['OvertimeDetail'][$value['Employee']['id']]) ? $overtimeDetails['OvertimeDetail'][$value['Employee']['id']]['id'] : '';
+
+                                                              ?>
+                                                             <input type="text" name="data[OvertimeDetail][<?php echo $KeyId ?>][reason]" class="form-control employee_reason" value="<?php echo  $reason ; ?>" id="checkbox">  
+                                                             
+                                                             <input type="hidden"  name="data[OvertimeDetail][<?php echo $KeyId ?>][employee_id]" class="form-control employee_id" value="<?php echo  $value['Employee']['id']; ?>" id="checkbox">
+
+                                                             <input type="hidden" name="data[OvertimeDetail][<?php echo $KeyId ?>][id]" class="form-control overtime_detail_id" value="<?php echo  $overtimeDetailId; ?>" >
+
+
+
+                                                          </div>
+
+
                                                           </li>
 
                                                           <?php $keys++; } ?>
