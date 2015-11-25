@@ -1380,7 +1380,7 @@ class SalesInvoiceController extends AccountingAppController {
                 INNER JOIN koufu_sale.companies AS Company
                 ON Delivery.company_id = Company.id 
                 WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR ClientOrder.po_number LIKE "%'.$hint.'%"
-                OR Company.company_name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%" LIMIT 10 ');
+                OR Company.company_name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%"  ');
 
             // $deliveryData = $this->Delivery->find('all',array(
             //               'conditions' => array(
@@ -1425,7 +1425,7 @@ class SalesInvoiceController extends AccountingAppController {
                 INNER JOIN koufu_sale.companies AS Company
                 ON Delivery.company_id = Company.id 
                 WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR SalesInvoice.sales_invoice_no LIKE "%'.$hint.'%"
-                OR Company.company_name LIKE "%'.$hint.'%" LIMIT 10 ');
+                OR Company.company_name LIKE "%'.$hint.'%"  ');
 
 
             $deliveryNumHolder = $this->Delivery->find('list',array('fields' => array('dr_uuid','company_id')));
