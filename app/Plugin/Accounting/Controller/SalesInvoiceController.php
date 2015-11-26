@@ -151,9 +151,11 @@ class SalesInvoiceController extends AccountingAppController {
                                                             'conditions' => array('User.id' => $invoiceData['SalesInvoice']['created_by'])
                                                             )); 
         
-        $this->Delivery->bindDelivery();
-
+       
         if(!empty($invoiceData['SalesInvoice']['dr_uuid'])){
+
+            $this->Delivery->bindDelivery();
+
 
             $drData = $this->Delivery->find('first', array(
                                                 'conditions' => array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid']
@@ -170,7 +172,7 @@ class SalesInvoiceController extends AccountingAppController {
                                             'conditions' => array($conditions
                                             )));
 
-       // pr($clientData); exit;
+       //pr($clientData); exit;
 
         $clientOrderId = $clientData['ClientOrder']['id'];
 
@@ -1367,21 +1369,21 @@ class SalesInvoiceController extends AccountingAppController {
 
        // pr($type); exit;
 
-        $this->loadModel('Sales.Company');
+      //  $this->loadModel('Sales.Company');
 
-        $this->loadModel('Delivery.Delivery');
 
-        $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
+
+       // $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
 
         if($type == '1'){
 
-            $this->loadModel('Sales.ClientOrder');
+           // $this->loadModel('Sales.ClientOrder');
 
-             $deliveryData = $this->Delivery->query('SELECT ClientOrder.id ,ClientOrder.po_number , ClientOrder.uuid, Company.id, Company.company_name , Delivery.dr_uuid, Delivery.company_id, Delivery.dr_uuid, Delivery.clients_order_id , Delivery.status,  Delivery.id  
+            $deliveryData = $this->Delivery->query('SELECT ClientOrder.id ,ClientOrder.po_number , ClientOrder.uuid, Company.id, Company.company_name , Delivery.dr_uuid, Delivery.company_id, Delivery.dr_uuid, Delivery.clients_order_id , Delivery.status,  Delivery.id  
                 FROM koufu_delivery.deliveries AS Delivery
-                INNER JOIN koufu_sale.client_orders AS ClientOrder
+                LEFT JOIN koufu_sale.client_orders AS ClientOrder
                 ON Delivery.clients_order_id = ClientOrder.uuid 
-                INNER JOIN koufu_sale.companies AS Company
+                LEFT JOIN koufu_sale.companies AS Company
                 ON Delivery.company_id = Company.id 
                 WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR ClientOrder.po_number LIKE "%'.$hint.'%"
                 OR Company.company_name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%"   ');
@@ -1399,7 +1401,7 @@ class SalesInvoiceController extends AccountingAppController {
             //pr($deliveryData); exit;
 
 
-            $poNumber = $this->ClientOrder->find('list', array('fields' => array('uuid', 'po_number')));
+          //  $poNumber = $this->ClientOrder->find('list', array('fields' => array('uuid', 'po_number')));
 
             $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData',  'poNumber', 'companyData'));
             
@@ -1420,19 +1422,21 @@ class SalesInvoiceController extends AccountingAppController {
 
         }else{
 
+           // $this->loadModel('Delivery.Delivery');
+
             $userData = $this->Session->read('Auth');
 
             $invoiceData = $this->SalesInvoice->query('SELECT SalesInvoice.id ,SalesInvoice.status , SalesInvoice.sales_invoice_no, Company.id, Company.company_name , Delivery.dr_uuid, Delivery.company_id, Delivery.dr_uuid, SalesInvoice.dr_uuid 
                 FROM koufu_delivery.deliveries AS Delivery
-                INNER JOIN koufu_accounting.sales_invoices AS SalesInvoice
+                LEFT JOIN koufu_accounting.sales_invoices AS SalesInvoice
                 ON Delivery.dr_uuid = SalesInvoice.dr_uuid 
-                INNER JOIN koufu_sale.companies AS Company
+                LEFT JOIN koufu_sale.companies AS Company
                 ON Delivery.company_id = Company.id 
                 WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR SalesInvoice.sales_invoice_no LIKE "%'.$hint.'%"
                 OR Company.company_name LIKE "%'.$hint.'%"  ');
 
 
-            $deliveryNumHolder = $this->Delivery->find('list',array('fields' => array('dr_uuid','company_id')));
+           // $deliveryNumHolder = $this->Delivery->find('list',array('fields' => array('dr_uuid','company_id')));
 
             $this->set(compact('companyData','invoiceData','noPermissionReciv','noPermissionPay', 'deliveryNumHolder'));
 

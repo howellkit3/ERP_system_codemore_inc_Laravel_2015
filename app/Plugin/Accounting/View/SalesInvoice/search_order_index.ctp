@@ -21,7 +21,7 @@ foreach ($invoiceData as $invoiceDataList):
         <td class="">
             <?php  
 
-            echo $companyData[$deliveryNumHolder[$invoiceDataList['SalesInvoice']['dr_uuid']]];?>
+            echo $invoiceDataList['Company']['company_name'];?>
         </td> 
         
         <td class="text-center">
