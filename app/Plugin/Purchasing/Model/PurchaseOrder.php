@@ -76,7 +76,7 @@ class PurchaseOrder extends AppModel {
 		$this->contain($model);
 	}
 
-	public function savePurchaseOrder($purchaseOrderData = null, $auth = null){
+	public function savePurchaseOrder($purchaseOrderData = null, $auth = null, $bycash = null){
 		
 		$month = date("m"); 
 
@@ -92,19 +92,27 @@ class PurchaseOrder extends AppModel {
 
 		$code =  $year. $month .$random;
 
-		//$this->create();
-
 		if (empty($purchaseOrderData['PurchaseOrder']['id'])) {
 
 			$purchaseOrderData[$this->name]['uuid'] = $code;
 			$purchaseOrderData[$this->name]['created_by'] = $auth;
-			$purchaseOrderData[$this->name]['status'] = 8;
 			$purchaseOrderData[$this->name]['version'] = 1;
+			
+
+			if(!empty($bycash)){
+
+				$purchaseOrderData[$this->name]['status'] = 1;
+				$purchaseOrderData[$this->name]['receive_item_status'] = 0;
+
+			}else{
+
+				$purchaseOrderData[$this->name]['status'] = 8;
+			}
 		}
 		
 		$purchaseOrderData[$this->name]['modified_by'] = $auth;
 		
-		
+		//pr($purchaseOrderData); exit;
 		$this->save($purchaseOrderData);
 
 		return $this->id;

@@ -437,7 +437,7 @@ class RequestsController extends PurchasingAppController {
 
     }
 
-    public function create_order($requestId = null){
+    public function create_order($requestId = null, $bycash = null){
 
     	$userData = $this->Session->read('Auth');
 
@@ -538,11 +538,13 @@ class RequestsController extends PurchasingAppController {
 															'order' => array('PurchasingType.id' => 'ASC')
 															));
 
-    	$this->set(compact('purchaseNumber','requestId','supplierData','paymentTermData','requestData','type','unitData','requestItem','currencyData'));
+    	$this->set(compact('purchaseNumber','requestId','supplierData','paymentTermData','requestData','type','unitData','requestItem','currencyData', 'bycash'));
 
     }
 
-    public function purchase_order(){
+    public function purchase_order($bycash = null){
+
+    	//pr($bycash); exit;
 
     	$userData = $this->Session->read('Auth');
 
@@ -570,7 +572,7 @@ class RequestsController extends PurchasingAppController {
 	    		}
     		}
     		
-    		$this->PurchaseOrder->savePurchaseOrder($this->request->data,$userData['User']['id']);
+    		$this->PurchaseOrder->savePurchaseOrder($this->request->data,$userData['User']['id'], $bycash);
 
     		$this->RequestItem->saveRequestItemPrice($this->request->data);
 

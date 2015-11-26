@@ -41,6 +41,8 @@
         }
 
         echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'requests', 'action' => 'edit',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
+
+        echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Receive by Cash', array('controller' => 'requests', 'action' => 'create_order',$requestId, 1),array('class' =>'btn btn-primary pull-right','escape' => false));
     ?>
     <br><br>
 </div>

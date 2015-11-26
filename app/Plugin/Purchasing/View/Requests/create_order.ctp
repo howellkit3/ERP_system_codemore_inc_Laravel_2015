@@ -16,10 +16,15 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<header class="main-box-header clearfix">
-					
-					<h1 class="pull-left">
-						Create Purchase Order
-					</h1>
+					<?php if(empty($bycash)){?>
+						<h1 class="pull-left">
+							Create Purchase Order
+						</h1>
+					<?php }else{ ?>
+						<h1 class="pull-left">
+							Receive By Cash
+						</h1>
+						<?php } ?>
 					<?php 
 						 echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'requests', 'action' => 'view',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
 					?>
@@ -28,7 +33,16 @@
 			</div>
 		</div>
 
-		<?php echo $this->Form->create('PurchaseOrder',array('url'=>(array('controller' => 'requests','action' => 'purchase_order'))));?>
+		<?php if(empty($bycash)){ ?>
+
+			<?php echo $this->Form->create('PurchaseOrder',array('url'=>(array('controller' => 'requests','action' => 'purchase_order'))));?>
+
+		<?php }else{?>
+
+			<?php echo $this->Form->create('PurchaseOrder',array('url'=>(array('controller' => 'requests','action' => 'purchase_order', 1))));?>
+
+		<?php }?>
+
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="main-box">
@@ -36,6 +50,8 @@
 						<div class="main-box-body clearfix">
 							<div class="main-box-body clearfix">
 								<div class="form-horizontal">
+
+									<?php if(empty($bycash)){ ?>
 
 									<div class="form-group">
 	                                	<label class="col-lg-2 control-label">Purchase Order Name</label>
@@ -49,6 +65,8 @@
 	                                        ?>
 										</div>
 									</div>
+
+									<?php } ?>
 									
 									<div class="form-group">
 	                                	<label class="col-lg-2 control-label"><span style="color:red">*</span>Supplier</label>
@@ -98,36 +116,73 @@
 										</div>
 									</div>
 
-									<div class="form-group">
-	                                	<label class="col-lg-2 control-label"><span style="color:red">*</span>PUO No.</label>
-										<div class="col-lg-8">
-											<?php 
-	                                            echo $this->Form->input('PurchaseOrder.po_number',array( 
-	                                            						'class' => 'form-control  required', 
-	                                                					'label' => false,
-	                                                					'placeholder' => 'PUO Number',
-	                                                					'id' => 'generate-poNumber' 
-	                                                					));
+									<?php if(empty($bycash)){ ?>
 
-	                                            echo $this->Form->input('PurchaseOrder.request_id',array( 
-	                                            						'class' => 'form-control  required', 
-	                                                					'label' => false,
-	                                                					'type' => 'hidden',
-	                                                					'value' => $requestId
-	                                                					));
-	                                        ?>
-										</div>
-									</div>
+										<div class="form-group">
+		                                	<label class="col-lg-2 control-label"><span style="color:red">*</span>PUO No.</label>
+											<div class="col-lg-8">
+												<?php 
+		                                            echo $this->Form->input('PurchaseOrder.po_number',array( 
+		                                            						'class' => 'form-control  required', 
+		                                                					'label' => false,
+		                                                					'placeholder' => 'PUO Number',
+		                                                					'id' => 'generate-poNumber' 
+		                                                					));
 
-									<div class="form-group">
-	                                	<label class="col-lg-2 control-label"></label>
-										<div class="col-lg-8">
-											<div class="checkbox-nice">
-												<input id="checkbox-1" type="checkbox" class="generate-poNumber">
-												<label for="checkbox-1"> Generate PUO Number </label>
+		                                            echo $this->Form->input('PurchaseOrder.request_id',array( 
+		                                            						'class' => 'form-control  required', 
+		                                                					'label' => false,
+		                                                					'type' => 'hidden',
+		                                                					'value' => $requestId
+		                                                					));
+		                                        ?>
 											</div>
 										</div>
-									</div>
+
+										<div class="form-group">
+		                                	<label class="col-lg-2 control-label"></label>
+											<div class="col-lg-8">
+												<div class="checkbox-nice">
+													<input id="checkbox-1" type="checkbox" class="generate-poNumber">
+													<label for="checkbox-1"> Generate PUO Number </label>
+												</div>
+											</div>
+										</div>
+
+									<?php }else{ ?>
+
+										<div class="form-group">
+		                                	<label class="col-lg-2 control-label"><span style="color:red">*</span>Receive No.</label>
+											<div class="col-lg-8">
+												<?php 
+		                                            echo $this->Form->input('PurchaseOrder.po_number',array( 
+		                                            						'class' => 'form-control  required', 
+		                                                					'label' => false,
+		                                                					'placeholder' => 'PUO Number',
+		                                                					'id' => 'generate-poNumber' 
+		                                                					));
+
+		                                            echo $this->Form->input('PurchaseOrder.request_id',array( 
+		                                            						'class' => 'form-control  required', 
+		                                                					'label' => false,
+		                                                					'type' => 'hidden',
+		                                                					'value' => $requestId
+		                                                					));
+		                                        ?>
+											</div>
+										</div>
+
+										<div class="form-group">
+		                                	<label class="col-lg-2 control-label"></label>
+											<div class="col-lg-8">
+												<div class="checkbox-nice">
+													<input id="checkbox-1" type="checkbox" class="generate-poNumber">
+													<label for="checkbox-1"> Generate Receive Number </label>
+												</div>
+											</div>
+										</div>
+
+									<?php }?>
 
 									<div class="form-group">
 	                                	<label class="col-lg-2 control-label"><span style="color:red">*</span>Payment Terms</label>
@@ -138,6 +193,7 @@
 					                                'type' => 'select',
 					                                'label' => false,
 					                                'class' => 'form-control required ',
+					                                'value' => !empty($bycash) ? 12 : "" , 
 					                                'empty' => '---Select Payment Term---'
 					                                 )); 
 
@@ -146,7 +202,7 @@
 									</div>
 
 									<div class="form-group">
-	                                    	<label class="col-lg-2 control-label"><span style="color:red">*</span>Delivery Date</label>
+	                                    	<label class="col-lg-2 control-label"><span style="color:red">*</span>Delivery/Received Date</label>
 											<div class="col-lg-8">
 												<?php 
 	                                                echo $this->Form->input('PurchaseOrder.deliveryDate',array( 
