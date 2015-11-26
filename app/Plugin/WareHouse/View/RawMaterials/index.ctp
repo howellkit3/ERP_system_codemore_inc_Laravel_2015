@@ -19,7 +19,7 @@
                     
 
                     <div class="form-group pull-left">
-                        <input class="form-control searchItem" onkeyup="searchItem(this)" placeholder="Search...">
+                        <input class="form-control searchItem" data-type="raw_material" onkeyup="searchItem(this)" placeholder="Search...">
                             <i class="fa fa-search search-icon"></i>
                     </div>
                     
@@ -61,7 +61,6 @@
 
                                         if (!empty($list['ItemSpec'][0]['id'])) {
 
-
                                                     foreach ($list['ItemSpec'] as $key => $measure) {
 
                                                             $size = '';
@@ -74,7 +73,7 @@
 
                                                                 $size .= !empty($measure['length']) ? ' X '.$measure['length'] : '';
 
-                                                               $size .= !empty($measure['unit_length']) ? $measure['unit_length'] : '';
+                                                               $size .= !empty($measure['unit_length']) ? ' '.$measure['unit_length'] : '';
 
                                                             } 
 
