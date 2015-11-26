@@ -46,12 +46,12 @@ echo $this->Html->script(array(
 
                         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back', array('controller' => 'overtimes', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
                         
-                          echo $this->Html->link('<i class="fa fa-print fa-lg"></i> PRINT', array('controller' => 'overtimes', 'action' => 'print_request',$this->request->data['Overtime']['id']),array(
+                        echo $this->Html->link('<i class="fa fa-print fa-lg"></i> PRINT', array(
+                          'controller' => 'overtimes', 'action' => 'print_request',$this->request->data['Overtime']['id']),array(
                             'class' =>'btn btn-primary pull-right',
                             'escape' => false,
                             'id' => 'printRequest'
-
-                            ));
+                          ));
                         
                         
                         // echo $this->Html->link('<i class="fa fa-times fa-lg"></i> Rejected ', array('controller' => 'overtimes', 'action' => 'process',$this->request->data['Overtime']['id'],'reject'),
@@ -60,6 +60,7 @@ echo $this->Html->script(array(
                         //     'data-process' => 'reject',  
                         //     'title'=>'Edit Information',
                         //     ));
+
                     if (in_array($userData['User']['role_id'],array('19','12'))) {
 
                         echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Approved ', array('controller' => 'overtimes',
