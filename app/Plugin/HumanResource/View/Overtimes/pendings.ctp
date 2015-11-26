@@ -76,12 +76,11 @@ $active_tab = 'pendings';
                                     <thead>
                                         <tr>
                                             <th><a href="#"><span>Date</span></a></th>
-
                                             <th><a href="#"><span>Requested By</span></a></th>
                                             <th><a href="#" ><span>From</span></a></th>
                                             <th><a href="#" ><span>To</span></a></th>
-                                            <th><a href="#"><span>Status</span></a></th>
                                             <th><a href="#"><span>Employees</span></a></th>
+                                            <th><a href="#"><span>Status</span></a></th>
                                             <th><a href="#"><span>Actions</span></a></th> 
                                             <!-- 
                                             <th><a href="#"><span>Out</span></a></th>

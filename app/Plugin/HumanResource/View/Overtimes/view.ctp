@@ -370,7 +370,7 @@ echo $this->Html->script(array(
                                <!--  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> -->
                             </div>
 
-                             <label class=""> <span style="color:red">*</span> Reason </label>
+                             <label class=""> <!-- <span style="color:red">*</span> --> Reason </label>
                             <?php echo  $reason ; ?>
                             </li>
                             <?php } ?>
