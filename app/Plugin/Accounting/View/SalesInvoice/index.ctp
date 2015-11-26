@@ -78,6 +78,11 @@
 
 				                            		echo "<span class='label label-danger'>Terminated</span>";
 
+				                            	} else if($invoiceDataList['SalesInvoice']['status'] == 3){
+
+				                            		echo "<span class='label label-danger'>Cancel</span>";
+
+
 				                            	}else{
 
 				                        			echo "<span class='label label-info'>Pre-Invoice</span>";
@@ -93,6 +98,15 @@
 							                    ));
 				        
 				                            ?>
+
+				                            <?php
+
+				                            	echo $this->Html->link('<span class="fa-stack">
+							                    <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-trash  fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> Cancel </font></span></span> ', array('controller' => 'sales_invoice', 'action' => 'cancel',$invoiceDataList['SalesInvoice']['id']), array('class' =>' table-link','escape' => false, 'title'=>'View Sales Invoice'
+							                    ));
+				        
+				                            ?>
+
 				                        </td>
 				                    </tr>
 
