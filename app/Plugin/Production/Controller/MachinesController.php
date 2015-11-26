@@ -127,7 +127,6 @@ class MachinesController extends ProductionAppController {
 
             $this->loadModel('Production.TicketProcessSchedule');
 
-
             $this->loadModel('Sales.Company');
 
             $this->loadModel('Production.Machine');
@@ -142,9 +141,15 @@ class MachinesController extends ProductionAppController {
 
             $machineData = $this->Machine->find('list',array('fields' => array('id','name')));
 
-            $productName = $this->Product->find('list',array('fields' => array('id','name')));
+            $ticketData = $this->JobTicket->query(
+                "Select * from koufu_ticketing.job_tickets as JobTicket 
+                LEFT JOIN koufu_sale.products as Product
+                ON (Product.id = JobTicket.product_id) WHERE JobTicket.id = ".$logs['TicketProcessSchedule']['job_ticket_id']."
+                LIMIT 1
+                "
+            );
 
-            $ticketData =$this->JobTicket->findById($logs['TicketProcessSchedule']['job_ticket_id']);
+            $ticketData = $ticketData[0];
 
             $this->set(compact('ticketData','logs','productName','machineData','companyData'));
 

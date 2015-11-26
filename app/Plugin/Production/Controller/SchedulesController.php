@@ -9,6 +9,7 @@ class SchedulesController extends ProductionAppController {
     }
 
     public function add() {
+    	
     	$userData = $this->Session->read('Auth');
     	$this->loadModel('Sales.Company');
     	$this->Company->bind(array('Quotation'));

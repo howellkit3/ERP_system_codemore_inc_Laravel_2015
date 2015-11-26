@@ -10,15 +10,37 @@ class ProductionDashboardsController extends ProductionAppController {
 
 		$this->loadModel('Production.TicketProcessSchedule');
 
-            $this->loadModel('Production.ProcessDepartment');
+        $this->loadModel('Production.ProcessDepartment');
 
         $this->loadModel('Production.Machine');
+
+        $this->loadModel('Unit');
+
+        $conditions = '';
+
+        $selectedDate = '';
+        
+        $data = $this->request->query;
+
+        if (!empty($data['data']['date'])) {
+
+            $date = explode('-', $data['data']['date']);
+
+            $date1 = !empty($date[0]) ? date('Y-m-d',strtotime($date[0])) : '';
+
+            $date2 = !empty($date[1]) ? date('Y-m-d',strtotime($date[1])) : ''; 
+
+            $conditions =  "WHERE ClientOrderDeliverySchedule.schedule BETWEEN '".$date1."' AND '".$date2."' ";
+
+            $selectedDate = $date1.' - '.$date2;
+        }
 
         $tickets = $this->TicketProcessSchedule->query("
         SELECT TicketProcessSchedule.id,TicketProcessSchedule.job_ticket_id,TicketProcessSchedule.job_ticket_id,TicketProcessSchedule.production_date,TicketProcessSchedule.department_process_id,TicketProcessSchedule.machine_id,
         RecievedTicket.id,RecievedTicket.job_ticket_id,RecievedTicket.status,RecievedTicket.created,
-        JobTicket.id,JobTicket.product_id,JobTicket.client_order_id,JobTicket.po_number,JobTicket.status_production_id,JobTicket.remarks,
-        ClientOrder.id,
+        JobTicket.id,JobTicket.product_id,JobTicket.client_order_id,JobTicket.po_number,JobTicket.status_production_id,JobTicket.remarks,JobTicket.uuid,
+        ClientOrder.id,ClientOrder.po_number,ClientOrder.company_id,ClientOrder.quotation_id,ClientOrder.client_order_item_details_id,
+        Company.id,Company.company_name,
         Product.id,Product.uuid,Product.company_id,Product.item_category_holder_id,Product.name,
         ClientOrderDeliverySchedule.id,ClientOrderDeliverySchedule.client_order_id,ClientOrderDeliverySchedule.delivery_type,ClientOrderDeliverySchedule.schedule,
         ProductSpecification.id,ProductSpecification.product_id,ProductSpecification.size1,ProductSpecification.size2,ProductSpecification.size3,ProductSpecification.quantity,ProductSpecification.quantity_unit_id,ProductSpecification.stock,
@@ -42,11 +64,11 @@ class ProductionDashboardsController extends ProductionAppController {
         ON (ProductSpecification.product_id = JobTicket.product_id)
         LEFT JOIN koufu_sale.product_specification_parts as ProductSpecificationPart
         ON (ProductSpecificationPart.product_specification_id = ProductSpecification.id)
-
-        group by TicketProcessSchedule.id
+        LEFT JOIN koufu_sale.companies as Company
+        ON (Company.id = ClientOrder.company_id)
+        ". $conditions ." group by TicketProcessSchedule.id
         ");
 
-    
 
         if (!empty($_GET['test'])) { 
 
@@ -108,13 +130,23 @@ class ProductionDashboardsController extends ProductionAppController {
 
        	$machineData = $this->Machine->find('list',array('fields' => array('id','name')));
 
-      
+        $unitData = Cache::read('unitData');
+
+        if (!$unitData) {
+            
+            $unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
+                                                            'order' => array('Unit.unit' => 'ASC')
+                                                            ));
+            Cache::write('unitData', $unitData);
+        }
+
+
         if (!empty($_GET['test'])) {
         	pr($tickets);
         	//exit();
         }
         
-        $this->set(compact('tickets','departmentProcess','machineData'));
+        $this->set(compact('tickets','departmentProcess','machineData','selectedDate','unitData'));
 
 		// $this->set(compact('scheduleData'));
     }
