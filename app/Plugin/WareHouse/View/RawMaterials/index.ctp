@@ -72,7 +72,9 @@
 
                                                             if ($measure['length'] > 0) {
 
-                                                               $size .= !empty($measure['unit_length']) ?  'X '.$measure['unit_length'] : '';
+                                                                $size .= !empty($measure['length']) ? ' X '.$measure['length'] : '';
+
+                                                               $size .= !empty($measure['unit_length']) ? $measure['unit_length'] : '';
 
                                                             } 
 
