@@ -162,12 +162,12 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->Delivery->bindDelivery();
 
-       $deliveryConditions = array('Delivery.schedule_uuid' => $clientsOrderUuid,
+        $deliveryConditions = array('Delivery.schedule_uuid' => $clientsOrderUuid,
                                                'Delivery.clients_order_id' => $clientUuid);
 
 
 
-       $deliveryEdit = $this->Delivery->find('all', array(
+        $deliveryEdit = $this->Delivery->find('all', array(
                                        'group' => 'Delivery.dr_uuid',
                                        'conditions' => $deliveryConditions ,
                                        'order' => 'Delivery.id DESC'
@@ -700,13 +700,13 @@ class DeliveriesController extends DeliveryAppController {
 
       $clientsOrder = $this->ClientOrderDeliverySchedule->query('SELECT *
             FROM koufu_sale.client_order_delivery_schedules AS ClientOrderDeliverySchedule
-            INNER JOIN koufu_sale.client_orders AS ClientOrder
+            LEFT JOIN koufu_sale.client_orders AS ClientOrder
             ON ClientOrder.id = ClientOrderDeliverySchedule.client_order_id
-            INNER JOIN koufu_ticketing.job_tickets AS JobTicket
+            LEFT JOIN koufu_ticketing.job_tickets AS JobTicket
             ON JobTicket.client_order_id = ClientOrderDeliverySchedule.client_order_id
-            INNER JOIN koufu_sale.companies AS Company
+            LEFT JOIN koufu_sale.companies AS Company
             ON ClientOrder.company_id = Company.id 
-            INNER JOIN koufu_sale.products AS Product
+            LEFT JOIN koufu_sale.products AS Product
             ON Product.id = JobTicket.product_id
             WHERE JobTicket.uuid LIKE "%'.$hint.'%" OR ClientOrder.po_number LIKE "%'.$hint.'%"
             OR Company.company_name LIKE "%'.$hint.'%" OR Product.name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%" LIMIT 10 ');

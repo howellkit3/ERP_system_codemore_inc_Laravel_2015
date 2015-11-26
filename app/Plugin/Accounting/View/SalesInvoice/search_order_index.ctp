@@ -38,14 +38,16 @@ foreach ($invoiceData as $invoiceDataList):
 
         <td>
             <?php
-
                 echo $this->Html->link('<span class="fa-stack">
                 <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span> ', array('controller' => 'sales_invoice', 'action' => 'view',$invoiceDataList['SalesInvoice']['id']), array('class' =>' table-link','escape' => false, 'title'=>'View Sales Invoice'
                 ));
-       //         echo $this->Html->link('<span class="fa-stack">
-                // <i class="fa fa-square fa-stack-2x"></i>
-                // <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Print </font></span>
-                // </span> ', array('controller' => 'sales_invoice', 'action' => 'print_invoice',$invoiceDataList['SalesInvoice']['id']),array('class' =>' table-link','escape' => false,'title'=>'Print Information','target' => '_blank'));
+            ?>
+
+            <?php
+
+                echo $this->Html->link('<span class="fa-stack">
+                <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-trash  fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> Cancel </font></span></span> ', array('controller' => 'sales_invoice', 'action' => 'cancel',$invoiceDataList['SalesInvoice']['id']), array('class' =>' table-link','escape' => false, 'title'=>'View Sales Invoice'
+                ));
 
             ?>
         </td>
