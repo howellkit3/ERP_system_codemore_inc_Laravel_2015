@@ -14,7 +14,6 @@ class RawMaterialsController extends WareHouseAppController {
 		$this->loadModel('WareHouse.Department');
 
 
-
 		$this->Item->bind(array('ItemCategory','ItemSpec'));	
 
 		$limit = 10;

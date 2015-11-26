@@ -221,10 +221,13 @@ class ItemsController extends WareHouseAppController {
 
 		$this->loadModel('WareHouse.ItemCategory');
 
-		$this->Item->bind(array('ItemCategory'));	
+		$this->loadModel('WareHouse.ItemSpec');
+
+		$this->Item->bind(array('ItemCategory','ItemSpec'));	
 
 		$query = $this->request->query;
 
+		$page = '';
 
 		$conditions = array();
 
@@ -236,6 +239,11 @@ class ItemsController extends WareHouseAppController {
 
 			$conditions = array_merge($conditions,array('Item.category_type_id' => $query['type']));
 		}
+		if (!empty($query['data_type']) && $query['data_type'] == 'raw_material') {
+
+
+		$conditions = array_merge($conditions,array('Item.category_type_id' => 2));
+		}
 
 
 		$items = $this->Item->find('all',array(
@@ -243,9 +251,20 @@ class ItemsController extends WareHouseAppController {
 			'order' => 'Item.name DESC'
 		));
 
-		$this->set(compact('items'));
+		$this->set(compact('items','page'));
+
+		if (!empty($query['data_type']) && $query['data_type'] == 'raw_material') {
+
+			$this->render('RawMaterials/ajax/items');
+		} else {
 
 		$this->render('Items/ajax/search');
+
+		}
+		// if (!empty*()) {
+
+		// }
+
 	}
 
 }

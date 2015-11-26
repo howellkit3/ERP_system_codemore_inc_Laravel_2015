@@ -1,5 +1,6 @@
 function searchItem(element)  {
 
+
         $value = $(element).val();
 
         $select = $('#category_type').val();
@@ -8,10 +9,13 @@ function searchItem(element)  {
 
         $container.html('<img src="'+serverPath+'/img/loader.gif"/>');
 
+        $dataType = $(element).data('type');
+
+  
         $.ajax({
             type: "GET",
             url: serverPath + "ware_house/items/searchItem",
-            data : {'search':$value, 'type':$select   },
+            data : {'search':$value, 'type':$select ,'data_type':  $dataType },
             dataType: "html",
             success: function(data) {
 
