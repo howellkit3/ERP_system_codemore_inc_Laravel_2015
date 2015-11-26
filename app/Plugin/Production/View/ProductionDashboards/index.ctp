@@ -19,7 +19,7 @@
 							<header class="main-box-header clearfix">
 				                <h2 class="pull-left"><b>Production Schedule</b> </h2>
 				                <div class="filter-block pull-right">
-<!-- 
+
 				                 	<div class="form-group pull-left">
 				                        <?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
 				                            <input placeholder="Search..." class="form-control searchPrinting"  />
@@ -33,8 +33,7 @@
 
 			                            <i class="fa fa fa-calendar calendar-icon"></i>
 
-			                    	</div> -->
-
+			                    	</div>
 				                   <br><br>
 				               	</div>
 				            </header>
@@ -68,7 +67,7 @@
 									                           <?php echo !empty($ticket['RecievedTicket']['created']) ? date('Y-m-d',strtotime($ticket['RecievedTicket']['created'])) : '' ?>
 									                        </td>
 									                        <td class="">
-									                           <?php echo !empty($ticket['ClientOrderDeliverySchedule'][0]['schedule']) ? date('Y-m-d',strtotime($ticket['ClientOrderDeliverySchedule'][0]['schedule'])) : '' ?>
+									                           <?php echo !empty($ticket['ClientOrderDeliverySchedule']['schedule']) ? date('Y-m-d',strtotime($ticket['ClientOrderDeliverySchedule']['schedule'])) : '' ?>
 									                        </td>
 									                         <td class="">
 									                           <?php echo !empty($ticket['TicketProcessSchedule']['production_date']) ? date('Y-m-d',strtotime($ticket['TicketProcessSchedule']['production_date'])) : '' ?>
@@ -78,6 +77,38 @@
 									                        </td>
 									                        <td class="">
 									                           <?php echo !empty($ticket['TicketProcessSchedule']['machine_id']) ?  $machineData[$ticket['TicketProcessSchedule']['machine_id']] : '' ?>
+									                        </td>
+									                        <td class="">
+									                           <?php echo !empty($ticket['ProductSpecificationPart']['material']) ?   $ticket['ProductSpecificationPart']['material'] : '' ?>
+									                        </td>
+									                         <td class="">
+									                           <?php echo '' ?>
+									                        </td>
+									                          <td class="">
+									                           <?php 
+																echo !empty($ticket['ProductSpecificationPart']['size1']) ? $ticket['ProductSpecificationPart']['size1'] : '0'; 
+																echo " x ";
+																echo !empty($ticket['ProductSpecificationPart']['size2']) ? $ticket['ProductSpecificationPart']['size2'] : '0';
+											
+																?>
+									                        </td>
+									                          <td class="">
+									                           <?php echo $ticket['ProductSpecification']['quantity']; ?>
+									                        </td>
+									                         <td class="">
+									                           <?php echo $ticket['ProductSpecificationPart']['quantity']; ?>
+									                        </td>
+									                           <td class="">
+									                           <?php //echo $ticket['ProductSpecificationPart']['quantity']; ?>
+									                        </td>
+									                            <td class="">
+									                           <?php
+									                           	$outs1 = ($ticket['ProductSpecificationPart']['outs1'] > 0) ?  floatval($ticket['ProductSpecificationPart']['outs1']) : 1;
+									                           	 $outs2 = ($ticket['ProductSpecificationPart']['outs2'] > 0) ? floatval($ticket['ProductSpecificationPart']['outs2']) : 1;
+
+									                           	 echo $outs1 * $outs2;
+
+									                            //echo $ticket['ProductSpecificationPart']['quantity']; ?>
 									                        </td>
 									                    </tr>
 													</tbody>

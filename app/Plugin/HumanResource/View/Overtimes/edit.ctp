@@ -60,6 +60,7 @@ echo $this->Html->script(array(
                         //     'data-process' => 'reject',  
                         //     'title'=>'Edit Information',
                         //     ));
+                    if (in_array($userData['User']['role_id'],array('19','12'))) {
 
                         echo $this->Html->link('<i class="fa fa-check-square-o fa-lg"></i> Approved ', array('controller' => 'overtimes',
                             'action' => 'process',
@@ -67,6 +68,8 @@ echo $this->Html->script(array(
                             array('class' =>' table-link btn btn-primary pull-right overtime-process',
                                   'data-process' => 'approved',   
                                   'escape' => false));
+
+                      }
                                             
                         ?>
                         </div>

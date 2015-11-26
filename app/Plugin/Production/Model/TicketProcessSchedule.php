@@ -23,11 +23,11 @@ class TicketProcessSchedule extends AppModel {
 					'foreignKey' => 'job_ticket_id',
 					//'conditions' => 'JobTicket.id = TicketProcessSchedule.job_ticket_id'
 				),
-				// 'ClientOrder' => array(
-				// 	'className' => 'Sales.ClientOrder',
-				// 	'foreignKey' => false,
-				// 	'conditions' => array('ClientOrder.id' => 'JobTicket.client_order_id')
-				// ),
+				'ClientOrder' => array(
+					'className' => 'Sales.ClientOrder',
+					'foreignKey' => false,
+					'conditions' => array('ClientOrder.id' => 'JobTicket.client_order_id')
+				),
 				'RecievedTicket' => array(
 					'className' => 'Production.RecievedTicket',
 					'foreignKey' => false,
@@ -68,8 +68,8 @@ class TicketProcessSchedule extends AppModel {
 				),
 				'JobTicket' => array(
 					'className' => 'Ticket.JobTicket',
-					'foreignKey' => 'job_ticket_id',
-					//'conditions' => 'JobTicket.id = TicketProcessSchedule.job_ticket_id'
+					//'foreignKey' => 'job_ticket_id',
+					'conditions' => 'JobTicket.id = TicketProcessSchedule.job_ticket_id'
 				),
 				'ClientOrder' => array(
 					'className' => 'Sales.ClientOrder',
