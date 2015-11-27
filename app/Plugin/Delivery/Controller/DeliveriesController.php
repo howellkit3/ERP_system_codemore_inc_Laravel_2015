@@ -174,6 +174,7 @@ class DeliveriesController extends DeliveryAppController {
                                    ));
 
         $this->Delivery->bindDelivery();
+        
         $deliveryStatus = $this->Delivery->find('all');
 
         $deliveryList = $this->Delivery->find('list',array('fields' => array('schedule_uuid', 'dr_uuid')));

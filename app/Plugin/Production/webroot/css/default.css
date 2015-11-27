@@ -28,3 +28,9 @@ div.disabled
   font-weight: bold;
   text-align: left;
 }
+
+.table-responsive.overflow {
+  overflow: auto !important;
+  white-space: nowrap;
+  padding: 5px;
+}

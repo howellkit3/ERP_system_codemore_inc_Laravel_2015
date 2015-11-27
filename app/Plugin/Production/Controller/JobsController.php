@@ -15,7 +15,6 @@ class JobsController extends ProductionAppController {
 
     public function plans() {
 
-
         $limit = 10;
 
         $this->loadModel('Ticket.JobTicket');
@@ -28,9 +27,7 @@ class JobsController extends ProductionAppController {
 
         $this->loadModel('Production.ProcessDepartment');
 
-
         $this->loadModel('Production.RecievedTicket');
-
 
         $departmentProcess = $this->ProcessDepartment->find('list', array('fields' => array('id', 'name')));
 
@@ -49,8 +46,6 @@ class JobsController extends ProductionAppController {
 
         $query = $this->request->query;
 
-
-
         if (!empty( $query['data']['date'])) {
 
             $dateSplit = explode('-',$query['data']['date']);
@@ -59,12 +54,9 @@ class JobsController extends ProductionAppController {
 
             $date2 =  date('Y-m-d',strtotime($dateSplit[1]));
 
-
-
-        $conditions =array('date(JobTicket.created) BETWEEN ? AND ?' => array($date1,$date2));
-
-
-        $dateSelected =  $query['data']['date'];    
+            $conditions =array('date(JobTicket.created) BETWEEN ? AND ?' => array($date1,$date2));
+            
+            $dateSelected =  $query['data']['date'];    
             
         } else {
 
@@ -77,17 +69,13 @@ class JobsController extends ProductionAppController {
 
             $dateSelected = date('Y/m/d',strtotime($date)).' - '.date('Y/m/d',strtotime($date2));
 
-
         }
-
-
 
         $clientOrderUUID = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('client_order_id','uuid')));
 
         $clientOrderQuantity = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('client_order_id','quantity')));
 
-
-         $params =  array(
+        $params =  array(
                 'conditions' => $conditions,
                 'limit' => $limit,
                 //'group' => array('Attendance.date'),
@@ -100,20 +88,20 @@ class JobsController extends ProductionAppController {
 
         $jobData = $this->RecievedTicket->checkStatus( $jobData);
 
-      //  $jobData = $this->JobTicket->find('all',array('order' => 'JobTicket.id DESC','conditions' => $conditions ));
+        //  $jobData = $this->JobTicket->find('all',array('order' => 'JobTicket.id DESC','conditions' => $conditions ));
 
         //pr($jobData ); exit;
         // foreach ($jobData as $key => $jobList) {
 
         //     //find if product has specs
-           
+
         //     $formatData = $this->ProductSpecificationProcess->find('first',array('conditions' => array('product_id' => $jobList['Product']['id'])));
 
         //     $processData = $this->ProductSpecificationProcessHolder->find('all',array('conditions' => array('product_specification_process_id' => $formatData['ProductSpecificationProcess']['id']),
         //                                             'fields' => array('id','product_specification_process_id','process_id','sub_process_id','order')));
-            
+
         //     $jobData[$key]['Process'] = $processData;
-           
+
         // }
         //pr($jobData);exit();
         $this->set(compact('jobData','companyData','machineData','processDepartmentData', 'clientOrderUUID', 'clientOrderQuantity','dateSelected','departmentProcess'));
