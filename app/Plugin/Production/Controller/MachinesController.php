@@ -55,6 +55,7 @@ class MachinesController extends ProductionAppController {
         $auth = $this->Session->read('Auth.User');
 
         $this->loadModel('Production.ProcessDepartment');
+
         $processDepartmentData = $this->ProcessDepartment->find('list',array('fields' => array('id','name')));
 
         if(!empty($this->request->data)){
@@ -127,9 +128,13 @@ class MachinesController extends ProductionAppController {
 
             $this->loadModel('Production.TicketProcessSchedule');
 
+            $this->loadModel('Production.ProcessDepartment');
+
             $this->loadModel('Sales.Company');
 
             $this->loadModel('Production.Machine');
+
+            $this->loadModel('HumanResource.Employee');
 
             $this->loadModel('Sales.Product');
 
@@ -141,6 +146,13 @@ class MachinesController extends ProductionAppController {
 
             $machineData = $this->Machine->find('list',array('fields' => array('id','name')));
 
+            $processDepartmentData = $this->ProcessDepartment->find('list',array('fields' => array('id','name')));
+
+            $conditions = array();
+            
+            $employees =  $this->Employee->getOperator('list',$conditions);   
+
+
             $ticketData = $this->JobTicket->query(
                 "Select * from koufu_ticketing.job_tickets as JobTicket 
                 LEFT JOIN koufu_sale.products as Product
@@ -151,7 +163,7 @@ class MachinesController extends ProductionAppController {
 
             $ticketData = $ticketData[0];
 
-            $this->set(compact('ticketData','logs','productName','machineData','companyData'));
+            $this->set(compact('ticketData','logs','productName','machineData','companyData','employees','processDepartmentData'));
 
             $this->render('Machines/ajax/view_logs');
         }
@@ -162,6 +174,8 @@ class MachinesController extends ProductionAppController {
         if ($this->request->is('post')) {
 
             $this->loadModel('Production.Output');
+
+            $this->loadModel('Production.OutputDetail');
 
             $this->loadModel('Production.MachineLog');
 
@@ -175,11 +189,16 @@ class MachinesController extends ProductionAppController {
 
             $data = $this->request->data;
 
-
             if ($this->MachineLog->save( $data )) {
 
                 //save Output
-                $this->Output->saveOutput( $data,$auth );
+                $outputId = $this->Output->saveOutput( $data,$auth );
+
+
+                if ($outputId) {
+                    //save details
+                    $this->OutputDetail->saveDetails($outputId,$this->request->data);
+                }
 
                 //$save
                 $this->Session->setFlash('Saving Log Succesfully','success');

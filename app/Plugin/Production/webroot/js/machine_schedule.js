@@ -7,8 +7,6 @@ $(document).ready(function(){
 
       $this.parents('form').submit(function(e){
 
-      
-
         if ($this.parents('form').find('.error:visible').length > 0) {
 
         } else {
