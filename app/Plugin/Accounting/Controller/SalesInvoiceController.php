@@ -1292,8 +1292,11 @@ class SalesInvoiceController extends AccountingAppController {
 
     public function invoice_modal($deliveryId = null, $deliveryUUID = null) {
 
+        $conditions = array('NOT' => array('SalesInvoice.status' => array(2, 3)) );
+
         $seriesNo = $this->SalesInvoice->find('first', array(
-                'order' => array('SalesInvoice.id DESC')));
+                'order' => array('SalesInvoice.id DESC'),
+                'conditions' => $conditions));
 
         if(!empty($seriesNo)){
 
