@@ -10,7 +10,7 @@
                                     <tr class="">
 
                                         <td class="text-center">
-                                                  <?php  echo !empty($jobTicketData[$scheduleDataList['ClientOrder']['id']]) ? $jobTicketData[$scheduleDataList['ClientOrder']['id']] : "No Job Ticket yet"; ?>  
+                                                  <?php  echo !empty($scheduleDataList['JobTicket']['uuid']) ? $scheduleDataList['JobTicket']['uuid'] : "No Job Ticket yet"; ?>  
                                         </td>
 
                                         <td class="text-center">

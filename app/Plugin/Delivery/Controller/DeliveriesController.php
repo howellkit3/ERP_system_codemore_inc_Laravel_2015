@@ -681,13 +681,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $userData = $this->Session->read('Auth');
 
-        $this->loadModel('Sales.ClientOrder');
-
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
-
-        $this->loadModel('Ticket.JobTicket');
-
-        //$this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product'));
         
         if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
 
@@ -699,7 +693,15 @@ class DeliveriesController extends DeliveryAppController {
 
         }
 
-      $clientsOrder = $this->ClientOrderDeliverySchedule->query('SELECT *
+      $clientsOrder = $this->ClientOrderDeliverySchedule->query('SELECT 
+            ClientOrder.id, ClientOrder.client_order_item_details_id,
+            ClientOrder.po_number, ClientOrder.company_id, ClientOrder.quotation_id,  ClientOrder.uuid, ClientOrder.status_id,
+            ClientOrderDeliverySchedule.id, ClientOrderDeliverySchedule.client_order_id,ClientOrderDeliverySchedule.modified,
+            ClientOrderDeliverySchedule.schedule,ClientOrderDeliverySchedule.location,
+            ClientOrderDeliverySchedule.quantity,ClientOrderDeliverySchedule.uuid
+            ,ClientOrderDeliverySchedule.delivery_type, ClientOrderDeliverySchedule.status_id,
+            JobTicket.client_order_id , JobTicket.uuid , QuotationDetail.quotation_id, Product.id,Product.name,
+            Company.id, Company.company_name
             FROM koufu_sale.client_order_delivery_schedules AS ClientOrderDeliverySchedule
             LEFT JOIN koufu_sale.client_orders AS ClientOrder
             ON ClientOrder.id = ClientOrderDeliverySchedule.client_order_id
@@ -707,43 +709,21 @@ class DeliveriesController extends DeliveryAppController {
             ON JobTicket.client_order_id = ClientOrderDeliverySchedule.client_order_id
             LEFT JOIN koufu_sale.companies AS Company
             ON ClientOrder.company_id = Company.id 
+            LEFT JOIN koufu_sale.quotation_details AS QuotationDetail
+            ON ClientOrder.quotation_id = QuotationDetail.quotation_id
             LEFT JOIN koufu_sale.products AS Product
-            ON Product.id = JobTicket.product_id
+            ON Product.id = QuotationDetail.product_id
             WHERE JobTicket.uuid LIKE "%'.$hint.'%" OR ClientOrder.po_number LIKE "%'.$hint.'%"
             OR Company.company_name LIKE "%'.$hint.'%" OR Product.name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%" LIMIT 10 ');
-
-        // $conditions = array('ClientOrder.status_id' => null, 'OR' => array(
-        //                 array('ClientOrder.po_number LIKE' => '%' . $hint . '%'),
-        //                 array('ClientOrder.uuid LIKE' => '%' . $hint . '%'),
-        //                   array('Product.name LIKE' => '%' . $hint . '%'),
-        //                   array('Company.company_name LIKE' => '%' . $hint . '%')
-        //                   ));
-
-        // $clientsOrder = $this->ClientOrderDeliverySchedule->find('all',array(
-        //               'conditions' => $conditions,
-        //               'limit' => 10
-        //               )); 
-
-      //  pr($clientsOrder); exit; 
-
-        $jobTicketData = $this->JobTicket->find('list',array('fields' => array('client_order_id', 'uuid')));
 
         $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status')));
 
         $this->Delivery->bindDelivery();
         $deliveryStatus = $this->Delivery->find('all');
 
-       // pr($deliveryStatus); exit;
-
         $deliveryList = $this->Delivery->find('list',array('fields' => array('schedule_uuid', 'dr_uuid')));
 
-        //$orderList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'status')));
-
         $orderListHelper = $this->Delivery->find('list',array('fields' => array('clients_order_id', 'dr_uuid')));
-
-        //$orderDeliveryList = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid', 'uuid')));
-
-       // $deliveryDetailList = $this->DeliveryDetail->find('list',array('fields' => array('delivery_uuid', 'delivered_quantity')));
 
         $this->set(compact('clientsOrder','noPermissionSales',  'deliveryStatus', 'deliveryList', 'orderListHelper', 'orderDeliveryList', 'deliveryDetailList' , 'deliveryData', 'jobTicketData'));
 
@@ -1478,13 +1458,11 @@ class DeliveriesController extends DeliveryAppController {
 
         //$orderDeliveryList = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid', 'uuid')));
 
-       
-
         $this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product'));
 
         $this->ClientOrderDeliverySchedule->recursive = 1;
 
-        $limit = 10;
+        $limit = 2000;
 
         $conditions = "";
         $this->paginate = array(
@@ -1509,8 +1487,6 @@ class DeliveriesController extends DeliveryAppController {
 
         $clientsOrder = $this->paginate('ClientOrderDeliverySchedule');
 
-        //pr($clientsOrder); exit;
-
         foreach ($clientsOrder as $key => $value){
 
             foreach ($deliveryStatus as $key1 => $valueofDelivery){
@@ -1524,13 +1500,9 @@ class DeliveriesController extends DeliveryAppController {
                     $clientsOrder[$key]['Delivery']['dr_uuid'] = $valueofDelivery['Delivery']['dr_uuid'];
                     $clientsOrder[$key]['DeliveryDetail']['status'] = $valueofDelivery['DeliveryDetail']['status'];
 
-
                 }
-
             }
         }
-
-       // pr($clientsOrder); exit;
 
         if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
 
