@@ -8,11 +8,12 @@
                 <?php echo $deliveryDataList['Delivery']['clients_order_id'] ?>  
             </td>
             <td class="">
-                <?php echo $poNumber[$deliveryDataList['Delivery']['clients_order_id']] ?>
+
+                <?php echo $deliveryDataList['ClientOrder']['po_number']  ?>
                 
             </td>
             <td class="">
-                <?php echo $companyData[$deliveryDataList['Delivery']['company_id']] ?>..
+                <?php echo $deliveryDataList['Company']['company_name']  ?>..
             </td>
             <td class="">
                 <?php echo $deliveryDataList['Delivery']['dr_uuid']; ?>
