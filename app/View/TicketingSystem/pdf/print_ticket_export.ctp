@@ -44,11 +44,18 @@ body { margin: 5px; }
 							
 							<tr>
 								<td ><label class="strong">Item Size</label> 
+
+									<?php if(empty($specs['ProductSpecification']['size1']) && empty($specs['ProductSpecification']['size2']) && empty($specs['ProductSpecification']['size3'])){ ?>
+
+									<?php }else{?>
+
 									<?php echo !empty($specs['ProductSpecification']['size1']) ? $specs['ProductSpecification']['size1'] : '0' ?>
-									X 
-									<?php echo !empty($specs['ProductSpecification']['size2']) ? $specs['ProductSpecification']['size2'] : '0' ?>
-									X
-									<?php echo !empty($specs['ProductSpecification']['size3']) ? $specs['ProductSpecification']['size3'] : '0' ?></td>
+
+									<?php echo !empty($specs['ProductSpecification']['size2']) ? ' x ' .  $specs['ProductSpecification']['size2'] : '' ?>
+									
+									<?php echo !empty($specs['ProductSpecification']['size3']) ? ' x ' .  $specs['ProductSpecification']['size3'] : '' ?></td>
+
+									<?php }  ?>
 								<td class="text-right"><label class="strong">Del Date</label> <?php 
 								echo !empty($delData['ClientOrderDeliverySchedule'][0]['schedule']) ? date('M d, Y', strtotime($delData['ClientOrderDeliverySchedule'][0]['schedule'])) : ''; ?>
 								</td>
