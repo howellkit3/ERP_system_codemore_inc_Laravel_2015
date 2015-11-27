@@ -2481,3 +2481,15 @@ CREATE TABLE IF NOT EXISTS `overtime_details` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
+
+CREATE TABLE `output_details` (
+`id` int NULL AUTO_INCREMENT ,
+`department_process_id`  int NULL ,
+`output_id`  int NULL ,
+`pallet`  varchar(255) NULL ,
+`qty_pallet`  varchar(255) NULL ,
+`height`  varchar(255) NULL ,
+`created`  datetime NULL ,
+`modified`  datetime NULL ,
+PRIMARY KEY (`id`)
+);
