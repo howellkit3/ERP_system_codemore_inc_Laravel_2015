@@ -1344,7 +1344,7 @@ class SalesInvoiceController extends AccountingAppController {
                 LEFT JOIN koufu_sale.client_orders AS ClientOrder
                 ON Delivery.clients_order_id = ClientOrder.uuid 
                 LEFT JOIN koufu_sale.companies AS Company
-                ON Delivery.company_id = Company.id 
+                ON ClientOrder.company_id = Company.id 
                 WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR ClientOrder.po_number LIKE "%'.$hint.'%"
                 OR Company.company_name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%"   ');
 
