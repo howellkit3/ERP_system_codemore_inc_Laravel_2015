@@ -217,18 +217,19 @@ class SalesInvoiceController extends AccountingAppController {
         if($this->request->is('post')){
 
             if(!empty($this->request->data)){
-                
+
                 $DRdata = $this->SalesInvoice->find('first', array(
-                            'conditions' => array(
-                                'SalesInvoice.dr_uuid' => $this->request->data['SalesInvoice']['dr_uuid'])
-                            ));
+                    'conditions' => array(
+                        'SalesInvoice.dr_uuid' => $this->request->data['SalesInvoice']['dr_uuid']),
+                        'order' => array('created DESC')
+                    ));
 
-                if (!empty($DRdata)) {
+                if (!empty($DRdata && $DRdata['SalesInvoice']['status'] != 3)) {
 
-                    $this->Session->setFlash(__('This Delivery No. already exist. '), 'error');
+                    $this->Session->setFlash(__('This Delivery No. has been used. '), 'error');
                     $this->redirect( array(
                                  'controller' => 'salesInvoice', 
-                                 'action' => 'add_statement'
+                                 'action' => 'add'
                             ));
                 }
 
@@ -271,23 +272,13 @@ class SalesInvoiceController extends AccountingAppController {
 
     public function add_invoice(){
 
-       //$this->loadModel('Delivery.Delivery');
-
         $userData = $this->Session->read('Auth');
-
-        //pr($this->request->data); exit;
-
-       // if(!empty($this->request->data['SalesInvoice']['dr_uuid'])){
 
         $DRdata = $this->SalesInvoice->find('first', array(
             'conditions' => array(
                 'SalesInvoice.dr_uuid' => $this->request->data['SalesInvoice']['dr_uuid']),
                 'order' => array('created DESC')
             ));
-
-        //}
-//pr($DRdata); exit;
-        
 
         if (!empty($DRdata && $DRdata['SalesInvoice']['status'] != 3)) {
 
@@ -298,32 +289,6 @@ class SalesInvoiceController extends AccountingAppController {
                     ));
         }
 
-     //   pr($DRdata); exit;
-        // if(!empty($this->request->data['SalesInvoice']['dr_uuid'])){
-
-        //     $findDRdata = $this->Delivery->find('first', array(
-        //                 'conditions' => array(
-        //                     'Delivery.dr_uuid' => $this->request->data['SalesInvoice']['dr_uuid'])
-        //                 ));
-
-        // }
-    
-       // if (!empty($findDRdata)) {
-
-            // $this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id']);
-
-            // $this->Session->setFlash(__(' Sales Invoice No. completed. '), 'success');
-            // $this->redirect( array(
-            //              'controller' => 'sales_invoice', 
-            //              'action' => 'index'
-            //         ));
-
-       // }else{
-
-            //pr($this->request->data ); exit;
-
-            //$this->request->data = $this->request->data['SalesInvoice']['dr_uuid'];
-
             $this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id']);
 
             $this->Session->setFlash(__(' Sales Invoice No. completed. '), 'success');
@@ -331,14 +296,6 @@ class SalesInvoiceController extends AccountingAppController {
                          'controller' => 'sales_invoice', 
                          'action' => 'index'
                     ));
-
-            // $this->Session->setFlash(__(' Delivery No. not matched in our system. '), 'error');
-            // $this->redirect( array(
-            //              'controller' => 'salesInvoice', 
-            //              'action' => 'add'
-            //         ));
-    //   }
-        
 
     }
 

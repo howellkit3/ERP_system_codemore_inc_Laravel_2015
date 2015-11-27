@@ -9,7 +9,7 @@
                 <div class="filter-block pull-right">
                    <?php
                    
-                      echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Sales Invoice ', 
+                      echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Statement of Account ', 
                             array('controller' => 'sales_invoice', 
                                     'action' => 'add_statement',),
                             array('class' =>'btn btn-primary pull-right',
