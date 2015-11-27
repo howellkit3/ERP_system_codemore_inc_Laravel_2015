@@ -669,8 +669,6 @@ class TicketingSystemsController extends TicketAppController {
                 }
                 
 
-            pr(); exit;
-                
                 if (!empty($model)){
                     $data = $this->$model->find('first',
                     array('conditions' => array('id' => $list['ProductSpecificationDetail']['foreign_key'])));
@@ -912,6 +910,21 @@ class TicketingSystemsController extends TicketAppController {
     }
 
 
+    private function getDetail($jobticketUUID = null,$jobticketID = null) {
+
+        if (!empty($jobticketUUID) && !empty($jobticketID)) {
+
+            if (!empty($jobticketUUID) && !empty($jobticketID)) {
+                $conditions = 'Where JobTicket.id = $jobticketID && JobTicket.uuid = $jobticketUUID';
+
+            }
+            
+            $jobticket = $this->JobTicket->query("Select * from koufu_ticketing.job_tickets as JobTicket ". $conditions ." limit 1");
+
+            return $jobticket;
+
+        }
+    }
 
     public function print_process($processId = null,$productUuid = null,$ticketUuid = null, $model = null , $lastId = null,$ticketId = null, $productId = null, $componentName = null) {
       //  pr($componentName); exit;
@@ -946,6 +959,9 @@ class TicketingSystemsController extends TicketAppController {
         }
 
         $this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
+
+        //find details
+       // $processDetails = $this->getDetail($ticketUuid,$ticketId);
 
 
        //$delData = $this->ClientOrder->find('first',array('ClientOrder.id' => $clientOrderId));
@@ -1121,7 +1137,8 @@ class TicketingSystemsController extends TicketAppController {
             $productId = !empty($query['productId']) ? $query['productId'] : $product;
             $PlateMakingProcess = $this->PlateMakingProcess->getProcess(
                 array(
-                    'ticketuuId' => $ticketUuid, 'processID' =>  $processId , 
+                    'ticketuuId' => $ticketUuid,
+                    'processID' =>  $processId , 
                     'productId' =>  $productUuid,
                     'product' => $productId,
                     'ticketId' => $ticketId  
