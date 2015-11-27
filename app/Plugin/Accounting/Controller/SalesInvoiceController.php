@@ -1337,7 +1337,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         if($type == '1'){
 
-           // $this->loadModel('Sales.ClientOrder');
+            $this->loadModel('Delivery.Delivery');
 
             $deliveryData = $this->Delivery->query('SELECT ClientOrder.id ,ClientOrder.po_number , ClientOrder.uuid, Company.id, Company.company_name , Delivery.dr_uuid, Delivery.company_id, Delivery.dr_uuid, Delivery.clients_order_id , Delivery.status,  Delivery.id  
                 FROM koufu_delivery.deliveries AS Delivery
@@ -1347,21 +1347,6 @@ class SalesInvoiceController extends AccountingAppController {
                 ON Delivery.company_id = Company.id 
                 WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR ClientOrder.po_number LIKE "%'.$hint.'%"
                 OR Company.company_name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%"   ');
-
-            // $deliveryData = $this->Delivery->find('all',array(
-            //               'conditions' => array(
-            //                 'OR' => array(
-            //                 array('Delivery.clients_order_id LIKE' => '%' . $hint . '%'),
-            //                   array('Delivery.dr_uuid LIKE' => '%' . $hint . '%')
-            //                   )
-            //                 ),
-            //               'limit' => 10
-            //               )); 
-
-            //pr($deliveryData); exit;
-
-
-          //  $poNumber = $this->ClientOrder->find('list', array('fields' => array('uuid', 'po_number')));
 
             $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData',  'poNumber', 'companyData'));
             
