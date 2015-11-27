@@ -912,8 +912,9 @@ class TicketingSystemsController extends TicketAppController {
     }
 
 
+
     public function print_process($processId = null,$productUuid = null,$ticketUuid = null, $model = null , $lastId = null,$ticketId = null, $productId = null, $componentName = null) {
-    
+      //  pr($componentName); exit;
         if (!empty($processId) && !empty($productUuid)) {
 
         $userData = $this->Session->read('Auth');
@@ -944,43 +945,22 @@ class TicketingSystemsController extends TicketAppController {
 
         }
 
-     //   $formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
-
-       // pr($formatDataSpecs); exit;
-
-      
-        $details = $this->test($productUuid, $ticketId);
-
-        $ticketData = $details['ticketData'];
-
-        $formatDataSpecs = $details['formatDataSpecs'];
-
-        $productData = $details['productData'];
-
-        $specs = $details['specs'];
-
-        if(!empty($details['delData'])){
-
-            $delData = $details['delData'];
-
-        }
-
-        //$this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
+        $this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
 
 
        //$delData = $this->ClientOrder->find('first',array('ClientOrder.id' => $clientOrderId));
 
 
-        // $ticketData = $this->JobTicket->find('first',array(
-        //     'conditions' => array('JobTicket.uuid' => $ticketUuid,'JobTicket.id' => $ticketId  )));
+        $ticketData = $this->JobTicket->find('first',array(
+            'conditions' => array('JobTicket.uuid' => $ticketUuid,'JobTicket.id' => $ticketId  )));
        // pr($ticketData); exit;
 
-        //$productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid,'Product.id' =>   $ticketData['JobTicket']['product_id']) ,'order' => 'Product.id DESC'));
+        $productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid,'Product.id' =>   $ticketData['JobTicket']['product_id']) ,'order' => 'Product.id DESC'));
 
         // $ticketData = $this->JobTicket->find('first',array(
         //     'conditions' => array('JobTicket.uuid' => $ticketUuid)));
 
-        //$specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
+        $specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
 
         //find if product has specs
 
@@ -1004,10 +984,12 @@ class TicketingSystemsController extends TicketAppController {
                 ));
         } 
 
+
+
         $processData = $this->ProductSpecificationDetail->find('first',array(
             'conditions' =>  $processCond
 
-       ));
+        ));
 
         $part = array();
          
@@ -1019,10 +1001,8 @@ class TicketingSystemsController extends TicketAppController {
                 )
             ));
         }   
-
-        //pr($processData); exit;
         
-        
+        $formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
 
        //pr($formatDataSpecs); exit;
         
@@ -1161,7 +1141,7 @@ class TicketingSystemsController extends TicketAppController {
             
         } else {
             
-            $output = $view->render(' ', false);
+            $output = $view->render('print_process', false);
         }
     
         $dompdf = new DOMPDF();
@@ -1176,7 +1156,7 @@ class TicketingSystemsController extends TicketAppController {
         $random = rand(0, 1000000) . '-' . time();
 
         if (empty($filename)) {
-            $filename = 'payslip-record'.time();
+            $filename = 'jobticket-record'.time();
         }
         $filePath = $filename.'.pdf';
 
@@ -1207,7 +1187,7 @@ class TicketingSystemsController extends TicketAppController {
         }
 
         $dompdf->render();
-         if ($dompdf->stream('payslip-'.$ticketUuid.'-.pdf')){
+         if ($dompdf->stream('jobticket-'.$ticketUuid.'-.pdf')){
 
             unlink($file_to_save);
         }
