@@ -41,7 +41,7 @@
 								<?php echo !empty($ticketData['Product']['name']) ? $ticketData['Product']['name'] : ''; ?>
 							</div>
 					</form>
-		</div>
+			</div>
 		</div>
 	</div>
 </div>

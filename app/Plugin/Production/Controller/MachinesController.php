@@ -181,9 +181,7 @@ class MachinesController extends ProductionAppController {
 
             $this->loadModel('Production.TicketProcessSchedule');
 
-
             $this->loadModel('Production.ProcessDepartment');
-
 
             $auth = $this->Session->read('Auth.User');
 
