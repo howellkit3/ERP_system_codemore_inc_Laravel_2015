@@ -544,8 +544,6 @@ class RequestsController extends PurchasingAppController {
 
     public function purchase_order($bycash = null){
 
-    	//pr($bycash); exit;
-
     	$userData = $this->Session->read('Auth');
 
     	$this->loadModel('Purchasing.PurchaseOrder');
@@ -555,6 +553,14 @@ class RequestsController extends PurchasingAppController {
     	$this->loadModel('Purchasing.RequestItem');
 
     	if (!empty($this->request->data)) {
+
+    		if(!empty($this->request->data['PurchaseOrder']['supplier'])){
+
+    				$this->request->data['PurchaseOrder']['supplier_id'] = $this->request->data['PurchaseOrder']['supplier'];
+    				$this->request->data['PurchaseOrder']['contact_id'] = $this->request->data['PurchaseOrder']['contact'];
+    				$this->request->data['PurchaseOrder']['contact_person_id'] = $this->request->data['PurchaseOrder']['contact_person'];
+
+    		}
 
     		$this->request->data['PurchaseOrder']['delivery_date'] = $this->request->data['PurchaseOrder']['deliveryDate'];
 
@@ -980,6 +986,19 @@ class RequestsController extends PurchasingAppController {
 		$this->set(compact('requestData','statusData','type', 'userName', 'approvedRequestData'));    
 
     } 
+
+    public function receivedBy($preparedby = null) {
+
+	    	$this->loadModel('User');
+
+			$userData = $this->User->find('list', array('fields' => array('id', 'fullname')
+																	));
+			
+	 		$this->set(compact('userData', 'preparedby'));
+
+			$this->render('received');
+
+   	}
 
     public function index_status($status = null) {
 

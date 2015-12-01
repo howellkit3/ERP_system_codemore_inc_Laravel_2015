@@ -2493,3 +2493,13 @@ CREATE TABLE `output_details` (
 `modified`  datetime NULL ,
 PRIMARY KEY (`id`)
 );
+
+
+/*  howellkit added this 11-24-15 koufu_human_resources */
+
+ALTER TABLE `koufu_purchasing`.`requests` ADD COLUMN `received` DATETIME DEFAULT NULL AFTER modified; 
+ALTER TABLE `koufu_purchasing`.`requests` ADD COLUMN `received_by`  INT(11) DEFAULT NULL AFTER approved_by;
+
+ALTER TABLE `purchase_orders` CHANGE `supplier_id` `supplier_id` VARCHAR(120) DEFAULT NULL;
+ALTER TABLE `purchase_orders` CHANGE `contact_person_id` `contact_person_id` VARCHAR(50) DEFAULT NULL;
+ALTER TABLE `purchase_orders` CHANGE `contact_id` `contact_id` VARCHAR(50) DEFAULT NULL;

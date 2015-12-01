@@ -98,7 +98,6 @@ class PurchaseOrder extends AppModel {
 			$purchaseOrderData[$this->name]['created_by'] = $auth;
 			$purchaseOrderData[$this->name]['version'] = 1;
 			
-
 			if(!empty($bycash)){
 
 				$purchaseOrderData[$this->name]['status'] = 1;
@@ -108,6 +107,13 @@ class PurchaseOrder extends AppModel {
 
 				$purchaseOrderData[$this->name]['status'] = 8;
 			}
+
+			if($purchaseOrderData['PurchaseOrder']['question'] == 1){
+
+				$purchaseOrderData[$this->name]['status'] = 12;
+
+			}
+
 		}
 		
 		$purchaseOrderData[$this->name]['modified_by'] = $auth;

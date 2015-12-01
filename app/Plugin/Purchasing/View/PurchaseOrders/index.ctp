@@ -12,7 +12,8 @@
             <ul class="nav nav-tabs">
                         <li class="<?php echo ($active_tab == 'tab-waiting') ? 'active' : '' ?> statusclick" alt="tab-waiting" value = "1"><a href="#tab-waiting" data-toggle="tab">Waiting</a></li>
                         <li class="<?php echo ($active_tab == 'tab-approved') ? 'active' : '' ?> statusclick" alt="tab-approved" value = "2"><a href="#tab-approved" id = 'itemType' data-toggle="tab">Approved</a></li>
-                        <li class="<?php echo ($active_tab == 'tab-received') ? 'active' : '' ?> statusclick" alt="tab-received" value = "3"><a href="#tab-received" id = 'itemType' data-toggle="tab">Received</a></li>
+                        <li class="<?php echo ($active_tab == 'tab-received') ? 'active' : '' ?> statusclick" alt="tab-received" value = "3"><a href="#tab-received" id = 'itemType' data-toggle="tab">Received by Warehouse</a></li>
+                        <li class="<?php echo ($active_tab == 'tab-received') ? 'active' : '' ?> statusclick" alt="tab-received" value = "4"><a href="#tab-received" id = 'itemType' data-toggle="tab">Received by Cash</a></li>
                     </ul>
 
             <div class="main-box-body clearfix">
