@@ -1940,6 +1940,8 @@ class SalariesController  extends HumanResourceAppController {
 
 			$this->loadModel('Payroll.Adjustment');
 
+			$this->loadModel('Payroll.TaxHistory');
+
 			$payroll = $this->Payroll->findById($id);
 
 			if (!empty($payroll['Payroll']['employeeIds'])) {
@@ -1964,6 +1966,8 @@ class SalariesController  extends HumanResourceAppController {
 					if ($this->SalaryReport->createMultipleReport($salaries,$auth)) {
 
 						//$salaries = $this->_checkThirteenPayroll($payroll,true);
+
+						//create history for taxes
 					}
 
 					$payroll['Payroll']['status'] = 'process';
@@ -1982,8 +1986,13 @@ class SalariesController  extends HumanResourceAppController {
 				} else {
 
 
-				
+					
 					if( $this->SalaryReport->createMultipleReport($salaries,$auth) ) {
+
+
+						$this->TaxHistory->saveHistory($salaries,$auth);
+
+						exit();
 
 						$save = $this->SssReport->saveReport($salaries,$id,$auth);
 

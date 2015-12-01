@@ -2493,3 +2493,40 @@ CREATE TABLE `output_details` (
 `modified`  datetime NULL ,
 PRIMARY KEY (`id`)
 );
+
+/* aldrin added this dec 1 2015 koufu payrolls */
+CREATE TABLE IF NOT EXISTS `tax_histories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `loan_id` int(11) NOT NULL,
+  `amount` decimal(8,2) NOT NULL,
+  `payroll_id` int(11) NOT NULL,
+  `payroll_date` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE IF NOT EXISTS `deduction_histories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `deduction_id` int(11) NOT NULL,
+  `amount` decimal(8,2) NOT NULL,
+  `balance` decimal(8,2) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+/*  howellkit added this 11-24-15 koufu_human_resources */
+
+ALTER TABLE `koufu_purchasing`.`requests` ADD COLUMN `received` DATETIME DEFAULT NULL AFTER modified; 
+ALTER TABLE `koufu_purchasing`.`requests` ADD COLUMN `received_by`  INT(11) DEFAULT NULL AFTER approved_by;
+
+ALTER TABLE `purchase_orders` CHANGE `supplier_id` `supplier_id` VARCHAR(120) DEFAULT NULL;
+ALTER TABLE `purchase_orders` CHANGE `contact_person_id` `contact_person_id` VARCHAR(50) DEFAULT NULL;
+ALTER TABLE `purchase_orders` CHANGE `contact_id` `contact_id` VARCHAR(50) DEFAULT NULL;

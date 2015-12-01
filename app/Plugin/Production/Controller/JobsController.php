@@ -54,7 +54,7 @@ class JobsController extends ProductionAppController {
 
             $date2 =  date('Y-m-d',strtotime($dateSplit[1]));
 
-            $conditions =array('date(JobTicket.created) BETWEEN ? AND ?' => array($date1,$date2));
+            $conditions = array('date(JobTicket.created) BETWEEN ? AND ?' => array($date1,$date2));
             
             $dateSelected =  $query['data']['date'];    
             
@@ -111,7 +111,6 @@ class JobsController extends ProductionAppController {
     public function view($jobId = null) {
 
         if (!empty($jobId)) {
-
 
             $this->loadModel('HumanResource.Employee');
 

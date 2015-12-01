@@ -4,10 +4,12 @@ App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 App::uses('AuthComponent', 'Controller/Component');
 
 class ProductSpecificationDetail extends AppModel {
+	
 	public $useDbConfig = 'koufu_sale';
     public $name = 'ProductSpecificationDetail';
+    public $recursive = -1;
     public $actsAs = array('Containable');
-    
+
     public function bind($model = array('Group')){
 
 		$this->bindModel(array(
@@ -52,7 +54,7 @@ class ProductSpecificationDetail extends AppModel {
 
 			),
 
-		));
+		),1);
 
 		$this->contain($model);
 	}
@@ -144,7 +146,7 @@ class ProductSpecificationDetail extends AppModel {
 			}
 			
 		}
-		
+
 		return $dataArray;
 	}
 

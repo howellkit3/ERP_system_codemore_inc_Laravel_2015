@@ -89,6 +89,19 @@ class SalaryComputationComponent extends Component
         				$salary[$key]['to'] = $customDate['end'];
         				$salary[$key]['days'] = $gross['days'];
         				
+
+        				$salary[$key]['sss'] = 0;
+        				$salary[$key]['sss_employer'] =  0;
+        				$salary[$key]['sss_compensation'] =  0;
+						$salary[$key]['sss_id'] =  0;
+
+						$salary[$key]['philhealth'] = 0;
+						$salary[$key]['philhealth_employer'] = 0;
+						$salary[$key]['philhealth_id'] =  0;		
+						$salary[$key]['philhealth'] = 0;
+						$salary[$key]['pagibig'] =  0;
+
+
         				if (!empty($salary[$key]['gross'])) {
 
         				//sss contribution
@@ -106,17 +119,6 @@ class SalaryComputationComponent extends Component
 						$salary[$key]['philhealth_id'] = !empty($phContribution['philheath_id']) ? $phContribution['philheath_id'] : 0;		
 						$salary[$key]['pagibig'] = $this->pagibig_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$salary[$key]['gross'] , $models );
 
-        				} else {
-        				//sss contribution
-        			//	$contribution = $this->sss_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$salary[$key]['gross'], $models);	
-        				$salary[$key]['sss'] = 0;
-        				$salary[$key]['sss_employer'] =  0;
-        				$salary[$key]['sss_compensation'] =  0;
-						$salary[$key]['sss_id'] =  0;
-
-						
-						$salary[$key]['philhealth'] = 0;
-						$salary[$key]['pagibig'] =  0;
         				}
 							
 						//ctpa 
@@ -237,7 +239,6 @@ class SalaryComputationComponent extends Component
 						$salary[$key]['Salary']	= !empty($employee['Salary']) ? $employee['Salary'] : array();
         			
         		}
-
 				
 				return $salary;
 			}
