@@ -96,14 +96,13 @@ class ClientOrderDeliverySchedule extends AppModel {
 					'dependent' => true
 				),
 				
-			),
-
-				'hasOne' => array(
+			// ),
+			// 	'hasOne' => array(
 
 					'JobTicket' => array(
 						'className' => 'Ticket.JobTicket',
 						'foreignKey' => false,
-						'conditions' => array('JobTicket.client_order_id = ClientOrderDeliverySchedule.client_order_id'),
+						'conditions' => array('JobTicket.client_order_id = ClientOrder.id'),
 						'dependent' => true
 					),
 				),
