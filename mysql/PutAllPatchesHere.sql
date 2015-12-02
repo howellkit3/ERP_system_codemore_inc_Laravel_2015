@@ -2521,6 +2521,29 @@ CREATE TABLE IF NOT EXISTS `deduction_histories` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+ALTER TABLE `tax_histories`
+MODIFY COLUMN `payroll_id`  int(11) NOT NULL AFTER `loan_id`,
+MODIFY COLUMN `amount`  decimal(8,2) NOT NULL AFTER `payroll_id`,
+ADD COLUMN `employee`  decimal(8,2) NULL AFTER `amount`,
+ADD COLUMN `employer`  decimal(8,2) NULL AFTER `employee`,
+ADD COLUMN `compensation`  decimal(8,2) NULL AFTER `employer`;
+
+
+/* koufu payroll */
+
+CREATE TABLE `contribution_balances` (
+`id`  int(11) NULL ,
+`contribution_id`  int(11) NULL ,
+`amount`  varchar(255) NULL,
+`employee_id`  int(11) NULL ,
+`payroll_id`  int(11) NULL ,
+`sched`  varchar(255) NULL ,
+`from`  datetime NULL ,
+`to`  datetime NULL ,
+`created`  datetime NULL ,
+`modified`  datetime NULL ,
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 /*  howellkit added this 11-24-15 koufu_human_resources */
 
