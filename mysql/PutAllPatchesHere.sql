@@ -2530,9 +2530,8 @@ ADD COLUMN `compensation`  decimal(8,2) NULL AFTER `employer`;
 
 
 /* koufu payroll */
-
 CREATE TABLE `contribution_balances` (
-`id`  int(11) NULL ,
+`id`  int(11) NULL AUTO_INCREMENT,
 `contribution_id`  int(11) NULL ,
 `amount`  varchar(255) NULL,
 `employee_id`  int(11) NULL ,
@@ -2553,3 +2552,16 @@ ALTER TABLE `koufu_purchasing`.`requests` ADD COLUMN `received_by`  INT(11) DEFA
 ALTER TABLE `purchase_orders` CHANGE `supplier_id` `supplier_id` VARCHAR(120) DEFAULT NULL;
 ALTER TABLE `purchase_orders` CHANGE `contact_person_id` `contact_person_id` VARCHAR(50) DEFAULT NULL;
 ALTER TABLE `purchase_orders` CHANGE `contact_id` `contact_id` VARCHAR(50) DEFAULT NULL;
+
+/* aldrin added this 12-2-15 */
+ALTER TABLE `contribution_balances`
+ADD COLUMN `amount`  decimal(8,2) NULL AFTER `payroll_id`;
+
+/* aldrin added this 12-2-15 koufu payrolls*/
+ALTER TABLE `sss_reports`
+ADD COLUMN `salary_report_id`  int(11) NULL AFTER `employee_id`;
+
+ALTER TABLE `sss_reports`
+ADD COLUMN `from`  datetime NULL AFTER `compensation`,
+ADD COLUMN `to`  datetime NULL AFTER `from`;
+

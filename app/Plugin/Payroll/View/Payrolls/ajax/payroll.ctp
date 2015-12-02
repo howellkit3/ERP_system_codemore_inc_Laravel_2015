@@ -14,12 +14,9 @@
 
             <tbody aria-relevant="all" aria-live="polite" role="alert">
                                     <?php  if(!empty($payrolls)) { ?>
-
-                                           <?php foreach ($payrolls as $key => $payroll): ?>
-                                                    
+                            <?php foreach ($payrolls as $key => $payroll): ?>
                                                     <tr>
-                                                       
-                                                        <td class="">
+                                                       <td class="">
                                                            <?php echo !empty($payroll['Payroll']['date']) ? date('Y/m/d', strtotime($payroll['Payroll']['date']))  : ''; ?>
                                                         </td>
                                                         <td class="">
@@ -78,9 +75,7 @@
                                                         </td>
                                                       
                                                     </tr>
-
-                                                
-                                        <?php  endforeach;  ?>
+                                          <?php  endforeach;  ?>
                                        <?php } ?> 
                                   </tbody>
                                   </table>
