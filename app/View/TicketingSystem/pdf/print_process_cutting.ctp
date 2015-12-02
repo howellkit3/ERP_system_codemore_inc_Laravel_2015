@@ -156,7 +156,7 @@ Configure::write('debug',2);
 								$outs1 = $part['ProductSpecificationPart']['outs1'] > 0 ? $part['ProductSpecificationPart']['outs1'] : 1;
 								$outs2 = $part['ProductSpecificationPart']['outs2'] > 0 ? $part['ProductSpecificationPart']['outs2'] : 1;
 								$total_outs = floatval($outs1) * floatval($outs2);
-								$paperQuantity =   $part['ProductSpecificationPart']['quantity'];
+								$paperQuantity =   $quantity;
 								$paperQuantity = ($paperQuantity / $total_outs );
 								//$outPaper = $paperQuantity / $part['ProductSpecificationPart']['outs1'];  
 								//echo round($outs); 
