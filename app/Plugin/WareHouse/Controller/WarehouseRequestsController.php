@@ -780,10 +780,55 @@ class WarehouseRequestsController extends WareHouseAppController {
 
     }
 
-    public function print_deducted_summary($outrecord = null){
+    public function searchRequest($hint = null){
 
-    	//pr($this->request->data); exit;
+		$this->loadModel('WareHouse.WarehouseRequest');
 
+		// $this->WarehouseRequest->bind('User');	
+
+		//$userName = $this->User->find('list', array('fields' => array('User.id', 'User.fullname')));
+
+        // $limit = 10;
+
+        // $conditions = array('NOT' => array('WarehouseRequest.status_id' => 5));
+
+        // $requestData = $this->WarehouseRequest->find('all',array(
+        // 				'fields' => array('WarehouseRequest.uuid', 'WarehouseRequest.name' , 'WarehouseRequest.status_id', 'WarehouseRequest.id',
+	       //                	'WarehouseRequest.created_by', 'User.id'),
+	       //                'conditions' => array(
+	       //                  'OR' => array(
+	       //                  array('WarehouseRequest.uuid LIKE' => '%' . $hint . '%'),
+	       //                  array('WarehouseRequest.name LIKE' => '%' . $hint . '%')
+	       //                 // array('User.firstname LIKE' => '%' . $hint . '%'),
+	       //                //  array('User.lastname LIKE' => '%' . $hint . '%')
+	       //                    ), 'WarehouseRequest.status_id' => 8
+	       //                  ),
+	       //                'limit' => 10
+	       //                )); 
+
+		$requestData = $this->WarehouseRequest->query('SELECT 
+            WarehouseRequest.id, WarehouseRequest.created_by, WarehouseRequest.name, WarehouseRequest.uuid,
+            WarehouseRequest.status_id, User.id,  User.first_name, User.last_name
+            FROM koufu_warehouse.warehouse_requests AS WarehouseRequest
+            LEFT JOIN koufu_system.users AS User
+            ON WarehouseRequest.created_by = User.id
+            WHERE WarehouseRequest.uuid LIKE "%'.$hint.'%" OR WarehouseRequest.name LIKE "%'.$hint.'%"
+            OR User.last_name LIKE "%'.$hint.'%" OR User.first_name LIKE "%'.$hint.'%" LIMIT 10 ');
+
+       // pr($requestData); exit;
+        
+       	$this->set(compact('requestData','userName'));
+
+        if ($hint == ' ') {
+
+            $this->render('index');
+
+        }else{
+
+            $this->render('request_search');
+
+        }
+    	
     }
 
     public function out_record_report($from = null, $to = null){

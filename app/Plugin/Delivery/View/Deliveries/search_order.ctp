@@ -76,92 +76,62 @@
 
                                         <td class="text-center">
 
-                                                <?php 
-                                              
-                                                $uuidClientsOrder = $scheduleDataList['ClientOrderDeliverySchedule']['uuid'];
-                                                
-                                                $arr = array();
+                                           <?php 
 
-                                                 foreach ($deliveryStatus as $key => $value) {
+                                                      $uuidClientsOrder = $scheduleDataList['ClientOrderDeliverySchedule']['uuid'];
+                                                     
 
-                                                  $IdClientsOrder = $orderListHelper[$value['Delivery']['clients_order_id']];
-                                                 
-  
-                                                    if($value['Delivery']['schedule_uuid'] == $scheduleDataList['ClientOrderDeliverySchedule']['uuid']){  
-                                                   
-                                                      array_push($arr,$value['DeliveryDetail']['status']);
+                                                      $arr = array();
 
-                                                    }  
+                                                       foreach ($deliveryStatus as $key => $value) {
 
-                                                    $dataholder = 0;
-                                                    foreach ($arr as $key => $value) {
+                                                        $IdClientsOrder = !empty($scheduleDataList['Delivery']['dr_uuid']) ? $scheduleDataList['Delivery']['dr_uuid'] : "";
 
-                                                       if ($value == 'Incomplete' ) {
-                                                         $dataholder = 1;
-                                                       }
+                                                          if($value['Delivery']['schedule_uuid'] == $scheduleDataList['ClientOrderDeliverySchedule']['uuid'] &&  $value['DeliveryDetail']['status'] == 3 ){  
 
-                                                       if ($value == '' ) {
-                                                         $dataholder = 1;
-                                                       }
-                                                    }
-                                                    
-                                                  }
+                                                            if($value['DeliveryDetail']['status'] != 5){
+                                                         
+                                                            array_push($arr,$value['DeliveryDetail']['delivered_quantity']);
 
-                                                $Scheddate = $scheduleDataList['ClientOrderDeliverySchedule']['schedule'];
-                                                $Currentdate = date("Y-m-d H:i:s");
+                                                          }
 
-                                                $Scheddate = str_replace('-', '', $Scheddate);
-                                                
-                                                $Currentdate = str_replace('-', '', $Currentdate);   
+                                                        }  
+                                                          
+                                                      }
 
-                                                $arrDelivered = array();
+                                                      $Scheddate = $scheduleDataList['ClientOrderDeliverySchedule']['schedule'];
 
-                                                  foreach ($deliveryStatus as $key => $value) {
+                                                      $Currentdate = date("Y-m-d H:i:s");
 
-                                                  //$DeliveredHolder = $deliveryDetailList[$value['Delivery']['dr_uuid']];
+                                                      $Scheddate = str_replace('-', '', $Scheddate);
+                                                      
+                                                      $Currentdate = str_replace('-', '', $Currentdate); 
 
-                                                    $DeliveredHolder = $value['DeliveryDetail']['delivered_quantity'];
-  
-                                                    if($value['Delivery']['schedule_uuid'] == $scheduleDataList['ClientOrderDeliverySchedule']['uuid'] AND $value['DeliveryDetail']['status'] != 5 && $value['Delivery']['status'] != 2){  
+                                                      if (array_sum($arr) == $scheduleDataList['ClientOrderDeliverySchedule']['quantity']){ 
 
-                                                      array_push($arrDelivered,$DeliveredHolder);
-
-                                                    }  
-
-                                                }
-
-                                                $sumDelivered = array_sum($arrDelivered);
-
-
-                                                   if (!empty($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']]) || !empty($deliveryList[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']])) {   
-
-                                                   
-                                                    if (array_sum($arr) == $scheduleDataList['ClientOrderDeliverySchedule']['quantity']){ 
-
-                                                            echo "<span class='label label-success'>Completed</span>";
-
-                                                    }elseif ($sumDelivered == $scheduleDataList['ClientOrderDeliverySchedule']['quantity']){
-
-                                                            echo "<span class='label label-success'>Completed</span>";
-
-                                                    }elseif ($deliveryData[$scheduleDataList['ClientOrderDeliverySchedule']['uuid']] == '1') { 
+                                                          echo "<span class='label label-success'>Completed</span>";
+                                        
+                                                      }elseif (array_sum($arrholder) != 0) { 
+                                                            
+                                                           echo "<span class='label label-warning'>Approved</span>"; ?> &nbsp<?php
                                                         
-                                                             echo "<span class='label label-warning'>Approved</span>"; ?> &nbsp<?php
-                                                    } 
-      
-                                                    }else{
-                                                               echo "<span class='label label-default'>Waiting</span>"; ?> &nbsp
+
+                                                      }else{
+
+                                                          echo "<span class='label label-default'>Waiting</span>"; ?> &nbsp
 
 
-                                                    <?php                if(strtotime($Scheddate) < strtotime($Currentdate))
-                                                                {
-                                                                    echo "<span class='label label-danger'>Due</span>"; 
-                                                                }  
+                                                          <?php    
 
-                                                 } ?>
+                                                            $Scheddate = date('Y-m-d',strtotime($Scheddate)).' 23:00:00';
 
-                                                
-                                   
+                                                          if(strtotime($Currentdate) >= strtotime( $Scheddate ))
+                                                          {
+                                                              echo "<span class='label label-danger'>Due</span>"; 
+                                                          } 
+                                                            
+                                                           
+                                                  } ?>
                                         </td>
 
                                         <td class="text-center">

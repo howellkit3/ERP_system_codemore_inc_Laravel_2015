@@ -68,10 +68,63 @@
     
     jQuery(document).ready(function(){
         
-       setTimeout(function (){
-            location.reload();
-        }, 1000); 
+       // setTimeout(function (){
+       //      location.reload();
+       //  }, 1000); 
 
-    
-  
+    })
+
+    function searchRequest(searchInput) {
+
+        $this = $('.searchRequest');
+
+        var searchInput = $('.searchRequest').val();
+
+        if(searchInput != ''){
+
+            $('.requestFields').hide();
+            $('.searchAppend').show();
+            //alert('hide');
+
+        }else{
+            $('.requestFields').show();
+            $('.searchAppend').hide();
+            //alert('show');
+        }
+        
+        $.ajax({
+            type: "GET",
+            url: serverPath + "ware_house/warehouse_requests/searchRequest/"+searchInput,
+            dataType: "html",
+            success: function(data) {
+
+                //alert(data);
+
+                if(data){
+
+                    $('.searchAppend').html(data);
+
+                } 
+                if (data.length < 5 ) {
+
+                    $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
+                     
+                }
+                
+            }
+        });
+    }
+
+        var timeout;
+
+        $('.searchRequest').keypress(function() {
+
+            if(timeout) {
+                clearTimeout(timeout);
+                timeout = null;
+            }
+
+            timeout = setTimeout(searchRequest,600)
+        })
+
 </script>
