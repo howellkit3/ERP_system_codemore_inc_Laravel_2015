@@ -2707,21 +2707,19 @@ class SalaryComputationComponent extends Component
 
 				foreach ($sorted as $sortedKey => $emp) {
 
-					
 						$empData[$sortedKey]['employee_id'] = $sortedKey;
 
 						foreach ($emp as $empKey => $salary) {
 
-
 						if ($type == 'sss') {
 
-							if ($salary['SalaryReport']['salary_type'] == 'first') {
+							if ($salary['SssReport']['sched'] == 'first') {
 								$empData[$sortedKey]['SSS']['first_half'] = $salary['SalaryReport']['sss_employees'];
 								$empData[$sortedKey]['SSS']['first_half_employer'] = $salary['SalaryReport']['sss_employers'];
 								$empData[$sortedKey]['SSS']['number'] = $salary['SSS']['value'];
 								$empData[$sortedKey]['SSS']['first_half_compensation'] = $salary['SalaryReport']['sss_employers'];
 							}
-							if ($salary['SalaryReport']['salary_type'] == 'second') {
+							if ($salary['SssReport']['sched'] == 'second') {
 								$empData[$sortedKey]['SSS']['second_half'] = $salary['SalaryReport']['sss_employees'];
 								$empData[$sortedKey]['SSS']['second_half_employer'] = $salary['SalaryReport']['sss_employers'];
 								$empData[$sortedKey]['SSS']['number'] = $salary['SSS']['value'];

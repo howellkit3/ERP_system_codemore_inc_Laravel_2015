@@ -50,8 +50,9 @@ class SssReport extends AppModel {
         $reportIds = array();
 
         pr($data);
-    
 
+        exit();
+        
         if (!empty($data)) {
             
             foreach ($data as $key => $list) {
@@ -63,13 +64,11 @@ class SssReport extends AppModel {
                 $report['compensation'] = !empty($list['sss_compensation']) ? $list['sss_compensation'] : '';
 
                 $report['from'] =  $list['from'];
-
                 $report['to'] = $list['to'];
+                $report['sched'] = $list['sched'];
 
                 $report['created_by'] = !empty($auth['id']) ? $auth['id'] : '';
-
                 $report['modified_by'] = !empty($auth['id']) ? $auth['id'] : '';
-
                 $report['payroll_id'] = !empty($payroll_id) ? $payroll_id : '';
 
                 if ($this->save($report)) {
