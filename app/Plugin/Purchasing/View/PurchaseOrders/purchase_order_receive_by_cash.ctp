@@ -35,6 +35,7 @@
                             <tr>
                                <!--  <th>Purchase Order No</th> -->
                                 <th>Receive No.</th>
+                                <th>Request No.</th>
                                 <th>Supplier</th>
                                 <th>Prepared by</th>
                                 <th>Received by</th>

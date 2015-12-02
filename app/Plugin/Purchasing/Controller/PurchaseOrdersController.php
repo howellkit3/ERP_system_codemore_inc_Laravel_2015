@@ -653,6 +653,8 @@ class PurchaseOrdersController extends PurchasingAppController {
 
 		$this->loadModel('User');
 
+		$this->PurchaseOrder->bind(array('Request'));
+
 		if($status == 1){
 
 			$this->loadModel('Supplier');
@@ -664,13 +666,16 @@ class PurchaseOrdersController extends PurchasingAppController {
 			$params =  array(
 		            'conditions' => $conditions,
 		            'limit' => $limit,
-		            //'fields' => array('id', 'status','created'),
+		            'fields' => array('PurchaseOrder.id', 'PurchaseOrder.status','PurchaseOrder.created','Request.uuid',
+		            	'PurchaseOrder.po_number', 'PurchaseOrder.supplier_id','PurchaseOrder.created_by','PurchaseOrder.status'),
 		            'order' => 'PurchaseOrder.created DESC',
 		    );
 
 			$this->paginate = $params;
 
 			$purchaseOrderData = $this->paginate('PurchaseOrder');
+
+			//pr($purchaseOrderData); exit;
 
 	    	$supplierData = $this->Supplier->find('list', array(
 															'fields' => array('Supplier.id', 'Supplier.name'),
@@ -696,7 +701,8 @@ class PurchaseOrdersController extends PurchasingAppController {
 			$params =  array(
 		            'conditions' => $conditions,
 		            'limit' => $limit,
-		            //'fields' => array('id', 'status','created'),
+		            'fields' => array('PurchaseOrder.id', 'PurchaseOrder.status','PurchaseOrder.created','Request.uuid',
+		            	'PurchaseOrder.po_number', 'PurchaseOrder.supplier_id','PurchaseOrder.created_by','PurchaseOrder.status'),
 		            'order' => 'PurchaseOrder.created DESC',
 		    );
 
@@ -724,10 +730,12 @@ class PurchaseOrdersController extends PurchasingAppController {
 			$limit = 10;
 
 			$conditions = array('NOT' => array('PurchaseOrder.status' => 5), 'PurchaseOrder.status' => 11);
+
 			$params =  array(
 		            'conditions' => $conditions,
 		            'limit' => $limit,
-		            //'fields' => array('id', 'status','created'),
+		            'fields' => array('PurchaseOrder.id', 'PurchaseOrder.status','PurchaseOrder.created','Request.uuid',
+		            	'PurchaseOrder.po_number', 'PurchaseOrder.supplier_id','PurchaseOrder.created_by','PurchaseOrder.status'),
 		            'order' => 'PurchaseOrder.created DESC',
 		    );
 
