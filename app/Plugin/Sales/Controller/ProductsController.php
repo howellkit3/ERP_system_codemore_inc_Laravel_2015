@@ -1105,7 +1105,10 @@ class ProductsController extends SalesAppController {
     	$this->loadModel('Ticket.Jobticket');
 
     	$userData = $this->Session->read('Auth');
- 
+ 			
+
+    	$this->loadModel('Sales.ProductSpecification');
+
     	$this->loadModel('Sales.ProductSpecificationDetail');
 
     	$this->loadModel('Sales.ProductSpecificationMainPanel');
@@ -1142,7 +1145,7 @@ class ProductsController extends SalesAppController {
     	 
     	$this->request->data['Product']['id'] = $productId;
 
-    	$specId = $this->Product->ProductSpecification->saveSpecEdit($this->request->data,$userData['User']['id']);
+    	$specId = $this->ProductSpecification->saveSpecEdit($this->request->data,$userData['User']['id']);
 
 		$componentArray = array();
 
