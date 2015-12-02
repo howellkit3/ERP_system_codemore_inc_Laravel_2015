@@ -1462,7 +1462,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->ClientOrderDeliverySchedule->recursive = 1;
 
-        $limit = 2000;
+        $limit = 10;
 
         $conditions = "";
         $this->paginate = array(
