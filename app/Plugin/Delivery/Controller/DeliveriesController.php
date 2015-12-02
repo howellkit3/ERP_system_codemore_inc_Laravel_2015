@@ -1484,6 +1484,7 @@ class DeliveriesController extends DeliveryAppController {
                 'QuotationDetail.quotation_id'),
             'order' => 'ClientOrder.id DESC',
         );
+        
 
         $clientsOrder = $this->paginate('ClientOrderDeliverySchedule');
 
