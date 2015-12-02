@@ -144,7 +144,7 @@ echo $this->element('ware_house_option');?>
                                                     <span class="help-block" style= "color:white"> &nbsp </span>
                                             </div>
 
-                                            <label for="inputPassword1" class="col-lg-1 control-label"> <span style="color:red">*</span> Length </label>
+                                            <label for="inputPassword1" class="col-lg-1 control-label"> Length </label>
                                                  
                                             <div class="col-lg-1"> 
 

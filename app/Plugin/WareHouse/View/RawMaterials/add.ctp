@@ -126,14 +126,14 @@
                                                         ?>
                                                     <span class="help-block" style= "color:white"> &nbsp </span>
                                             </div>
-                                            <label for="inputPassword1" class="col-lg-1 control-label"> <span style="color:red">*</span> Length </label>
+                                            <label for="inputPassword1" class="col-lg-1 control-label">Length </label>
                                                  
                                             <div class="col-lg-1"> 
 
                                                      <?php //$items = array( 'rolls' => 'Rolls', 'sheets' => 'Sheets');
 
                                                         echo $this->Form->input('ItemSpec.0.length', array(
-                                                                                    'class' => 'form-control required',
+                                                                                    'class' => 'form-control',
                                                                                     'alt' => 'type',
                                                                                     'label' => false,
                                                                                     'type' => 'number',
