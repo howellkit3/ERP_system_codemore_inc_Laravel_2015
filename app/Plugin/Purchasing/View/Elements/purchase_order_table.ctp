@@ -3,18 +3,18 @@
 
         <tr class="">
 
-            <!-- <td class="">
-                <?php echo ucfirst($purchaseOrderDataList['PurchaseOrder']['uuid']) ?>  
-            </td> -->
-
             <td class="">
-
-                <?php echo ucfirst($purchaseOrderDataList['PurchaseOrder']['po_number']) ?>
-
+                PUO-<?php echo ucfirst($purchaseOrderDataList['PurchaseOrder']['po_number']) ?>
             </td>
 
             <td class="">
-                <?php echo ucfirst($supplierData[$purchaseOrderDataList['PurchaseOrder']['supplier_id']]) ?>
+                PR-<?php echo ucfirst($purchaseOrderDataList['Request']['uuid']) ?>
+            </td>
+
+            <td class="">
+                
+                <?php echo ucfirst(substr($supplierData[$purchaseOrderDataList['PurchaseOrder']['supplier_id']],0,20)) ?>..
+
             </td>
 
             <td class="">
