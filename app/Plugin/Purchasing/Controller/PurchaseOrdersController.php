@@ -651,11 +651,11 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     public function index_status($status = null) {
 
-    	$this->loadModel('Supplier');
-
 		$this->loadModel('User');
 
 		if($status == 1){
+
+			$this->loadModel('Supplier');
 
 			$limit = 10;
 
@@ -687,6 +687,8 @@ class PurchaseOrdersController extends PurchasingAppController {
 
 		if($status == 2){
 
+			$this->loadModel('Supplier');
+
 			$limit = 10;
 
 			$conditions = array('NOT' => array('PurchaseOrder.status' => 5), 'PurchaseOrder.status' => 1);
@@ -717,6 +719,8 @@ class PurchaseOrdersController extends PurchasingAppController {
 
 		if($status == 3){
 
+			$this->loadModel('Supplier');
+
 			$limit = 10;
 
 			$conditions = array('NOT' => array('PurchaseOrder.status' => 5), 'PurchaseOrder.status' => 11);
@@ -741,6 +745,33 @@ class PurchaseOrdersController extends PurchasingAppController {
 			$this->set(compact('purchaseOrderData','supplierData', 'userName'));
 
 			$this->render('purchase_order_received');
+
+		}
+
+		if($status == 4){
+
+
+			$limit = 10;
+
+			$conditions = array('NOT' => array('PurchaseOrder.status' => 5), 'PurchaseOrder.status' => 12);
+			$params =  array(
+		            'conditions' => $conditions,
+		            'limit' => $limit,
+		            //'fields' => array('id', 'status','created'),
+		            'order' => 'PurchaseOrder.created DESC',
+		    );
+
+			$this->paginate = $params;
+
+			$purchaseOrderData = $this->paginate('PurchaseOrder');
+
+
+	    	$userName = $this->User->find('list', array('fields' => array('id', 'fullname')
+																));
+
+			$this->set(compact('purchaseOrderData','supplierData', 'userName'));
+
+			$this->render('purchase_order_receive_by_cash');
 
 		}
 

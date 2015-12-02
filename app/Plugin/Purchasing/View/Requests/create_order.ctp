@@ -6,6 +6,14 @@
 <?php  echo $this->Html->script('Purchasing.category_purchase');?>
 <?php  echo $this->Html->script('Purchasing.modal_clone');?>
 
+<style>
+
+.bycash {
+    display: none;
+} 
+
+</style>
+
 <div style="clear:both"></div>
 
 <?php echo $this->element('purchasings_option'); ?><br><br>
@@ -51,7 +59,51 @@
 							<div class="main-box-body clearfix">
 								<div class="form-horizontal">
 
-									<?php if(empty($bycash)){ ?>
+									<?php if(!empty($bycash)){ ?>
+
+									<div class="form-group">
+		                                	<label class="col-lg-2 control-label">Supplier</label>
+											<div class="col-lg-8">
+												
+					                            <?php echo $this->Form->input('PurchaseOrder.supplier', array(
+						                                'class' => 'form-control', 
+                                    					'label' => false,
+                                    					'placeholder' => 'Supplier Name'
+						                                 )); 
+
+						                            ?>
+											</div>
+										</div>
+
+										<div class="form-group">
+		                                	<label class="col-lg-2 control-label">Contact Number</label>
+											<div class="col-lg-8">
+												
+					                            <?php echo $this->Form->input('PurchaseOrder.contact', array(
+						                                'class' => 'form-control ', 
+                                    					'label' => false,
+                                    					'placeholder' => 'Contact Number'
+						                                 )); 
+
+						                            ?>
+											</div>
+										</div>
+
+										<div class="form-group">
+		                                	<label class="col-lg-2 control-label">Contact Person</label>
+											<div class="col-lg-8">
+												
+					                            <?php echo $this->Form->input('PurchaseOrder.contact_person', array(
+						                                'class' => 'form-control ', 
+                                    					'label' => false,
+                                    					'placeholder' => 'Contact Person'
+						                                 )); 
+
+						                            ?>
+											</div>
+										</div>
+
+									<?php }else{ ?>
 
 									<div class="form-group">
 	                                	<label class="col-lg-2 control-label">Purchase Order Name</label>
@@ -65,8 +117,6 @@
 	                                        ?>
 										</div>
 									</div>
-
-									<?php } ?>
 									
 									<div class="form-group">
 	                                	<label class="col-lg-2 control-label"><span style="color:red">*</span>Supplier</label>
@@ -115,7 +165,7 @@
 					                            ?>
 										</div>
 									</div>
-
+									<?php } ?>
 									<?php if(empty($bycash)){ ?>
 
 										<div class="form-group">
@@ -192,14 +242,46 @@
 					                                'options' => array($paymentTermData),
 					                                'type' => 'select',
 					                                'label' => false,
-					                                'class' => 'form-control required ',
+					                                'class' => 'form-control required paymentTerm',
 					                                'value' => !empty($bycash) ? 12 : "" , 
 					                                'empty' => '---Select Payment Term---'
 					                                 )); 
 
 					                            ?>
+
+					                            <?php echo $this->Form->input('PurchaseOrder.prepared_by', array(
+					                                'label' => false,
+					                                'type' => 'hidden',
+					                                'class' => 'form-control required preparedby',
+					                                'value' => $requestData['Request']['prepared_by'] 
+					                                 )); 
+
+					                            ?>
 										</div>
 									</div>
+
+									<section class = "bycash">
+
+										<div class="form-group">
+		                                	<label class="col-lg-2 control-label"><span style="color:red">*</span>Received By</label>
+											<div class="col-lg-8">
+												
+					                            <?php echo $this->Form->input('PurchaseOrder.question', array(
+						                                'options' => array('Warehouse', 'Requestor'),
+						                                'type' => 'select',
+						                                'label' => false,
+						                                'class' => 'form-control required receivedBy',
+						                                'empty' => '---Select Receiver---'
+						                                 )); 
+
+						                            ?>
+											</div>
+										</div>
+
+										<section class = "append">
+										</section>
+
+									</section>
 
 									<div class="form-group">
 	                                    	<label class="col-lg-2 control-label"><span style="color:red">*</span>Delivery/Received Date</label>
@@ -769,7 +851,6 @@
 	        	$(this).parents('.item-category').find( ".other-element" ).prop( "disabled", false );
            		$(this).parents('.item-category').find( ".roll-element" ).prop( "disabled", true );
 
-
 	       }
 
         });
@@ -783,7 +864,64 @@
 		$('.datepick').datepicker({
 			format: 'yyyy-mm-dd'
 		});
+
+		paymentCash();
+
 	});
+
+	$('.receivedBy').change(function(){
+
+		var receivedBy = $('.receivedBy').val();
+
+		var preparedby = $('.preparedby').val();
+		
+		if(receivedBy == 1){
+
+			$('.append').show();
+
+			$.ajax({
+	            type: "GET",
+	            url: serverPath + "purchasing/requests/receivedBy/"+preparedby,
+	            dataType: "html",
+	            success: function(data) {
+
+	                if(data){
+
+	                    $('.append').html(data);
+
+	                } 
+	            }
+	        });
+
+    	}else{
+
+    		$('.append').hide();
+
+    	}
+
+	});
+
+	$('.paymentTerm').change(function(){
+
+		paymentCash();
+
+	});
+
+	function paymentCash(whatsection, thisElement){
+
+	    var paymentTerm = $('.paymentTerm').val();
+
+		if(paymentTerm == 12){
+
+			$('.bycash').show();
+
+		}else{
+
+			$('.bycash').hide();
+		}
+
+	} 
+
 	// generate PO number
 	$('.generate-poNumber').change(function(){
 
@@ -793,7 +931,6 @@
 		var hour = currentTime.getHours()
 		var minute = currentTime.getMinutes()
 		var seconds = currentTime.getSeconds()
-
 
 		//alert(month); 
 		var uuid = $('.po_number').val();
