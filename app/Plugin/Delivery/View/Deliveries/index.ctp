@@ -56,12 +56,12 @@
 
 <script>
 
-    $("body").on('keyup','.searchOrder', function(e){
+    function searchOrder(searchInput) {
 
-        var searchInput = $(this).val();
-    
-        
-        //alert(searchInput);
+        $this = $('.searchOrder');
+
+        var searchInput = $('.searchOrder').val();
+
         if(searchInput != ''){
 
             $('.OrderFields').hide();
@@ -95,10 +95,23 @@
                 
             }
         });
+    }
 
-    });
+    var timeout;
 
-     function selectStatus(deliveryStatus) {
+    $('.searchOrder').keypress(function() {
+
+
+        if(timeout) {
+            clearTimeout(timeout);
+            timeout = null;
+        }
+
+        timeout = setTimeout(searchOrder,600)
+    })
+
+
+    function selectStatus(deliveryStatus) {
 
         $.ajax({
             type: "GET",
