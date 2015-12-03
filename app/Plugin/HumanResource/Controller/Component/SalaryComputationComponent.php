@@ -103,6 +103,8 @@ class SalaryComputationComponent extends Component
 						$salary[$key]['philhealth'] = 0;
 						$salary[$key]['pagibig'] =  0;
 
+						$salary[$key]['sched'] =  $pay_sched;
+
 						$salary[$key]['TaxHistory'] = array();
 						$salary[$key]['ContributionBalance'] = array();
 
@@ -268,25 +270,28 @@ class SalaryComputationComponent extends Component
 						
 						$salary[$key]['Salary']	= !empty($employee['Salary']) ? $employee['Salary'] : array();
 
-					// pr($salary);
         		}
-
 
 				return $salary;
 			}
     }
 
-    public function is_date( $str ){ 
-	    $stamp = strtotime( $str ); 
-	    if (!is_numeric($stamp)) 
-	        return FALSE; 
-	    $month = date( 'm', $stamp ); 
-	    $day   = date( 'd', $stamp ); 
-	    $year  = date( 'Y', $stamp ); 
-	    if (checkdate($month, $day, $year)) 
-	        return TRUE; 
-	    return FALSE; 
-}
+	public function is_date( $str ) { 
+		
+		$stamp = strtotime( $str ); 
+
+		if (!is_numeric($stamp)) 
+		    return FALSE; 
+
+		$month = date( 'm', $stamp ); 
+		$day   = date( 'd', $stamp ); 
+		$year  = date( 'Y', $stamp ); 
+		
+		if (checkdate($month, $day, $year)) 
+		   return TRUE; 
+
+		return FALSE; 
+	}
 
     private function workingDays($date = null) {
 
@@ -302,7 +307,7 @@ class SalaryComputationComponent extends Component
 
 			$working_days = 0;
 			
-			for($i=0; $i<=$interval->d; $i++){
+			for($i=0; $i <= $interval->d; $i++) {
 					$modif = $datetime1->modify('+1 day');
 					$weekday = $datetime1->format('w');
 
@@ -2426,10 +2431,15 @@ class SalaryComputationComponent extends Component
 							$empData[$sortedKey]['Employee'] = $salary['Employee'];
 
 							if ($salary['SalaryReport']['salary_type'] == 'first') {
+								
 								$empData[$sortedKey]['first_half'] = $salary['SalaryReport']['total_pay'];
+							
 							}
+
 							if ($salary['SalaryReport']['salary_type'] == 'second') {
+							
 								$empData[$sortedKey]['second_half'] = $salary['SalaryReport']['total_pay'];
+							
 							}
 							
 						}				
@@ -2636,6 +2646,7 @@ class SalaryComputationComponent extends Component
 						$range = $taxes['Tax']['taxes_'.$i];
 						$taxKey = $i;
 					}
+
 					
 				}
 
@@ -2653,10 +2664,11 @@ class SalaryComputationComponent extends Component
 
 				}
 
+
 			}
 
-		}
 
+		}
 		return $total_tax;
 
 	}
@@ -2698,43 +2710,45 @@ class SalaryComputationComponent extends Component
 				//sort by employee_id
 				$sorted = array();
 
+
 				foreach($data as $key => $item)
 				{
-					$sorted[$item['SalaryReport']['employee_id']][$key] = $item;
+					$sorted[$item['SssReport']['employee_id']][$key] = $item;
 				}
 
 				ksort($sorted, SORT_NUMERIC);
 
 				foreach ($sorted as $sortedKey => $emp) {
 
-						$empData[$sortedKey]['employee_id'] = $sortedKey;
+						$empData[$sortedKey]['Employee']['employee_id'] = $sortedKey;
 
 						foreach ($emp as $empKey => $salary) {
 
 						if ($type == 'sss') {
 
 							if ($salary['SssReport']['sched'] == 'first') {
-								$empData[$sortedKey]['SSS']['first_half'] = $salary['SalaryReport']['sss_employees'];
-								$empData[$sortedKey]['SSS']['first_half_employer'] = $salary['SalaryReport']['sss_employers'];
-								$empData[$sortedKey]['SSS']['number'] = $salary['SSS']['value'];
-								$empData[$sortedKey]['SSS']['first_half_compensation'] = $salary['SalaryReport']['sss_employers'];
+								$empData[$sortedKey]['SSS']['first_half'] = $salary['SssReport']['employee'];
+								$empData[$sortedKey]['SSS']['first_half_employer'] = $salary['SssReport']['employer'];
+								//$empData[$sortedKey]['SSS']['number'] = $salary['SSS']['value'];
+								$empData[$sortedKey]['SSS']['first_half_compensation'] = $salary['SssReport']['compensation'];
 							}
 							if ($salary['SssReport']['sched'] == 'second') {
-								$empData[$sortedKey]['SSS']['second_half'] = $salary['SalaryReport']['sss_employees'];
-								$empData[$sortedKey]['SSS']['second_half_employer'] = $salary['SalaryReport']['sss_employers'];
-								$empData[$sortedKey]['SSS']['number'] = $salary['SSS']['value'];
-								$empData[$sortedKey]['SSS']['second_half_compensation'] = $salary['SalaryReport']['sss_compensation'];
+								$empData[$sortedKey]['SSS']['second_half'] = $salary['SssReport']['employee'];
+								$empData[$sortedKey]['SSS']['second_half_employer'] = $salary['SssReport']['employer'];
+								//$empData[$sortedKey]['SSS']['number'] = $salary['SSS']['value'];
+								$empData[$sortedKey]['SSS']['second_half_compensation'] = $salary['SssReport']['compensation'];
 							}
 							
+
+
+
 						}
 
-							$empData[$sortedKey]['Employee'] = $salary['Employee'];
+						$empData[$sortedKey]['Employee'] = $salary['Employee'];
 
 							
 						}				
 				}
-
-
 				return $empData;
 			
 			}

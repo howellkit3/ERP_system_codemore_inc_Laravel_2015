@@ -1354,22 +1354,33 @@ class SalariesController  extends HumanResourceAppController {
 
 			$date = explode('-',$query['month']);
 
-			$from = date('Y-m-01',strtotime(trim($date[1]).'-'.$date[0].'-01'));
+			$from = date('Y-m-01',strtotime(trim($date[1]).'-'.$date[0].'-01')).' 00:00:00';
 
-			$to = date('Y-m-t',strtotime(trim($date[1]).'-'.$date[0].'-01'));
+			$to = date('Y-m-t',strtotime(trim($date[1]).'-'.$date[0].'-01')).' 00:00:00';
 
+
+			//pr($from);
 		}
 
 		$conditions = array_merge($conditions,array(
 			'date(SssReport.from) BETWEEN ? AND ?' => array($from,$to), 
 		));
 
+		
 
-		//$this->SalaryReport->bind(array('Employee','SSS'));
+		$this->SssReport->bind(array('Employee','SSS'));
 
 		$reports = $this->SssReport->find('all',array(
 			'conditions' => $conditions
 		));
+
+		// $conditions = 'WHERE SssReport.from BETWEEN '.$from.' AND '.$to.'';
+
+		// $reports = $this->SssReport->query("
+  //       SELECT * FROM koufu_payrolls.sss_reports AS SssReport 
+  //       ". $conditions ." 
+  //       ");
+
 		
 		$statuses = $this->Status->getAllStatus();
 
