@@ -590,7 +590,7 @@ echo $this->element('payroll_options');
 														                       		<?php 
 
 														                       			//sunday ctpa per day
-															                       		 echo !empty($salary['sss']) ? number_format($salary['sss'],2) : '';
+															                       		 echo !empty($salary['sss']) ? number_format($salary['sss'],2) : '0';
 
 														                       		 ?>
 														                       	</td>

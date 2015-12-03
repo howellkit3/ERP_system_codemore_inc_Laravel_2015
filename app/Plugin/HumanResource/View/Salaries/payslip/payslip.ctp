@@ -52,7 +52,7 @@ $sectionSettings = array(
 'marginRight' => 150,
 'marginBottom ' => 0,
 // 'colsNum' => 2,
-'pageSizeW' => '4000',
+'pageSizeW' => '4500',
 'pageSizeH' => '8000',
 
 );
@@ -315,6 +315,7 @@ $deduct = $table->addCell(2000);
 
 $deductAmounts = $table->addCell(2000);
 
+$total_deductions = 0;
 
 foreach ($deductions as $deduction_key => $list) {
 
@@ -322,7 +323,7 @@ foreach ($deductions as $deduction_key => $list) {
 	
 	$index = str_replace(' ','_',strtolower($list['Loan']['name']));
 	$amount = !empty($salary[$index]) ? number_format($salary[$index],2) : '0.00';
-
+	$total_deductions += $amount;
 	$deductAmounts->addText($amount,$fontStyle,$paragraphStyle);
 }
 
@@ -338,12 +339,17 @@ $deduct->addText('PhilHealth',$fontStyle,$paragraphStyle);
 $deduct->addText('Pag-ibig',$fontStyle,$paragraphStyle);
 $deduct->addText('WTax',$fontStyle,$paragraphStyle);
 
-//dedcut amount
+//deduct amount
+
+// $deductAmounts->addText($total_deductions,$fontStyle,$paragraphStyle);
+
 $deductAmounts->addText('',$fontStyle,$paragraphStyle);
 $deductAmounts->addText($sss,$fontStyle,$paragraphStyle);
 $deductAmounts->addText($philhealth,$fontStyle,$paragraphStyle);
 $deductAmounts->addText($pagibig,$fontStyle,$paragraphStyle);
 $deductAmounts->addText($wtax,$fontStyle,$paragraphStyle);
+
+
 
 // $objWriter = PHPWord_IOFactory::createWriter($PHPWord, 'Word2007');
 // $objWriter->save('AdvancedTable.docx');
