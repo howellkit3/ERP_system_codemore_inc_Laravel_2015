@@ -38,9 +38,7 @@
                                 <input placeholder="Date Filter" name="from_date" data="1" type="text" class="form-control myDateRange datepickerDateRange" id="datepickerDateRange" >
                             </div>
                         </div>
-
-                        <button type="button" class="clear-date btn btn-success pull-left" ><i class="fa fa-eraser fa-lg"></i> Clear</button>
-
+                    
                         <div class="form-group col-md-3 pull-left">
                             <div class="input-group">
 
@@ -49,11 +47,13 @@
                                 'options' => $companyData,  
                                 'label' => false,
                                 'class' => 'form-control company-filter',
-                                'empty' => '---Select Category---'
+                                'empty' => '---Select Customer---'
                                  )); 
                         ?>
                             </div>
                         </div>
+
+                        <button type="button" class="clear-date btn btn-success pull-left" ><i class="fa fa-eraser fa-lg"></i> Clear</button>
 
                     <?php echo $this->Form->end(); ?>
 
