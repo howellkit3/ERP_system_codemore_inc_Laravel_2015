@@ -18,10 +18,9 @@ echo $this->Html->script(array(
 
 echo $this->element('payroll_options');
 
-	$active_tab = 'sss_table';
- ?>
+$active_tab = 'sss_table';
 
-<?php if(!empty($contracts)) : ?>
+if(!empty($contracts)) : ?>
 <div class="alert alert-block alert-danger fade in">
 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 <h4>Warning! There's some employees which is under end of contract!</h4>
@@ -210,8 +209,7 @@ endif;
 
             		<!-- 	<header class="main-box-header clearfix">
 			                <h2 class="pull-left"><b>Employee</b> </h2>
-            			</header>
- -->
+            			</header> -->
 		<div class="main-box-body clearfix">
 			            	<div id="result-table">
 			            		  <div class="table-responsive overflow">
@@ -292,6 +290,7 @@ endif;
 											<?php echo $this->Form->create('Payroll',array('url' => array('controller' => 'salaries','action' => 'process_payroll_save') ));  ?>
 
 											<?php echo $this->Form->input('payroll_id',array('type' => 'hidden','value' => $payroll['Payroll']['id'] )); ?>
+											<?php echo $this->Form->input('department_id',array('type' => 'hidden','value' => $departmentId)); ?>
 												<table class="table table-bordered table-hover" style="margin:0px;">
 													<thead>
 													<tr>

@@ -21,20 +21,6 @@
                      	<?php echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'employees', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
                    		?>
                     </div>
-                  <!--   <div class="form-group pull-right" style="margin-right:10px;">
-                    	
-                    	<?php echo $this->Html->link('<i class="fa fa-pencil fa-lg"></i> Edit Information', array('controller' => 'employees', 'action' => 'edit',$employee['Employee']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
-						?>
-
-                    </div>
-
-                    <div class="form-group pull-right" style="margin-right:10px;">
-                    	
-                    	<?php echo $this->Html->link('<i class="fa fa-money fa-lg"></i> Salary Settings', array('controller' => 'salaries', 'action' => 'employee_settings',$employee['Employee']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
-						?>
-
-                    </div> -->
-
                 </header>
 			</div>
         </div>

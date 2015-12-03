@@ -1306,6 +1306,8 @@ class SalariesController  extends HumanResourceAppController {
 
 		$employees =  $this->paginate('Employee');
 
+		pr($employees);
+
 		$status = $this->Status->getAllStatus();
 
 		$this->set(compact('date','employees','status'));
@@ -1334,6 +1336,8 @@ class SalariesController  extends HumanResourceAppController {
 
 		$this->loadModel('Payroll.SalaryReport');
 
+		$this->loadModel('Payroll.SssReport');
+
 		$this->render('Salaries/ajax/sss_contibution');
 
 		$query = $this->request->query;
@@ -1357,17 +1361,16 @@ class SalariesController  extends HumanResourceAppController {
 		}
 
 		$conditions = array_merge($conditions,array(
-			'date(SalaryReport.from) BETWEEN ? AND ?' => array($from,$to), 
+			'date(SssReport.from) BETWEEN ? AND ?' => array($from,$to), 
 		));
 
 
-		$this->SalaryReport->bind(array('Employee','SSS'));
+		//$this->SalaryReport->bind(array('Employee','SSS'));
 
-		$reports = $this->SalaryReport->find('all',array(
+		$reports = $this->SssReport->find('all',array(
 			'conditions' => $conditions
 		));
-
-
+		
 		$statuses = $this->Status->getAllStatus();
 
 		$employees = $this->SalaryComputation->getMonlyContibution($reports,'sss');
@@ -1717,12 +1720,22 @@ class SalariesController  extends HumanResourceAppController {
 			/* if( $this->process_payroll($data['Payroll']['payroll_id'],$data['Payroll']['emp'])) {
 
 			} */
+			//unset($data['Payroll']['emp']);
+		//	pr($data); exit();
 
 			$payrollData = array();
 
 			$payroll = $this->Payroll->findById($data['Payroll']['payroll_id']);
 
 			$payrollData['Payroll']['id'] = $data['Payroll']['payroll_id'];
+
+			if (empty($data['Payroll']['emp'])) {
+
+				$this->Session->setFlash('There\'s an error processing the data');
+
+				$departmentId = !empty($this->request->data['Payroll']['department_id']) ? $this->request->data['Payroll']['department_id'] : '';
+				$this->redirect(array('controller' => 'salaries', 'action' => 'employee_select','payroll' => 1,$data['Payroll']['payroll_id'],$departmentId));
+			}
 
 			$payrollData['Payroll']['employeeIds'] = json_encode($data['Payroll']['emp']);
 
@@ -1755,7 +1768,6 @@ class SalariesController  extends HumanResourceAppController {
 
 		if (!empty($id)) {
 
-	
 			$payroll = $this->Payroll->findById($id);
 
 			//find employee by date
@@ -1781,7 +1793,7 @@ class SalariesController  extends HumanResourceAppController {
 			//check employee contract
 			$contracts = $this->Employee->checkContract($employees);
 
-			$this->set(compact('employees','payroll','contracts','id'));
+			$this->set(compact('employees','payroll','contracts','id','departmentId'));
 
 		}
 	}
@@ -1905,7 +1917,6 @@ class SalariesController  extends HumanResourceAppController {
 			
 			}
 
-			
 		}
 
 		$this->set(compact('salaries','payroll','pages','salarySplit','salariesList','deductions','departments'));
@@ -1935,6 +1946,8 @@ class SalariesController  extends HumanResourceAppController {
 			$this->loadModel('Payroll.SalaryReport');
 
 			$this->loadModel('Payroll.SssReport');
+
+			$this->loadModel('Payroll.ContributionBalance');
 
 			$this->loadModel('Payroll.PhilHealthReport');
 
@@ -1990,13 +2003,14 @@ class SalariesController  extends HumanResourceAppController {
 					if( $this->SalaryReport->createMultipleReport($salaries,$auth) ) {
 
 
-						$this->TaxHistory->saveHistory($salaries,$auth);
-
-						exit();
-
+						$save = $this->TaxHistory->saveHistory($salaries,$auth);
+						
 						$save = $this->SssReport->saveReport($salaries,$id,$auth);
 
 						$save = $this->PhilHealthReport->saveReport($salaries,$id,$auth);
+
+						//save contribution balance
+						$this->ContributionBalance->saveBalance($salaries,$auth,$id);
 
 						$payroll['Payroll']['status'] = 'process';
 
@@ -2174,10 +2188,10 @@ class SalariesController  extends HumanResourceAppController {
 					$this->loadModel('Payroll.Amortization');			
 					$this->loadModel('Payroll.OvertimeRate');
 					$this->loadModel('Payroll.Contribution');
+					$this->loadModel('Payroll.ContributionBalance');
 					$this->loadModel('Payroll.Loan');
 
 					$this->loadModel('Payroll.Adjustment');	
-
 					//taxes tables		
 					$this->loadModel('Payroll.Tax');
 					$this->loadModel('Payroll.TaxDeduction');

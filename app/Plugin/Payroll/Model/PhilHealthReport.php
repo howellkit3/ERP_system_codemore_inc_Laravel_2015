@@ -59,7 +59,7 @@ class PhilHealthReport extends AppModel {
                 $report['employee'] = !empty($list['philhealth']) ? $list['philhealth'] : '';
 
                 $report['created_by'] = !empty($auth['id']) ? $auth['id'] : '';
-
+                
                 $report['modified_by'] = !empty($auth['id']) ? $auth['id'] : '';
 
                 $report['payroll_id'] = !empty($payroll_id) ? $payroll_id : '';
