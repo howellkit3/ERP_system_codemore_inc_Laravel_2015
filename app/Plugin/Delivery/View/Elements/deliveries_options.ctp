@@ -52,6 +52,20 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
            
         </li>
 
+        <li class="dropdown hidden-xs">
+            <?php $page =($active_page == 'deliveries' && $active_action == 'dr_summary') ? 'active tab' : '' ?>
+            <?php echo $this->Html->link("<span class='count'>DR Summary</span>", array(
+                                                                                   'controller' => 'deliveries', 
+                                                                                    'action' => 'dr_summary?'.rand(1000,9999).'='.date("is")
+                                                                                    ),
+                                                                            array(
+                                                                                   'escape' => false,
+                                                                                   'class' => 'btn '.$page.' '.$noPermissionSales 
+                                                                                   )); 
+            ?>
+           
+        </li>
+
          <li class="dropdown hidden-xs">
             <?php $page =($active_page == 'deliveries' && $active_action == 'delivery_transmittal_record') ? 'active tab' : '' ?>
             <?php echo $this->Html->link("<span class='count'>Transmittal Records</span>", array(
