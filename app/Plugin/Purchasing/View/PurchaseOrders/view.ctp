@@ -18,7 +18,15 @@
             echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'purchase_orders', 'action' => 'edit',$purchaseOrderid),array('class' =>'btn btn-primary pull-right','escape' => false));
        }
 
+       if(!empty($bycash)){
+
+        echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print', array('controller' => 'purchase_orders', 'action' => 'print_purchase_order',$purchaseOrderid, 1),array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
+
+       }else{
+
         echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print', array('controller' => 'purchase_orders', 'action' => 'print_purchase_order',$purchaseOrderid),array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
+
+       } 
     ?>
     <br><br>
 </div>
@@ -43,7 +51,7 @@
                             <h1 style = "margin-bottom:0px; margin-top:0px; margin-bottom:30px; padding-top:0px;"><b>PURCHASE ORDER </b></h1>
                             &emsp;&emsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             PO No  : <u><?php echo $purchaseOrderData['PurchaseOrder']['po_number']; ?></u>
-                        
+                         
                     </td>
                 </tr>   
             </table>
@@ -54,7 +62,7 @@
                 
                     <tr>
                         <td align = "left" width = "20%">Supplier </td>
-                        <td align = "left" width = "20%">:<?php echo ucfirst($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]); ?></td>
+                        <td align = "left" width = "20%">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['supplier_id'] : ucfirst($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]); ?></td>
                         <td align = "left" width = "20%"></td>
                         <td align = "left" width = "20%">Date </td>
                         <td align = "left" width = "20%">:<?php echo (new \DateTime())->format('M d, Y') ?>
@@ -63,9 +71,11 @@
             </table>
 
             <table  width = "100%" style="margin-left:2%;" >
-                    <tr>
+                    <tr> 
                         <td align = "left" width = "20%">Contact Person</td>
-                        <td align = "left" width = "20%">:<?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']); ?> <?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
+                        <td align = "left" width = "20%">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_person_id'] : ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']) . " " . ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?>
+
+                        </td>
                         <td align = "left" width = "20%"></td>
                         <td align = "left" width = "20%">Terms </td>
                         <td align = "left" width = "20%">:<?php echo $paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]; ?>   
@@ -78,7 +88,8 @@
             <table  width = "100%"  style="margin-left:2%;">
                     <tr>
                         <td align = "left" width = "20%">Telephone</td>
-                        <td align = "left" width = "20%">:<?php echo !empty($telContactData['Contact']['number']) ? $telContactData['Contact']['number'] : " "; ?></td>
+                        <td align = "left" width = "20%">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_id'] : $telContactData['Contact']['number']; ?></td>
+                        
                         <td align = "left" width = "20%"><?php echo  !empty($faxContactData['Contact']['number']) ? "Fax # :  " .  $faxContactData['Contact']['number'] : " "; ?></td>
                         <td align = "left" width = "20%">Delivery Date:</td>
                         <td align = "left" width = "20%">:<?php echo date('M d, Y', strtotime($purchaseOrderData['PurchaseOrder']['delivery_date'])); ?> 
@@ -102,6 +113,7 @@
                             <th class="text-center">Amount</th>
                         </thead>
                         <?php  $total = 0; foreach ($purchaseItemData as $key => $value) {  $key++ ?>
+
                             <tr>
                                <?php  $dividend = floor($value[$modelTable]['quantity'] / $value[$modelTable]['pieces']);
                                 $difference = $value[$modelTable]['quantity'] - (floor($dividend) * $value[$modelTable]['pieces']);
@@ -136,7 +148,8 @@
                                     ?>
                                 </td>
                             </tr>
-                        <?php } ?>
+
+                        <?php }  ?>
                         <tr>
                             <td> </td>
                             <td class="text-center">------END------</td>

@@ -150,6 +150,17 @@
 											    					));
 											                ?>
 
+											                <?php 
+											                    echo $this->Form->input('RequestItem.'.$key.'.status_id', 
+																				array( 
+																	'class' => 'form-control item_model required ', 
+																	'type' => 'hidden',
+											    					'label' => false,
+											    					'readonly' => 'readonly',
+											    					'value' => $value['RequestItem']['status_id']
+											    					));
+											                ?>
+
 											        	</div>
 
 														<div class="col-lg-4">

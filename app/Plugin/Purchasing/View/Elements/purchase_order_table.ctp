@@ -13,7 +13,7 @@
 
             <td class="">
                 
-                <?php echo ucfirst(substr($supplierData[$purchaseOrderDataList['PurchaseOrder']['supplier_id']],0,20)) ?>..
+                <?php echo !empty($supplierData[$purchaseOrderDataList['PurchaseOrder']['supplier_id']]) ? ucfirst(substr($supplierData[$purchaseOrderDataList['PurchaseOrder']['supplier_id']],0,20)) : $purchaseOrderDataList['PurchaseOrder']['supplier_id']?>..
 
             </td>
 

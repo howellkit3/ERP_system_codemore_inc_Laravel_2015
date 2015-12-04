@@ -49,12 +49,14 @@ class RequestItem extends AppModel {
 		return true;
 	}
 
-	public function saveRequestItemPrice($priceData = null)
+	public function saveRequestItemPrice($priceData = null, $filledNum = null)
 	{
 	 	if(!empty($priceData['RequestItem'])){
 			foreach ($priceData['RequestItem'] as $key => $priceDataValue)
 			{
 				$this->create();
+				$priceDataValue['filed_number'] = $filledNum;
+				$priceDataValue['status_id'] = 1;
 				
 				$this->save($priceDataValue);
 			}

@@ -273,6 +273,15 @@
 											    					'readonly' => 'readonly',
 											    					'value' => $value[$modelTable]['foreign_key']
 											    					));
+
+											                    echo $this->Form->input('PurchasingItem.'.$key.'.status_id', 
+																				array( 
+																	'class' => 'form-control item_id ', 
+																	'type' => 'hidden',
+											    					'label' => false,
+											    					'readonly' => 'readonly',
+											    					'value' => $value[$modelTable]['status_id']
+											    					));
 											                ?>
 
 											                <?php 
