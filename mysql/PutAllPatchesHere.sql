@@ -2565,3 +2565,24 @@ ALTER TABLE `sss_reports`
 ADD COLUMN `from`  datetime NULL AFTER `compensation`,
 ADD COLUMN `to`  datetime NULL AFTER `from`;
 
+/* howell kit added this 12-3-15 koufu purchasing*/
+
+ALTER TABLE `request_items`
+ADD COLUMN `status_id`  INT(11) NULL AFTER `purpose`;
+
+UPDATE `request_items` SET `status_id` = 0 WHERE `status_id` IS NULL;
+
+
+/* howell kit added this 12-4-15 koufu purchasing*/
+
+ALTER TABLE `purchasing_items`
+ADD COLUMN `status_id`  INT(11) NULL AFTER `purpose`;
+
+UPDATE `purchasing_items` SET `status_id` = 0 WHERE `status_id` IS NULL;
+
+ALTER TABLE `purchase_orders`
+ADD COLUMN `received_bycash_number`  INT(11) NULL AFTER `delivery_date`;
+
+ALTER TABLE `request_items`
+ADD COLUMN `received_bycash_number`  INT(11) NULL AFTER `unit_price_unit_id`;
+

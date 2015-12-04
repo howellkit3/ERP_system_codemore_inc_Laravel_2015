@@ -78,8 +78,6 @@
 
     function selectStatus(purchasingStatus) {
 
-
-
         $.ajax({
             type: "GET",
             url: serverPath + "purchasing/purchase_orders/index_status/"+purchasingStatus,

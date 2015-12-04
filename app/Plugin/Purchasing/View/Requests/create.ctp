@@ -144,6 +144,16 @@
 										    					));
 										                ?>
 
+										                <?php 
+										                    echo $this->Form->input('RequestItem.0.status_id', 
+																			array( 
+																'class' => 'form-control item_model required ', 
+																'type' => 'hidden',
+										    					'label' => false,
+										    					'value' => 0
+										    					));
+										                ?>
+
 										        	</div>
 
 													<div class="col-lg-4">

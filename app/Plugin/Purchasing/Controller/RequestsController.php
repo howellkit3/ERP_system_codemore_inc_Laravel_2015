@@ -59,7 +59,6 @@ class RequestsController extends PurchasingAppController {
 
 	 	if ($this->request->is(array('post','put'))) {
 
-
 			$requestUuid = $this->Request->saveRequest($this->request->data['Request'],$userData['User']['id']);
 
 			$this->RequestItem->saveRequestItem($this->request->data ,$requestUuid);
@@ -71,7 +70,6 @@ class RequestsController extends PurchasingAppController {
                      'action' => 'request_list'
     
              ));
-
         }
 
 		$this->set(compact('purchasingTypeData', 'unitData','itemData'));
@@ -459,30 +457,27 @@ class RequestsController extends PurchasingAppController {
 
 		$this->loadModel('CompoundSubstrate');
 
-		//$this->Request->bind(array('Purchase'));
-
-		// $purchaseOrderData = $this->PurchaseOrder->find('all', 'order' => array('PurchaseOrder.created' => 'ASC')
-		// 													);
+		$byCashNum = strtotime(date('h:i:s'));
 
 		$purchaseOrderData = $this->PurchaseOrder->find('first', array('fields' => array('id', 'po_number'),
 															'order' => array('PurchaseOrder.created' => 'DESC')
 															));
 
-		
-		//pr($purchaseOrderData); exit;
-		//if($purchaseOrderData['PurchaseOrder']['po_number'] != 15100001){
-
-			//$purchaseNumber = 15100001;
-
-		//}else if($purchaseOrderData['PurchaseOrder']['po_number'] >= 15100001){
-
 		$purchaseNumber = $purchaseOrderData['PurchaseOrder']['po_number'] + 1;
-
-		//}
 
     	$requestData = $this->Request->find('first', array('conditions' => array('Request.id' => $requestId)));
 
-    	$requestItem = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'])));
+    	if(!empty($bycash)){
+
+    		$requestItem = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'], 'RequestItem.status_id' => 0)));
+
+    	}else{
+
+    		$requestItem = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'])));
+
+    	}
+
+    	$requestItemCount = count($requestItem);
 
     	foreach ($requestItem as $key => $value) {
 			
@@ -538,7 +533,7 @@ class RequestsController extends PurchasingAppController {
 															'order' => array('PurchasingType.id' => 'ASC')
 															));
 
-    	$this->set(compact('purchaseNumber','requestId','supplierData','paymentTermData','requestData','type','unitData','requestItem','currencyData', 'bycash'));
+    	$this->set(compact('purchaseNumber','requestId','supplierData','paymentTermData','requestData','type','unitData','requestItem','currencyData', 'bycash', 'byCashNum', 'requestItemCount'));
 
     }
 
@@ -554,11 +549,33 @@ class RequestsController extends PurchasingAppController {
 
     	if (!empty($this->request->data)) {
 
+    		$filledNum = $this->request->data['PurchaseOrder']['filed_number'];
+
+    		$statusHolder = 0;
+
     		if(!empty($this->request->data['PurchaseOrder']['supplier'])){
 
     				$this->request->data['PurchaseOrder']['supplier_id'] = $this->request->data['PurchaseOrder']['supplier'];
     				$this->request->data['PurchaseOrder']['contact_id'] = $this->request->data['PurchaseOrder']['contact'];
     				$this->request->data['PurchaseOrder']['contact_person_id'] = $this->request->data['PurchaseOrder']['contact_person'];
+
+    			if($this->request->data['PurchaseOrder']['request_item_count'] <= count($this->request->data['RequestItemIdHolder'])){
+
+	    			$statusHolder = 0;
+
+    			}else{
+
+    				$statusHolder = 1;
+    			}
+
+    		}
+	
+    		if($statusHolder != 1){
+
+
+    			$this->Request->id = $this->request->data['PurchaseOrder']['request_id'];
+
+    			$this->Request->saveField('status_id',0);
 
     		}
 
@@ -580,11 +597,7 @@ class RequestsController extends PurchasingAppController {
     		
     		$this->PurchaseOrder->savePurchaseOrder($this->request->data,$userData['User']['id'], $bycash);
 
-    		$this->RequestItem->saveRequestItemPrice($this->request->data);
-
-    		$this->Request->id = $this->request->data['PurchaseOrder']['request_id'];
-
-    		$this->Request->saveField('status_id',0);
+    		$this->RequestItem->saveRequestItemPrice($this->request->data, $filledNum);
 
     		$this->Session->setFlash(__('Purchase Order complete.'));
 
