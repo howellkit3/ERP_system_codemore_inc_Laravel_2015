@@ -160,6 +160,8 @@ $paper  = ceil($product / $outProduct);
 
 			<table class="full-width border" style="font-family:sans-serif;">
 
+			<?php if(!empty($corrugated['ItemGroupLayer'])){ ?>
+
 				<?php foreach ($corrugated['ItemGroupLayer'] as $key => $layerList){ ?>
 
 				<tr>
@@ -185,21 +187,22 @@ $paper  = ceil($product / $outProduct);
 					</td>
 				</tr>
 
-				<?php } ?>
+				<?php } 
+			}?>
 
 			</table>
 
 			<table class="full-width border" style="height:80px">
 				<tr>
-				<td style="vertical-align:top">
-						<h2 style="font-size:12px">Remarks</h2>
-					<br>
-					<?php  if (!empty($corrugatedJobTicket['CorrugatedPaperJobTicket']['remarks']))  {
+					<td style="vertical-align:top">
+							<h2 style="font-size:12px">Remarks</h2>
+						<br>
+						<?php  if (!empty($corrugatedJobTicket['CorrugatedPaperJobTicket']['remarks']))  {
 
-						echo $corrugatedJobTicket['CorrugatedPaperJobTicket']['remarks'];
+							echo $corrugatedJobTicket['CorrugatedPaperJobTicket']['remarks'];
 
-					}?>	
-				</td>
+						}?>	
+					</td>
 				</tr>	
 					
 			</table>
