@@ -146,6 +146,8 @@ Configure::write('debug',0);
 
 			<table class="full-width border" style="font-family:sans-serif;">
 
+			<?php if(!empty($corrugated['ItemGroupLayer'])){?>
+
 				<?php foreach ($corrugated['ItemGroupLayer'] as $key => $layerList){ ?>
 
 				<tr>
@@ -171,7 +173,9 @@ Configure::write('debug',0);
 					</td>
 				</tr>
 
-				<?php } ?>
+				<?php }
+
+			} ?>
 
 			</table>
 
