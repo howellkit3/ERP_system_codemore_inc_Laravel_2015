@@ -26,11 +26,11 @@
             // echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'requests', 'action' => 'edit',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
         }
 
-        if ($requestData['Request']['status_id'] != 1) {
+        // if ($requestData['Request']['status_id'] != 1) {
 
-             echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print', array('controller' => 'requests', 'action' => 'print_request', $requestId),array('class' =>'btn btn-primary pull-right ','escape' => false, 'target' => '_blank'));
+        //      echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print', array('controller' => 'requests', 'action' => 'print_request', $requestId),array('class' =>'btn btn-primary pull-right ','escape' => false, 'target' => '_blank'));
 
-        }else{
+        // }else{
 
             echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print', array('controller' => 'requests', 'action' => 'print_request', $requestId),array('class' =>'btn btn-primary pull-right ','escape' => false, 'target' => '_blank'));
 
@@ -38,7 +38,7 @@
 
             echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Receive by Cash', array('controller' => 'requests', 'action' => 'create_order',$requestId, 1),array('class' =>'btn btn-primary pull-right','escape' => false));
 
-        }
+    //    }
 
         echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'requests', 'action' => 'edit',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
 
