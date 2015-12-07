@@ -27,6 +27,7 @@ Configure::write('debug',0);
 					</td>
 				</tr>				
 		</table>
+		
 		<br>
 
 		<?php $outs = floatval($part['ProductSpecificationPart']['outs1']) * floatval($part['ProductSpecificationPart']['outs2']);
