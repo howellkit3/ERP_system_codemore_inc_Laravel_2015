@@ -9,7 +9,7 @@
                     
     <?php
 
-        if($userData['User']['role_id'] != 1 && $userData['User']['role_id'] != 2 && $userData['User']['role_id'] != 4  ){
+        if($userData['User']['role_id'] != 1 && $userData['User']['role_id'] != 2 && $userData['User']['role_id'] != 7  ){
 
             $active = "not-active" ;
         }else {
