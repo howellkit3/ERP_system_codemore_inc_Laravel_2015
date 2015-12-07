@@ -25,13 +25,17 @@
 
         //     // echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'requests', 'action' => 'edit',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
         // }
-        // if ($requestData['Request']['status_id'] != 1) {
+
+        // if (!empty($purchased) {
 
         //      echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print', array('controller' => 'requests', 'action' => 'print_request', $requestId),array('class' =>'btn btn-primary pull-right ','escape' => false, 'target' => '_blank'));
 
         // }else{
 
+        if (empty($purchased)) {
+
             echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print', array('controller' => 'requests', 'action' => 'print_request', $requestId),array('class' =>'btn btn-primary pull-right ','escape' => false, 'target' => '_blank'));
+        }
 
             echo $this->Html->link('<i class="fa fa fa-pencil-square-o fa-lg"></i> Create Order', array('controller' => 'requests', 'action' => 'create_order',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
 
@@ -97,50 +101,95 @@
                             <th class="text-center">Remarks</th>
                         </thead>
 
-                        <?php  foreach ($requestPurchasingItem as $key => $value) {  $key++ ?>
+                        <?php if(!empty($purchased)){?>
 
-                        <?php 
+                          <?php  foreach ($requestPurchasingItem as $key => $value) {   ?>
 
-                        if($value['RequestItem']['status_id'] != 1){
+                            <?php $key++ ?> 
 
-                            $specs1 = !empty($value['RequestItem']['size1']) ? $value['RequestItem']['size1'] . " " . $unitData[$value['RequestItem']['size1_unit_id']] : "";
+                            <?php $specs1 = !empty($value['RequestItem']['size1']) ? $value['RequestItem']['size1'] . " " . $unitData[$value['RequestItem']['size1_unit_id']] : "";
 
-                            $specs2 = !empty($value['RequestItem']['size2']) ? " x " . $value['RequestItem']['size2'] . " " . $unitData[$value['RequestItem']['size2_unit_id']] : "";
+                                $specs2 = !empty($value['RequestItem']['size2']) ? " x " . $value['RequestItem']['size2'] . " " . $unitData[$value['RequestItem']['size2_unit_id']] : "";
 
-                            $specs3 = !empty($value['RequestItem']['size3']) ? " x " .  $value['RequestItem']['size3'] . " " . $unitData[$value['RequestItem']['size3_unit_id']] : "";
+                                $specs3 = !empty($value['RequestItem']['size3']) ? " x " .  $value['RequestItem']['size3'] . " " . $unitData[$value['RequestItem']['size3_unit_id']] : "";
 
-                            $specsAll = $specs1 . " " . $specs2  . " " . $specs3 ;
+                                $specsAll = $specs1 . " " . $specs2  . " " . $specs3 ;
 
-                            $nameWithSpecs = $value['RequestItem']['name'] . " " . $specsAll;
+                                $nameWithSpecs = $value['RequestItem']['name'] . " " . $specsAll;
 
                             ?>
+                                    <tr>
+                                        <td><?php echo $key ?></td>
+                                        <td class="text-center"><?php echo $nameWithSpecs?></td>
+                                        <td class="text-center">
+                                            <?php  
+                                            if(!empty($value['RequestItem']['quantity'])){ 
+                                                echo $value['RequestItem']['quantity']?>
+                                        <?php } ?>
 
-                                <tr>
-                                    <td><?php echo $key ?></td>
-                                    <td class="text-center"><?php echo $nameWithSpecs?></td>
-                                    <td class="text-center">
-                                        <?php  
-                                        if(!empty($value['RequestItem']['quantity'])){ 
-                                            echo $value['RequestItem']['quantity']?>
-                                    <?php } ?>
+                                        </td>
 
-                                    </td>
+                                         <td class="text-center">
+                                            <?php  
+                                            if(!empty($unitData[$value['RequestItem']['quantity_unit_id']])){ 
+                                            echo $unitData[$value['RequestItem']['quantity_unit_id']];
+                                           } ?>
+                                        </td>
+                                        <td class="text-center"></td>
+                                        <td class="text-center"></td>
+                                        <td class="text-center" style ="font-size:70%;"><?php echo date("Y-m-d", strtotime($value['RequestItem']['date_needed'])) ?></td>
+                                        <td class="text-center"><?php echo $value['RequestItem']['purpose'] ?></td>
+                                        <td class="text-center"><?php echo $value['RequestItem']['remarks'] ?></td>
+                                        
+                                    </tr>
+                            <?php 
+                                    } 
+                                
+                            }else{ ?>
 
-                                     <td class="text-center">
-                                        <?php  
-                                        if(!empty($unitData[$value['RequestItem']['quantity_unit_id']])){ 
-                                        echo $unitData[$value['RequestItem']['quantity_unit_id']];
-                                       } ?>
-                                    </td>
-                                    <td class="text-center"></td>
-                                    <td class="text-center"></td>
-                                    <td class="text-center" style ="font-size:70%;"><?php echo date("Y-m-d", strtotime($value['RequestItem']['date_needed'])) ?></td>
-                                    <td class="text-center"><?php echo $value['RequestItem']['purpose'] ?></td>
-                                    <td class="text-center"><?php echo $value['RequestItem']['remarks'] ?></td>
-                                    
-                                </tr>
-                        <?php 
-                            } } ?>
+                                <?php  foreach ($requestPurchasingItem as $key => $value) {  $key++ ?>
+
+                                    <?php if($value['RequestItem']['status_id'] != 1 ){
+
+                                        $specs1 = !empty($value['RequestItem']['size1']) ? $value['RequestItem']['size1'] . " " . $unitData[$value['RequestItem']['size1_unit_id']] : "";
+
+                                        $specs2 = !empty($value['RequestItem']['size2']) ? " x " . $value['RequestItem']['size2'] . " " . $unitData[$value['RequestItem']['size2_unit_id']] : "";
+
+                                        $specs3 = !empty($value['RequestItem']['size3']) ? " x " .  $value['RequestItem']['size3'] . " " . $unitData[$value['RequestItem']['size3_unit_id']] : "";
+
+                                        $specsAll = $specs1 . " " . $specs2  . " " . $specs3 ;
+
+                                        $nameWithSpecs = $value['RequestItem']['name'] . " " . $specsAll;
+
+                                        ?>
+                                            <tr>
+                                                <td><?php echo $key ?></td>
+                                                <td class="text-center"><?php echo $nameWithSpecs?></td>
+                                                <td class="text-center">
+                                                    <?php  
+                                                    if(!empty($value['RequestItem']['quantity'])){ 
+                                                        echo $value['RequestItem']['quantity']?>
+                                                <?php } ?>
+
+                                                </td>
+
+                                                 <td class="text-center">
+                                                    <?php  
+                                                    if(!empty($unitData[$value['RequestItem']['quantity_unit_id']])){ 
+                                                    echo $unitData[$value['RequestItem']['quantity_unit_id']];
+                                                   } ?>
+                                                </td>
+                                                <td class="text-center"></td>
+                                                <td class="text-center"></td>
+                                                <td class="text-center" style ="font-size:70%;"><?php echo date("Y-m-d", strtotime($value['RequestItem']['date_needed'])) ?></td>
+                                                <td class="text-center"><?php echo $value['RequestItem']['purpose'] ?></td>
+                                                <td class="text-center"><?php echo $value['RequestItem']['remarks'] ?></td>
+                                                
+                                            </tr>
+                                    <?php 
+                                            } 
+                                        }
+                             } ?>
                         <tr>
                             <td> </td>
                             <td class="text-center">------END------</td>

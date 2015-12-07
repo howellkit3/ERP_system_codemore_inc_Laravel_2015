@@ -709,8 +709,6 @@ class PurchaseOrdersController extends PurchasingAppController {
 
 			$purchaseOrderData = $this->paginate('PurchaseOrder');
 
-			//pr($purchaseOrderData); exit;
-
 	    	$supplierData = $this->Supplier->find('list', array(
 															'fields' => array('Supplier.id', 'Supplier.name'),
 															));
