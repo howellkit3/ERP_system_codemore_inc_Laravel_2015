@@ -19,12 +19,12 @@
         
         echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'requests', 'action' => 'request_list'),array('class' =>'btn btn-primary pull-right ' ,'escape' => false));
 
-        if ($requestData['Request']['status_id'] == 8) {
+        // if ($requestData['Request']['status_id'] == 8) {
 
-            echo $this->Html->link('<i class= "fa fa-check-square-o fa-lg "></i> Approve', array('controller' => 'requests', 'action' => 'approved',$requestId),array('class' => 'btn btn-primary pull-right ' . $active   ,'escape' => false));
+        //     echo $this->Html->link('<i class= "fa fa-check-square-o fa-lg "></i> Approve', array('controller' => 'requests', 'action' => 'approved',$requestId),array('class' => 'btn btn-primary pull-right ' . $active   ,'escape' => false));
 
-            // echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'requests', 'action' => 'edit',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
-        }
+        //     // echo $this->Html->link('<i class="fa fa-edit fa-lg"></i> Edit', array('controller' => 'requests', 'action' => 'edit',$requestId),array('class' =>'btn btn-primary pull-right','escape' => false));
+        // }
 
         // if ($requestData['Request']['status_id'] != 1) {
 
