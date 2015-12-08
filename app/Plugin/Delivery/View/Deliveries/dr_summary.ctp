@@ -12,23 +12,24 @@
 
             <h2 class="pull-left"><b>Delivery Schedule</b></h2>
 
+             <?php   
+                echo $this->Html->link('<i class="fa  fa-arrow-left fa-lg "></i> Back ', 
+                    array('controller' => 'deliveries', 
+                    'action' => 'index'
+                    ),
+                    array('class' =>'btn btn-primary pull-right',
+                        'style' => "margin-left:3px",
+                        'escape' => false));
+
+            ?> 
+
         </header>
 
         <div class="main-box-body clearfix">
             <div class="table-responsive">
                 <div class="main-box clearfix body-pad">  
-                     <?php   
-                            echo $this->Html->link('<i class="fa  fa-arrow-left fa-lg "></i> Back ', 
-                                array('controller' => 'deliveries', 
-                                'action' => 'index'
-                                ),
-                                array('class' =>'btn btn-primary pull-right',
-                                    'style' => "margin-left:3px",
-                                    'escape' => false));
-
-                        ?> 
-
-                    <?php echo $this->Form->create('SalesInvoice',array('url'=>(array('controller' => 'sales_invoice','action' => 'payables_print')),array('class' => 'form-inline')));?>
+                    
+                    <?php echo $this->Form->create('SalesInvoice',array('url'=>(array('controller' => 'deliveries','action' => 'dr_summary')),array('class' => 'form-inline')));?>
 
                         <button type="submit" class="form-export-btn btn btn-success pull-right"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
                         
@@ -53,6 +54,20 @@
                             </div>
                         </div>
 
+                        <div class="form-group col-md-3 pull-left">
+                            <div class="input-group">
+
+                        <?php 
+                            echo $this->Form->input('RequestItem.product', array(
+                                'options' => $productData,  
+                                'label' => false,
+                                'class' => 'form-control product-filter',
+                                'empty' => '---Select Item---'
+                                 )); 
+                        ?>
+                            </div>
+                        </div>
+
                         <button type="button" class="clear-date btn btn-success pull-left" ><i class="fa fa-eraser fa-lg"></i> Clear</button>
 
                     <?php echo $this->Form->end(); ?>
@@ -63,11 +78,11 @@
                             <tr>
                                 <th class=""><a href="#"><span>D.R. #</span></a></th>
                                 <th class=""><a href="#"><span>Customer</span></a></th>
+                                <th class=""><a href="#"><span>Item Name</span></a></th>
                                 <th class=""><a href="#"><span>C.O. #</span></a></th>
                                 <th class=""><a href="#"><span>P.O. #</span></a></th>
                                 <th class=""><a href="#"><span>Schedule</span></a></th>
                                 <th class=""><a href="#"><span>Quantity</span></a></th>
-                                <th class=""><a href="#"><span>Delivered</span></a></th>
                                 <th class=""><a href="#"><span>Status</span></a></th>
                             </tr>
                         </thead>
@@ -89,7 +104,7 @@
                                 echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'Delivery','model' => 'Delivery'), null, array('class' => 'disable'));
 
                                 ?>
-                        </div>
+                    </div>
                 </div>
             </div>  
         </div>

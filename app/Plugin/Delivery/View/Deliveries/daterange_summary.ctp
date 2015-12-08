@@ -10,7 +10,11 @@
             </td>
 
             <td class="">
-                  <?php echo substr($companyData[$deliveryDataList['Delivery']['company_id']],0,25); ?>..
+                  <?php echo substr($deliveryDataList['Company']['company_name'],0,25); ?>..
+            </td>
+
+            <td class="">
+                  <?php echo $deliveryDataList['Product']['name']; ?>
             </td>
 
             <td class="">
@@ -18,7 +22,7 @@
             </td>
 
             <td class="">
-                  <?php echo $PONumber[$deliveryDataList['Delivery']['clients_order_id']]; ?>
+                  <?php echo $deliveryDataList['ClientOrder']['po_number']; ?>
             </td>
 
             <td class="">
@@ -29,9 +33,9 @@
               <?php echo  $deliveryDataList['DeliveryDetail']['quantity']; ?> <br>
             </td>
 
-            <td class="">
+         <!--    <td class="">
                 <?php echo !empty($deliveryDataList['DeliveryDetail']['delivered_quantity']) ? $deliveryDataList['DeliveryDetail']['delivered_quantity'] : 0 ; ?> <br>
-            </td>
+            </td> -->
 
             <td class="">
   
