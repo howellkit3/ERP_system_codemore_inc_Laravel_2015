@@ -1582,12 +1582,13 @@ class DeliveriesController extends DeliveryAppController {
 
     }
 
-
     public function dr_summary() {
 
         $this->loadModel('Sales.ClientOrder');
 
         $this->loadModel('Sales.Company');
+
+         $this->loadModel('Sales.Product');
 
         $this->Delivery->bindDeliveryClientOrder();
 
@@ -1595,13 +1596,14 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->Delivery->recursive = 1;
 
-        $conditions = array();
+        $conditions = array('Delivery.status' => 1);
         $this->paginate = array(
             'conditions' => $conditions,
             'limit' => $limit,
             'fields' => array(
                 'Delivery.id',
                 'Delivery.dr_uuid',
+                'Delivery.status',
                 'Delivery.company_id',
                 'Delivery.clients_order_id', 
                 'DeliveryDetail.schedule',
@@ -1609,137 +1611,112 @@ class DeliveriesController extends DeliveryAppController {
                 'DeliveryDetail.quantity',
                 'DeliveryDetail.delivered_quantity'),
             'order' => 'Delivery.id DESC',
+            'group' => 'Delivery.dr_uuid'
         );
         
-
         $deliveryData = $this->paginate('Delivery');
 
-        //pr($deliveryData); exit;
+        $this->ClientOrder->bind(array('QuotationDetail','Product'));
 
-        $PONumber = $this->ClientOrder->find('list',array('fields' => array('uuid','po_number')));
+        $clientOrderData = $this->ClientOrder->find('all', array(
+                                       'fields' => array('ClientOrder.po_number',
+                                        'ClientOrder.uuid',
+                                        'Product.name' )
+                                   ));
+
+        foreach ($clientOrderData as $key => $clientValue) {
+
+            foreach ($deliveryData as $key2 => $deliveryValue) {
+
+                if($clientValue['ClientOrder']['uuid'] == $deliveryValue['Delivery']['clients_order_id']){
+
+                    $deliveryData[$key2]['ClientOrder']['po_number'] = $clientValue['ClientOrder']['po_number'];
+
+                    $deliveryData[$key2]['ClientOrder']['item_name'] = $clientValue['Product']['name'];
+
+                }
+
+            }
+            
+        }
+
+        $productData = $this->Product->find('list',array('fields' => array('id','name'),
+                                            'order' => 'Product.name ASc'));
 
         $companyData= $this->Company->find('list',array('fields' => array('id','company_name'),
                                             'order' => 'Company.company_name ASC'));
 
         $noPermissionSales = ' '; 
 
-        $this->set(compact('noPermissionSales', 'deliveryData', 'PONumber', 'companyData'));     
+        $this->set(compact('noPermissionSales', 'deliveryData', 'PONumber', 'companyData', 'productData'));     
             
     }
 
-    public function daterange_summary($from = null, $to = null, $company = null){
+    public function daterange_summary($from = null, $to = null, $product = null , $company = null){
 
-        $this->loadModel('Sales.ClientOrder');
+        if($product != "undefined"){
 
-        $this->loadModel('Sales.Company');
+            if($from != "undefined" || $to != "undefined"){
 
-        $this->Delivery->bindDeliveryClientOrder();
+                $condition = ' QuotationDetail.product_id ='.$product.'
+                    AND (Delivery.created BETWEEN "'.$from.' 00:00:00'.'" AND "'.$to.' 00:00:00'.'") AND 
+                    Delivery.status = 1';
 
-        $this->Delivery->recursive = 1;
+            }else{
 
-        if(empty($company)){
+                $condition = ' QuotationDetail.product_id ='.$product.' AND 
+                    Delivery.status = 1';
 
-            $conditions = array('AND' => array(
-                        'Delivery.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:')
-                    ));
+            }
+
+        }else if($company != "undefined"){
+
+            if($from != "undefined" || $to != "undefined"){
+
+                $condition = ' ClientOrder.company_id ='.$company.'
+                    AND (Delivery.created BETWEEN "'.$from.' 00:00:00'.'" AND "'.$to.' 00:00:00'.'") AND 
+                    Delivery.status = 1';
+
+            }else{
+
+                $condition = ' ClientOrder.company_id ='.$company.' AND 
+                    Delivery.status = 1';
+
+            }
 
         }else{
 
-            $conditions = array('AND' => array('and' => array(
-                        array('Delivery.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:'),
-                             ),
-            'Delivery.company_id' => $company
-            )));
+            $condition = ' Delivery.created BETWEEN "'.$from.' 00:00:00'.'" AND "'.$to.' 00:00:00'.'" AND 
+                    Delivery.status = 1';
 
-        }
+        } 
 
-        $this->paginate = array(
-            'conditions' => $conditions,
-            'fields' => array(
-                'Delivery.id',
-                'Delivery.dr_uuid',
-                'Delivery.company_id',
-                'Delivery.created',
-                'Delivery.clients_order_id', 
-                'DeliveryDetail.schedule',
-                'DeliveryDetail.id',
-                'DeliveryDetail.quantity',
-                'DeliveryDetail.delivered_quantity'),
-            'order' => 'Delivery.id DESC',
-        );
-        
-
-        $deliveryData = $this->paginate('Delivery');
-
-        $PONumber = $this->ClientOrder->find('list',array('fields' => array('uuid','po_number')));
-
-        $companyData= $this->Company->find('list',array('fields' => array('id','company_name')));
+        $deliveryData = $this->Delivery->query('SELECT Delivery.id,
+                Delivery.dr_uuid, Delivery.company_id, Delivery.created,
+                Delivery.clients_order_id, DeliveryDetail.schedule, DeliveryDetail.id,
+                DeliveryDetail.quantity,DeliveryDetail.delivered_quantity ,Product.name,
+                ClientOrder.po_number, Company.company_name
+                FROM koufu_delivery.deliveries AS Delivery
+                LEFT JOIN koufu_delivery.delivery_details AS DeliveryDetail
+                ON Delivery.dr_uuid = DeliveryDetail.delivery_uuid
+                LEFT JOIN koufu_sale.client_orders AS ClientOrder
+                ON Delivery.clients_order_id = ClientOrder.uuid
+                LEFT JOIN koufu_sale.quotation_details AS QuotationDetail
+                ON ClientOrder.quotation_id = QuotationDetail.quotation_id
+                LEFT JOIN koufu_sale.products AS Product
+                ON Product.id = QuotationDetail.product_id
+                LEFT JOIN koufu_sale.companies AS Company
+                ON Company.id = ClientOrder.company_id
+                WHERE'. $condition.' GROUP BY Delivery.dr_uuid
+                ORDER BY Delivery.created ASC
+                ');
 
         $noPermissionSales = ' '; 
 
         $this->set(compact('noPermissionSales', 'deliveryData', 'PONumber', 'companyData'));   
 
-        $this->render('daterange_summary');
+        $this->render('daterange_summary'); 
         
-    }
-
-    public function company_filter($company = null, $from = null, $to = null){
-
-        $this->loadModel('Sales.ClientOrder');
-
-        $this->loadModel('Sales.Company');
-
-        $this->Delivery->bindDeliveryClientOrder();
-
-        $this->Delivery->recursive = 1;
-
-        if(empty($from)){
-
-           $conditions = array(
-
-                       'Delivery.company_id' => $company
-                   );
-
-        }else{
-
-            $conditions = array('AND' => array('and' => array(
-                        array('Delivery.created BETWEEN ? AND ?' => array($from.' '.'00:00:00:', $to.' '.'23:00:00:'),
-                             ),
-            'Delivery.company_id' => $company
-            )));
-
-        }
-
-        $this->paginate = array(
-            'conditions' => $conditions,
-            'fields' => array(
-                'Delivery.id',
-                'Delivery.dr_uuid',
-                'Delivery.company_id',
-                'Delivery.created',
-                'Delivery.clients_order_id', 
-                'DeliveryDetail.schedule',
-                'DeliveryDetail.id',
-                'DeliveryDetail.quantity',
-                'DeliveryDetail.delivered_quantity'),
-            'order' => 'Delivery.id DESC',
-        );
-
-        $deliveryData = $this->paginate('Delivery');
-
-       //pr($deliveryData); exit;
-
-        $PONumber = $this->ClientOrder->find('list',array('fields' => array('uuid','po_number')));
-
-        $companyData= $this->Company->find('list',array('fields' => array('id','company_name')));
-
-        $noPermissionSales = ' '; 
-
-        $this->set(compact('noPermissionSales', 'deliveryData', 'PONumber', 'companyData'));   
-
-        $this->render('daterange_summary');
-        
-
     }
 
 }
