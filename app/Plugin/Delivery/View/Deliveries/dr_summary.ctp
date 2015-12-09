@@ -29,7 +29,7 @@
             <div class="table-responsive">
                 <div class="main-box clearfix body-pad">  
                     
-                    <?php echo $this->Form->create('SalesInvoice',array('url'=>(array('controller' => 'deliveries','action' => 'dr_summary')),array('class' => 'form-inline')));?>
+                    <?php echo $this->Form->create('SalesInvoice',array('url'=>(array('controller' => 'deliveries','action' => 'export_dr')),array('class' => 'form-inline')));?>
 
                         <button type="submit" class="form-export-btn btn btn-success pull-right"><i class="fa fa-share-square-o fa-lg"></i> Export</button>
                         
@@ -44,7 +44,7 @@
                             <div class="input-group">
 
                         <?php 
-                            echo $this->Form->input('RequestItem.category', array(
+                            echo $this->Form->input('company_id', array(
                                 'options' => $companyData,  
                                 'label' => false,
                                 'class' => 'form-control company-filter',
@@ -58,7 +58,7 @@
                             <div class="input-group">
 
                         <?php 
-                            echo $this->Form->input('RequestItem.product', array(
+                            echo $this->Form->input('product_id', array(
                                 'options' => $productData,  
                                 'label' => false,
                                 'class' => 'form-control product-filter',

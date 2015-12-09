@@ -1652,7 +1652,7 @@ class DeliveriesController extends DeliveryAppController {
             
     }
 
-    public function daterange_summary($from = null, $to = null, $product = null , $company = null){
+    public function daterange_summary($from = null, $to = null, $product = null , $company = null, $export = null){
 
         if($product != "undefined"){
 
@@ -1691,11 +1691,13 @@ class DeliveriesController extends DeliveryAppController {
 
         } 
 
+        $order =' ORDER BY ClientOrder.po_number ASC';
+
         $deliveryData = $this->Delivery->query('SELECT Delivery.id,
                 Delivery.dr_uuid, Delivery.company_id, Delivery.created,
                 Delivery.clients_order_id, DeliveryDetail.schedule, DeliveryDetail.id,
                 DeliveryDetail.quantity,DeliveryDetail.delivered_quantity ,Product.name,
-                ClientOrder.po_number, Company.company_name
+                ClientOrder.po_number, Company.company_name , QuotationItemDetail.quantity , QuotationItemDetail.id
                 FROM koufu_delivery.deliveries AS Delivery
                 LEFT JOIN koufu_delivery.delivery_details AS DeliveryDetail
                 ON Delivery.dr_uuid = DeliveryDetail.delivery_uuid
@@ -1703,20 +1705,88 @@ class DeliveriesController extends DeliveryAppController {
                 ON Delivery.clients_order_id = ClientOrder.uuid
                 LEFT JOIN koufu_sale.quotation_details AS QuotationDetail
                 ON ClientOrder.quotation_id = QuotationDetail.quotation_id
+                LEFT JOIN koufu_sale.quotation_item_details AS QuotationItemDetail
+                ON ClientOrder.client_order_item_details_id = QuotationItemDetail.id
                 LEFT JOIN koufu_sale.products AS Product
                 ON Product.id = QuotationDetail.product_id
                 LEFT JOIN koufu_sale.companies AS Company
                 ON Company.id = ClientOrder.company_id
                 WHERE'. $condition.' GROUP BY Delivery.dr_uuid
-                ORDER BY Delivery.created ASC
+                '. $order.'
                 ');
 
         $noPermissionSales = ' '; 
 
         $this->set(compact('noPermissionSales', 'deliveryData', 'PONumber', 'companyData'));   
 
-        $this->render('daterange_summary'); 
+        if(!empty($export)){
+
+            return $deliveryData;
+
+        }else{
+
+            $this->render('daterange_summary'); 
+
+        }
         
     }
+    
+    public function export_dr() {
+
+        if(!empty($this->request->data['from_date'])){
+
+            $date = split("-", $this->request->data['from_date']);
+
+            $date1 = trim($date[0]);
+
+            $date2 = trim($date[1]); 
+
+            $from = str_replace('/', '-', $date1);
+
+            $to = str_replace('/', '-', $date2);
+
+        }else{
+
+            $from = 'undefined';
+
+            $to = 'undefined';
+
+        }
+
+        if(!empty($this->request->data['SalesInvoice']['company_id'])){
+
+            $company = $this->request->data['SalesInvoice']['company_id'];
+
+        }else{
+
+            $company = 'undefined';
+
+        }
+
+        if(!empty($this->request->data['SalesInvoice']['product_id'])){
+
+            $product = $this->request->data['SalesInvoice']['product_id'];
+
+        }else{
+
+            $product = 'undefined';
+
+        }
+
+        $export = 1;
+
+        $deliveryData = $this->daterange_summary($from, $to, $product, $company, $export);
+
+        //pr($deliveryData); exit;
+
+        $noPermissionSales = ' '; 
+
+        $this->set(compact('noPermissionSales', 'deliveryData'));   
+
+        $this->render('export_dr');
+        
+    }
+
+    
 
 }
