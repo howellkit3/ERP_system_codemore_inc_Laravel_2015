@@ -7,7 +7,6 @@ jQuery(function($){
 
     });
 
-
     $("body").on('click','.clear-date', function(e){
         $(this).parent().find('.myDateRange').val('');
         $(this).parent().find('.product-filter').val('');
@@ -16,10 +15,8 @@ jQuery(function($){
         
         $('.dateRangeAppend-dr').hide();
 
-
         $('.dr-report').show();
-
-        
+  
     }); 
 
     $("body").on('change','.product-filter', function(e){
@@ -42,8 +39,6 @@ jQuery(function($){
         $('.'+thisReport).show();
         //$('.myDateRange').prop('readonly', true);
         var dateRange = $('.myDateRange').val();
-
-        
 
         if(dateRange){
 
