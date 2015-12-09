@@ -1733,6 +1733,7 @@ class DeliveriesController extends DeliveryAppController {
     
     public function export_dr() {
 
+
         if(!empty($this->request->data['from_date'])){
 
             $date = split("-", $this->request->data['from_date']);
@@ -1777,7 +1778,16 @@ class DeliveriesController extends DeliveryAppController {
 
         $deliveryData = $this->daterange_summary($from, $to, $product, $company, $export);
 
-        //pr($deliveryData); exit;
+        if((empty($this->request->data['from_date']) && empty($this->request->data['SalesInvoice']['company_id']) && empty($this->request->data['SalesInvoice']['product_id'])) || empty($deliveryData)){
+
+            $this->Session->setFlash(__('Use the Filter or Check the Data before Export'), 'error');
+
+            $this->redirect( array(
+                'controller' => 'deliveries',   
+                'action' => 'dr_summary'
+            ));   
+
+        }
 
         $noPermissionSales = ' '; 
 
