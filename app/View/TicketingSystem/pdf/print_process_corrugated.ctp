@@ -43,7 +43,7 @@ $paper  = ceil($product / $outProduct);
 		</table>
 		<br>
 
-		<?php $outs = floatval($part['ProductSpecificationPart']['outs1']) * floatval($part['ProductSpecificationPart']['outs2']);
+		<?php// $outs = floatval($part['ProductSpecificationPart']['outs1']) * floatval($part['ProductSpecificationPart']['outs2']);
         ?>
 
 			<table class="full-width border" style="font-family:sans-serif;">
