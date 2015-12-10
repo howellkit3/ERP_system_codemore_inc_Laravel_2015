@@ -16,8 +16,6 @@ class SalesInvoiceController extends AccountingAppController {
 
         $this->loadModel('Delivery.Delivery');
 
-       // $this->SalesInvoice->bindInvoice();
-
         $limit = 10;
 
         $conditions = array('NOT' => array('SalesInvoice.status' => 2) );
@@ -31,7 +29,6 @@ class SalesInvoiceController extends AccountingAppController {
                 'SalesInvoice.statement_no',  
                 'SalesInvoice.dr_uuid', 
                 'SalesInvoice.status',
-             //   'Delivery.company_id',
                 ),
             'order' => 'SalesInvoice.id DESC',
         );
@@ -74,20 +71,33 @@ class SalesInvoiceController extends AccountingAppController {
         
         $userData = $this->Session->read('Auth');
 
-        $invoiceData = $this->SalesInvoice->find('all', array(
-                                                    'fields' => array(
-                                                        'id','sales_invoice_no',
-                                                        'dr_uuid','statement_no',
-                                                        'status'),
-                                                    'conditions' => array(
-                                                        'SalesInvoice.status' => 2 ),
-                                                    'order' => 'SalesInvoice.id DESC'
-                                                ));
+        $limit = 10;
+
+        $conditions = array('SalesInvoice.status' => 2);
+
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array(
+                'SalesInvoice.id',
+                'SalesInvoice.sales_invoice_no',
+                'SalesInvoice.statement_no',  
+                'SalesInvoice.dr_uuid', 
+                'SalesInvoice.status',
+                ),
+            'order' => 'SalesInvoice.id DESC',
+        );
+
+        $invoiceData = $this->paginate('SalesInvoice');
 
         if ($userData['User']['role_id'] == 9 ) {
+
             $noPermissionReciv = 'disabled not-active';
+
         } else {
+
             $noPermissionReciv = ' ';
+
         }
 
        if ($userData['User']['role_id'] == 10) {
@@ -303,8 +313,6 @@ class SalesInvoiceController extends AccountingAppController {
 
         $this->loadModel('Sales.Company');
 
-      //  $this->Delivery->bindInvoice();
-
         $limit = 10;
 
         $conditions = array();
@@ -323,8 +331,6 @@ class SalesInvoiceController extends AccountingAppController {
         );
 
         $deliveryData = $this->paginate('Delivery');
-
-     // pr($deliveryData); exit;
 
         $poNumber = $this->ClientOrder->find('list', array('fields' => array('uuid', 'po_number')));
 
@@ -346,6 +352,7 @@ class SalesInvoiceController extends AccountingAppController {
         }
         
         $noPermissionPay = "";
+
         $noPermissionReciv = "";
 
         $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData', 'companyData', 'poNumber'));
@@ -1172,6 +1179,32 @@ class SalesInvoiceController extends AccountingAppController {
                 }
             }
 
+        } else if($type == '2'){
+
+            $userData = $this->Session->read('Auth');
+
+            $invoiceData = $this->SalesInvoice->query('SELECT SalesInvoice.id ,SalesInvoice.status , SalesInvoice.statement_no, Company.id, Company.company_name , Delivery.dr_uuid, Delivery.company_id, Delivery.dr_uuid, SalesInvoice.dr_uuid 
+                FROM koufu_delivery.deliveries AS Delivery
+                LEFT JOIN koufu_accounting.sales_invoices AS SalesInvoice
+                ON Delivery.dr_uuid = SalesInvoice.dr_uuid 
+                LEFT JOIN koufu_sale.client_orders AS ClientOrder
+                ON Delivery.clients_order_id = ClientOrder.uuid 
+                LEFT JOIN koufu_sale.companies AS Company
+                ON ClientOrder.company_id = Company.id 
+                WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR SalesInvoice.statement_no LIKE "%'.$hint.'%"
+                OR Company.company_name LIKE "%'.$hint.'%"  AND SalesInvoice.status = 2');
+            //pr($invoiceData); exit;
+            $this->set(compact('companyData','invoiceData','noPermissionReciv','noPermissionPay', 'deliveryNumHolder'));
+
+            if ($hint == ' ') {
+
+                $this->render('statement');
+
+            }else{
+
+                $this->render('search_statement_account');
+            }
+        
         }else{
 
             $userData = $this->Session->read('Auth');
@@ -1185,7 +1218,7 @@ class SalesInvoiceController extends AccountingAppController {
                 LEFT JOIN koufu_sale.companies AS Company
                 ON ClientOrder.company_id = Company.id 
                 WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR SalesInvoice.sales_invoice_no LIKE "%'.$hint.'%"
-                OR Company.company_name LIKE "%'.$hint.'%"  ');
+                OR Company.company_name LIKE "%'.$hint.'%" AND SalesInvoice.status = 1');
 
             $this->set(compact('companyData','invoiceData','noPermissionReciv','noPermissionPay', 'deliveryNumHolder'));
 

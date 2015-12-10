@@ -19,11 +19,10 @@
 
                     <div class="form-group pull-left">
                 
-                        <input placeholder="Search..." class="form-control searchOrder"  />
+                        <input placeholder="Search..." class="form-control searchSI"  />
                         <i class="fa fa-search search-icon"></i>
                     
                 	</div>
-
 
                   <br><br>
                </div>
@@ -36,7 +35,6 @@
 						<thead>
 							<tr>
 								<th><a href="#"><span>Sales Invoice No.</span></a></th>
-                                <!-- <th><a href="#"><span>Statement of Account No.</span></a></th> -->
 								<th><a href="#"><span>Delivery No.</span></a></th>
 								<th><a href="#"><span>Company</span></a></th>
 								<th class="text-center"><a href="#"><span>Status</span></a></th>
@@ -46,8 +44,6 @@
 						<?php 
 					        if(!empty($invoiceData)){ ?>
 
-					        	<?php //pr($invoiceData); ?>
-					           
 				            	<tbody aria-relevant="all" aria-live="polite" class="OrderFields" role="alert" >
 
 				            		<?php foreach ($invoiceData as $invoiceDataList): ?>
@@ -157,61 +153,55 @@
 
 <script>
 
-	// var timeout;
+	function searchSI(searchInput) {
 
-	// $('.searchOrder').keypress(function() {
+	    var searchInput = $('.searchSI').val();
 
-	//     if(timeout) {
-	//         clearTimeout(timeout);
-	//         timeout = null;
-	//     }
+	    var view = "index";
 
-	//     timeout = setTimeout(searchOrder,400)
-	// });
-		
-	$("body").on('keyup','.searchOrder', function(e){
+	    if(searchInput != ''){
 
-        var searchInput = $(this).val();
+	        $('.OrderFields').hide();
+	        $('.searchAppend').show();
 
-        var view = "index";
-    
-        //alert(searchInput);
-        if(searchInput != ''){
+	    }else{
+	        $('.OrderFields').show();
+	        $('.searchAppend').hide();
+	    }
 
-            $('.OrderFields').hide();
-            $('.searchAppend').show();
-            //alert('hide');
+	    type = 0;
 
-        }else{
-            $('.OrderFields').show();
-            $('.searchAppend').hide();
-            //alert('show');
-        }
+	    $.ajax({
+	            type: "GET",
+	            url: serverPath + "accounting/sales_invoice/search_order/"+view+"/"+searchInput+"/"+type,
+	            dataType: "html",
+	            success: function(data) {
 
-        type = 0;
-        
-        $.ajax({
-            type: "GET",
-            url: serverPath + "accounting/sales_invoice/search_order/"+view+"/"+searchInput+"/"+type,
-            dataType: "html",
-            success: function(data) {
+	                if(data){
 
-                //alert(data);
+	                    $('.searchAppend').html(data);
 
-                if(data){
+	                } 
+	                if (data.length < 5 ) {
 
-                    $('.searchAppend').html(data);
+	                    $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
+	                     
+	                }
+	                
+	            }
+	        });
+	}
 
-                } 
-                if (data.length < 5 ) {
+	var timeout;
 
-                    $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
-                     
-                }
-                
-            }
-        });
+	$('.searchSI').keypress(function() {
 
-    });
+	    if(timeout) {
+	        clearTimeout(timeout);
+	        timeout = null;
+	    }
+
+	    timeout = setTimeout(searchSI,600)
+	})
 
 </script>
