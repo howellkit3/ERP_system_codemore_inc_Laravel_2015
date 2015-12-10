@@ -25,6 +25,8 @@
                     <i class="fa  fa-plus-circle fa-stack-1x fa-inverse  "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Invoice</font></span></a> 
       
             </td>
+
+            <label class = "indicator" value = "<?php echo $indicator?>"></label>
         </tr>
 
     <div class="modal fade" id="processModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -55,16 +57,17 @@
 
         $('body').on('click','.modal_button',function(){
 
+            var indicator = $('.indicator').attr('value');
             var deliveryId = $(this).attr('value');
             var deliveryUUID = $(this).attr('deliveryUUID');
-            
+
             $container = $('#result-table');
 
             $.ajax({
-            url: serverPath + "accounting/sales_invoice/invoice_modal/"+deliveryId+"/"+deliveryUUID,
+            url: serverPath + "accounting/sales_invoice/invoice_modal/"+deliveryId+"/"+deliveryUUID+"/"+indicator,
             type: "GET",
             dataType: "html",
-           // data : { 'processId' : $processId , 'subProcess' : $subProcess , 'ticketId' : $ticketUuid },
+           
             success: function(data) {
                 
                 $container.html(data); 

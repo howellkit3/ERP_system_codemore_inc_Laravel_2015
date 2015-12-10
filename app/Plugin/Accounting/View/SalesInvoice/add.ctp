@@ -8,7 +8,7 @@
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
             <header class="main-box-header clearfix">
-                <h2 class="pull-left"><b>Approved Clients Order</b></h2>
+                <h2 class="pull-left"><b>Create Sales Invoice</b></h2>
                 
                 <div class="filter-block pull-right">
                     <div class="form-group pull-left">

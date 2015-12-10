@@ -1,4 +1,4 @@
-<?php  //pr($invoiceData); exit;
+<?php  
 foreach ($invoiceData as $invoiceDataList){
 
     if($invoiceDataList['SalesInvoice']['status'] == '2'){ ?>    
@@ -10,6 +10,10 @@ foreach ($invoiceData as $invoiceDataList){
 
         <td class="">
             <?php echo $invoiceDataList['SalesInvoice']['dr_uuid'];?>
+        </td>
+
+        <td class="">
+            <?php echo $invoiceDataList['Company']['company_name'];?>
         </td>
         
         <td>

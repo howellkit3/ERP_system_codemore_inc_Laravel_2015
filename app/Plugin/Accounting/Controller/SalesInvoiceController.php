@@ -68,6 +68,12 @@ class SalesInvoiceController extends AccountingAppController {
     }
 
     public function statement(){
+
+        $this->loadModel('Sales.Company');
+
+        $this->loadModel('Delivery.Delivery');
+
+        $deliveryNumHolder = $this->Delivery->find('list',array('fields' => array('dr_uuid','company_id')));
         
         $userData = $this->Session->read('Auth');
 
@@ -107,7 +113,9 @@ class SalesInvoiceController extends AccountingAppController {
             $noPermissionPay = ' ';
         }
 
-        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay'));
+        $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
+
+        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay', 'companyName', 'deliveryNumHolder'));
 
     }
 
@@ -197,27 +205,6 @@ class SalesInvoiceController extends AccountingAppController {
 
     public function add_statement(){
 
-        $userData = $this->Session->read('Auth');
-
-        $this->loadModel('Delivery.Delivery');
-
-        $seriesNo = $this->SalesInvoice->find('first', array(
-                'order' => array('SalesInvoice.statement_no DESC')));
-
-        if(!empty($seriesNo)){
-
-            $nextSalesNo = intval($seriesNo['SalesInvoice']['statement_no']);
-
-            $seriesSalesNo = str_pad(++$nextSalesNo,6,'0',STR_PAD_LEFT); 
-
-        }else{
-
-            $nextSalesNo = intval(0);
-
-            $seriesSalesNo = str_pad(++$nextSalesNo,6,'0',STR_PAD_LEFT);
-
-        }
-
         if($this->request->is('post')){
 
             if(!empty($this->request->data)){
@@ -237,32 +224,14 @@ class SalesInvoiceController extends AccountingAppController {
                             ));
                 }
 
-                $findDRdata = $this->Delivery->find('first', array(
-                            'conditions' => array(
-                                'Delivery.dr_uuid' => $this->request->data['SalesInvoice']['dr_uuid'])
-                            ));
-            
-                if (!empty($findDRdata)) {
+                $this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id']);
 
-                    $this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id']);
+                $this->Session->setFlash(__(' Sales Invoice No. completed. '), 'success');
+                $this->redirect( array(
+                             'controller' => 'sales_invoice', 
+                             'action' => 'statement'
+                        ));
 
-                    $this->Session->setFlash(__(' Sales Invoice No. completed. '), 'success');
-                    $this->redirect( array(
-                                 'controller' => 'sales_invoice', 
-                                 'action' => 'statement'
-                            ));
-
-                }else{
-
-                    $this->request->data = $this->request->data['SalesInvoice']['dr_uuid'];
-
-                    $this->Session->setFlash(__(' Delivery No. not matched in our system. '), 'error');
-                    $this->redirect( array(
-                                 'controller' => 'salesInvoice', 
-                                 'action' => 'add_statement'
-                            ));
-                }
-                
             }
         }
 
@@ -303,7 +272,7 @@ class SalesInvoiceController extends AccountingAppController {
 
     }
 
-    public function add(){
+    public function add($indicator = null){
 
         $userData = $this->Session->read('Auth');
 
@@ -355,8 +324,16 @@ class SalesInvoiceController extends AccountingAppController {
 
         $noPermissionReciv = "";
 
-        $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData', 'companyData', 'poNumber'));
+        $this->set(compact('seriesSalesNo', 'indicator','noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData', 'companyData', 'poNumber'));
         
+        if ($indicator == 'si_num') {
+
+            $output = $this->render('add');
+
+        }else{
+
+            $output = $this->render('add_statement');
+        }
     }
 
     public function find_data($id = null){
@@ -1112,30 +1089,55 @@ class SalesInvoiceController extends AccountingAppController {
 
     }
 
-    public function invoice_modal($deliveryId = null, $deliveryUUID = null) {
+    public function invoice_modal($deliveryId = null, $deliveryUUID = null, $indicator = null) {
 
-        $conditions = array('NOT' => array('SalesInvoice.status' => array(2, 3)) );
+        if($indicator == "si_num"){
 
-        $seriesNo = $this->SalesInvoice->find('first', array(
-                'order' => array('SalesInvoice.id DESC'),
-                'conditions' => $conditions));
+            $conditions = array('NOT' => array('SalesInvoice.status' => array(2, 3)) );
 
-        if(!empty($seriesNo)){
+            $seriesNo = $this->SalesInvoice->find('first', array(
+                    'order' => array('SalesInvoice.modified DESC'),
+                    'conditions' => $conditions));
 
-            $nextSalesNo = intval($seriesNo['SalesInvoice']['sales_invoice_no']);
+            if(!empty($seriesNo)){
 
-            $seriesSalesNo = str_pad(++$nextSalesNo,6,'0',STR_PAD_LEFT); 
+                $nextSalesNo = intval($seriesNo['SalesInvoice']['sales_invoice_no']);
 
+                $seriesSalesNo = str_pad(++$nextSalesNo,6,'0',STR_PAD_LEFT); 
+
+            }else{
+
+                $nextSalesNo = intval(0);
+
+                $seriesSalesNo = str_pad(++$nextSalesNo,6,'0',STR_PAD_LEFT);
+
+            }
+ 
         }else{
 
-            $nextSalesNo = intval(0);
+            $conditions = "";
 
-            $seriesSalesNo = str_pad(++$nextSalesNo,6,'0',STR_PAD_LEFT);
+            $seriesNo = $this->SalesInvoice->find('first', array(
+                    'order' => array('SalesInvoice.statement_no DESC'),
+                    'conditions' => $conditions));
+
+            if(!empty($seriesNo)){
+
+                $nextSalesNo = intval($seriesNo['SalesInvoice']['statement_no']);
+
+                $seriesSalesNo = str_pad(++$nextSalesNo,6,'0',STR_PAD_LEFT); 
+
+            }else{
+
+                $nextSalesNo = intval(0);
+
+                $seriesSalesNo = str_pad(++$nextSalesNo,6,'0',STR_PAD_LEFT);
+
+            }
 
         }
- 
 
-        $this->set(compact('deliveryUUID', 'seriesSalesNo'));
+        $this->set(compact('deliveryUUID', 'seriesSalesNo', 'indicator'));
 
         if (!empty($deliveryId)) {
 
@@ -1193,7 +1195,7 @@ class SalesInvoiceController extends AccountingAppController {
                 ON ClientOrder.company_id = Company.id 
                 WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR SalesInvoice.statement_no LIKE "%'.$hint.'%"
                 OR Company.company_name LIKE "%'.$hint.'%"  AND SalesInvoice.status = 2');
-            //pr($invoiceData); exit;
+            
             $this->set(compact('companyData','invoiceData','noPermissionReciv','noPermissionPay', 'deliveryNumHolder'));
 
             if ($hint == ' ') {
@@ -1425,12 +1427,8 @@ class SalesInvoiceController extends AccountingAppController {
                 $SINum = str_pad($SINum, 6, '0', STR_PAD_LEFT);
                 $invoiceData['SalesInvoice']['sales_invoice_no'] = $SINum;
 
-                //pr($invoiceData); exit;
-
             }else{
 
-                //pr('s'); exit;
-            
                 $SINumber = $invoiceData['SalesInvoice']['sales_invoice_no'];
                 $SINumber = str_pad($SINumber, 6, '0', STR_PAD_LEFT);
                 $invoiceData['SalesInvoice']['sales_invoice_no'] = $SINumber;
