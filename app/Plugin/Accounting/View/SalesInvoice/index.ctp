@@ -91,6 +91,20 @@
 				                        </td>
 
 				                       	<td>
+				                       		<?php
+
+				                       		if($invoiceDataList['SalesInvoice']['status'] == 3){
+
+				                       			$status = " not-active";
+
+				                       		}else{
+
+				                       			$status = " active";
+
+				                       		}
+
+				                       		?>
+
 				                            <?php
 
 				                            	echo $this->Html->link('<span class="fa-stack">
@@ -102,7 +116,15 @@
 				                            <?php
 
 				                            	echo $this->Html->link('<span class="fa-stack">
-							                    <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-trash  fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> Cancel </font></span></span> ', array('controller' => 'sales_invoice', 'action' => 'cancel',$invoiceDataList['SalesInvoice']['id']), array('class' =>' table-link','escape' => false, 'title'=>'View Sales Invoice'
+							                    <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-paper-plane  fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> Move</font></span></span> ', array('controller' => 'sales_invoice', 'action' => 'move',$invoiceDataList['SalesInvoice']['id']), array('class' =>' table-link' . $status ,'escape' => false, 'title'=>'Move to Statement of Acccount', 'confirm' => 'Do you want to move this Sales Invoice to Statement of Account?'
+							                    ));
+				        
+				                            ?>
+
+				                            <?php
+
+				                            	echo $this->Html->link('<span class="fa-stack">
+							                    <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-trash  fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> Cancel </font></span></span> ', array('controller' => 'sales_invoice', 'action' => 'cancel',$invoiceDataList['SalesInvoice']['id']), array('class' =>' table-link','escape' => false, 'title'=>'Cancel Sales Invoice'
 							                    ));
 				        
 				                            ?>

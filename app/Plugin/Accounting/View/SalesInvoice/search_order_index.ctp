@@ -43,6 +43,14 @@ foreach ($invoiceData as $invoiceDataList):
                 ));
             ?>
 
+             <?php
+
+                echo $this->Html->link('<span class="fa-stack">
+                <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-paper-plane  fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> Move</font></span></span> ', array('controller' => 'sales_invoice', 'action' => 'move',$invoiceDataList['SalesInvoice']['id']), array('class' =>' table-link','escape' => false, 'title'=>'Move to Statement of Acccount'
+                ));
+
+            ?>
+
             <?php
 
                 echo $this->Html->link('<span class="fa-stack">
