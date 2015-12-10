@@ -1,4 +1,4 @@
-<?php  //pr($invoiceData); exit;
+<?php  
 foreach ($invoiceData as $invoiceDataList){
 
     if($invoiceDataList['SalesInvoice']['status'] == '2'){ ?>    

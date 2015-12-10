@@ -11,7 +11,7 @@
                    
                       echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Statement of Account ', 
                             array('controller' => 'sales_invoice', 
-                                    'action' => 'add_statement',),
+                                    'action' => 'add','sa_no'),
                             array('class' =>'btn btn-primary pull-right',
                                 'escape' => false));
 

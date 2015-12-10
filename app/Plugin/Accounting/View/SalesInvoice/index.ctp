@@ -11,7 +11,7 @@
                    
                       echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Sales Invoice ', 
                             array('controller' => 'sales_invoice', 
-                                    'action' => 'add',),
+                                    'action' => 'add','si_num'),
                             array('class' =>'btn btn-primary pull-right',
                                 'escape' => false));
 
