@@ -68,6 +68,12 @@ class SalesInvoiceController extends AccountingAppController {
     }
 
     public function statement(){
+
+        $this->loadModel('Sales.Company');
+
+        $this->loadModel('Delivery.Delivery');
+
+        $deliveryNumHolder = $this->Delivery->find('list',array('fields' => array('dr_uuid','company_id')));
         
         $userData = $this->Session->read('Auth');
 
@@ -107,7 +113,9 @@ class SalesInvoiceController extends AccountingAppController {
             $noPermissionPay = ' ';
         }
 
-        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay'));
+        $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
+
+        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay', 'companyName', 'deliveryNumHolder'));
 
     }
 
@@ -1193,7 +1201,7 @@ class SalesInvoiceController extends AccountingAppController {
                 ON ClientOrder.company_id = Company.id 
                 WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR SalesInvoice.statement_no LIKE "%'.$hint.'%"
                 OR Company.company_name LIKE "%'.$hint.'%"  AND SalesInvoice.status = 2');
-            //pr($invoiceData); exit;
+            
             $this->set(compact('companyData','invoiceData','noPermissionReciv','noPermissionPay', 'deliveryNumHolder'));
 
             if ($hint == ' ') {

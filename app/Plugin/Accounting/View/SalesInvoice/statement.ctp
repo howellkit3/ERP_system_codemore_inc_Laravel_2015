@@ -36,6 +36,7 @@
 							<tr>
 								<th><a href="#"><span>Statement of Account No.</span></a></th>
 								<th><a href="#"><span>Delivery No.</span></a></th>
+								<th><a href="#"><span>Company</span></a></th>
 								<th><a href="#"><span>Action</span></a></th>
 							</tr>
 						</thead>
@@ -53,6 +54,10 @@
 
 						                        <td class="">
 						                            <?php echo $invoiceDataList['SalesInvoice']['dr_uuid'];?>
+						                        </td>
+
+						                        <td class="">
+						                            <?php echo $companyName[$deliveryNumHolder[$invoiceDataList['SalesInvoice']['dr_uuid']]];;?>
 						                        </td>
 						                        
 						                       	<td>
