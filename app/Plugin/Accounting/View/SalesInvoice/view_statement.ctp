@@ -9,8 +9,7 @@
 		echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> Export ', array(
         	'controller' => 'sales_invoice', 
         	'action' => 'print_invoice',
-        	//'ext' => 'pdf',
-        	$invoiceId,'sa_no'),
+        	$invoiceId,$clientOrderId,'sa_no'),
         	array('class' =>'btn btn-info pull-right ','escape' => false));
 	?>
 	<br><br>
@@ -45,7 +44,7 @@
 						</div>
 						<div class="col-lg-6">
 							:&emsp;
-							<?php echo ucfirst($companyData['Company']['company_name'])?>
+							<?php echo ucfirst($companyData)?>
 						</div>
 						<div class="col-lg-4">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
 							DATE : <?php echo (new \DateTime())->format('m/d/Y'); ?>
@@ -57,7 +56,7 @@
 						</div>
 						<div class="col-lg-6">:&emsp;</div>
 						<div class="col-lg-4">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
-							TIN : <?php echo ucfirst($companyData['Company']['tin'])?>
+							TIN : <?php echo ucfirst($clientData['Company']['tin'])?>
 						</div>
 					</div>
 					<div class="form-group">
@@ -65,7 +64,7 @@
 							ADDRESS
 						</div>
 						<div class="col-lg-6">
-							:&emsp;<?php echo ucfirst($companyData['Address'][0]['address1'])?>
+							:&emsp;<?php echo ucfirst($drData['DeliveryDetail']['location'])?>
 						</div>
 						<div class="col-lg-4">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
 							TERMS : <?php echo ucfirst($paymentTermData[$clientData['ClientOrder']['payment_terms']])?>
