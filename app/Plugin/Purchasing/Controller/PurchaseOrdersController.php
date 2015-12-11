@@ -22,7 +22,6 @@ class PurchaseOrdersController extends PurchasingAppController {
 		$params =  array(
 	            'conditions' => $conditions,
 	            'limit' => $limit,
-	            //'fields' => array('id', 'status','created'),
 	            'order' => 'PurchaseOrder.created DESC',
 	    );
 
@@ -36,8 +35,6 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     	$userName = $this->User->find('list', array('fields' => array('id', 'fullname')
 															));
-
-	//	$purchaseOrderData = $this->PurchaseOrder->find('all',array('order' => 'PurchaseOrder.id DESC'));
 
 		$this->set(compact('purchaseOrderData','supplierData', 'userName'));
 
@@ -273,8 +270,6 @@ class PurchaseOrdersController extends PurchasingAppController {
         $userData = $this->Session->read('Auth');
 
     	if (!empty($this->request->data)) {
-    		
-    		//pr($this->request->data); exit;
 
     		foreach ($this->request->data['PurchasingItemIdHolder'] as $key => $value) {
 
@@ -339,6 +334,8 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     	$this->PurchaseOrder->id = $purchaseOrderId;
 
+    	$this->PurchaseOrder->saveField('receive_item_status',0);
+
     	$this->PurchaseOrder->saveField('status',1);
 
     	$this->PurchaseOrder->saveField('order', $highest_order);
@@ -386,7 +383,6 @@ class PurchaseOrdersController extends PurchasingAppController {
 															'order' => array('Currency.name' => 'ASC')
 															));
 
-		//set to cache in first load
 		$paymentTermData = Cache::read('paymentTerms');
 		
 		if (!$paymentTermData) {
@@ -548,7 +544,6 @@ class PurchaseOrdersController extends PurchasingAppController {
 	                    array('Supplier.name LIKE' => '%' . $hint . '%')
 	                      ),  'PurchaseOrder.status' => 8
 	                    ),
-	                //  'limit' => 10
 	                  )); 
 
 			$userName = $this->User->find('list', array('fields' => array('id', 'fullname')));
@@ -790,14 +785,12 @@ class PurchaseOrdersController extends PurchasingAppController {
 
 		if($status == 4){
 
-
 			$limit = 10;
 
 			$conditions = array('NOT' => array('PurchaseOrder.status' => 5), 'PurchaseOrder.status' => 12);
 			$params =  array(
 		            'conditions' => $conditions,
 		            'limit' => $limit,
-		            //'fields' => array('id', 'status','created'),
 		            'order' => 'PurchaseOrder.created DESC',
 		    );
 
@@ -816,5 +809,19 @@ class PurchaseOrdersController extends PurchasingAppController {
 		}
 
     } 
+
+    public function purchased_items($id = null){
+
+    	$this->loadModel('Purchasing.PurchasingItem');
+
+		$this->loadModel('Purchasing.RequestItem');
+
+		$purchaseItemData = $this->PurchasingItem->find('all');
+
+		pr($purchaseItemData); exit;
+
+		$this->set(compact('purchaseItemData'));
+
+    }
 
 }
