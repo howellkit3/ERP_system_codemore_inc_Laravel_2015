@@ -1149,7 +1149,7 @@ class SalesInvoiceController extends AccountingAppController {
 
     }
 
-    public function search_order($view = null, $hint = null, $type = null){
+    public function search_order($view = null, $hint = null, $type = null, $indicator = null){
 
         if($type == '1'){
 
@@ -1164,7 +1164,7 @@ class SalesInvoiceController extends AccountingAppController {
                 WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR ClientOrder.po_number LIKE "%'.$hint.'%"
                 OR Company.company_name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%"   ');
 
-            $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData',  'poNumber', 'companyData'));
+            $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData',  'poNumber', 'companyData','indicator'));
             
             if ($hint == ' ') {
                 $this->render('index');
@@ -1196,7 +1196,7 @@ class SalesInvoiceController extends AccountingAppController {
                 WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR SalesInvoice.statement_no LIKE "%'.$hint.'%"
                 OR Company.company_name LIKE "%'.$hint.'%"  AND SalesInvoice.status = 2');
             
-            $this->set(compact('companyData','invoiceData','noPermissionReciv','noPermissionPay', 'deliveryNumHolder'));
+            $this->set(compact('companyData','invoiceData','noPermissionReciv','noPermissionPay', 'deliveryNumHolder','indicator'));
 
             if ($hint == ' ') {
 
@@ -1222,11 +1222,13 @@ class SalesInvoiceController extends AccountingAppController {
                 WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR SalesInvoice.sales_invoice_no LIKE "%'.$hint.'%"
                 OR Company.company_name LIKE "%'.$hint.'%" AND SalesInvoice.status = 1');
 
-            $this->set(compact('companyData','invoiceData','noPermissionReciv','noPermissionPay', 'deliveryNumHolder'));
+            $this->set(compact('companyData','invoiceData','noPermissionReciv','noPermissionPay', 'deliveryNumHolder','indicator'));
 
             if ($hint == ' ') {
+
                 $this->render('index');
             }else{
+
                 $this->render('search_order_index');
             }
 
