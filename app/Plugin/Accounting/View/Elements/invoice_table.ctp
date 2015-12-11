@@ -19,10 +19,20 @@
             </td>
             
             <td>
+                <?php //pr($indicator); exit; ?>
+                <?php if($indicator == "si_num" ){
+
+                    $label = " S.I.";
+
+                }else{
+
+                    $label = " S.A.";
+
+                } ?>
 
                 <a data-toggle="modal" href="#processModal" class="modal_button table-link " value="<?php echo $deliveryDataList['Delivery']['id']?>" deliveryUUID="<?php echo $deliveryDataList['Delivery']['dr_uuid']?>"><i class="fa fa-lg "></i><span class="fa-stack">
                     <i class="fa fa-square fa-stack-2x "></i>
-                    <i class="fa  fa-plus-circle fa-stack-1x fa-inverse  "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px">  S.A.</font></span></a> 
+                    <i class="fa  fa-plus-circle fa-stack-1x fa-inverse  "></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"><?php echo $label?></font></span></a> 
       
             </td>
 
