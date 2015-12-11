@@ -23,10 +23,12 @@
                 <?php if($indicator == "si_num" ){
 
                     $label = " S.I.";
+                    $heading = "Sales Invoice Details";
 
                 }else{
 
                     $label = " S.A.";
+                    $heading = " Statement of Account Details";
 
                 } ?>
 
@@ -44,7 +46,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Invoice Details</h4>
+                    <h4 class="modal-title"><?php echo $heading?></h4>
                 </div>
                 <div class="modal-body">
                     <div id="result-table">
