@@ -40,7 +40,7 @@ class DashboardsController  extends HumanResourceAppController {
 		// pr($holidays);
 		// exit();
 
-		$conditions = array();
+		$conditions = array('Employee.status NOT' => 3 );
 
 		if (!empty($departmentId)) {
 

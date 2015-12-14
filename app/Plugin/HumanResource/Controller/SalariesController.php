@@ -1918,8 +1918,6 @@ class SalariesController  extends HumanResourceAppController {
 				switch ($payroll['Payroll']['type']) {
 					case 'normal':
 						$salariesList = $this->_checkPayroll($payroll,false,$empIds);
-
-					case '13_month':
 						$salariesList = $this->_checkThirteenPayroll($payroll,false,$empIds);
 
 					break;

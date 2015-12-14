@@ -331,3 +331,6 @@ div.value {
 span.required {
   color: red;
 }
+#viewAll {
+  margin: 0 30px;
+}

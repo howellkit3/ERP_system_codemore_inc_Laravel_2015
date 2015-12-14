@@ -1571,5 +1571,59 @@ class EmployeesController  extends HumanResourceAppController {
 
 	}	
 
+	public function end_contract() {
+
+
+		$this->loadModel('HumanResource.Tooling');
+		$this->loadModel('HumanResource.Position');
+		$this->loadModel('HumanResource.Department');
+		$this->loadModel('HumanResource.Status');
+
+		$this->Employee->bind(array('Position','Department','Status'));
+
+		//array_push($departmentData, "All");
+		//$limit = 10;
+        $conditions = array('Employee.status NOT' => 3, 'Employee.');
+
+	 	if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'Employee' ) {
+	 		
+	 		$this->Employee->bind(array('Position','Department','Status'));
+
+	        // $this->paginate = array(
+	        //     'conditions' => $conditions,
+	        //     'limit' => $limit,
+	        //     //'fields' => array('id', 'status','created'),
+	        //     'recursive' => -1,
+	        //     'order' => 'Employee.code DESC',
+	        // );
+
+	        $emp = $this->Employee->find('all',array(
+	        		'conditions' => $conditions,
+	        		'order' => array('Employee.last_name ASC')
+
+	        ));
+
+       // pr($employees);
+	 
+			$employees  = $this->Employee->checkContract( $emp );
+
+			//pr($employees); exit();
+
+			$positions = $this->Position->find('list',array('fields' => array('id','name')));
+
+			$departments = $this->Department->find('list',array('fields' => array('id','notes')));
+
+			$departmentData = $this->Department->find('list',array('fields' => array('id','name')));
+
+			//$toolList = $this->Tool->find('list',array('fields' => array('id','name')));
+
+			$statusList = $this->Status->find('list',array('fields' => array('id','name')));
+
+        $this->set(compact('employees','departments','positions','toolings','toolList','employeeList', 'departmentData','statusList','totalEmployee'));
+
+	}
+
+}
+
 	
 }

@@ -413,7 +413,6 @@ class Employee extends AppModel {
 
 				$datetime2 = new DateTime($to);
 				$interval = $datetime1->diff($datetime2);
-
 				// if ($) {
 
 				// }
@@ -421,16 +420,17 @@ class Employee extends AppModel {
 				$empStatus = array('1','2');
 
 				if ($interval->m >= 5 && in_array($list['Employee']['contract_id'],$empStatus)) {
+						
 						$contractStart[$startKey] = $list;
 						$contractStart[$startKey]['date_hired'] = $list['Employee']['date_hired'];
 						$contractStart[$startKey]['end_contract'] =  date('Y-m-d', strtotime("+5 months", strtotime($list['Employee']['date_hired'])));
 						$contractStart[$startKey]['emp_status'] = $list['Employee']['contract_id'];
+				
 				}
 
-			$startKey++;
+				$startKey++;
 
 			}
-
 
 			return $contractStart;
 
