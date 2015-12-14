@@ -14,6 +14,8 @@ class SalesInvoiceController extends AccountingAppController {
         
         $this->loadModel('Sales.Company');
 
+        $this->loadModel('Sales.ClientOrder');
+
         $this->loadModel('Delivery.Delivery');
 
         $limit = 10;
@@ -37,8 +39,10 @@ class SalesInvoiceController extends AccountingAppController {
 
         $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
 
-        $deliveryNumHolder = $this->Delivery->find('list',array('fields' => array('dr_uuid','company_id')));
-       
+        $deliveryNumHolder = $this->Delivery->find('list',array('fields' => array('dr_uuid','clients_order_id')));
+
+        $clientDataHolder = $this->ClientOrder->find('list',array('fields' => array('uuid','company_id')));
+
         foreach($deliveryNumHolder as $key => $deliveryList) {
           
            $keyHolder = ltrim($key, '0');
@@ -47,12 +51,16 @@ class SalesInvoiceController extends AccountingAppController {
       
       
         if ($userData['User']['role_id'] == 9 ) {
+
             $noPermissionReciv = 'disabled not-active';
+
         } else {
+
             $noPermissionReciv = ' ';
+
         }
 
-       if ($userData['User']['role_id'] == 10) {
+        if ($userData['User']['role_id'] == 10) {
             $noPermissionPay = 'disabled not-active';
             $this->redirect( array(
                  'controller' => 'salesInvoice', 
@@ -60,10 +68,12 @@ class SalesInvoiceController extends AccountingAppController {
             ));
 
         } else {
+
             $noPermissionPay = ' ';
+
         }
 
-        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay','companyName', 'deliveryNumHolder'));
+        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay','companyName', 'deliveryNumHolder', 'clientDataHolder'));
 
     }
 

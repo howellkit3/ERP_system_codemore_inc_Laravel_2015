@@ -61,7 +61,7 @@
 				                        <td class="">
 				                            <?php  
 
-				                            echo $companyName[$deliveryNumHolder[$invoiceDataList['SalesInvoice']['dr_uuid']]];?>
+				                            echo $companyName[$clientDataHolder[$deliveryNumHolder[$invoiceDataList['SalesInvoice']['dr_uuid']]]];?>
 				                        </td> 
 				                        
 				                        <td class="text-center">
