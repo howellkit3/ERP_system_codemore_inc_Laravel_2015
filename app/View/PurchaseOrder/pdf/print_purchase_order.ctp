@@ -16,7 +16,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 						<center>
 
 						<!-- <img src="<?php echo Router::url('/', true) ?>img/koufu_logo.png" alt="logo" style="width:165px;height:30px;">  -->
-						<img src="http://localhost/koufunet_system/img/koufu_logo_2.jpg" alt="logo" style="width:210px;height:30px;padding-bottom:10;"><br>
+						<img src="<?php echo Router::url('/', true) ?>img/koufu_logo_2.jpg" alt="logo" style="width:210px;height:30px;padding-bottom:10;"><br>
 								<label style = "margin-top:0px; font-size: 12px;">Lot 4-5 Blk 4 Mountview Industrial Complex<br>
 								Brgy. Bancal Carmona Cavite<br>
 								Tel: +632-5844928; &nbsp; +6346-4301576 &nbsp; Fax: +632-5844952</label>
@@ -247,7 +247,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 					<td style =" padding:0px; padding-top:0px;  border:0px solid black; width:40%;">
 					<center>
 					<!-- <img src="<?php echo Router::url('/', true) ?>img/koufu_logo.png" alt="logo" style="width:165px;height:30px;">  -->
-					<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:210px;height:30px;padding-bottom:10;"><br>
+					<img src="<?php echo Router::url('/', true) ?>img/koufu_logo_2.jpg" alt="logo" style="width:210px;height:30px;padding-bottom:10;"><br>
 							<label style = "margin-top:0px; font-size: 12px;">Lot 4-5 Blk 4 Mountview Industrial Complex<br>
 							Brgy. Bancal Carmona Cavite<br>
 							Tel: +632-5844928; &nbsp; +6346-4301576 &nbsp; Fax: +632-5844952</label>
@@ -474,7 +474,8 @@ for ($x = 0; $x <= 1; $x++) { ?>
 					<td style =" padding:0px; padding-top:0px; border:0px solid black; width:40%;">
 					<center>
 					<!-- <img src="<?php echo Router::url('/', true) ?>img/koufu_logo.png" alt="logo" style="width:165px;height:30px;">  -->
-					<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:210px;height:30px;padding-bottom:10;"><br>
+				
+					<img src="<?php echo Router::url('/', true) ?>img/koufu_logo_2.jpg" alt="logo" style="width:210px;height:30px;padding-bottom:10;"><br>
 							<label style = "margin-top:0px; font-size: 12px;">Lot 4-5 Blk 4 Mountview Industrial Complex<br>
 							Brgy. Bancal Carmona Cavite<br>
 							Tel: +632-5844928; &nbsp; +6346-4301576 &nbsp; Fax: +632-5844952</label>
