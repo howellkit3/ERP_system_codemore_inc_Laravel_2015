@@ -2586,3 +2586,6 @@ ADD COLUMN `received_bycash_number`  INT(11) NULL AFTER `delivery_date`;
 ALTER TABLE `request_items`
 ADD COLUMN `received_bycash_number`  INT(11) NULL AFTER `unit_price_unit_id`;
 
+
+/* aldrin added this 12 - 11 - 15 koufu production */
+ALTER TABLE `ticket_process_schedules`  ADD `production_date_from` DATETIME NULL AFTER `production_date`,  ADD `production_date_to` DATETIME NULL AFTER `production_date_from`;

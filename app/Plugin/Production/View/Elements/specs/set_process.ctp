@@ -39,13 +39,21 @@
 						<h1>Set Process</h1>
 						<div class="row parent-collapse">
 							<div class="col-lg-5">
-
+<!-- 
 								<div class="col-lg-9"> <?php echo $this->Form->input('production_date',array(
-								'class' => 'datepicker form-control required',
+								'class' => 'daterangepicker form-control required',
 								'label' => 'Production Date <span class="required"> * </span>',
 								'type' => 'text',
 								'value' => !empty($processData['TicketProcessSchedule']['production_date']) ? date('Y-m-d',strtotime($processData['TicketProcessSchedule']['production_date'])) : ''
-								)); ?> </div>
+								)); ?> </div> -->
+
+								  <div class="form-group pull-left col-lg-9">
+								  	<label> Production Date <span class="required"> * </span> </label>
+					                 	<div class="input-group">
+			                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+			                                <input placeholder="" name="data[TicketProcessSchedule][production_date]" data="1" type="text" class="form-control myDateRange"  value="<?php //echo $dateSelected ?>" >
+			                            </div>
+									</div>
 							</div>
 							<div class="col-lg-5">
 								<div class="col-lg-9"> <?php echo $this->Form->input('department_process_id',array(
