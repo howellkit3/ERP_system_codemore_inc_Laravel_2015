@@ -16,7 +16,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 						<center>
 
 						<!-- <img src="<?php echo Router::url('/', true) ?>img/koufu_logo.png" alt="logo" style="width:165px;height:30px;">  -->
-						<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:210px;height:30px;padding-bottom:10;"><br>
+						<img src="http://localhost/koufunet_system/img/koufu_logo_2.jpg" alt="logo" style="width:210px;height:30px;padding-bottom:10;"><br>
 								<label style = "margin-top:0px; font-size: 12px;">Lot 4-5 Blk 4 Mountview Industrial Complex<br>
 								Brgy. Bancal Carmona Cavite<br>
 								Tel: +632-5844928; &nbsp; +6346-4301576 &nbsp; Fax: +632-5844952</label>
@@ -207,7 +207,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 	                </td>
 	                <td style="width:230px;">Version : <?php echo $purchaseOrderData['PurchaseOrder']['version']; ?></th></td> -->
 	                <td align = "right" style="width:300px;" class="border-bot">TOTAL AMOUNT</th>
-	                <td align ="center" style="width:70px;" class="border-bot"> <?php echo ($total == 0) ? " " : ": " . number_format($total,2)?></td>
+	                <td align ="center" style="width:70px;" class="border-bot"> <?php echo ($total == 0) ? " " : ": " . $currencyData[$value[$modelTable]['unit_price_unit_id']] . " " . number_format($total,2)?></td>
 	            </tr>
 	        </table>
 
@@ -439,7 +439,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 	                </td>
 	                <td style="width:230px;">Version : <?php echo $purchaseOrderData['PurchaseOrder']['version']; ?></th></td> -->
 	                <td align = "right" style="width:300px;" class="border-bot">TOTAL AMOUNT</th>
-	                <td align ="center" style="width:70px;" class="border-bot"> <?php echo ($total == 0) ? " " : ": " . number_format($total,2)?></td>
+	                <td align ="center" style="width:70px;" class="border-bot"> <?php echo ($total == 0) ? " " : ": " . $currencyData[$value[$modelTable]['unit_price_unit_id']] . " " . number_format($total,2)?></td>
 	            </tr>
 	        </table>
 
@@ -662,7 +662,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 	                </td>
 	                <td style="width:230px;">Version : <?php echo $purchaseOrderData['PurchaseOrder']['version']; ?></th></td> -->
 	                <td align = "right" style="width:300px;" class="border-bot">TOTAL AMOUNT</th>
-	                <td align ="center" style="width:70px;" class="border-bot"> <?php echo ($total == 0) ? " " : ": " . number_format($total,2)?></td>
+	                <td align ="center" style="width:70px;" class="border-bot"> <?php echo ($total == 0) ? " " : ": " . $currencyData[$value[$modelTable]['unit_price_unit_id']] . " " .number_format($total,2)?></td>
 	            </tr>
 	        </table>
 
