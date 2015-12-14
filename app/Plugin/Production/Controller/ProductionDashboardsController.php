@@ -36,7 +36,7 @@ class ProductionDashboardsController extends ProductionAppController {
         }
 
         $tickets = $this->TicketProcessSchedule->query("
-        SELECT TicketProcessSchedule.id,TicketProcessSchedule.job_ticket_id,TicketProcessSchedule.job_ticket_id,TicketProcessSchedule.production_date,TicketProcessSchedule.department_process_id,TicketProcessSchedule.machine_id,
+        SELECT TicketProcessSchedule.id,TicketProcessSchedule.job_ticket_id,TicketProcessSchedule.job_ticket_id,TicketProcessSchedule.production_date,TicketProcessSchedule.department_process_id,TicketProcessSchedule.machine_id,TicketProcessSchedule.production_date_from,TicketProcessSchedule.production_date_to,
         RecievedTicket.id,RecievedTicket.job_ticket_id,RecievedTicket.status,RecievedTicket.created,
         JobTicket.id,JobTicket.product_id,JobTicket.client_order_id,JobTicket.po_number,JobTicket.status_production_id,JobTicket.remarks,JobTicket.uuid,
         ClientOrder.id,ClientOrder.po_number,ClientOrder.company_id,ClientOrder.quotation_id,ClientOrder.client_order_item_details_id,

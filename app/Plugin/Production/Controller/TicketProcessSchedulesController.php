@@ -222,8 +222,19 @@ class TicketProcessSchedulesController extends ProductionAppController {
 
             $data = $this->request->data;
 
-            $TicketProcessScheduleID = $this->TicketProcessSchedule->saveProcess($data,$auth['id']);
 
+            if (!empty($data['TicketProcessSchedule']['production_date'])) {
+
+                $dates = explode('-', $data['TicketProcessSchedule']['production_date']);
+                
+                $data['TicketProcessSchedule']['production_date_from'] = date('Y-m-d',strtotime($dates[0]));
+
+                $data['TicketProcessSchedule']['production_date_to'] = date('Y-m-d',strtotime($dates[1]));
+
+            }
+
+
+            $TicketProcessScheduleID = $this->TicketProcessSchedule->saveProcess($data,$auth['id']);
             $this->MachineLog->saveMachineLog($TicketProcessScheduleID, $auth['id']);
 
             if ($this->request->is('ajax')) {

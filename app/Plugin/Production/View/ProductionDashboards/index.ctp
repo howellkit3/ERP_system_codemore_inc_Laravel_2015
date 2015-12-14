@@ -45,13 +45,21 @@ echo $this->Html->css(array(
 											<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 											<input placeholder="Date Range" name="data[date]" data="1" type="text" class="form-control myDateRange"  value="<?php echo $selectedDate; ?>" >
 										</div>
+
+										<div class="pull-right">
+			                    	<button class="btn btn-success" type="submit">
+												EXPORT
+										</button>
 									</div>
+									</div>
+
 									
 										<button class="btn btn-success" type="submit">
 												SEARCH
 										</button>
 
 			                    	<?php echo $this->Form->end(); ?>
+			                    	
 				                   <br><br>
 				               	</div>
 				            </header>
@@ -91,7 +99,16 @@ echo $this->Html->css(array(
 									                           <?php echo !empty($ticket['ClientOrderDeliverySchedule']['schedule']) ? date('Y-m-d',strtotime($ticket['ClientOrderDeliverySchedule']['schedule'])) : '' ?>
 									                        </td>
 									                         <td class="">
-									                           <?php echo !empty($ticket['TicketProcessSchedule']['production_date']) ? date('Y-m-d',strtotime($ticket['TicketProcessSchedule']['production_date'])) : '' ?>
+									                         
+									                           <?php 
+									                           if(!empty($ticket['TicketProcessSchedule']['production_date_from']) && !empty($ticket['TicketProcessSchedule']['production_date_to']))  {
+
+									                           	echo date('Y-m-d',strtotime($ticket['TicketProcessSchedule']['production_date_from'])) . ' - ' . date('Y-m-d',strtotime($ticket['TicketProcessSchedule']['production_date_to']));
+
+									                           } else {
+
+
+									                           } ?>
 									                        </td>
 									                        <td class="">
 									                           <?php echo !empty($ticket['TicketProcessSchedule']['department_process_id']) ?  $departmentProcess[$ticket['TicketProcessSchedule']['department_process_id']] : '' ?>

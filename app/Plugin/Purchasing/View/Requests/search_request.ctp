@@ -53,21 +53,30 @@
             </td>
 
             <td>
-                <?php
+                <?php if(empty($purchased)){
+
                     echo $this->Html->link('<span class="fa-stack">
                         <i class="fa fa-square fa-stack-2x"></i>
                         <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View </font></span>
                         </span> ', array('controller' => 'requests', 'action' => 'view',$requestList['Request']['id']),array('class' =>' table-link','escape' => false,'title'=>'Review Request'));
-                ?>
-               
-                <?php
+
+
                     echo $this->Html->link('<span class="fa-stack">
                         <i class="fa fa-square fa-stack-2x"></i>
                         <i class="fa fa-trash fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Remove </font></span>
                         </span>', array('controller' => 'requests', 'action' => 'delete',$requestList['Request']['id']),array('class' =>' table-link','escape' => false,'title'=>'Edit Information'));
-                ?>
-             
                 
+                    
+                }else{
+
+                    echo $this->Html->link('<span class="fa-stack">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View </font></span>
+                        </span> ', array('controller' => 'requests', 'action' => 'view',$requestList['Request']['id'],1),array('class' =>' table-link','escape' => false,'title'=>'Review Request'));
+                }
+
+                ?>
+               
             </td>
         </tr>
 

@@ -1,7 +1,7 @@
 <?php 
 // header("Content-disposition: attachment; filename="'this.pdf');
 // header("Content-type: application/pdf");
-Configure::write('debug',0);
+Configure::write('debug',2);
 ?>
 <style>
 <?php include('word.css'); ?>
@@ -14,6 +14,20 @@ Configure::write('debug',0);
 </head>
 <body style="font-family:sans-serif;">	
 
+<?php
+$outs1  = !empty($part['ProductSpecificationPart']['outs1']) ? $part['ProductSpecificationPart']['outs1']  : 1;
+$outs2  = !empty($part['ProductSpecificationPart']['outs2']) ? $part['ProductSpecificationPart']['outs2']  : 1;
+$outProduct = $outs1 * $outs2; 
+$quantity = $specs['ProductSpecification']['quantity']; 
+$rate  = !empty($part['ProductSpecificationPart']['rate']) ? $part['ProductSpecificationPart']['rate']  : 1;
+$stocks = !empty($specs['ProductSpecification']['stock']) ? $specs['ProductSpecification']['stock']  : 0;
+
+$quantitySubtracted = $quantity - $stocks; 
+$product = $rate * $quantitySubtracted;
+$paper  = ceil($product / $outProduct);
+
+
+?>
 <div class="large-padding">
 		<table class="full-width" style="font-family:sans-serif;">
 				<tr>
@@ -29,7 +43,7 @@ Configure::write('debug',0);
 		</table>
 		<br>
 
-		<?php $outs = floatval($part['ProductSpecificationPart']['outs1']) * floatval($part['ProductSpecificationPart']['outs2']);
+		<?php// $outs = floatval($part['ProductSpecificationPart']['outs1']) * floatval($part['ProductSpecificationPart']['outs2']);
         ?>
 
 			<table class="full-width border" style="font-family:sans-serif;">
@@ -127,7 +141,7 @@ Configure::write('debug',0);
 
 									?>
 									<td style = "align:right; "><?php echo $cuttingSize ?></td>
-									<td><?php  echo $specs['ProductSpecification']['quantity'] ?> + <?php  echo !empty($allowance) ? $allowance : 0 ?> = <?php echo $total ?> </td>
+									<td><?php $paperQty = !empty($paper) ? $paper : $specs['ProductSpecification']['quantity']; echo $paperQty; $total = $paperQty; ?> + <?php  $allowance = !empty($allowance) ? $allowance : 0; echo $allowance; $total += $allowance;  ?> = <?php echo $total ?> </td>
 								</tr>
 							</table>
 					</td>
@@ -145,6 +159,8 @@ Configure::write('debug',0);
 			</table>
 
 			<table class="full-width border" style="font-family:sans-serif;">
+
+			<?php if(!empty($corrugated['ItemGroupLayer'])){ ?>
 
 				<?php foreach ($corrugated['ItemGroupLayer'] as $key => $layerList){ ?>
 
@@ -171,21 +187,22 @@ Configure::write('debug',0);
 					</td>
 				</tr>
 
-				<?php } ?>
+				<?php } 
+			}?>
 
 			</table>
 
 			<table class="full-width border" style="height:80px">
 				<tr>
-				<td style="vertical-align:top">
-						<h2 style="font-size:12px">Remarks</h2>
-					<br>
-					<?php  if (!empty($corrugatedJobTicket['CorrugatedPaperJobTicket']['remarks']))  {
+					<td style="vertical-align:top">
+							<h2 style="font-size:12px">Remarks</h2>
+						<br>
+						<?php  if (!empty($corrugatedJobTicket['CorrugatedPaperJobTicket']['remarks']))  {
 
-						echo $corrugatedJobTicket['CorrugatedPaperJobTicket']['remarks'];
+							echo $corrugatedJobTicket['CorrugatedPaperJobTicket']['remarks'];
 
-					}?>	
-				</td>
+						}?>	
+					</td>
 				</tr>	
 					
 			</table>

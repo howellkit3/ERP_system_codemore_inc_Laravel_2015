@@ -21,7 +21,6 @@
 		echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> Export ', array(
         	'controller' => 'sales_invoice', 
         	'action' => 'print_invoice',
-        	//'ext' => 'pdf',
         	$invoiceId,
         	$clientOrderId),
         	array('class' =>'btn btn-info pull-right ','escape' => false));
@@ -40,6 +39,7 @@
         	array('class' =>'btn btn-info pull-right ','escape' => false));
 
 	}
+	
 	?>
 	<br><br>
 </div>

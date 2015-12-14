@@ -59,7 +59,6 @@ class RequestsController extends PurchasingAppController {
 
 	 	if ($this->request->is(array('post','put'))) {
 
-
 			$requestUuid = $this->Request->saveRequest($this->request->data['Request'],$userData['User']['id']);
 
 			$this->RequestItem->saveRequestItem($this->request->data ,$requestUuid);
@@ -71,7 +70,6 @@ class RequestsController extends PurchasingAppController {
                      'action' => 'request_list'
     
              ));
-
         }
 
 		$this->set(compact('purchasingTypeData', 'unitData','itemData'));
@@ -246,7 +244,7 @@ class RequestsController extends PurchasingAppController {
 		
     }
 
-    public function view($requestId = null){
+    public function view($requestId = null, $purchased = null ){
 
     	$userData = $this->Session->read('Auth');
 
@@ -277,7 +275,7 @@ class RequestsController extends PurchasingAppController {
     	$requestData = $this->Request->find('first', array('conditions' => array('Request.id' => $requestId)));
 		
 		$requestPurchasingItem = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'])));
-
+		
 	    foreach ($requestPurchasingItem as $key => $value) {
 			
 			if($value['RequestItem']['model'] == 'GeneralItem'){
@@ -315,10 +313,11 @@ class RequestsController extends PurchasingAppController {
 	    $preparedData = $this->User->find('first', array(
 														'conditions' => array('User.id' => $requestData['Request']['prepared_by']),
 														));
-	    //pr($requestPurchasingItem);exit();
-    	$this->set(compact('requestId','requestData','requestPurchasingItem','unitData','preparedData' , 'userData'));
+	    
+    	$this->set(compact('requestId','requestData','requestPurchasingItem','unitData','preparedData' , 'userData', 'purchased'));
     }
 
+ 
     public function edit($requestId = null){
 
     	$userData = $this->Session->read('Auth');
@@ -459,30 +458,27 @@ class RequestsController extends PurchasingAppController {
 
 		$this->loadModel('CompoundSubstrate');
 
-		//$this->Request->bind(array('Purchase'));
-
-		// $purchaseOrderData = $this->PurchaseOrder->find('all', 'order' => array('PurchaseOrder.created' => 'ASC')
-		// 													);
+		$byCashNum = strtotime(date('h:i:s'));
 
 		$purchaseOrderData = $this->PurchaseOrder->find('first', array('fields' => array('id', 'po_number'),
 															'order' => array('PurchaseOrder.created' => 'DESC')
 															));
 
-		
-		//pr($purchaseOrderData); exit;
-		//if($purchaseOrderData['PurchaseOrder']['po_number'] != 15100001){
-
-			//$purchaseNumber = 15100001;
-
-		//}else if($purchaseOrderData['PurchaseOrder']['po_number'] >= 15100001){
-
 		$purchaseNumber = $purchaseOrderData['PurchaseOrder']['po_number'] + 1;
-
-		//}
 
     	$requestData = $this->Request->find('first', array('conditions' => array('Request.id' => $requestId)));
 
-    	$requestItem = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'])));
+    	if(!empty($bycash)){
+
+    		$requestItem = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'], 'RequestItem.status_id' => 0)));
+
+    	}else{
+
+    		$requestItem = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'])));
+
+    	}
+
+    	$requestItemCount = count($requestItem);
 
     	foreach ($requestItem as $key => $value) {
 			
@@ -538,7 +534,7 @@ class RequestsController extends PurchasingAppController {
 															'order' => array('PurchasingType.id' => 'ASC')
 															));
 
-    	$this->set(compact('purchaseNumber','requestId','supplierData','paymentTermData','requestData','type','unitData','requestItem','currencyData', 'bycash'));
+    	$this->set(compact('purchaseNumber','requestId','supplierData','paymentTermData','requestData','type','unitData','requestItem','currencyData', 'bycash', 'byCashNum', 'requestItemCount'));
 
     }
 
@@ -554,11 +550,33 @@ class RequestsController extends PurchasingAppController {
 
     	if (!empty($this->request->data)) {
 
+    		$filledNum = $this->request->data['PurchaseOrder']['filed_number'];
+
+    		$statusHolder = 0;
+
     		if(!empty($this->request->data['PurchaseOrder']['supplier'])){
 
     				$this->request->data['PurchaseOrder']['supplier_id'] = $this->request->data['PurchaseOrder']['supplier'];
     				$this->request->data['PurchaseOrder']['contact_id'] = $this->request->data['PurchaseOrder']['contact'];
     				$this->request->data['PurchaseOrder']['contact_person_id'] = $this->request->data['PurchaseOrder']['contact_person'];
+
+    			if($this->request->data['PurchaseOrder']['request_item_count'] <= count($this->request->data['RequestItemIdHolder'])){
+
+	    			$statusHolder = 0;
+
+    			}else{
+
+    				$statusHolder = 1;
+    			}
+
+    		}
+	
+    		if($statusHolder != 1){
+
+
+    			$this->Request->id = $this->request->data['PurchaseOrder']['request_id'];
+
+    			$this->Request->saveField('status_id',0);
 
     		}
 
@@ -580,11 +598,7 @@ class RequestsController extends PurchasingAppController {
     		
     		$this->PurchaseOrder->savePurchaseOrder($this->request->data,$userData['User']['id'], $bycash);
 
-    		$this->RequestItem->saveRequestItemPrice($this->request->data);
-
-    		$this->Request->id = $this->request->data['PurchaseOrder']['request_id'];
-
-    		$this->Request->saveField('status_id',0);
+    		$this->RequestItem->saveRequestItemPrice($this->request->data, $filledNum);
 
     		$this->Session->setFlash(__('Purchase Order complete.'));
 
@@ -845,6 +859,8 @@ class RequestsController extends PurchasingAppController {
 
   	  	if($status == 3){
 
+  	  		$purchased = 1;
+
 			$userName = $this->User->find('list', array('fields' => array('id', 'fullname')
 																));
 
@@ -866,7 +882,7 @@ class RequestsController extends PurchasingAppController {
 	                      )); 
 
 
-	       $this->set(compact('requestData', 'type','statusData', 'userName'));
+	       $this->set(compact('requestData', 'type','statusData', 'userName','purchased'));
 
 	        if ($hint == ' ') {
 	            $this->render('index');
@@ -917,13 +933,7 @@ class RequestsController extends PurchasingAppController {
         										'CorrugatedPaper.name LIKE' => '%' . $searchHint . '%',
         										 ),'limit' => 10));
     	}
-
-    	//pr($searchedProduct); exit;
-
-    	// foreach ($categoryData as $key => $list) {    		
-    	// 	$categoryData[$key][$ModelName]['name'] = utf8_encode($list[$ModelName]['name']);    		
-    	// }
-    	//pr($categoryData);exit();
+ 	
     	$this->set(compact('searchedProduct','ModelName','dynamicId'));
 		$this->render('searched_item_details');
 
@@ -937,11 +947,11 @@ class RequestsController extends PurchasingAppController {
 
     		//update request
 
-    		$status = 0;
+    		$status = 2;
 
     		$this->Request->id = $id;
 
-    		if ( $this->Request->saveField('status', $status) ) {
+    		if ( $this->Request->saveField('status_id', $status) ) {
 
     			$this->Session->setFlash(__('Request Termination sucess.'),'success');
 
@@ -949,7 +959,6 @@ class RequestsController extends PurchasingAppController {
     			$this->Session->setFlash(__('Request Termination Failes.'),'error');
 
     		}
-
 
 	        $this->redirect( array(
 	                 'controller' => 'requests', 
@@ -1002,13 +1011,17 @@ class RequestsController extends PurchasingAppController {
 
     public function index_status($status = null) {
 
-    	$this->loadModel('Purchasing.Request');
-
 		$this->loadModel('User');
 
 		$this->loadModel('Purchasing.PurchasingType');
 
+		$type = $this->PurchasingType->find('list', array('fields' => array('id', 'name'),
+												'order' => array('PurchasingType.id' => 'ASC')
+												));
+
 		if($status == 1){
+
+			$this->loadModel('Purchasing.Request');
 
 			$limit = 10;
 
@@ -1027,10 +1040,6 @@ class RequestsController extends PurchasingAppController {
 			$userName = $this->User->find('list', array('fields' => array('id', 'fullname')
 															));
 
-			$type = $this->PurchasingType->find('list', array('fields' => array('id', 'name'),
-															'order' => array('PurchasingType.id' => 'ASC')
-															));
-
 			$this->set(compact('requestData','type', 'userName'));  
 
 			$this->render('request_waiting');
@@ -1039,6 +1048,8 @@ class RequestsController extends PurchasingAppController {
 
 
 		if($status == 2){
+
+			$this->loadModel('Purchasing.Request');
 
 			$limit = 10;
 
@@ -1057,9 +1068,7 @@ class RequestsController extends PurchasingAppController {
 			$userName = $this->User->find('list', array('fields' => array('id', 'fullname')
 															));
 
-			$type = $this->PurchasingType->find('list', array('fields' => array('id', 'name'),
-															'order' => array('PurchasingType.id' => 'ASC')
-															));
+
 
 			$this->set(compact('requestData','type', 'userName'));  
 
@@ -1068,6 +1077,10 @@ class RequestsController extends PurchasingAppController {
 		}
 
 		if($status == 3){
+
+			$purchased = 1;
+
+			$this->loadModel('Purchasing.Request');
 
 			$limit = 10;
 
@@ -1086,13 +1099,13 @@ class RequestsController extends PurchasingAppController {
 			$userName = $this->User->find('list', array('fields' => array('id', 'fullname')
 															));
 
-			$type = $this->PurchasingType->find('list', array('fields' => array('id', 'name'),
-															'order' => array('PurchasingType.id' => 'ASC')
-															));
 
-			$this->set(compact('requestData','type', 'userName'));  
+
+			$this->set(compact('requestData','type', 'userName', 'purchased'));  
 
 			$this->render('request_purchased');
+
+			
 
 		}
 

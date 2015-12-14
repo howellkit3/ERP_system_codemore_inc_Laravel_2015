@@ -50,7 +50,7 @@
                     echo $this->Html->link('<span class="fa-stack">
                         <i class="fa fa-square fa-stack-2x"></i>
                         <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> View </font></span>
-                        </span> ', array('controller' => 'purchase_orders', 'action' => 'view',$purchaseOrderDataList['PurchaseOrder']['id']),array('class' =>' table-link','escape' => false,'title'=>'Review Purchase Order'));
+                        </span> ', array('controller' => 'purchase_orders', 'action' => 'view',$purchaseOrderDataList['PurchaseOrder']['id'], 1),array('class' =>' table-link','escape' => false,'title'=>'Review Purchase Order'));
                 ?>
 
                 <?php

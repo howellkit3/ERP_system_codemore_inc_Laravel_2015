@@ -43,7 +43,7 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     }
 
-    public function view($purchaseOrderid = null){
+    public function view($purchaseOrderid = null, $bycash = null){
 
 		$this->loadModel('Supplier');
 
@@ -102,13 +102,34 @@ class PurchaseOrdersController extends PurchasingAppController {
 
 		$purchaseItemData = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $requestData['Request']['uuid'])));
 
+		//$purchaseItemData = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'])));
+
+	//	pr($purchaseOrderData['PurchaseOrder']['received_bycash_number']); exit;
+
 		if (empty($purchaseItemData)) {
 
-    		$purchaseItemData = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'])));
-    		$modelTable = 'RequestItem'; 
-    	} else {
+			if(!empty($purchaseOrderData['PurchaseOrder']['filed_number'])){
+
+    			$purchaseItemData = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'],
+    					'RequestItem.filed_number ' => $purchaseOrderData['PurchaseOrder']['filed_number'],
+    					'RequestItem.status_id ' => 1
+    			 )));
+    			$modelTable = 'RequestItem'; 
+
+    		}else{
+
+    			$purchaseItemData = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'], 
+    					'RequestItem.status_id ' => 0)));
+    			$modelTable = 'RequestItem'; 
+
+    		}
+
+    	} else { 
+
     		$modelTable = 'PurchasingItem'; 
     	}
+
+    //	pr($purchaseItemData); exit;
 
 		foreach ($purchaseItemData as $key => $value) {
 			
@@ -148,7 +169,7 @@ class PurchaseOrdersController extends PurchasingAppController {
 														'conditions' => array('User.id' => $purchaseOrderData['PurchaseOrder']['created_by']),
 														));
 		
-		$this->set(compact('modelTable','purchaseOrderData','supplierData','purchaseOrderid','unitData','paymentTermData','purchaseItemData','preparedData', 'currencyData', 'faxContactData', 'telContactData'));
+		$this->set(compact('modelTable','purchaseOrderData','supplierData','purchaseOrderid','unitData','paymentTermData','purchaseItemData','preparedData', 'currencyData', 'faxContactData', 'telContactData', 'bycash'));
 
     }
 
@@ -332,7 +353,7 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     }
 
-    public function print_purchase_order($purchaseOrderId){
+    public function print_purchase_order($purchaseOrderId, $bycash = null){
 
     	$this->loadModel('Supplier');
 
@@ -391,8 +412,21 @@ class PurchaseOrdersController extends PurchasingAppController {
 
 		if (empty($purchaseItemData)) {
 
-    		$purchaseItemData = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'])));
-    		$modelTable = 'RequestItem'; 
+    		if(!empty($purchaseOrderData['PurchaseOrder']['filed_number'])){
+
+    			$purchaseItemData = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'],
+    					'RequestItem.filed_number ' => $purchaseOrderData['PurchaseOrder']['filed_number'],
+    					'RequestItem.status_id ' => 1
+    			 )));
+    			$modelTable = 'RequestItem'; 
+
+    		}else{
+
+    			$purchaseItemData = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'], 
+    					'RequestItem.status_id ' => 0)));
+    			$modelTable = 'RequestItem'; 
+
+    		}
     	} else {
     		$modelTable = 'PurchasingItem'; 
     	}
@@ -437,7 +471,7 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     	$view = new View(null, false);
 
-		$view->set(compact('modelTable','purchaseOrderData','supplierData','purchaseOrderId','unitData','paymentTermData','purchaseItemData','preparedData', 'currencyData', 'telContactData', 'faxContactData'));
+		$view->set(compact('modelTable','purchaseOrderData','supplierData','purchaseOrderId','unitData','paymentTermData','purchaseItemData','preparedData', 'currencyData', 'telContactData', 'faxContactData', 'bycash'));
 		
 		$view->viewPath = 'PurchaseOrder'.DS.'pdf';	
    
@@ -675,8 +709,6 @@ class PurchaseOrdersController extends PurchasingAppController {
 
 			$purchaseOrderData = $this->paginate('PurchaseOrder');
 
-			//pr($purchaseOrderData); exit;
-
 	    	$supplierData = $this->Supplier->find('list', array(
 															'fields' => array('Supplier.id', 'Supplier.name'),
 															));
@@ -784,7 +816,5 @@ class PurchaseOrdersController extends PurchasingAppController {
 		}
 
     } 
-
-
 
 }

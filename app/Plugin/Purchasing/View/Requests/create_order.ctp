@@ -238,7 +238,32 @@
 	                                	<label class="col-lg-2 control-label"><span style="color:red">*</span>Payment Terms</label>
 										<div class="col-lg-8">
 											
-				                            <?php echo $this->Form->input('PurchaseOrder.payment_term', array(
+				                            <?php 
+
+				                            if(!empty($bycash)){
+
+				                            echo $this->Form->input('PurchaseOrder.payment_term_proxy', array(
+					                                'options' => array($paymentTermData),
+					                                'type' => 'select',
+					                                'label' => false,
+					                                'class' => 'form-control required paymentTerm',
+					                                'value' => !empty($bycash) ? 12 : "" , 
+					                                'readonly' => 'readonly',
+					                                'disabled' => 'disabled',
+					                                'empty' => '---Select Payment Term---'
+					                                 )); 
+
+				                            echo $this->Form->input('PurchaseOrder.payment_term', array(
+					                                'type' => 'hidden',
+					                                'label' => false,
+					                                'class' => 'form-control required paymentTerm',
+					                                'value' => !empty($bycash) ? 12 : "" , 
+					                                'empty' => '---Select Payment Term---'
+					                                 )); 
+
+					                        }else{
+
+					                        	 echo $this->Form->input('PurchaseOrder.payment_term', array(
 					                                'options' => array($paymentTermData),
 					                                'type' => 'select',
 					                                'label' => false,
@@ -246,8 +271,7 @@
 					                                'value' => !empty($bycash) ? 12 : "" , 
 					                                'empty' => '---Select Payment Term---'
 					                                 )); 
-
-					                            ?>
+					                        } ?>
 
 					                            <?php echo $this->Form->input('PurchaseOrder.prepared_by', array(
 					                                'label' => false,
@@ -255,8 +279,16 @@
 					                                'class' => 'form-control required preparedby',
 					                                'value' => $requestData['Request']['prepared_by'] 
 					                                 )); 
-
 					                            ?>
+
+					                            <?php echo $this->Form->input('PurchaseOrder.filed_number', array(
+					                                'label' => false,
+					                                'type' => 'hidden',
+					                                'class' => 'form-control ',
+					                                'value' => $byCashNum 
+					                                 )); 
+					                            ?>
+
 										</div>
 									</div>
 
@@ -359,7 +391,7 @@
 					                                'value' => $type[$requestData['Request']['pur_type_id']]
 					                                 )); 
 
-					                            ?>
+					                            ?> 
 
 					                            <?php echo $this->Form->input('PurchaseOrder.po_number', array(
 					                                'type' => 'text',
@@ -369,346 +401,387 @@
 					                                'readonly' => true,
 					                                'value' => $purchaseNumber
 					                                 )); 
+					                            ?>
+
+					                            <?php echo $this->Form->input('PurchaseOrder.request_item_count', array(
+					                                'type' => 'text',
+					                                'label' => false,
+					                                'type' => 'hidden',
+ 					                                'class' => 'form-control po_number',
+					                                'readonly' => true,
+					                                'value' => $requestItemCount
+					                                 )); 
 
 					                            ?>
+
 										</div>
 									</div>
 
 									<hr>
 									
-									<?php foreach ($requestItem as $key => $value) { ?>
+									<?php foreach ($requestItem as $key => $value) { 
+
+										if($value['RequestItem']['status_id'] != 1){  ?>
 										
 										 <section class="cloneMe">
-								<div class="main-box-body clearfix">
-									<div class="form-horizontal item-category">
+											<div class="main-box-body clearfix">
+												<div class="form-horizontal item-category">
 
-										<?php $dataPlus = $key + 1; ?>
+													<?php $dataPlus = $key + 1; ?>
 
-										<?php 
-						    				echo $this->Form->input('RequestItemIdHolder.'.$key.'.id', array(
-												'class' => 'form-control',
-						                        'label' => false,
-						                        'type' => 'hidden',
-						                        'placeholder' => 'Size',
-						                        'value' => $value['RequestItem']['id']));
-						                ?>
+													<?php 
+									    				echo $this->Form->input('RequestItemIdHolder.'.$key.'.id', array(
+															'class' => 'form-control',
+									                        'label' => false,
+									                        'type' => 'hidden',
+									                        'placeholder' => 'Size',
+									                        'value' => $value['RequestItem']['id']));
+									                ?>
 
-						               
-								               
+									               	<?php 
+									    				echo $this->Form->input('RequestItemIdHolder.'.$key.'.status_id', array(
+															'class' => 'form-control',
+									                        'label' => false,
+									                        'type' => 'hidden',
+									                        'placeholder' => 'Size',
+									                        'value' => $value['RequestItem']['status_id']));
+									                ?>
+											               
+													<div class="form-group" >
+														<label class="col-lg-2 control-label"><span style="color:red">*</span>Item</label>
+														<div class="col-lg-5">
 
-										<div class="form-group" >
-											<label class="col-lg-2 control-label"><span style="color:red">*</span>Item</label>
-											<div class="col-lg-5">
+															<?php $dataPlus = $key + 1; ?>
 
-												<?php $dataPlus = $key + 1; ?>
+											                <input type="text" class="form-control item_name required" name="data[RequestItem][<?php echo $key ?>][nameToShow]" value="<?php echo $value['RequestItem']['name'] ?>" readonly>
 
-								                <input type="text" class="form-control item_name required" name="data[RequestItem][<?php echo $key ?>][nameToShow]" value="<?php echo $value['RequestItem']['name'] ?>" readonly>
+											                <input type="hidden" class="form-control item_name required" name="data[RequestItem][<?php echo $key ?>][name]" value="<?php echo $value['RequestItem']['name'] ?>" readonly>
 
-								                <input type="hidden" class="form-control item_name required" name="data[RequestItem][<?php echo $key ?>][name]" value="<?php echo $value['RequestItem']['name'] ?>" readonly>
+											                <?php 
 
-								                <?php 
+											                $uuid = $value['RequestItem']['request_uuid']; 
 
-								                $uuid = $value['RequestItem']['request_uuid']; 
+											               // pr($value['RequestItem']['id']);
 
-								               // pr($value['RequestItem']['id']);
+										                	   echo $this->Form->input('RequestItem.'.$key.'.request_uuid', 
+																			array( 
+																'class' => 'form-control  required ', 
+																'type' => 'hidden',
+										    					'label' => false,
+										    					'readonly' => 'readonly',
+										    					'value' => $value['RequestItem']['request_uuid']
+										    					));
 
-							                	   echo $this->Form->input('RequestItem.'.$key.'.request_uuid', 
-																array( 
-													'class' => 'form-control  required ', 
-													'type' => 'hidden',
-							    					'label' => false,
-							    					'readonly' => 'readonly',
-							    					'value' => $value['RequestItem']['request_uuid']
-							    					));
+											                    echo $this->Form->input('RequestItem.'.$key.'.foreign_key', 
+																				array( 
+																	'class' => 'form-control item_id required', 
+																	'type' => 'hidden',
+											    					'label' => false,
+											    					'readonly' => 'readonly',
+											    					'value' => $value['RequestItem']['foreign_key']
+											    					));
 
-								                    echo $this->Form->input('RequestItem.'.$key.'.foreign_key', 
-																	array( 
-														'class' => 'form-control item_id required', 
-														'type' => 'hidden',
-								    					'label' => false,
-								    					'readonly' => 'readonly',
-								    					'value' => $value['RequestItem']['foreign_key']
-								    					));
-								                ?>
+											                    echo $this->Form->input('RequestItem.'.$key.'.status_id', 
+																				array( 
+																	'class' => 'form-control item_id required', 
+																	'type' => 'hidden',
+											    					'label' => false,
+											    					'readonly' => 'readonly',
+											    					'value' => 1
+											    					));
 
-								                <?php 
-								                    echo $this->Form->input('RequestItem.'.$key.'.model', 
-																	array( 
-														'class' => 'form-control item_model required ', 
-														'type' => 'hidden',
-								    					'label' => false,
-								    					'readonly' => 'readonly',
-								    					'value' => $value['RequestItem']['model']
-								    					));
-								                 
-								                ?>
+											                    
 
-								        	</div>
+												                 echo $this->Form->input('RequestItem.'.$key.'.filed_number', 
+																					array( 
+																		'class' => 'form-control item_id required', 
+																		'type' => 'hidden',
+												    					'label' => false,
+												    					'readonly' => 'readonly',
+												    					'value' => $byCashNum
+												    					));
 
-											<div class="col-lg-4">
+											                	
+											                ?>
 
-												<a data-toggle="modal" href="#myModalItem" data-modal="<?php echo $dataPlus ?>" class="modal-button btn btn-primary mrg-b-lg pull-left  "><i class="fa fa-search-plus fa-lg"></i> Select Item</a>
+											                <?php 
+											                    echo $this->Form->input('RequestItem.'.$key.'.model', 
+																				array( 
+																	'class' => 'form-control item_model required ', 
+																	'type' => 'hidden',
+											    					'label' => false,
+											    					'readonly' => 'readonly',
+											    					'value' => $value['RequestItem']['model']
+											    					));
+											                 
+											                ?>
 
-												&emsp;
-												<button type="button" class="add-field1  table-link danger btn btn-success " onclick="cloneDatarequest('cloneMe', this)"><i class="fa fa-plus"></i></button>
-												<!-- <button type="button" class="add-field1sd proxy-counter add-request-section table-link danger btn btn-success" ><i class="fa fa-plus"></i></button> -->
-												
-												<?php 
-													if ($key == 0 ) { 
-														$newClass = 'hide-remove';
-													}else{
-														$newClass = ' ';
-													}
-												?>
-													<button type="button" class="remove remove-purchase-order btn btn-danger <?php //echo $newClass ?>"><i class="fa fa-minus" ></i></button>
-												
-											</div>
+											        	</div>
 
-										</div>
+														<div class="col-lg-4">
 
-										<div class="form-group">
+															<a data-toggle="modal" href="#myModalItem" data-modal="<?php echo $dataPlus ?>" class="modal-button btn btn-primary mrg-b-lg pull-left  "><i class="fa fa-search-plus fa-lg"></i> Select Item</a>
 
-											<label class="col-lg-2 control-label">Category</label>
-											
-											<div class="col-lg-6">
-												<?php 
-													echo $this->Form->input('RequestItem.'.$key.'.category', array(
-								                        'options' => array('No Amount Items', 'General Items'), 
-								                        'label' => false,
-								                        'class' => 'form-control category',
-								                        'empty' => '---Select Category---',
-								                        'value' =>  !empty($value['RequestItem']['category']
-								                         ))); 
-								                ?>
-
-											</div>
-
-										</div>
-
-										<div class="form-group other-items">
-
-											<label class="col-lg-2 control-label">Size</label>
-											<div class="col-lg-3">
-												<?php 
-								                    echo $this->Form->input('RequestItem.'.$key.'.size1', array(
-														'class' => 'form-control item_type other-element',
-								                        'label' => false,
-								                        'placeholder' => 'Size',
-								                        'disabled' => false,
-								                        'type' => 'number',
-								                        'value' => $value['RequestItem']['size1']));
-								                ?>
-											</div>
-
-											<div class="col-lg-3">
-												<?php 
-													echo $this->Form->input('RequestItem.'.$key.'.size1_unit_id', array(
-								                        'options' => array($unitData),  
-								                        'label' => false,
-								                        'class' => 'form-control other-element',
-								                        'empty' => '---Select Unit---',
-								                        'disabled' => false,
-								                        'value' => $value['RequestItem']['size1_unit_id']
-								                         )); 
-													
-								                ?>
-
-											</div>
-
-											<label class="col-lg-3 sizeWith">&emsp;&emsp;x </label>
-
-										</div>
-
-										<div class="form-group other-items">
-											<label class="col-lg-2 control-label"> </label>
-											<div class="col-lg-3">
-												<?php 
-													echo $this->Form->input('RequestItem.'.$key.'.size2', array(
-														'class' => 'form-control item_type other-element',
-								                        'label' => false,
-								                        'placeholder' => 'Size',
-								                        'disabled' => false,
-								                        'type' => 'number',
-								                        'value' => $value['RequestItem']['size2']));
-
-								                ?>
-											</div>
-
-											<div class="col-lg-3">
-												<?php 
-													echo $this->Form->input('RequestItem.'.$key.'.size2_unit_id', array(
-								                        'options' => array($unitData),  
-								                        'label' => false,
-								                        'class' => 'form-control other-element',
-								                        'empty' => '---Select Unit---',
-								                        'disabled' => false,
-								                        'default' => $value['RequestItem']['size2_unit_id']
-								                         )); 
-
-								                ?>
-											</div>
-
-											<label class="col-lg-3 sizeWith">&emsp;&emsp;x </label>
-
-										</div>
-
-										<div class="form-group other-items">
-											<label class="col-lg-2 control-label"> </label>
-											<div class="col-lg-3">
-												<?php 
-													echo $this->Form->input('RequestItem.'.$key.'.size3', array(
-														'class' => 'form-control item_type other-element',
-								                        'label' => false,
-								                        'placeholder' => 'Size',
-								                        'disabled' => false,
-								                        'type' => 'number',
-								                        'value' => $value['RequestItem']['size3']));
-
-								                ?>
-											</div>
-
-											<div class="col-lg-3">
-												<?php 
-													echo $this->Form->input('RequestItem.'.$key.'.size3_unit_id', array(
-								                        'options' => array($unitData),  
-								                        'label' => false,
-								                        'class' => 'form-control other-element',
-								                        'empty' => '---Select Unit---',
-								                        'disabled' => false,
-								                        'default' => $value['RequestItem']['size3_unit_id']
-								                         )); 
-
-								                ?>
-											</div>
-
-											<label class="col-lg-3 sizeWith">&emsp;&emsp;x </label>
-
-										</div>
-
-										<div class="form-group rolls">
-											<label class="col-lg-2 control-label"><span style="color:red">*</span> Width</label>
-											<div class="col-lg-3">
-												<?php 
-													echo $this->Form->input('RequestItem.'.$key.'.width', array(
-														'class' => 'form-control item_type roll-element required',
-								                        'label' => false,
-								                        'type' => 'number',
-								                        'value' => !empty($value['RequestItem']['width']),
-								                        'placeholder' => 'Width'));
-
-								                ?>
-											</div>
-
-											<div class="col-lg-3 ">
-												<?php 
-													echo $this->Form->input('RequestItem.'.$key.'.width_unit_id', array(
-								                        'options' => array($unitData),  
-								                        'label' => false,
-								                        'class' => 'form-control item_type roll-element required',
-								                        'empty' => '---Select Unit---',
-								                        'default' => !empty($value['RequestItem']['width_unit_id'])
-								                         )); 
-
-								                ?>
-											</div>
-
-										</div>
-
-										<div class="form-group other-items">
-													<label class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
-													<div class="col-lg-6">
-														<?php 
-															echo $this->Form->input('RequestItem.'.$key.'.quantity', array(
-																'class' => 'form-control item_type number  select-drop ',
-																'type' => 'number',
-										                        'label' => false,
-										                        'data' => 0,
-										                        'placeholder' => 'Quantity',
-										                        'value' => $value['RequestItem']['quantity']));
-
-										                ?>
-													</div>
-												</div>
-
-												<div class="form-group">
-														<label class="col-lg-2 control-label"><span style="color:red">*</span>Pieces</label>
-
-													<div class="col-lg-3">
-														<?php 
-															echo $this->Form->input('RequestItem.'.$key.'.pieces', array(
-																'class' => 'form-control item_type number  select-drop ',
-																'type' => 'number',
-										                        'label' => false,
-										                        'data' => 0,
-										                        'placeholder' => 'Pieces', 
-										                        'value' => $value['RequestItem']['pieces']
-											                         ));
-
-										                ?>
+															&emsp;
+															<button type="button" class="add-field1  table-link danger btn btn-success " onclick="cloneDatarequest('cloneMe', this)"><i class="fa fa-plus"></i></button>
+															<!-- <button type="button" class="add-field1sd proxy-counter add-request-section table-link danger btn btn-success" ><i class="fa fa-plus"></i></button> -->
+															
+															<?php 
+																if ($key == 0 ) { 
+																	$newClass = 'hide-remove';
+																}else{
+																	$newClass = ' ';
+																}
+															?>
+																<button type="button" class="remove remove-purchase-order btn btn-danger <?php //echo $newClass ?>"><i class="fa fa-minus" ></i></button>
+															
+														</div>
 
 													</div>
 
-													<div class="col-lg-3">
-														<?php 
-															echo $this->Form->input('RequestItem.'.$key.'.quantity_unit_id', array(
-										                        'options' => array($unitData),  
-										                        'label' => false,
-										                        'class' => 'form-control required',
-										                        'empty' => '---Select Unit---',
-										                        'default' => $value['RequestItem']['quantity_unit_id']
+													<div class="form-group">
+
+														<label class="col-lg-2 control-label">Category</label>
+														
+														<div class="col-lg-6">
+															<?php 
+																echo $this->Form->input('RequestItem.'.$key.'.category', array(
+											                        'options' => array('No Amount Items', 'General Items'), 
+											                        'label' => false,
+											                        'class' => 'form-control category',
+											                        'empty' => '---Select Category---',
+											                        'value' =>  !empty($value['RequestItem']['category']
+											                         ))); 
+											                ?>
+
+														</div>
+
+													</div>
+
+													<div class="form-group other-items">
+
+														<label class="col-lg-2 control-label">Size</label>
+														<div class="col-lg-3">
+															<?php 
+											                    echo $this->Form->input('RequestItem.'.$key.'.size1', array(
+																	'class' => 'form-control item_type other-element',
+											                        'label' => false,
+											                        'placeholder' => 'Size',
+											                        'disabled' => false,
+											                        'type' => 'number',
+											                        'value' => $value['RequestItem']['size1']));
+											                ?>
+														</div>
+
+														<div class="col-lg-3">
+															<?php 
+																echo $this->Form->input('RequestItem.'.$key.'.size1_unit_id', array(
+											                        'options' => array($unitData),  
+											                        'label' => false,
+											                        'class' => 'form-control other-element',
+											                        'empty' => '---Select Unit---',
+											                        'disabled' => false,
+											                        'value' => $value['RequestItem']['size1_unit_id']
+											                         )); 
+																
+											                ?>
+
+														</div>
+
+														<label class="col-lg-3 sizeWith">&emsp;&emsp;x </label>
+
+													</div>
+
+													<div class="form-group other-items">
+														<label class="col-lg-2 control-label"> </label>
+														<div class="col-lg-3">
+															<?php 
+																echo $this->Form->input('RequestItem.'.$key.'.size2', array(
+																	'class' => 'form-control item_type other-element',
+											                        'label' => false,
+											                        'placeholder' => 'Size',
+											                        'disabled' => false,
+											                        'type' => 'number',
+											                        'value' => $value['RequestItem']['size2']));
+
+											                ?>
+														</div>
+
+														<div class="col-lg-3">
+															<?php 
+																echo $this->Form->input('RequestItem.'.$key.'.size2_unit_id', array(
+											                        'options' => array($unitData),  
+											                        'label' => false,
+											                        'class' => 'form-control other-element',
+											                        'empty' => '---Select Unit---',
+											                        'disabled' => false,
+											                        'default' => $value['RequestItem']['size2_unit_id']
 											                         )); 
 
-										            ?>
+											                ?>
+														</div>
+
+														<label class="col-lg-3 sizeWith">&emsp;&emsp;x </label>
 
 													</div>
 
+													<div class="form-group other-items">
+														<label class="col-lg-2 control-label"> </label>
+														<div class="col-lg-3">
+															<?php 
+																echo $this->Form->input('RequestItem.'.$key.'.size3', array(
+																	'class' => 'form-control item_type other-element',
+											                        'label' => false,
+											                        'placeholder' => 'Size',
+											                        'disabled' => false,
+											                        'type' => 'number',
+											                        'value' => $value['RequestItem']['size3']));
+
+											                ?>
+														</div>
+
+														<div class="col-lg-3">
+															<?php 
+																echo $this->Form->input('RequestItem.'.$key.'.size3_unit_id', array(
+											                        'options' => array($unitData),  
+											                        'label' => false,
+											                        'class' => 'form-control other-element',
+											                        'empty' => '---Select Unit---',
+											                        'disabled' => false,
+											                        'default' => $value['RequestItem']['size3_unit_id']
+											                         )); 
+
+											                ?>
+														</div>
+
+														<label class="col-lg-3 sizeWith">&emsp;&emsp;x </label>
+
+													</div>
+
+													<div class="form-group rolls">
+														<label class="col-lg-2 control-label"><span style="color:red">*</span> Width</label>
+														<div class="col-lg-3">
+															<?php 
+																echo $this->Form->input('RequestItem.'.$key.'.width', array(
+																	'class' => 'form-control item_type roll-element required',
+											                        'label' => false,
+											                        'type' => 'number',
+											                        'value' => !empty($value['RequestItem']['width']),
+											                        'placeholder' => 'Width'));
+
+											                ?>
+														</div>
+
+														<div class="col-lg-3 ">
+															<?php 
+																echo $this->Form->input('RequestItem.'.$key.'.width_unit_id', array(
+											                        'options' => array($unitData),  
+											                        'label' => false,
+											                        'class' => 'form-control item_type roll-element required',
+											                        'empty' => '---Select Unit---',
+											                        'default' => !empty($value['RequestItem']['width_unit_id'])
+											                         )); 
+
+											                ?>
+														</div>
+
+													</div>
+
+													<div class="form-group other-items">
+																<label class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
+																<div class="col-lg-6">
+																	<?php 
+																		echo $this->Form->input('RequestItem.'.$key.'.quantity', array(
+																			'class' => 'form-control item_type number  select-drop ',
+																			'type' => 'number',
+													                        'label' => false,
+													                        'data' => 0,
+													                        'placeholder' => 'Quantity',
+													                        'value' => $value['RequestItem']['quantity']));
+
+													                ?>
+																</div>
+															</div>
+
+															<div class="form-group">
+																	<label class="col-lg-2 control-label"><span style="color:red">*</span>Pieces</label>
+
+																<div class="col-lg-3">
+																	<?php 
+																		echo $this->Form->input('RequestItem.'.$key.'.pieces', array(
+																			'class' => 'form-control item_type number  select-drop ',
+																			'type' => 'number',
+													                        'label' => false,
+													                        'data' => 0,
+													                        'placeholder' => 'Pieces', 
+													                        'value' => $value['RequestItem']['pieces']
+														                         ));
+
+													                ?>
+
+																</div>
+
+																<div class="col-lg-3">
+																	<?php 
+																		echo $this->Form->input('RequestItem.'.$key.'.quantity_unit_id', array(
+													                        'options' => array($unitData),  
+													                        'label' => false,
+													                        'class' => 'form-control required',
+													                        'empty' => '---Select Unit---',
+													                        'default' => $value['RequestItem']['quantity_unit_id']
+														                         )); 
+
+													            ?>
+
+																</div>
+
+															</div>
+
+													<div class="form-group">
+														<label class="col-lg-2 control-label"><span style="color:red">*</span>Price</label>
+														<div class="col-lg-3">
+															<?php 
+																echo $this->Form->input('RequestItem.'.$key.'.unit_price', array(
+																	'class' => 'form-control item_type number required',
+																	'type' => 'number',
+											                        'label' => false,
+											                        'placeholder' => 'Price'));
+
+											                ?>
+														</div>
+
+														<div class="col-lg-3 other-items">
+															<?php 
+																echo $this->Form->input('RequestItem.'.$key.'.unit_price_unit_id', array(
+											                        'options' => array($currencyData),  
+											                        'label' => false,
+											                        'class' => 'form-control required',
+											                        'empty' => '---Select Unit---'
+											                         )); 
+
+											                ?>
+														</div>
+
+														<div class="col-lg-3 rolls">
+															<?php 
+																echo $this->Form->input('RequestItem.'.$key.'.roll_unit_id', array(
+											                        'options' => array($unitData),  
+											                        'label' => false,
+											                        'class' => 'form-control required',
+											                        'empty' => '---Select Unit---'
+											                         )); 
+
+											                ?>
+														</div>
+
+													</div>
+
+													<hr>
+
 												</div>
-
-										<div class="form-group">
-											<label class="col-lg-2 control-label"><span style="color:red">*</span>Price</label>
-											<div class="col-lg-3">
-												<?php 
-													echo $this->Form->input('RequestItem.'.$key.'.unit_price', array(
-														'class' => 'form-control item_type number required',
-														'type' => 'number',
-								                        'label' => false,
-								                        'placeholder' => 'Price'));
-
-								                ?>
 											</div>
-
-											<div class="col-lg-3 other-items">
-												<?php 
-													echo $this->Form->input('RequestItem.'.$key.'.unit_price_unit_id', array(
-								                        'options' => array($currencyData),  
-								                        'label' => false,
-								                        'class' => 'form-control required',
-								                        'empty' => '---Select Unit---'
-								                         )); 
-
-								                ?>
-											</div>
-
-											<div class="col-lg-3 rolls">
-												<?php 
-													echo $this->Form->input('RequestItem.'.$key.'.roll_unit_id', array(
-								                        'options' => array($unitData),  
-								                        'label' => false,
-								                        'class' => 'form-control required',
-								                        'empty' => '---Select Unit---'
-								                         )); 
-
-								                ?>
-											</div>
-
-										</div>
-
-										<hr>
-
-									</div>
-								</div>
 							</section>
-									<?php } ?>
+									<?php }} ?>
 
 								</div>
 							</div>

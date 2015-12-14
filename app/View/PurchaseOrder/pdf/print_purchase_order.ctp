@@ -38,7 +38,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 				<thead>
 					<tr>
 						<td style="width:110px;">Supplier </td>
-						<td style="width:250px; font-size:70%;" class="border-bot">:<?php echo ucfirst($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]); ?></td>
+						<td style="width:250px; font-size:70%;" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['supplier_id'] : ucfirst($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]); ?></td>
 						
 						<td align = "right" style="width:80px;"> 
 						<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -54,7 +54,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Contact Person</td>
-						<td style="width:150px;" class="border-bot">:<?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']); ?> <?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
+						<td style="width:150px;" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_person_id'] : ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']) . " " . ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
 						
 						<td align = "right" style="width:80px;">Terms :  
 						</td>
@@ -68,7 +68,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Contact Person</td>
-						<td style="width:250px;" class="border-bot">:<?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']); ?> <?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
+						<td style="width:250px;" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_person_id'] : ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']) . " " . ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
 						
 						<td align = "right" style="width:80px;"> 
 						<td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -88,7 +88,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Telephone</td>
-						<td style="width:160px;" class="border-bot">:<?php echo !empty($telContactData['Contact']['number']) ? $telContactData['Contact']['number'] : " "; ?></td>
+						<td style="width:160px;" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_id'] : $telContactData['Contact']['number']; ?></td>
 						
 						<td align = "right" style="width:120px; "> <?php echo  !empty($faxContactData['Contact']['number']) ? "Fax # :  " .  $faxContactData['Contact']['number'] : " "; ?> </td>
 						<td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -110,24 +110,28 @@ for ($x = 0; $x <= 1; $x++) { ?>
 						<td class="td-heigth" style="line-height:15px;  verticalline-height:10px; -align: center;  border:1px solid black;"><center><b>Unit Price</b></center></td>
 						<td class="td-heigth" style="line-height:15px;  verticalline-height:10px; -align: center;  border:1px solid black;"><center><b>Amount</b></center></td>
 					</tr>
-					<?php $total = 0; $rollHolder = 0; $addRow2 = 8; foreach ($purchaseItemData as $key => $value) {  $key++; $addRow2 = $addRow2 - 1; 
-					$dividend = floor($value[$modelTable]['quantity'] / $value[$modelTable]['pieces']);
-                    $difference = $value[$modelTable]['quantity'] - (floor($dividend) * $value[$modelTable]['pieces']); 
-                    $itemdescription = $value[$modelTable]['name'];
+					<?php $total = 0; $rollHolder = 0; $addRow2 = 8; 
 
-                    if($value[$modelTable]['category'] == 0){ 
+					foreach ($purchaseItemData as $key => $value) {
 
-	                    $itemdescription .= !empty($value[$modelTable]['width']) ? " " .$value[$modelTable]['width'] . " " .$unitData[$value[$modelTable]['width_unit_id']] : " ";
+					  	$key++; $addRow2 = $addRow2 - 1; 
+						$dividend = floor($value[$modelTable]['quantity'] / $value[$modelTable]['pieces']);
+	                    $difference = $value[$modelTable]['quantity'] - (floor($dividend) * $value[$modelTable]['pieces']); 
+	                    $itemdescription = $value[$modelTable]['name'];
 
-	                }else{
+	                    if($value[$modelTable]['category'] == 0){ 
 
-	                	$itemdescription .= !empty($value[$modelTable]['size1']) ? " " . $value[$modelTable]['size1'] . " " .$unitData[$value[$modelTable]['size1_unit_id']] : " ";
+		                    $itemdescription .= !empty($value[$modelTable]['width']) ? " " .$value[$modelTable]['width'] . " " .$unitData[$value[$modelTable]['width_unit_id']] : " ";
 
-	                    $itemdescription .= !empty($value[$modelTable]['size2']) ? " " .  "x" . " " . $value[$modelTable]['size2'] . " " . $unitData[$value[$modelTable]['size2_unit_id']] : " ";
+		                }else{
 
-	                    $itemdescription .= !empty($value[$modelTable]['size3']) ? " " . "x" . " " .$value[$modelTable]['size3'] . " " . $unitData[$value[$modelTable]['size3_unit_id']] : " ";
+		                	$itemdescription .= !empty($value[$modelTable]['size1']) ? " " . $value[$modelTable]['size1'] . " " .$unitData[$value[$modelTable]['size1_unit_id']] : " ";
 
-	                }
+		                    $itemdescription .= !empty($value[$modelTable]['size2']) ? " " .  "x" . " " . $value[$modelTable]['size2'] . " " . $unitData[$value[$modelTable]['size2_unit_id']] : " ";
+
+		                    $itemdescription .= !empty($value[$modelTable]['size3']) ? " " . "x" . " " .$value[$modelTable]['size3'] . " " . $unitData[$value[$modelTable]['size3_unit_id']] : " ";
+
+		                }
 
                     ?>
 
@@ -265,7 +269,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 				<thead>
 					<tr>
 						<td style="width:110px;">Supplier</td>
-						<td style="width:250px; font-size:70%;" class="border-bot">:<?php echo ucfirst($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]); ?></td>
+						<td style="width:250px; font-size:70%;" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['supplier_id'] : ucfirst($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]); ?></td>
 						
 						<td align = "right" style="width:80px;"> 
 						<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -281,7 +285,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 		<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Contact Person</td>
-						<td style="width:150px;" class="border-bot">:<?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']); ?> <?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
+						<td style="width:150px;" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_person_id'] : ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']) . " " . ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
 						
 						<td align = "right" style="width:80px;">Terms :  
 						</td>
@@ -296,7 +300,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Contact Person</td>
-						<td style="width:250px;" class="border-bot">:<?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']); ?> <?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
+						<td style="width:250px;" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_person_id'] : ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']) . " " . ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
 						
 						<td align = "right" style="width:80px;"> 
 						<td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -314,7 +318,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Telephone</td>
-						<td style="width:120px;" class="border-bot">:<?php echo !empty($telContactData['Contact']['number']) ? $telContactData['Contact']['number'] : " "; ?></td>
+						<td style="width:120px;" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_id'] : $telContactData['Contact']['number']; ?></td>
 						
 						<td align = "right" style="width:160px; "> <?php echo  !empty($faxContactData['Contact']['number']) ? "Fax # :  " .  $faxContactData['Contact']['number'] : " "; ?> </td>
 						<td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -336,24 +340,28 @@ for ($x = 0; $x <= 1; $x++) { ?>
 						<td class="td-heigth" style="line-height:15px;  verticalline-height:10px; -align: center;  border:1px solid black;"><center><b>Unit Price</b></center></td>
 						<td class="td-heigth" style="line-height:15px;  verticalline-height:10px; -align: center;  border:1px solid black;"><center><b>Amount</b></center></td>
 					</tr>
-					<?php $total = 0; $addRow2 = 8; foreach ($purchaseItemData as $key => $value) {  $key++; $addRow2 = $addRow2 - 1; 
-					$dividend = floor($value[$modelTable]['quantity'] / $value[$modelTable]['pieces']);
-                    $difference = $value[$modelTable]['quantity'] - (floor($dividend) * $value[$modelTable]['pieces']);
-                    $itemdescription = $value[$modelTable]['name'];
+					<?php $total = 0; $addRow2 = 8; 
 
-                    if($value[$modelTable]['category'] == 0){ 
+					foreach ($purchaseItemData as $key => $value) {  
 
-	                    $itemdescription .= !empty($value[$modelTable]['width']) ? " " .$value[$modelTable]['width'] . " " .$unitData[$value[$modelTable]['width_unit_id']] : " ";
+						$key++; $addRow2 = $addRow2 - 1; 
+						$dividend = floor($value[$modelTable]['quantity'] / $value[$modelTable]['pieces']);
+	                    $difference = $value[$modelTable]['quantity'] - (floor($dividend) * $value[$modelTable]['pieces']);
+	                    $itemdescription = $value[$modelTable]['name'];
 
-	                }else{
+	                    if($value[$modelTable]['category'] == 0){ 
 
-	                	$itemdescription .= !empty($value[$modelTable]['size1']) ? " " . $value[$modelTable]['size1'] . " " .$unitData[$value[$modelTable]['size1_unit_id']] : " ";
+		                    $itemdescription .= !empty($value[$modelTable]['width']) ? " " .$value[$modelTable]['width'] . " " .$unitData[$value[$modelTable]['width_unit_id']] : " ";
 
-	                    $itemdescription .= !empty($value[$modelTable]['size2']) ? " " .  "x" . " " . $value[$modelTable]['size2'] . " " . $unitData[$value[$modelTable]['size2_unit_id']] : " ";
+		                }else{
 
-	                    $itemdescription .= !empty($value[$modelTable]['size3']) ? " " . "x" . " " .$value[$modelTable]['size3'] . " " . $unitData[$value[$modelTable]['size3_unit_id']] : " ";
+		                	$itemdescription .= !empty($value[$modelTable]['size1']) ? " " . $value[$modelTable]['size1'] . " " .$unitData[$value[$modelTable]['size1_unit_id']] : " ";
 
-	                }
+		                    $itemdescription .= !empty($value[$modelTable]['size2']) ? " " .  "x" . " " . $value[$modelTable]['size2'] . " " . $unitData[$value[$modelTable]['size2_unit_id']] : " ";
+
+		                    $itemdescription .= !empty($value[$modelTable]['size3']) ? " " . "x" . " " .$value[$modelTable]['size3'] . " " . $unitData[$value[$modelTable]['size3_unit_id']] : " ";
+
+		                }
                     ?>
 
 						<tr>
@@ -488,7 +496,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 				<thead>
 					<tr>
 						<td style="width:110px;">Supplier </td>
-						<td style="width:250px; font-size:70%;" class="border-bot">:<?php echo ucfirst($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]); ?></td>
+						<td style="width:250px; font-size:70%;" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['supplier_id'] : ucfirst($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]); ?></td>
 						
 						<td align = "right" style="width:80px;"> 
 						<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -504,7 +512,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Contact Person</td>
-						<td style="width:150px;" class="border-bot">:<?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']); ?> <?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
+						<td style="width:150px;" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_person_id'] : ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']) . " " . ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
 						
 						<td align = "right" style="width:80px;">Terms :  
 						</td>
@@ -519,7 +527,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Contact Person</td>
-						<td style="width:250px;" class="border-bot">:<?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']); ?> <?php echo ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
+						<td style="width:250px;" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_person_id'] : ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']) . " " . ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
 						
 						<td align = "right" style="width:80px;"> 
 						<td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -537,7 +545,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Telephone</td>
-						<td style="width:120px;" class="border-bot">:<?php echo !empty($telContactData['Contact']['number']) ? $telContactData['Contact']['number'] : " "; ?></td>
+						<td style="width:120px;" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_id'] : $telContactData['Contact']['number']; ?></td>
 						
 						
 						<td align = "right" style="width:160px; "> <?php echo  !empty($faxContactData['Contact']['number']) ? "Fax # :  " .  $faxContactData['Contact']['number'] : " "; ?> </td>
@@ -561,24 +569,28 @@ for ($x = 0; $x <= 1; $x++) { ?>
 						<td class="td-heigth" style="line-height:15px;  verticalline-height:10px; -align: center;  border:1px solid black;"><center><b>Amount</b></center></td>
 					</tr>
 					<?php 
-						$total = 0; $addRow2 = 8; foreach ($purchaseItemData as $key => $value) {  $key++; $addRow2 = $addRow2 - 1; 
-						$dividend = floor($value[$modelTable]['quantity'] / $value[$modelTable]['pieces']);
-                   		$difference = $value[$modelTable]['quantity'] - (floor($dividend) * $value[$modelTable]['pieces']);
-                   		$itemdescription = $value[$modelTable]['name'];
+						$total = 0; $addRow2 = 8; 
 
-	                    if($value[$modelTable]['category'] == 0){ 
+						foreach ($purchaseItemData as $key => $value) {  
 
-		                    $itemdescription .= !empty($value[$modelTable]['width']) ? " " .$value[$modelTable]['width'] . " " .$unitData[$value[$modelTable]['width_unit_id']] : " ";
+							$key++; $addRow2 = $addRow2 - 1; 
+							$dividend = floor($value[$modelTable]['quantity'] / $value[$modelTable]['pieces']);
+	                   		$difference = $value[$modelTable]['quantity'] - (floor($dividend) * $value[$modelTable]['pieces']);
+	                   		$itemdescription = $value[$modelTable]['name'];
 
-		                }else{
+		                    if($value[$modelTable]['category'] == 0){ 
 
-		                	$itemdescription .= !empty($value[$modelTable]['size1']) ? " " . $value[$modelTable]['size1'] . " " .$unitData[$value[$modelTable]['size1_unit_id']] : " ";
+			                    $itemdescription .= !empty($value[$modelTable]['width']) ? " " .$value[$modelTable]['width'] . " " .$unitData[$value[$modelTable]['width_unit_id']] : " ";
 
-		                    $itemdescription .= !empty($value[$modelTable]['size2']) ? " " .  "x" . " " . $value[$modelTable]['size2'] . " " . $unitData[$value[$modelTable]['size2_unit_id']] : " ";
+			                }else{
 
-		                    $itemdescription .= !empty($value[$modelTable]['size3']) ? " " . "x" . " " .$value[$modelTable]['size3'] . " " . $unitData[$value[$modelTable]['size3_unit_id']] : " ";
+			                	$itemdescription .= !empty($value[$modelTable]['size1']) ? " " . $value[$modelTable]['size1'] . " " .$unitData[$value[$modelTable]['size1_unit_id']] : " ";
 
-		                }
+			                    $itemdescription .= !empty($value[$modelTable]['size2']) ? " " .  "x" . " " . $value[$modelTable]['size2'] . " " . $unitData[$value[$modelTable]['size2_unit_id']] : " ";
+
+			                    $itemdescription .= !empty($value[$modelTable]['size3']) ? " " . "x" . " " .$value[$modelTable]['size3'] . " " . $unitData[$value[$modelTable]['size3_unit_id']] : " ";
+
+			                }
                    		?>
 						<tr>
 							<td align="center" style="width:2%; border:1px solid black; "><?php echo $key ?></td>

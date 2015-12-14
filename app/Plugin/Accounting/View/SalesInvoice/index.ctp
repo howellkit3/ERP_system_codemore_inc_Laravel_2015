@@ -11,7 +11,7 @@
                    
                       echo $this->Html->link('<i class="fa fa-pencil-square-o fa-lg"></i> Create Sales Invoice ', 
                             array('controller' => 'sales_invoice', 
-                                    'action' => 'add',),
+                                    'action' => 'add','si_num'),
                             array('class' =>'btn btn-primary pull-right',
                                 'escape' => false));
 
@@ -19,11 +19,10 @@
 
                     <div class="form-group pull-left">
                 
-                        <input placeholder="Search..." class="form-control searchOrder"  />
+                        <input placeholder="Search..." class="form-control searchSI"  />
                         <i class="fa fa-search search-icon"></i>
                     
                 	</div>
-
 
                   <br><br>
                </div>
@@ -36,7 +35,6 @@
 						<thead>
 							<tr>
 								<th><a href="#"><span>Sales Invoice No.</span></a></th>
-                                <!-- <th><a href="#"><span>Statement of Account No.</span></a></th> -->
 								<th><a href="#"><span>Delivery No.</span></a></th>
 								<th><a href="#"><span>Company</span></a></th>
 								<th class="text-center"><a href="#"><span>Status</span></a></th>
@@ -46,8 +44,6 @@
 						<?php 
 					        if(!empty($invoiceData)){ ?>
 
-					        	<?php //pr($invoiceData); ?>
-					           
 				            	<tbody aria-relevant="all" aria-live="polite" class="OrderFields" role="alert" >
 
 				            		<?php foreach ($invoiceData as $invoiceDataList): ?>
@@ -91,6 +87,20 @@
 				                        </td>
 
 				                       	<td>
+				                       		<?php
+
+				                       		if($invoiceDataList['SalesInvoice']['status'] == 3){
+
+				                       			$status = " not-active";
+
+				                       		}else{
+
+				                       			$status = " active";
+
+				                       		}
+
+				                       		?>
+
 				                            <?php
 
 				                            	echo $this->Html->link('<span class="fa-stack">
@@ -102,7 +112,15 @@
 				                            <?php
 
 				                            	echo $this->Html->link('<span class="fa-stack">
-							                    <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-trash  fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> Cancel </font></span></span> ', array('controller' => 'sales_invoice', 'action' => 'cancel',$invoiceDataList['SalesInvoice']['id']), array('class' =>' table-link','escape' => false, 'title'=>'View Sales Invoice'
+							                    <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-paper-plane  fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> Move</font></span></span> ', array('controller' => 'sales_invoice', 'action' => 'move',$invoiceDataList['SalesInvoice']['id']), array('class' =>' table-link' . $status ,'escape' => false, 'title'=>'Move to Statement of Acccount', 'confirm' => 'Do you want to move this Sales Invoice to Statement of Account?'
+							                    ));
+				        
+				                            ?>
+
+				                            <?php
+
+				                            	echo $this->Html->link('<span class="fa-stack">
+							                    <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-trash  fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> Cancel </font></span></span> ', array('controller' => 'sales_invoice', 'action' => 'cancel',$invoiceDataList['SalesInvoice']['id']), array('class' =>' table-link','escape' => false, 'title'=>'Cancel Sales Invoice'
 							                    ));
 				        
 				                            ?>
@@ -135,61 +153,55 @@
 
 <script>
 
-	// var timeout;
+	function searchSI(searchInput) {
 
-	// $('.searchOrder').keypress(function() {
+	    var searchInput = $('.searchSI').val();
 
-	//     if(timeout) {
-	//         clearTimeout(timeout);
-	//         timeout = null;
-	//     }
+	    var view = "index";
 
-	//     timeout = setTimeout(searchOrder,400)
-	// });
-		
-	$("body").on('keyup','.searchOrder', function(e){
+	    if(searchInput != ''){
 
-        var searchInput = $(this).val();
+	        $('.OrderFields').hide();
+	        $('.searchAppend').show();
 
-        var view = "index";
-    
-        //alert(searchInput);
-        if(searchInput != ''){
+	    }else{
+	        $('.OrderFields').show();
+	        $('.searchAppend').hide();
+	    }
 
-            $('.OrderFields').hide();
-            $('.searchAppend').show();
-            //alert('hide');
+	    type = 0;
 
-        }else{
-            $('.OrderFields').show();
-            $('.searchAppend').hide();
-            //alert('show');
-        }
+	    $.ajax({
+	            type: "GET",
+	            url: serverPath + "accounting/sales_invoice/search_order/"+view+"/"+searchInput+"/"+type,
+	            dataType: "html",
+	            success: function(data) {
 
-        type = 0;
-        
-        $.ajax({
-            type: "GET",
-            url: serverPath + "accounting/sales_invoice/search_order/"+view+"/"+searchInput+"/"+type,
-            dataType: "html",
-            success: function(data) {
+	                if(data){
 
-                //alert(data);
+	                    $('.searchAppend').html(data);
 
-                if(data){
+	                } 
+	                if (data.length < 5 ) {
 
-                    $('.searchAppend').html(data);
+	                    $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
+	                     
+	                }
+	                
+	            }
+	        });
+	}
 
-                } 
-                if (data.length < 5 ) {
+	var timeout;
 
-                    $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
-                     
-                }
-                
-            }
-        });
+	$('.searchSI').keypress(function() {
 
-    });
+	    if(timeout) {
+	        clearTimeout(timeout);
+	        timeout = null;
+	    }
+
+	    timeout = setTimeout(searchSI,600)
+	})
 
 </script>

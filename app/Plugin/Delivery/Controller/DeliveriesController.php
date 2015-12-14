@@ -1380,7 +1380,6 @@ class DeliveriesController extends DeliveryAppController {
             
     }
 
-
     public function remove_dr_sched($id = null,$deliveryScheduleId = null, $quotationId = null, $clientsOrderUuid = null, $clientUuid = null) {
 
         if (!empty($id)) {
@@ -1562,49 +1561,242 @@ class DeliveriesController extends DeliveryAppController {
 
     public function test($status = null) {
 
-        $userData = $this->Session->read('Auth');
-
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
-        $this->Delivery->bindDelivery();
+        $clientData = $this->ClientOrderDeliverySchedule->find('all');
 
-        $deliveryData = $this->Delivery->find('all');
-
-        $this->ClientOrderDeliverySchedule->bind(array('ClientOrder'));
-
-        $clientsOrder = $this->ClientOrderDeliverySchedule->find('all',array('fields' => array('ClientOrderDeliverySchedule.id','ClientOrderDeliverySchedule.uuid','ClientOrder.uuid', 'ClientOrder.id')));
-
-            foreach ($clientsOrder as $key => $value){
-
-                foreach ($deliveryData as $key1 => $valueofDelivery){
+        foreach ($clientData as $key => $value) {
         
-                    if($value['ClientOrderDeliverySchedule']['uuid'] == $valueofDelivery['Delivery']['schedule_uuid']){
+            foreach ($deliveryStatus as $key => $valuedelivery) {
+        
+                if($value['ClientOrderDeliverySchedule']['uuid'] == $valuedelivery['Delivery']['schedule_uuid']){
 
-
-                        $clientsOrder[$key]['DeliveryDetail']['quantity'] = $valueofDelivery['DeliveryDetail']['quantity'];
-                        $clientsOrder[$key]['DeliveryDetail']['delivered_quantity'] = $valueofDelivery['DeliveryDetail']['delivered_quantity'];
-                        $clientsOrder[$key]['Delivery']['status'] = $valueofDelivery['Delivery']['status'];
-                        $clientsOrder[$key]['Delivery']['dr_uuid'] = $valueofDelivery['Delivery']['dr_uuid'];
-                        $clientsOrder[$key]['DeliveryDetail']['status'] = $valueofDelivery['DeliveryDetail']['status'];
-
-
-                    }
+                    pr($value); exit;
 
                 }
+
             }
 
-       // pr($clientsOrder); exit;
 
-        $this->loadModel('Delivery.DrHolder');
-
-        //$this->Delivery->bindDelivery();
-
-       // $deliveryData = $this->Delivery->find('all');
-
-        $this->id = $this->DrHolder->saveDelivery($clientsOrder,$userData['User']['id']);
-
+        }
 
     }
 
+    public function dr_summary() {
+
+        $this->loadModel('Sales.ClientOrder');
+
+        $this->loadModel('Sales.Company');
+
+         $this->loadModel('Sales.Product');
+
+        $this->Delivery->bindDeliveryClientOrder();
+
+        $limit = 15;
+
+        $this->Delivery->recursive = 1;
+
+        $conditions = array('Delivery.status' => 1);
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array(
+                'Delivery.id',
+                'Delivery.dr_uuid',
+                'Delivery.status',
+                'Delivery.company_id',
+                'Delivery.clients_order_id', 
+                'DeliveryDetail.schedule',
+                'DeliveryDetail.id',
+                'DeliveryDetail.quantity',
+                'DeliveryDetail.delivered_quantity'),
+            'order' => 'Delivery.id DESC',
+            'group' => 'Delivery.dr_uuid'
+        );
+        
+        $deliveryData = $this->paginate('Delivery');
+
+        $this->ClientOrder->bind(array('QuotationDetail','Product'));
+
+        $clientOrderData = $this->ClientOrder->find('all', array(
+                                       'fields' => array('ClientOrder.po_number',
+                                        'ClientOrder.uuid',
+                                        'Product.name' )
+                                   ));
+
+        foreach ($clientOrderData as $key => $clientValue) {
+
+            foreach ($deliveryData as $key2 => $deliveryValue) {
+
+                if($clientValue['ClientOrder']['uuid'] == $deliveryValue['Delivery']['clients_order_id']){
+
+                    $deliveryData[$key2]['ClientOrder']['po_number'] = $clientValue['ClientOrder']['po_number'];
+
+                    $deliveryData[$key2]['ClientOrder']['item_name'] = $clientValue['Product']['name'];
+
+                }
+
+            }
+            
+        }
+
+        $productData = $this->Product->find('list',array('fields' => array('id','name'),
+                                            'order' => 'Product.name ASc'));
+
+        $companyData= $this->Company->find('list',array('fields' => array('id','company_name'),
+                                            'order' => 'Company.company_name ASC'));
+
+        $noPermissionSales = ' '; 
+
+        $this->set(compact('noPermissionSales', 'deliveryData', 'PONumber', 'companyData', 'productData'));     
+            
+    }
+
+    public function daterange_summary($from = null, $to = null, $product = null , $company = null, $export = null){
+
+        if($product != "undefined"){
+
+            if($from != "undefined" || $to != "undefined"){
+
+                $condition = ' QuotationDetail.product_id ='.$product.'
+                    AND (Delivery.created BETWEEN "'.$from.' 00:00:00'.'" AND "'.$to.' 00:00:00'.'") AND 
+                    Delivery.status = 1';
+
+            }else{
+
+                $condition = ' QuotationDetail.product_id ='.$product.' AND 
+                    Delivery.status = 1';
+
+            }
+
+        }else if($company != "undefined"){
+
+            if($from != "undefined" || $to != "undefined"){
+
+                $condition = ' ClientOrder.company_id ='.$company.'
+                    AND (Delivery.created BETWEEN "'.$from.' 00:00:00'.'" AND "'.$to.' 00:00:00'.'") AND 
+                    Delivery.status = 1';
+
+            }else{
+
+                $condition = ' ClientOrder.company_id ='.$company.' AND 
+                    Delivery.status = 1';
+
+            }
+
+        }else{
+
+            $condition = ' Delivery.created BETWEEN "'.$from.' 00:00:00'.'" AND "'.$to.' 00:00:00'.'" AND 
+                    Delivery.status = 1';
+
+        } 
+
+        $order =' ORDER BY ClientOrder.po_number ASC';
+
+        $deliveryData = $this->Delivery->query('SELECT Delivery.id,
+                Delivery.dr_uuid, Delivery.company_id, Delivery.created,
+                Delivery.clients_order_id, DeliveryDetail.schedule, DeliveryDetail.id,
+                DeliveryDetail.quantity,DeliveryDetail.delivered_quantity ,Product.name,
+                ClientOrder.po_number, Company.company_name , QuotationItemDetail.quantity , QuotationItemDetail.id
+                FROM koufu_delivery.deliveries AS Delivery
+                LEFT JOIN koufu_delivery.delivery_details AS DeliveryDetail
+                ON Delivery.dr_uuid = DeliveryDetail.delivery_uuid
+                LEFT JOIN koufu_sale.client_orders AS ClientOrder
+                ON Delivery.clients_order_id = ClientOrder.uuid
+                LEFT JOIN koufu_sale.quotation_details AS QuotationDetail
+                ON ClientOrder.quotation_id = QuotationDetail.quotation_id
+                LEFT JOIN koufu_sale.quotation_item_details AS QuotationItemDetail
+                ON ClientOrder.client_order_item_details_id = QuotationItemDetail.id
+                LEFT JOIN koufu_sale.products AS Product
+                ON Product.id = QuotationDetail.product_id
+                LEFT JOIN koufu_sale.companies AS Company
+                ON Company.id = ClientOrder.company_id
+                WHERE'. $condition.' GROUP BY Delivery.dr_uuid
+                '. $order.'
+                ');
+
+        $noPermissionSales = ' '; 
+
+        $this->set(compact('noPermissionSales', 'deliveryData', 'PONumber', 'companyData'));   
+
+        if(!empty($export)){
+
+            return $deliveryData;
+
+        }else{
+
+            $this->render('daterange_summary'); 
+
+        }
+        
+    }
+    
+    public function export_dr() {
+
+
+        if(!empty($this->request->data['from_date'])){
+
+            $date = split("-", $this->request->data['from_date']);
+
+            $date1 = trim($date[0]);
+
+            $date2 = trim($date[1]); 
+
+            $from = str_replace('/', '-', $date1);
+
+            $to = str_replace('/', '-', $date2);
+
+        }else{
+
+            $from = 'undefined';
+
+            $to = 'undefined';
+
+        }
+
+        if(!empty($this->request->data['SalesInvoice']['company_id'])){
+
+            $company = $this->request->data['SalesInvoice']['company_id'];
+
+        }else{
+
+            $company = 'undefined';
+
+        }
+
+        if(!empty($this->request->data['SalesInvoice']['product_id'])){
+
+            $product = $this->request->data['SalesInvoice']['product_id'];
+
+        }else{
+
+            $product = 'undefined';
+
+        }
+
+        $export = 1;
+
+        $deliveryData = $this->daterange_summary($from, $to, $product, $company, $export);
+
+        if((empty($this->request->data['from_date']) && empty($this->request->data['SalesInvoice']['company_id']) && empty($this->request->data['SalesInvoice']['product_id'])) || empty($deliveryData)){
+
+            $this->Session->setFlash(__('Use the Filter or Check the Data before Export'), 'error');
+
+            $this->redirect( array(
+                'controller' => 'deliveries',   
+                'action' => 'dr_summary'
+            ));   
+
+        }
+
+        $noPermissionSales = ' '; 
+
+        $this->set(compact('noPermissionSales', 'deliveryData'));   
+
+        $this->render('export_dr');
+        
+    }
+
+    
 
 }
