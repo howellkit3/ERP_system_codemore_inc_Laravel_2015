@@ -211,7 +211,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 	            </tr>
 	        </table>
 
-			<table class="table" style =" border:1px solid black;line-height: 10px; padding:0px; width:750px;">
+		<!-- 	<table class="table" style =" border:1px solid black;line-height: 10px; padding:0px; width:750px;">
 	            <tr>
 	                <td style="width:300px;">
 
@@ -219,7 +219,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 				 <br><br>          
 					</td>
 				</tr>
-			</table>
+			</table> -->
 
 			<table class="layout" style ="line-height: 15px; border:1px solid black; width:735px; padding:0px;">
 				<thead>
@@ -443,7 +443,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 	            </tr>
 	        </table>
 
-			<table class="table" style =" border:1px solid black;line-height: 10px; padding:0px; width:750px;">
+			<!-- <table class="table" style =" border:1px solid black;line-height: 10px; padding:0px; width:750px;">
 	            <tr>
 	                <td style="width:300px;">
 
@@ -451,7 +451,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 				 <br><br>          
 					</td>
 				</tr>
-			</table>
+			</table> -->
 
 			<table class="layout" style ="line-height: 15px; border:1px solid black; width:735px; padding:0px;">
 				<thead>
@@ -666,7 +666,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 	            </tr>
 	        </table>
 
-			<table class="table" style =" border:1px solid black;line-height: 10px; padding:0px; width:750px;">
+			<!-- <table class="table" style =" border:1px solid black;line-height: 10px; padding:0px; width:750px;">
 	            <tr>
 	                <td style="width:300px;">
 
@@ -674,7 +674,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 				 <br><br>          
 					</td>
 				</tr>
-			</table>
+			</table> -->
 
 			<table class="layout" style ="line-height: 15px; border:1px solid black; width:735px; padding:0px;">
 				<thead>
