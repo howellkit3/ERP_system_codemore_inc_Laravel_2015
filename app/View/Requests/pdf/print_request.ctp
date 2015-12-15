@@ -22,7 +22,7 @@ th, td {
 				<table>
 					<tr>
 						<td>
-							<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:155px;height:20px;padding-bottom:10;">
+							<img src="<?php echo Router::url('/', true) ?>img/koufu_logo_2.jpg" alt="logo" style="width:155px;height:20px;padding-bottom:10;">
 						</td>
 					<td colspan="2" style="width:235px">
 						<center>
@@ -204,7 +204,7 @@ th, td {
 					<table>
 					<tr>
 						<td>
-							<img src="<?php echo Router::url('/', true) ?>img/koufu_logo.jpg" alt="logo" style="width:155px;height:20px;padding-bottom:10;">
+							<img src="<?php echo Router::url('/', true) ?>img/koufu_logo_2.jpg" alt="logo" style="width:155px;height:20px;padding-bottom:10;">
 						</td>
 					<td colspan="2" style="width:235px">
 						<center>
