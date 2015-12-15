@@ -74,8 +74,6 @@ class PurchaseOrdersController extends PurchasingAppController {
 															'order' => array('Currency.name' => 'ASC')
 															));
 
-		//pr($currencyData); exit;
-		//set to cache in first load
 		$paymentTermData = Cache::read('paymentTerms');
 		
 		if (!$paymentTermData) {
@@ -99,10 +97,6 @@ class PurchaseOrdersController extends PurchasingAppController {
 
 		$purchaseItemData = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $requestData['Request']['uuid'])));
 
-		//$purchaseItemData = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'])));
-
-	//	pr($purchaseOrderData['PurchaseOrder']['received_bycash_number']); exit;
-
 		if (empty($purchaseItemData)) {
 
 			if(!empty($purchaseOrderData['PurchaseOrder']['filed_number'])){
@@ -125,8 +119,6 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     		$modelTable = 'PurchasingItem'; 
     	}
-
-    //	pr($purchaseItemData); exit;
 
 		foreach ($purchaseItemData as $key => $value) {
 			
@@ -204,8 +196,11 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     		$requestPurchasingItem = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'])));
     		$modelTable = 'RequestItem'; 
+
     	} else {
+
     		$modelTable = 'PurchasingItem'; 
+
     	}
 
     	foreach ($requestPurchasingItem as $key => $value) {
@@ -263,8 +258,10 @@ class PurchaseOrdersController extends PurchasingAppController {
 		$paymentTermData = Cache::read('paymentTerms');
 		
 		if (!$paymentTermData) {
+
             $paymentTermData = $this->PaymentTermHolder->getList(null,array('id','name'));
             Cache::write('paymentTerms', $paymentTermData);
+
         }
 
         $userData = $this->Session->read('Auth');
@@ -810,17 +807,255 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     } 
 
-    public function purchased_items($id = null){
+    public function purchased_items(){
 
-    	$this->loadModel('Purchasing.PurchasingItem');
+    	$this->loadModel('Purchasing.RequestItem');
 
-		$this->loadModel('Purchasing.RequestItem');
+    	$this->RequestItem->bindItem();
 
-		$purchaseItemData = $this->PurchasingItem->find('all');
+    	$limit = 10;
 
-		pr($purchaseItemData); exit;
+		$conditions = "";
 
-		$this->set(compact('purchaseItemData'));
+		$params =  array(
+	            'conditions' => $conditions,
+	            'limit' => $limit,
+	            'fields' => array('RequestItem.id',
+									'RequestItem.model',
+									'RequestItem.foreign_key',
+									'RequestItem.request_uuid',
+									'RequestItem.quantity',
+									'RequestItem.request_uuid',
+									'RequestItem.pieces',
+									'RequestItem.unit_price',
+									'RequestItem.unit_price_unit_id',
+									'PurchasingItem.id',
+									'PurchasingItem.model',
+									'PurchasingItem.foreign_key',
+									'PurchasingItem.request_uuid',
+									'PurchasingItem.quantity',
+									'PurchasingItem.pieces',
+									'PurchasingItem.unit_price',
+									'PurchasingItem.unit_price_unit_id'));
+
+		$this->paginate = $params;
+
+		$requestItemData = $this->paginate('RequestItem');
+
+    	foreach ($requestItemData as $key => $value) {
+
+    		if(!empty($value['PurchasingItem']['id'])){
+
+    			$modelTable = 'PurchasingItem';
+
+    		}else{
+
+    			$modelTable = 'RequestItem';
+
+    		}
+			
+			if($value[$modelTable]['model'] == 'GeneralItem'){
+
+				$this->loadModel('GeneralItem');
+
+	 			$itemData = $this->GeneralItem->find('list',array('fields' => array('id', 'name')));
+
+	 			$requestItemData[$key][$modelTable]['series'] = $key + 1;
+
+	 			if(!empty($itemData[$value['RequestItem']['foreign_key']])){
+
+	 				$requestItemData[$key][$modelTable]['name'] = $itemData[$value['RequestItem']['foreign_key']];
+
+	 			}else{
+
+	 				$requestItemData[$key][$modelTable]['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+
+	 			}
+	 		}
+
+	 		if($value[$modelTable]['model'] == 'CorrugatedPaper'){
+
+	 			$this->loadModel('CorrugatedPaper');
+
+	 			$itemData = $this->CorrugatedPaper->find('list',array('fields' => array('id', 'name')));
+
+	 			$requestItemData[$key][$modelTable]['series'] = $key + 1;
+
+	 			if(!empty($itemData[$value['RequestItem']['foreign_key']])){
+
+	 				$requestItemData[$key][$modelTable]['name'] = $itemData[$value['RequestItem']['foreign_key']];
+
+	 			}else{
+
+	 				$requestItemData[$key][$modelTable]['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+
+	 			}
+	 		}
+
+	 		if($value[$modelTable]['model'] == 'Substrate'){
+
+	 			$this->loadModel('Substrate');
+
+	 			$itemData = $this->Substrate->find('list',array('fields' => array('id', 'name')));
+
+	 			$requestItemData[$key][$modelTable]['series'] = $key + 1;
+
+	 			if(!empty($itemData[$value['RequestItem']['foreign_key']])){
+
+	 				$requestItemData[$key][$modelTable]['name'] = $itemData[$value['RequestItem']['foreign_key']];
+
+	 			}else{
+
+	 				$requestItemData[$key][$modelTable]['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+
+	 			}
+	 		}
+
+	 		if($value[$modelTable]['model'] == 'CompoundSubstrate'){
+
+	 			$this->loadModel('CompoundSubstrate');
+
+	 			$itemData = $this->CompoundSubstrate->find('list',array('fields' => array('id', 'name')));
+
+	 			$requestItemData[$key][$modelTable]['series'] = $key + 1;
+	 			
+	 			if(!empty($itemData[$value['RequestItem']['foreign_key']])){
+
+	 				$requestItemData[$key][$modelTable]['name'] = $itemData[$value['RequestItem']['foreign_key']];
+
+	 			}else{
+
+	 				$requestItemData[$key][$modelTable]['name'] = $itemData[$value['PurchasingItem']['foreign_key']];
+
+	 			}
+	 		}
+	    } 
+
+	$this->loadModel('Purchasing.Request');
+
+	$this->Request->bindRequest();
+
+	$requestData = $this->Request->find('all', array('fields' => array('
+									Request.id',
+									'Request.uuid',
+									'PurchaseOrder.request_id',
+									'PurchaseOrder.supplier_id',
+									'PurchaseOrder.po_number')));
+
+	foreach ($requestItemData as $key => $value) {
+		
+		foreach ($requestData as $key2 => $value2) {
+
+			if($value2['Request']['uuid'] == $value['RequestItem']['request_uuid']){
+
+				$requestItemData[$key]['Request']['uuid'] = $value2['Request']['uuid'];
+				$requestItemData[$key]['PurchaseOrder']['supplier_id'] = $value2['PurchaseOrder']['supplier_id'];
+				$requestItemData[$key]['PurchaseOrder']['po_number'] = $value2['PurchaseOrder']['po_number'];
+
+			}
+		}
+	}
+
+	$this->loadModel('Supplier');
+
+	$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name'),
+														));
+
+	$this->loadModel('Currency');
+	$currencyData = $this->Currency->find('list', array('fields' => array('id', 'name'),
+															'order' => array('Currency.name' => 'ASC')
+															));
+
+    $this->set(compact('requestItemData', 'modelTable', 'supplierData', 'currencyData'));
+
+    }
+
+    public function search_item($hint = null){
+
+    	$this->loadModel('Purchasing.RequestItem');
+
+    	$requestItemData = $this->RequestItem->query('SELECT Supplier.name, GeneralItem.name, Substrate.name,
+    			CompoundSubstrate.name, CorrugatedPaper.name, RequestItem.request_uuid, RequestItem.unit_price_unit_id, Request.uuid,
+    			PurchaseOrder.request_id, Request.id, RequestItem.foreign_key, GeneralItem.id, Substrate.id,
+    			CompoundSubstrate.id, CorrugatedPaper.id, PurchaseOrder.supplier_id, Supplier.id, PurchasingItem.request_uuid, PurchasingItem.foreign_key,
+    			PurchasingItem.unit_price_unit_id, PurchasingItem.pieces, RequestItem.pieces, PurchasingItem.unit_price, RequestItem.unit_price
+                FROM koufu_purchasing.request_items AS RequestItem
+                LEFT JOIN koufu_purchasing.requests AS Request
+                ON RequestItem.request_uuid = Request.uuid 
+                LEFT JOIN koufu_purchasing.purchase_orders AS PurchaseOrder
+                ON PurchaseOrder.request_id = Request.id 
+                LEFT JOIN koufu_system.general_items AS GeneralItem
+                ON GeneralItem.id = RequestItem.foreign_key 
+                	 AND RequestItem.model = "GeneralItem"
+                LEFT JOIN koufu_system.substrates AS Substrate
+                ON Substrate.id = RequestItem.foreign_key
+                	AND RequestItem.model = "Substrate"
+                LEFT JOIN koufu_system.compound_substrates AS CompoundSubstrate
+                ON CompoundSubstrate.id = RequestItem.foreign_key
+                	AND RequestItem.model = "CompoundSubstrate"
+                LEFT JOIN koufu_system.corrugated_papers AS CorrugatedPaper
+                ON CorrugatedPaper.id = RequestItem.foreign_key 
+                	AND RequestItem.model = "CorrugatedPaper"
+                LEFT JOIN koufu_system.suppliers AS Supplier
+                ON PurchaseOrder.supplier_id = Supplier.id 
+                LEFT JOIN koufu_purchasing.purchasing_items AS PurchasingItem
+                ON PurchasingItem.request_uuid = Request.uuid
+                WHERE Supplier.name LIKE "%'.$hint.'%" OR GeneralItem.name LIKE "%'.$hint.'%"
+                OR Substrate.name LIKE "%'.$hint.'%" OR CompoundSubstrate.name LIKE "%'.$hint.'%"
+                OR CorrugatedPaper.name LIKE "%'.$hint.'%"');
+
+		foreach ($requestItemData as $key => $value) {
+		
+			if(!empty($value['PurchasingItem']['unit_price_unit_id'])){
+
+				$requestItemData[$key]['model'] = 'PurchasingItem';
+
+			}else{
+
+				$requestItemData[$key]['model'] = 'PurchasingItem';
+			}
+
+			if(!empty($value['GeneralItem']['id'])){
+
+				$requestItemData[$key]['modelItem'] = 'GeneralItem';
+
+			}
+
+			if(!empty($value['Substrate']['id'])){
+
+				$requestItemData[$key]['modelItem'] = 'Substrate';
+
+			}
+
+			if(!empty($value['CompoundSubstrate']['id'])){
+
+				$requestItemData[$key]['modelItem'] = 'CompoundSubstrate';
+
+			}
+
+			if(!empty($value['CorrugatedPaper']['id'])){
+
+				$requestItemData[$key]['modelItem'] = 'CorrugatedPaper';
+
+			}
+
+		}
+
+		//pr($requestItemData); exit;
+
+		$this->loadModel('Supplier');
+		$supplierData = $this->Supplier->find('list', array('fields' => array('Supplier.id', 'Supplier.name'),
+															));
+
+		$this->loadModel('Currency');
+		$currencyData = $this->Currency->find('list', array('fields' => array('id', 'name'),
+																'order' => array('Currency.name' => 'ASC')
+																));
+
+
+		$this->set(compact('requestItemData','supplierData','currencyData', 'modelTable'));
+
+        $this->render('searched_purchase_item'); 
 
     }
 
