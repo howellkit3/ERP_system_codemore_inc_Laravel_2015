@@ -32,20 +32,31 @@ class RequestItem extends AppModel {
 		$this->contain($model);
 	}
 
+	public function bindItem() {
+		$this->bindModel(array(
+			'hasOne' => array(
+				'PurchasingItem' => array(
+					'className' => 'Purchasing.PurchasingItem',
+					'foreignKey' => false,
+					'conditions' => array('RequestItem.model = PurchasingItem.model',
+								'RequestItem.foreign_key = PurchasingItem.foreign_key',
+								'RequestItem.request_uuid = PurchasingItem.request_uuid')
+				)
+				
+			),
+		));
+		$this->recursive = 1;
+	}
+
 	public function saveRequestItem($requestData = null,$requestUuid = null)
 	{
-		//pr($requestData); exit;
-	
 		foreach ($requestData['RequestItem'] as $key => $requestValue)
 		{
 			$this->create();
-
 			$requestValue['request_uuid'] = $requestUuid;
-			//pr($requestValue); exit;
 			$this->save($requestValue);
 		}
 
-		
 		return true;
 	}
 

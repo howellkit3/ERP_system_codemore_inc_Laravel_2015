@@ -30,28 +30,7 @@ class ReceivingsController extends WareHouseAppController {
 
 		$originalQuantityData = $this->ReceivedItem->find('list', array('fields' => array('ReceivedItem.id', 'ReceivedItem.original_quantity')
 																));
-		//pr($quantityData); exit;
-	//	pr($purchaseOrderData); exit;
-		// foreach ($purchaseOrderData as $key => $purchaseValue){
-		// 	$arrholder[$key] = array();
-		// 	$arrholder2[$key] = array();
-		// 	 foreach ($receivedItemsData as $key2 => $value){
-		// 	 //	pr( $value); exit;
-		// 		if($purchaseValue['ReceivedOrder']['id'] == $value['ReceivedItem']['received_orders_id']){
 
-		// 			$quantity = $value['ReceivedItem']['quantity'];
-		// 			$original_quantity = $value['ReceivedItem']['original_quantity'];
-					
-		// 			array_push($arrholder[$key], $quantity);
-		// 			array_push($arrholder2[$key], $original_quantity);
-		// 			//break;
-		// 		}
-		// 		//break;
-		// 	}
-
-		// } //pr($arrholder); exit;
-
-		//pr($arrholder); exit;
 
 		$this->set(compact('purchaseOrderData', 'supplierData'));
 
