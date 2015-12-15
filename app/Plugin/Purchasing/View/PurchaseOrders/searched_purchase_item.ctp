@@ -1,9 +1,12 @@
 <?php foreach ($requestItemData  as $key => $list) { ?>
-
+    
     <?php 
         $modelTable = $list['model'];
         $ItemTable = $list['modelItem'];
     ?>
+
+    <?php if(!empty($list[$modelTable]['unit_price_unit_id'])){?>
+
     <tr>
         <td>
             <?php echo $list[$ItemTable]['name'] ?>
@@ -27,4 +30,6 @@
         </td>
         
     </tr>
+
+     <?php } ?>
 <?php  } ?>
