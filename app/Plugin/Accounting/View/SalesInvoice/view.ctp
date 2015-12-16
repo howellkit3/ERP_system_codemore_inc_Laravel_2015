@@ -130,8 +130,6 @@
 												$totalQty = $clientData['ClientOrderDeliverySchedule'][0]['quantity'] * $clientData['QuotationItemDetail']['unit_price'];
 											}
 
-										//	pr($clientData['QuotationItemDetail']['unit_price']); exit;
-
 											echo number_format($totalQty,2) ;
 										?>
 									</center>
@@ -146,7 +144,7 @@
 							</tr>
 							<tr>
 								<td></td>
-								<td>DR#<?php echo ucfirst($drData['Delivery']['dr_uuid'])?></td>
+								<td>DR#<?php echo str_pad($drData['Delivery']['dr_uuid'],5,'0',STR_PAD_LEFT);?></td>
 								<td></td>
 								<td></td>
 								<td></td>

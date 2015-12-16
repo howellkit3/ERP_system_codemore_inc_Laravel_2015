@@ -1,5 +1,5 @@
 <?php foreach ($deliveryData as $deliveryDataList ):
-
+    //pr($deliveryDataList['Delivery']['clients_order_id']); exit;
     if($deliveryDataList['Delivery']['status'] != 2 ){?>
 
         <tr class="">
@@ -8,7 +8,7 @@
                 <?php echo $deliveryDataList['Delivery']['clients_order_id'] ?>  
             </td>
             <td class="">
-                <?php echo $poNumber[$deliveryDataList['Delivery']['clients_order_id']] ?>
+                <?php echo !empty($poNumber[$deliveryDataList['Delivery']['clients_order_id']]) ? $poNumber[$deliveryDataList['Delivery']['clients_order_id']] : "" ; ?>
                 
             </td>
             <td class="">
@@ -19,7 +19,6 @@
             </td>
             
             <td>
-                <?php //pr($indicator); exit; ?>
                 <?php if($indicator == "si_num" ){
 
                     $label = " S.I.";

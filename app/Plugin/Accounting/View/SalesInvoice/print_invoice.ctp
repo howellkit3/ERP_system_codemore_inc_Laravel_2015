@@ -76,7 +76,7 @@
 
                 $addindex = $halfAddress + 1;
                 $Addresspart1 = $Addresspart1 . " " . $words[$i];
-               // pr(); exit;
+    
                if(count($words) == ($i + $halfAddress + 1)){
 
                     if($i != $halfAddress){
@@ -111,6 +111,8 @@
       
     }
 
+    $drNum = str_pad($drData['Delivery']['dr_uuid'],5,'0',STR_PAD_LEFT);
+
     $objTpl->setActiveSheetIndex(0)
                 ->setCellValue('C7', ucwords($clientData['Company']['company_name']))
                 ->setCellValue('C8', ucwords($Addresspart1))
@@ -124,7 +126,7 @@
                 ->setCellValue('D12', number_format($drData['DeliveryDetail']['quantity']))
                 ->setCellValue('I12', number_format($unitPrice,4))
                 ->setCellValue('K12', number_format($totalQty,2))
-                ->setCellValue('D26', 'DR#00'.$drData['Delivery']['dr_uuid'])
+                ->setCellValue('D26', 'DR#'.$drNum)
                 ->setCellValue('K29', $vatSale)
                 ->setCellValue('K30', $vatExem)
                 ->setCellValue('K31', $zeroRated)
