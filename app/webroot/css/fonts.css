@@ -93,3 +93,21 @@
   font-weight: 400;
   src: local('Titillium Web'), local('TitilliumWeb-Regular'), url(fonts/add_open_sans/7XUFZ5tgS-tD6QamInJTcZSnX671uNZIV63UdXh3Mg0.woff2) format('woff2');
 }
+
+/*Wallpoet*/
+
+@font-face {
+  font-family: 'Wallpoet';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Wallpoet'), url(fonts/add_open_sans/W3qktxGLI9WfewHx2MxrZfesZW2xOQ-xsNqO47m55DA.woff2) format('woff2');
+}
+
+/*Love Ya Like A Sister*/
+
+@font-face {
+  font-family: 'Love Ya Like A Sister';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Love Ya Like A Sister Regular'), local('LoveYaLikeASister-Regular'), url(fonts/add_open_sans/loveyalikeasister/v7/LzkxWS-af0Br2Sk_YgSJY9N6oT7VVZB_kATuDWj1CMI.woff2) format('woff2');
+}

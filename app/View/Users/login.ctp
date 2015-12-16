@@ -19,8 +19,8 @@
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-user"></i></span>
 									<?php echo $this->Form->input('email', array('class' => 'form-control','label' => false,'placeholder' => 'Email address'));?>
-
 								</div>
+								
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-key"></i></span>
 									<?php echo $this->Form->input('password', array('class' => 'form-control','label' => false,'placeholder' => 'Password'));?>
