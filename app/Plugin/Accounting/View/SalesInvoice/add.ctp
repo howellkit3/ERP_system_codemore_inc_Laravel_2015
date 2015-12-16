@@ -43,6 +43,8 @@
                     </table>
                     <hr>
 
+                <section class = "indicator" value = "<?php echo $indicator;?>"> </section>
+
                 <div class="paging" id="dr_pagination">
                         <?php
 
@@ -83,6 +85,8 @@
 
         var searchInput = $('.searchDR').val();
 
+        var indicator = $('.indicator').attr("value");
+
         var view = "index";
 
         if(searchInput != ''){
@@ -99,7 +103,7 @@
 
         $.ajax({
                 type: "GET",
-                url: serverPath + "accounting/sales_invoice/search_order/"+view+"/"+searchInput+"/"+type,
+                url: serverPath + "accounting/sales_invoice/search_order/"+view+"/"+searchInput+"/"+type+"/"+indicator,
                 dataType: "html",
                 success: function(data) {
 

@@ -3,10 +3,6 @@
 
         <tr class="">
 
-       <!--      <td class="">
-                <?php echo ucfirst($purchaseOrderDataList['PurchaseOrder']['uuid']) ?>  
-            </td> -->
-
             <td class="">
 
                 <?php echo ucfirst($purchaseOrderDataList['PurchaseOrder']['po_number']) ?>

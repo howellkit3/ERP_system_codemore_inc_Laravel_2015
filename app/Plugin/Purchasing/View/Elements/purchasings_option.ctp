@@ -37,6 +37,12 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
         </li>
 
         <li class="dropdown hidden-xs active">
+          <?php $page =($active_page == 'purchase_orders' && $active_action == 'purchased_items') ? 'active tab' : '' ?>
+          <?php echo $this->Html->link("<span class='count'>Purchased Items</span>", array('plugin' => 'purchasing', 'controller' => 'purchase_orders', 'action' => 'purchased_items?'.rand(1000,9999).'='.date("is")),array('escape' => false,'class' => 'btn '.$page )); ?>
+           
+        </li>
+
+        <li class="dropdown hidden-xs active">
           <?php $page =($active_page == 'settings' && $active_action == 'item_group') ? 'active tab' : '' ?>
           <?php echo $this->Html->link("<span class='count'>Item Group</span>", array('controller' => 'settings', 'action' => 'item_group' ,'purchasing?'.rand(1000,9999).'='.date("is"),'plugin' => false),array('escape' => false,'class' => 'btn'.$page)); ?>
            

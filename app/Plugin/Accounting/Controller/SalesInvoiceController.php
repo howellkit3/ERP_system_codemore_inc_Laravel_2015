@@ -14,6 +14,8 @@ class SalesInvoiceController extends AccountingAppController {
         
         $this->loadModel('Sales.Company');
 
+        $this->loadModel('Sales.ClientOrder');
+
         $this->loadModel('Delivery.Delivery');
 
         $limit = 10;
@@ -37,8 +39,10 @@ class SalesInvoiceController extends AccountingAppController {
 
         $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
 
-        $deliveryNumHolder = $this->Delivery->find('list',array('fields' => array('dr_uuid','company_id')));
-       
+        $deliveryNumHolder = $this->Delivery->find('list',array('fields' => array('dr_uuid','clients_order_id')));
+
+        $clientDataHolder = $this->ClientOrder->find('list',array('fields' => array('uuid','company_id')));
+
         foreach($deliveryNumHolder as $key => $deliveryList) {
           
            $keyHolder = ltrim($key, '0');
@@ -47,12 +51,16 @@ class SalesInvoiceController extends AccountingAppController {
       
       
         if ($userData['User']['role_id'] == 9 ) {
+
             $noPermissionReciv = 'disabled not-active';
+
         } else {
+
             $noPermissionReciv = ' ';
+
         }
 
-       if ($userData['User']['role_id'] == 10) {
+        if ($userData['User']['role_id'] == 10) {
             $noPermissionPay = 'disabled not-active';
             $this->redirect( array(
                  'controller' => 'salesInvoice', 
@@ -60,10 +68,12 @@ class SalesInvoiceController extends AccountingAppController {
             ));
 
         } else {
+
             $noPermissionPay = ' ';
+
         }
 
-        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay','companyName', 'deliveryNumHolder'));
+        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay','companyName', 'deliveryNumHolder', 'clientDataHolder'));
 
     }
 
@@ -1149,7 +1159,7 @@ class SalesInvoiceController extends AccountingAppController {
 
     }
 
-    public function search_order($view = null, $hint = null, $type = null){
+    public function search_order($view = null, $hint = null, $type = null, $indicator = null){
 
         if($type == '1'){
 
@@ -1164,7 +1174,7 @@ class SalesInvoiceController extends AccountingAppController {
                 WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR ClientOrder.po_number LIKE "%'.$hint.'%"
                 OR Company.company_name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%"   ');
 
-            $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData',  'poNumber', 'companyData'));
+            $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData',  'poNumber', 'companyData','indicator'));
             
             if ($hint == ' ') {
                 $this->render('index');
@@ -1196,7 +1206,7 @@ class SalesInvoiceController extends AccountingAppController {
                 WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR SalesInvoice.statement_no LIKE "%'.$hint.'%"
                 OR Company.company_name LIKE "%'.$hint.'%"  AND SalesInvoice.status = 2');
             
-            $this->set(compact('companyData','invoiceData','noPermissionReciv','noPermissionPay', 'deliveryNumHolder'));
+            $this->set(compact('companyData','invoiceData','noPermissionReciv','noPermissionPay', 'deliveryNumHolder','indicator'));
 
             if ($hint == ' ') {
 
@@ -1222,11 +1232,13 @@ class SalesInvoiceController extends AccountingAppController {
                 WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR SalesInvoice.sales_invoice_no LIKE "%'.$hint.'%"
                 OR Company.company_name LIKE "%'.$hint.'%" AND SalesInvoice.status = 1');
 
-            $this->set(compact('companyData','invoiceData','noPermissionReciv','noPermissionPay', 'deliveryNumHolder'));
+            $this->set(compact('companyData','invoiceData','noPermissionReciv','noPermissionPay', 'deliveryNumHolder','indicator'));
 
             if ($hint == ' ') {
+
                 $this->render('index');
             }else{
+
                 $this->render('search_order_index');
             }
 

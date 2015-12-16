@@ -46,20 +46,20 @@ class Request extends AppModel {
 		$this->contain($model);
 	}
 
-	// public function bindRequest() {
-	// 	$this->bindModel(array(
-	// 		'hasMany' => array(
-	// 			'PurchasingItem' => array(
-	// 				'className' => 'Purchasing.PurchasingItem',
-	// 				'foreignKey' => false,
-	// 				'conditions' => 'PurchasingItem.request_uuid = Request.uuid'
-	// 			),		
-				
-	// 		)
-	// 	));
-	// 	$this->recursive = 1;
-	// 	//$this->contain($giveMeTheTableRelationship);
-	// }
+	public function bindRequest() {
+		$this->bindModel(array(
+			'hasOne' => array(
+				'PurchaseOrder' => array(
+					'className' => 'Purchasing.PurchaseOrder',
+					'foreignKey' => false,
+					'conditions' => array('PurchaseOrder.request_id = Request.id')
+				),
+			),
+		
+		));
+		
+		$this->recursive = 1;
+	}
 
 	public function saveRequest($requestData = null, $auth = null){
 
