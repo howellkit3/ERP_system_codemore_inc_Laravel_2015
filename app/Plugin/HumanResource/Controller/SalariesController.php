@@ -1723,6 +1723,8 @@ class SalariesController  extends HumanResourceAppController {
 
 			$this->loadModel('Payroll.Payroll');
 
+			$this->loadModel('Payroll.HumanResource');
+
 
 			$this->loadModel('Payroll.Loan');
 
@@ -1733,6 +1735,7 @@ class SalariesController  extends HumanResourceAppController {
 			} */
 			//unset($data['Payroll']['emp']);
 		//	pr($data); exit();
+
 
 			$payrollData = array();
 
@@ -1777,6 +1780,11 @@ class SalariesController  extends HumanResourceAppController {
 
 		$this->loadModel('HumanResource.Employee');
 
+		$this->loadModel('HumanResource.Contract');
+
+
+
+
 		if (!empty($id)) {
 
 			$payroll = $this->Payroll->findById($id);
@@ -1784,8 +1792,9 @@ class SalariesController  extends HumanResourceAppController {
 			//find employee by date
 			//$employees = $this->Payroll->checkEmployee($payroll);
 
-			$conditions = array();
-
+			$conditions = array('Employee.status NOT' => 3,'Employee.last_payroll NOT' => 1);
+			//check employees
+		
 			if (!empty($departmentId)) {
 
 				$conditions = array_merge($conditions,array(
@@ -1793,16 +1802,52 @@ class SalariesController  extends HumanResourceAppController {
 				));
 			}
 
+			$this->Employee->bind(array('Contract'));
+
+			if (!empty($this->request->data)) {
+
+				$data = $this->request->data;
+
+				$this->Session->delete('payrollConditions');
+
+				$this->Session->write('payrollConditions',$this->request->data);
+				
+				$selectedEmp = $data['Payroll']['emp_id'];
+
+				if (!empty($data['Salaries']['all_employee'])) {
+
+					$allEmployee = json_decode($data['Salaries']['all_employee']);
+				} 
+
+				$notSelected = array();
+
+				foreach ($allEmployee as $key => $value) {
+					
+					if (!in_array($value,$selectedEmp)) {
+
+						$notSelected = $value;
+					}
+				}
+				
+				$conditions = array_merge($conditions,array(
+					'Employee.id NOT' => $notSelected
+				));
+
+			}
+
 			$employees = $this->Employee->find('all',array(
 				'conditions' => $conditions,
 				'order' => array('Employee.last_name ASC'),
-				'fields' => array('id','code','full_name','date_hired','status','contract_id'),
-				'limit' => 10,
+				'fields' => array('id','code','full_name','date_hired','status','contract_id','Contract.name'),
+				//'limit' => 10,
 				));
 
 
 			//check employee contract
 			$contracts = $this->Employee->checkContract($employees);
+
+			// pr($contracts) ;
+			// exit();
 
 			$this->set(compact('employees','payroll','contracts','id','departmentId'));
 
@@ -1950,6 +1995,8 @@ class SalariesController  extends HumanResourceAppController {
 
 			$auth = $this->Session->read('Auth.User');
 
+			$this->loadModel('HumanResource.Employee');
+
 			$this->loadModel('Payroll.Payroll');
 
 			$this->loadModel('Payroll.SalaryReport');
@@ -1965,6 +2012,25 @@ class SalariesController  extends HumanResourceAppController {
 			$this->loadModel('Payroll.TaxHistory');
 
 			$payroll = $this->Payroll->findById($id);
+
+
+			$lastSessionData = $this->Session->read('payrollConditions');
+
+
+			//check iuf last session_data is equal to payroll process
+
+			if (!empty($lastSessionData) && $lastSessionData['Salaries']['payroll_id'] == $id) {
+
+
+				//update last payroll employee
+				$this->Employee->updateAll(
+						array('Employee.last_payroll' => 1),
+						array('Employee.id' => $lastSessionData['LastPayroll']['emp_id'])
+
+				);
+
+			}
+
 
 			if (!empty($payroll['Payroll']['employeeIds'])) {
 

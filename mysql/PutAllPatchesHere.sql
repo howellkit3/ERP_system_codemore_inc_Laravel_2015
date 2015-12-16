@@ -2591,5 +2591,8 @@ ADD COLUMN `received_bycash_number`  INT(11) NULL AFTER `unit_price_unit_id`;
 ALTER TABLE `ticket_process_schedules`  ADD `production_date_from` DATETIME NULL AFTER `production_date`,  ADD `production_date_to` DATETIME NULL AFTER `production_date_from`;
 
 /* aldrin added this 12 - 14 - 15 koufu_human_resources */
+ALTER TABLE `employees` ADD COLUMN `date_resigned`  datetime NULL AFTER `date_hired`;
+
+/* aldrin added this 12 - 15 -15 koufu_human_resources */
 ALTER TABLE `employees`
-ADD COLUMN `date_resigned`  datetime NULL AFTER `date_hired`;
+ADD COLUMN `last_payroll`  int(11) NULL DEFAULT 0 AFTER `finger_code`;

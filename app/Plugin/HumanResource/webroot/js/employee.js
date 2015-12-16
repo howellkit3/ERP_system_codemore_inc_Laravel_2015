@@ -1,5 +1,5 @@
 
-function ajaxCallSearchEmployee(DepartmentId,thisStatus,inputSearch,profile){
+function ajaxCallSearchEmployee(DepartmentId,thisStatus,inputSearch,profile = 0,is_contract = 0){
 
     $container =  $('.append-table-department');
 
@@ -8,7 +8,7 @@ function ajaxCallSearchEmployee(DepartmentId,thisStatus,inputSearch,profile){
 
     $.ajax({
         type: "GET",
-        url: serverPath + "human_resource/employees/search_by_department/"+DepartmentId+"/"+thisStatus+"/"+inputSearch+'/'+profile,
+        url: serverPath + "human_resource/employees/search_by_department/"+DepartmentId+"/"+thisStatus+"/"+inputSearch+'/'+profile+'/html/'+is_contract,
         dataType: "html",
         success: function(data) {
            
@@ -170,7 +170,7 @@ function searchEmployee() {
 
          var profile = $('#profile option:selected').val();
     if (!profile) {
-        profile ='';
+        profile ='no';
     };
 
    
@@ -185,8 +185,14 @@ function searchEmployee() {
     $('.default-table').hide();
     $('.append-table-department').show();
 
+
+    var is_contract = 0;
+    if ($('.searchEmployee ').hasClass('end_contract')) {
+        is_contract = 1;
+    }
+
     //ajax function to search
-    ajaxCallSearchEmployee(DepartmentId,status,inputSearch,profile);
+    ajaxCallSearchEmployee(DepartmentId,status,inputSearch,profile,is_contract);
 }
 
 
@@ -346,14 +352,16 @@ $('body').on('change','.select-department-view',function(e){
 
 $('body').on('change','.select-status-view',function(e){
 
+    console.log('wewewe');
     //some filter
     var DepartmentId = $('.select-department-view option:selected').val();
     if (!DepartmentId) {
         DepartmentId = 0;
     };
-     var profile = $('#profile option:selected').val();
+    var profile = $('#profile option:selected').val();
+
     if (!profile) {
-        profile ='';
+        profile ='no';
     };
     
     var inputSearch = $('.searchEmployee').val();
@@ -363,7 +371,7 @@ $('body').on('change','.select-status-view',function(e){
 
     var thisStatus = $(this).val();
     
-     if (!thisStatus) {
+    if (!thisStatus) {
         thisStatus = 0;
     };
 
@@ -372,8 +380,12 @@ $('body').on('change','.select-status-view',function(e){
     $('.default-table').hide();
     $('.append-table-department').show();
 
+    var is_contract = 0;
+    if ($(this).hasClass('end_contract')) {
+        is_contract = 1;
+    }
     //ajax function to search
-    ajaxCallSearchEmployee(DepartmentId,thisStatus,inputSearch,profile);
+    ajaxCallSearchEmployee(DepartmentId,thisStatus,inputSearch,profile,is_contract);
    
 });
 
@@ -484,3 +496,33 @@ $('body').on('change','#EmployeePositionId',function(){
 
 });
 
+$('body').on('click','.edit_contract',function(){
+
+    $empId = $(this).data('id');
+
+    $modal_body = $('#changeStatus');
+
+    $container =  $modal_body.find('.modal-body.result');
+
+     $container.html('<img src="'+serverPath+'/img/loader.gif"/>');
+
+    $url = serverPath + 'human_resource/employees/check_contract/'+$empId;
+
+    if ($empId != '') {
+
+         $.ajax({
+            type: "GET",
+            url: $url,
+            dataType: "html",
+            success: function(data) {
+
+                $container.html(data); 
+                  
+            }
+
+    });
+
+
+    }
+
+})

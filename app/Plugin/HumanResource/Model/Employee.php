@@ -111,6 +111,13 @@ class Employee extends AppModel {
 						'conditions' => '',
 						'dependent' => true,
 					),	
+
+				'Contract' => array(
+						'className' => 'Contract',
+						'foreignKey' => 'contract_id',
+						'conditions' => '',
+						'dependent' => true,
+					),	
 				// 'Tooling' => array(
 				// 		'className' => 'Tooling',
 				// 		'foreignKey' => 'employee_id',
@@ -177,7 +184,6 @@ class Employee extends AppModel {
 					'foreignKey' => false,
 					'conditions' => 'Employee.id = WorkSchedule.foreign_key'
 				),		
-
 				'WorkShift' => array(
 					'className' => 'HumanResource.WorkShift',
 					'foreignKey' => false,
@@ -405,6 +411,11 @@ class Employee extends AppModel {
 
 			$contractStart = array();
 			$startKey = 0;
+
+			$empStatus = array('1','2');
+
+			$empContract = array('1','2');
+
 			foreach ($emp as $key => $list) {
 
 		    	$to = $list['Employee']['date_hired'];
@@ -417,9 +428,7 @@ class Employee extends AppModel {
 
 				// }
 				//contractual or probi
-				$empStatus = array('1','2');
-
-				if ($interval->m >= 5 && in_array($list['Employee']['contract_id'],$empStatus)) {
+				if ($interval->m >= 5 && in_array($list['Employee']['contract_id'],$empStatus) && in_array($list['Contract']['id'], $empContract)) {
 						
 						$contractStart[$startKey] = $list;
 						$contractStart[$startKey]['date_hired'] = $list['Employee']['date_hired'];

@@ -366,7 +366,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
 
 			                                           <div class="form-group department-other hide">
 			                                        	 <label class="col-lg-4 control-label">
-			                                        	 <span style="color:red">*</span> Department Name</label>
+			                                        	 <span style="color:red">*</span> Department Name </label>
 			                                            	
 				                                            <?php 
 

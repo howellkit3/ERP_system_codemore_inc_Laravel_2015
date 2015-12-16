@@ -439,7 +439,7 @@ echo $this->Html->script(array(
 	
 	if ($('.alert-block').length >= 1) {
 
-		$.playSound(serverPath + '/sounds/notification');
+		$.playSound(serverPath + '/sounds/warning');
 	}
 
 });

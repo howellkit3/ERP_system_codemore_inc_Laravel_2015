@@ -63,10 +63,12 @@
 		        showLoaderOnConfirm: true,
 		        }, 
 		        function(){   
-		            setTimeout(
-		                function(){     
-		                  window.location.href = $url;
-		                }, 2000); 
+		            // setTimeout(
+		            //     function(){     
+		            //       window.location.href = $url;
+		            //     }, 2000); 
+
+		    		$('#SalariesEmployeeSelectForm').submit();
 		        });
 
 		    e.preventDefault();
@@ -81,8 +83,6 @@
 	$body.on('click','#updatePayroll',function(e){
 
 		var url = $(this).attr('href');
-
-		console.log(url);
 		//$(this).attr('href',url+'?days='+range+'&&month='+month);
 
 		swal({   title: "Process Payroll",  

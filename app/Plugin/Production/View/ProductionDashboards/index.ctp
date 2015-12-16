@@ -12,7 +12,8 @@ echo $this->element('tab/jobs',array('active_tab' => $active_tab));
 // 	'StickyTableHeaders/css/normalize.css'
 // 	));
 echo $this->Html->script(array(
-                    'datetimepicker/jquery.datetimepicker',
+	'datetimepicker/jquery.datetimepicker',
+	'Production.dashboards'
 
 )); 
 echo $this->Html->css(array(
@@ -20,10 +21,8 @@ echo $this->Html->css(array(
 	'datetimepicker/jquery.datetimepicker'
 	));
 
-
 ?>
 	
-
 <div class="row">
 	<div class="col-lg-12">
         <div class="main-box clearfix body-pad">
@@ -46,14 +45,9 @@ echo $this->Html->css(array(
 											<input placeholder="Date Range" name="data[date]" data="1" type="text" class="form-control myDateRange"  value="<?php echo $selectedDate; ?>" >
 										</div>
 
-										<div class="pull-right">
-			                    	<button class="btn btn-success" type="submit">
-												EXPORT
-										</button>
+										
 									</div>
-									</div>
-
-									
+							
 										<button class="btn btn-success" type="submit">
 												SEARCH
 										</button>
@@ -62,9 +56,21 @@ echo $this->Html->css(array(
 			                    	
 				                   <br><br>
 				               	</div>
+				               	<?php echo $this->Form->create('Production',array('url' => array(
+				               	'controller' => 'production_dashboards','action' => 'export'),'type'=> 'post')); ?>
+
+				               		<?php echo $this->Form->input('date',array('id' => 'productionDate','type' => 'hidden')); ?>
+										
+				               		<div class="pull-right">
+			                    			<button id="exportReport" class="btn btn-success" type="submit">
+													EXPORT
+											</button>
+									</div>
+									<?php echo $this->Form->end(); ?>
+									
 				            </header>
 
-							<div class="main-box-body clearfix">
+							<div class="main-box-body clezarfix">
 				            	<div class="table-responsive overflow">
 									<table class="table table-bordered table-hover">
 										<thead>
@@ -203,9 +209,6 @@ echo $this->Html->css(array(
 	$(document).ready(function(){
 
 		$('.myDateRange').daterangepicker();
-
-
-
 
 	});
 </script>
