@@ -55,7 +55,8 @@
 				                        </td>
 
 				                        <td class="">
-				                            <?php echo $invoiceDataList['SalesInvoice']['dr_uuid'];?>
+
+				                            <?php echo str_pad($invoiceDataList['SalesInvoice']['dr_uuid'],5,'0',STR_PAD_LEFT);?>
 				                        </td>
 
 				                        <td class="">

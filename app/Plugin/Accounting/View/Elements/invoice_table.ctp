@@ -15,9 +15,8 @@
                 <?php echo $companyData[$deliveryDataList['Delivery']['company_id']] ?>..
             </td>
             <td class="">
-                <?php echo $deliveryDataList['Delivery']['dr_uuid']; ?>
+                <?php echo str_pad($deliveryDataList['Delivery']['dr_uuid'],5,'0',STR_PAD_LEFT); ?>
             </td>
-            
             <td>
                 <?php if($indicator == "si_num" ){
 
