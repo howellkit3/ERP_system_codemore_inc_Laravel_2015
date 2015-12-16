@@ -19,7 +19,7 @@ class ContributionBalance extends AppModel {
 
 	public function saveBalance($data = array(),$auth = null,$payroll_id = null) {
 
-		$save = array();
+		$save = $historyData = array();
 
     	foreach ($data as $key => $value) {
     			
@@ -33,8 +33,12 @@ class ContributionBalance extends AppModel {
     			
     			}
 
-    		$save = $this->saveAll($historyData);
-    		
+                if (!empty($historyData)) {
+
+                    $save = $this->saveAll($historyData);
+
+                }
+                
     	}
 
     	return $save;

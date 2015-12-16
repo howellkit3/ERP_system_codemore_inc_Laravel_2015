@@ -19,18 +19,24 @@ class SssReport extends AppModel {
 
     public function bind($model = array('Group')){
 
-        // $this->bindModel(array(
-            
-        // //     'belongsTo' => array(
-        // //         'RolePermission' => array(
-        // //             'className' => 'RolePermission',
-        // //             'foreignKey' => 'permission_id',
-        // //             'dependent' => true
-        // //         ),
-        // //     )
-        // // ));
+      $this->bindModel(
+            array(
+            'belongsTo' => array(
+                'Employee' => array(
+                    'className' => 'HumanResource.Employee',
+                    'foreignKey' => 'employee_id'),
+                'SSS' => array(
+                    'className' => 'HumanResource.GovernmentRecord',
+                    'foreignKey' => false,
+                    'conditions' => array('SSS.employee_id = Employee.id')
+                ),
+                ),
 
-        // $this->contain($model);
+
+            ),false);
+
+
+        $this->contain($model);
     }
 
     public function formatData($data = null, $auth = null){
@@ -47,11 +53,8 @@ class SssReport extends AppModel {
     public function saveReport($data = array(),$payroll_id = null,$auth = null) {
 
         $report = array();
+
         $reportIds = array();
-
-        pr($data);
-
-        exit();
         
         if (!empty($data)) {
             
@@ -72,6 +75,7 @@ class SssReport extends AppModel {
                 $report['payroll_id'] = !empty($payroll_id) ? $payroll_id : '';
 
                 if ($this->save($report)) {
+                     
                      $reportIds[] = $this->id;
                 }
             

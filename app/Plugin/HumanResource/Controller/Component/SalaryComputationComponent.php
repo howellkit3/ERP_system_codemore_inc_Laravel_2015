@@ -103,6 +103,8 @@ class SalaryComputationComponent extends Component
 						$salary[$key]['philhealth'] = 0;
 						$salary[$key]['pagibig'] =  0;
 
+						$salary[$key]['sched'] =  $pay_sched;
+
 						$salary[$key]['TaxHistory'] = array();
 						$salary[$key]['ContributionBalance'] = array();
 
@@ -142,15 +144,10 @@ class SalaryComputationComponent extends Component
 						$salary[$key]['pagibig'] = $this->pagibig_pay($employee['Attendance'],$employee['Salary'],$pay_sched,$salary[$key]['gross'] , $models );
 						
 						$salary[$key]['ContributionBalance'][1]['balance'] = $phContribution['balance'];
-
 						$salary[$key]['ContributionBalance'][1]['contribution_id'] = 2;
-
 						$salary[$key]['ContributionBalance'][1]['employee_id'] =  $employee['Employee']['id'];
-
 						$salary[$key]['ContributionBalance'][1]['sched'] = $pay_sched;
-
 						$salary[$key]['ContributionBalance'][1]['from'] = $customDate['start'];
-
 						$salary[$key]['ContributionBalance'][1]['to'] = $customDate['end'];
 
 						}
@@ -268,25 +265,28 @@ class SalaryComputationComponent extends Component
 						
 						$salary[$key]['Salary']	= !empty($employee['Salary']) ? $employee['Salary'] : array();
 
-					// pr($salary);
         		}
-
 
 				return $salary;
 			}
     }
 
-    public function is_date( $str ){ 
-	    $stamp = strtotime( $str ); 
-	    if (!is_numeric($stamp)) 
-	        return FALSE; 
-	    $month = date( 'm', $stamp ); 
-	    $day   = date( 'd', $stamp ); 
-	    $year  = date( 'Y', $stamp ); 
-	    if (checkdate($month, $day, $year)) 
-	        return TRUE; 
-	    return FALSE; 
-}
+	public function is_date( $str ) { 
+		
+		$stamp = strtotime( $str ); 
+
+		if (!is_numeric($stamp)) 
+		    return FALSE; 
+
+		$month = date( 'm', $stamp ); 
+		$day   = date( 'd', $stamp ); 
+		$year  = date( 'Y', $stamp ); 
+		
+		if (checkdate($month, $day, $year)) 
+		   return TRUE; 
+
+		return FALSE; 
+	}
 
     private function workingDays($date = null) {
 
@@ -296,15 +296,15 @@ class SalaryComputationComponent extends Component
 	    	$to = date('Y-m-t',  strtotime($date['end']) );
 
 			$datetime1 = new DateTime($from);
-
 			$datetime2 = new DateTime($to);
 			$interval = $datetime1->diff($datetime2);
 
 			$working_days = 0;
 			
-			for($i=0; $i<=$interval->d; $i++){
-					$modif = $datetime1->modify('+1 day');
-					$weekday = $datetime1->format('w');
+			for($i=0; $i <= $interval->d; $i++) {
+				
+				$modif = $datetime1->modify('+1 day');
+				$weekday = $datetime1->format('w');
 
 				if($weekday != 0 ){ // 0 for Sunday and 6 for Saturday
 					$working_days++;  
@@ -345,76 +345,69 @@ class SalaryComputationComponent extends Component
 			if ($inToday <= $workEndToday) {
 
 			
-			if (strtotime($timeIn) > $in ) {
+				if (strtotime($timeIn) > $in ) {
 
-				$timeIn = date('Y-m-d H:i',strtotime($timeIn)).':00';
+					$timeIn = date('Y-m-d H:i',strtotime($timeIn)).':00';
 
-			} else {
+				} else {
 
-				$timeIn = $today.' '.$data['MyWorkshift']['from'];
-			}
+					$timeIn = $today.' '.$data['MyWorkshift']['from'];
+				}
 
 
-			$timeOut = date('H:i:s',strtotime($data['Attendance']['out']));
+					$timeOut = date('H:i:s',strtotime($data['Attendance']['out']));
 
-			if (strtotime($timeOut) > strtotime($data['MyWorkshift']['to'])) {
+				if (strtotime($timeOut) > strtotime($data['MyWorkshift']['to'])) {
 
-				$timeOut = $logout.' '.$data['MyWorkshift']['to'];
+					$timeOut = $logout.' '.$data['MyWorkshift']['to'];
 
-			} else {
+				} else {
+					
+					$timeOut = date('Y-m-d',strtotime($data['Attendance']['in'])).' '.date('H:i',strtotime($timeOut)).':00';
+				}
+
+			if (!empty($data['MyBreakTime']['id'])) {
+
+				//#4 2nd shift
+				// if ($data['MyWorkshift']['id'] != 4) {
+
+
+				// }
+
 				
-				$timeOut = date('Y-m-d',strtotime($data['Attendance']['in'])).' '.date('H:i',strtotime($timeOut)).':00';
-			}
+				//substract lunchbreaktime
 
-			// pr($data['Attendance']);
+				$myBreakFrom = $today.' '. $data['MyBreakTime']['from'];
+				
+				$myBreakTo = $today.' '. $data['MyBreakTime']['to'];
 
-			// pr($timeIn);
+				$breakHour = strtotime($data['MyBreakTime']['from']) + 3600;
 
-			//pr($data);
+				if (strtotime($timeOut) >= strtotime($myBreakFrom) && strtotime($timeOut) >= strtotime($myBreakTo)) {
+				
+						$timeOut = strtotime($timeOut) - 3600;
+						$timeOut = date('Y-m-d',strtotime($data['Attendance']['in'])).' '.date('H:i:s',$timeOut);
+
+				}
+
+					$todayBreak =  $today.' '.date('H:i:s',$breakHour);
 
 
-		if (!empty($data['MyBreakTime']['id'])) {
+				if (strtotime($data['Attendance']['out']) >= strtotime($myBreakFrom) && strtotime($data['Attendance']['out']) <= strtotime($todayBreak)) {
 
-			//#4 2nd shift
-			// if ($data['MyWorkshift']['id'] != 4) {
+					$timeOut = $today.' '.date('H:',strtotime($data['Attendance']['out'])).'00:00';
 
 
-			// }
+				}
 
-			
-			//substract lunchbreaktime
+			} else{
 
-			$myBreakFrom = $today.' '. $data['MyBreakTime']['from'];
-			
-			$myBreakTo = $today.' '. $data['MyBreakTime']['to'];
-
-			$breakHour = strtotime($data['MyBreakTime']['from']) + 3600;
-
-			if (strtotime($timeOut) >= strtotime($myBreakFrom) && strtotime($timeOut) >= strtotime($myBreakTo)) {
-			
+				if (strtotime($timeOut) > strtotime($data['MyWorkshift']['to'])) {
 					$timeOut = strtotime($timeOut) - 3600;
 					$timeOut = date('Y-m-d',strtotime($data['Attendance']['in'])).' '.date('H:i:s',$timeOut);
-
+				}
+			
 			}
-
-				$todayBreak =  $today.' '.date('H:i:s',$breakHour);
-
-
-			if (strtotime($data['Attendance']['out']) >= strtotime($myBreakFrom) && strtotime($data['Attendance']['out']) <= strtotime($todayBreak)) {
-
-				$timeOut = $today.' '.date('H:',strtotime($data['Attendance']['out'])).'00:00';
-
-
-			}
-
-		} else{
-
-			if (strtotime($timeOut) > strtotime($data['MyWorkshift']['to'])) {
-				$timeOut = strtotime($timeOut) - 3600;
-				$timeOut = date('Y-m-d',strtotime($data['Attendance']['in'])).' '.date('H:i:s',$timeOut);
-			}
-		
-		}
 
 		
 
@@ -616,7 +609,6 @@ class SalaryComputationComponent extends Component
 			$fromDate = $today .' 22:00:00';
 				
 			//$nighInn
-
 			$nightIn = strtotime($fromDate);
 
 			$timeIn =  date('Y-m-d H:i:s',strtotime($days['Attendance']['in']));
@@ -2426,10 +2418,15 @@ class SalaryComputationComponent extends Component
 							$empData[$sortedKey]['Employee'] = $salary['Employee'];
 
 							if ($salary['SalaryReport']['salary_type'] == 'first') {
+								
 								$empData[$sortedKey]['first_half'] = $salary['SalaryReport']['total_pay'];
+							
 							}
+
 							if ($salary['SalaryReport']['salary_type'] == 'second') {
+							
 								$empData[$sortedKey]['second_half'] = $salary['SalaryReport']['total_pay'];
+							
 							}
 							
 						}				
@@ -2636,6 +2633,7 @@ class SalaryComputationComponent extends Component
 						$range = $taxes['Tax']['taxes_'.$i];
 						$taxKey = $i;
 					}
+
 					
 				}
 
@@ -2653,10 +2651,11 @@ class SalaryComputationComponent extends Component
 
 				}
 
+
 			}
 
-		}
 
+		}
 		return $total_tax;
 
 	}
@@ -2698,43 +2697,45 @@ class SalaryComputationComponent extends Component
 				//sort by employee_id
 				$sorted = array();
 
+
 				foreach($data as $key => $item)
 				{
-					$sorted[$item['SalaryReport']['employee_id']][$key] = $item;
+					$sorted[$item['SssReport']['employee_id']][$key] = $item;
 				}
 
 				ksort($sorted, SORT_NUMERIC);
 
 				foreach ($sorted as $sortedKey => $emp) {
 
-						$empData[$sortedKey]['employee_id'] = $sortedKey;
+						$empData[$sortedKey]['Employee']['employee_id'] = $sortedKey;
 
 						foreach ($emp as $empKey => $salary) {
 
 						if ($type == 'sss') {
 
 							if ($salary['SssReport']['sched'] == 'first') {
-								$empData[$sortedKey]['SSS']['first_half'] = $salary['SalaryReport']['sss_employees'];
-								$empData[$sortedKey]['SSS']['first_half_employer'] = $salary['SalaryReport']['sss_employers'];
-								$empData[$sortedKey]['SSS']['number'] = $salary['SSS']['value'];
-								$empData[$sortedKey]['SSS']['first_half_compensation'] = $salary['SalaryReport']['sss_employers'];
+								$empData[$sortedKey]['SSS']['first_half'] = $salary['SssReport']['employee'];
+								$empData[$sortedKey]['SSS']['first_half_employer'] = $salary['SssReport']['employer'];
+								//$empData[$sortedKey]['SSS']['number'] = $salary['SSS']['value'];
+								$empData[$sortedKey]['SSS']['first_half_compensation'] = $salary['SssReport']['compensation'];
 							}
 							if ($salary['SssReport']['sched'] == 'second') {
-								$empData[$sortedKey]['SSS']['second_half'] = $salary['SalaryReport']['sss_employees'];
-								$empData[$sortedKey]['SSS']['second_half_employer'] = $salary['SalaryReport']['sss_employers'];
-								$empData[$sortedKey]['SSS']['number'] = $salary['SSS']['value'];
-								$empData[$sortedKey]['SSS']['second_half_compensation'] = $salary['SalaryReport']['sss_compensation'];
+								$empData[$sortedKey]['SSS']['second_half'] = $salary['SssReport']['employee'];
+								$empData[$sortedKey]['SSS']['second_half_employer'] = $salary['SssReport']['employer'];
+								//$empData[$sortedKey]['SSS']['number'] = $salary['SSS']['value'];
+								$empData[$sortedKey]['SSS']['second_half_compensation'] = $salary['SssReport']['compensation'];
 							}
 							
+
+
+
 						}
 
-							$empData[$sortedKey]['Employee'] = $salary['Employee'];
+						$empData[$sortedKey]['Employee'] = $salary['Employee'];
 
 							
 						}				
 				}
-
-
 				return $empData;
 			
 			}

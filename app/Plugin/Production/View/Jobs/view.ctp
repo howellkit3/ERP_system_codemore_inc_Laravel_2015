@@ -215,26 +215,10 @@ echo $this->element('tab/jobs',array('active_tab' => $active_tab));
 		</div>
 	</div>
 </div>
-<style type="text/css">
-	.fa-stack{
-		color: #03a9f4;
-	}
-	.header-drag-section{
-		background: #03A9F4;
-		padding: 15px 1px 1px;
-	}
-	.sched-header{
-		color: white;
-	}
-	.dragField{
-		padding: 0px;
-	}
-	.table-link{
-		position: relative;
-		top: -17px;
-	}
-	.modal-header{
-		background: #03A9F4;
-		color: white;
-	}
-</style>
+<script>
+	$(document).ready(function(){
+
+		$('.myDateRange').daterangepicker();
+
+	});
+</script>

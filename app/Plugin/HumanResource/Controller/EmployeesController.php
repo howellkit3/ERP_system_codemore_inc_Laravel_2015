@@ -82,13 +82,13 @@ class EmployeesController  extends HumanResourceAppController {
 	}
 
 
-	public function search_by_department($departmentId = null , $status = null,$hintKey = null,$profile = null,$type = "html"){
+	public function search_by_department($departmentId = null , $status = null,$hintKey = null,$profile = null,$type = "html",$is_contract = null){
 
 		$this->loadModel('HumanResource.Position');
 		$this->loadModel('HumanResource.Department');
 		$this->loadModel('HumanResource.Status');
-
-		$this->Employee->bind(array('Position','Department','Status'));
+		$this->loadModel('HumanResource.Contract');
+		$this->Employee->bind(array('Position','Department','Status','Contract'));
 
 		$conditions = array();
 
@@ -113,8 +113,6 @@ class EmployeesController  extends HumanResourceAppController {
 				$conditions = array_merge($conditions,array('Employee.image' => '' ));
 		} 
 
-	
-
 		if (!empty($hintKey)) {
 
 			$conditions = array_merge($conditions,array(
@@ -127,10 +125,14 @@ class EmployeesController  extends HumanResourceAppController {
 
 		}
 
+
+
 		$employeeData = $this->Employee->find('all',array(
 			'conditions' => $conditions,
-			'order' => array('Employee.code DESC')
+			'order' => array('Employee.code DESC'),
+			//'fields' => array(),
 		));
+		
 
 
 		if ($type == 'json') {
@@ -147,8 +149,21 @@ class EmployeesController  extends HumanResourceAppController {
 		}
 
 		$this->set(compact('employeeData'));
+
+
+		if (!empty($is_contract) && $is_contract == 1) {
+
+			$employeeData = $this->Employee->checkContract($employeeData);
+
+			$this->set(compact('employeeData'));
 		
-    	$this->render('search_by_department');
+    		$this->render('Employees/ajax/end_contract');
+
+		} else {
+
+		
+    		$this->render('search_by_department');
+		}
     	
 
 	}
@@ -242,7 +257,6 @@ class EmployeesController  extends HumanResourceAppController {
 			 		//$this->loadModel('HumanResource.Contact');
 
 			 		$this->loadModel('HumanResource.HumanResourceContactPerson');
-
 
 			 		//$save = $this->HumanResourceContactPerson->saveContact($data['Contact'],$employeeId,'Employee',$auth['id']);
 
@@ -1571,5 +1585,102 @@ class EmployeesController  extends HumanResourceAppController {
 
 	}	
 
+	public function end_contract() {
+
+
+		$this->loadModel('HumanResource.Tooling');
+		$this->loadModel('HumanResource.Position');
+		$this->loadModel('HumanResource.Department');
+		$this->loadModel('HumanResource.Status');
+		$this->loadModel('HumanResource.Contract');
+
+		$this->Employee->bind(array('Position','Department','Status','Contract'));
+
+		//array_push($departmentData, "All");
+		//$limit = 10;
+        $conditions = array('Employee.status NOT' => 3);
+
+	 	if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'Employee' ) {
+	 		
+	 		$this->Employee->bind(array('Position','Department','Status','Contract'));
+
+	        // $this->paginate = array(
+	        //     'conditions' => $conditions,
+	        //     'limit' => $limit,
+	        //     //'fields' => array('id', 'status','created'),
+	        //     'recursive' => -1,
+	        //     'order' => 'Employee.code DESC',
+	        // );
+
+	        $emp = $this->Employee->find('all',array(
+	        		'conditions' => $conditions,
+	        		'order' => array('Employee.last_name ASC'),
+	        		'group' => 'Employee.id',
+	        		'limit' => 3
+
+	        ));
+
+       // pr($employees);
+	 
+			$employees  = $this->Employee->checkContract( $emp );
+
+			//pr($employees); exit();
+
+			$positions = $this->Position->find('list',array('fields' => array('id','name')));
+
+			$departments = $this->Department->find('list',array('fields' => array('id','notes')));
+
+			$departmentData = $this->Department->find('list',array('fields' => array('id','name')));
+
+			//$toolList = $this->Tool->find('list',array('fields' => array('id','name')));
+
+			$statusList = $this->Status->find('list',array('fields' => array('id','name')));
+
+        	$this->set(compact('employees','departments','positions','toolings','toolList','employeeList', 'departmentData','statusList','totalEmployee'));
+
+	}
+
+}
+	
+	public function edit_contract() {
+
+		if ($this->request->is('put')) {
+
+			if ($this->Employee->save($this->request->data)) {
+
+				echo $this->Session->setFlash('Employee Contract Successfully Updated','success');
+
+			} else {
+
+				echo $this->Session->setFlash('There\'s an error saving successfully','error');
+			}
+
+
+			return $this->redirect(array('action' => 'end_contract'));
+
+		}
+	}
+
+	public function check_contract($id = null) {
+
+		$this->loadModel('HumanResource.Contract');
+
+		$this->loadModel('HumanResource.Status');
+
+		if (!empty($id)) {
+
+			$this->request->data = $this->Employee->read(null,$id);
+		}
+
+		$contractList = $this->Contract->find('list',array('fields' => array('id','name')));
+
+		$statusList = $this->Status->find('list',array('fields' => array('id','name')));
+
+		
+
+		$this->set(compact('contractList','statusList'));
+
+		$this->render('Employees/ajax/employee_contract');
+	}
 	
 }

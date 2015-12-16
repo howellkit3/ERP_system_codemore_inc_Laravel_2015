@@ -42,6 +42,7 @@ echo $this->Html->script(array(
 		</ul>
 	<?php endif; ?>
 
+			<?php echo $this->Html->link('View All',array('controller' => 'employees', 'action' => 'end_contract'),array('id' => 'viewAll')); ?>
 	</div>
 	</div>
 </div>
@@ -438,7 +439,7 @@ echo $this->Html->script(array(
 	
 	if ($('.alert-block').length >= 1) {
 
-		$.playSound(serverPath + '/sounds/notification');
+		$.playSound(serverPath + '/sounds/warning');
 	}
 
 });

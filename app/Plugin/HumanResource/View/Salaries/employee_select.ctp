@@ -15,7 +15,6 @@ echo $this->Html->script(array(
 
 )); 
 
-
 echo $this->element('payroll_options');
 
 $active_tab = 'sss_table';
@@ -23,22 +22,84 @@ $active_tab = 'sss_table';
 if(!empty($contracts)) : ?>
 <div class="alert alert-block alert-danger fade in">
 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-<h4>Warning! There's some employees which is under end of contract!</h4>
-<p>See list: </p>
+<h4>Warning! There's some employees which is near or end of contract!</h4>
+	<p>See list: </p>
 <br>
-	<ul>
-<?php  foreach ($contracts as $key => $list) { ?>
-		<li><?php echo $list['Employee']['full_name']; ?> ( <?php echo date('F d, Y',strtotime($list['end_contract'])); ?>) </li>
 
-		<?php
-			//  if($key > 0) {
-			// 		echo $this->Html->link('View All',array('controller' => ''));
-   			//  break;  // this will break both foreach loops
-      			
-			// }
-		 ?>
-<?php } ?>
-	</ul>
+
+<div class="panel-group accordion" id="accordion">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a class="accordion-toggle collapsed " data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+				   <i class="fa fa-chevron-circle-down"></i> Employee Near / End of Contract
+				</a>
+			</h4>
+		</div>
+
+		<div id="collapseOne" class="panel-collapse collapse in" style="">
+		<div class="panel-body">
+
+					<table class="table table-bordered alert-table">
+						<thead>
+							<tr>
+								<th style="width:70px"><span>Include in Payroll</span></th>
+								<th style="width:70px"><span>Last Payroll</span></th>
+								<th><span>Employee</span></th>
+								<th><span>Date Hired</span></th>
+								<th><span>End Contract</span></th>
+								<th class="text-center"><span>Contract</span></th>
+							</tr>
+						</thead>
+					<tbody>
+					<?php echo $this->Form->create('Salaries',array('url' => array('controller' => 'salaries','actions' => 'employee_select',$id,'payroll' => true))); ?>
+					<?php $select_emp = array(); foreach ($contracts as $key => $list) { ?>
+						<tr>
+
+							<td> <input type="checkbox" name="data[Payroll][emp_id][<?php echo $key ?>]" value="<?php echo $list['Employee']['id']; ?>" checked> </td>
+							<td> <input type="checkbox" name="data[LastPayroll][emp_id][<?php echo $key ?>]" value="<?php echo $list['Employee']['id']; ?>"> </td>
+							<td> <?php echo $list['Employee']['full_name']; ?>  </td>
+							<td class="">
+								<?php echo !empty($list['date_hired']) ? date('Y-m-d',strtotime($list['date_hired']))  : '' ?>
+							</td>
+							<td class="">
+							<?php 
+								if (!empty($list['Employee']['date_resigned'])) {
+
+									echo date('Y-m-d',strtotime($list['Employee']['date_resigned']));
+
+								} else if(!empty($list['end_contract'])) {
+
+									echo date('Y-m-d',strtotime($list['end_contract']));
+
+								} else {
+
+								}
+
+							?>
+							</td>
+							<td class="text-center">
+								<span class="label label-success"><?php echo $list['Contract']['name']; ?></span>
+							</td>
+						</tr>
+					<?php  $select_emp[] = $list['Employee']['id'];  } ?>
+					</tbody>
+					</table>	
+
+		 </div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<?php echo $this->Form->input('all_employee',array('value' => json_encode($select_emp),'type' => 'hidden')); ?>
+
+<?php echo $this->Form->input('payroll_id',array('value' => $id,'type' => 'hidden')); ?>
+
+<?php echo $this->Form->end(); ?>
+	
 	<br>
 <p>
 <?php 
@@ -130,12 +191,12 @@ endif;
 									                         	 )
 							                        	 ); 
 
-                         		echo $this->Html->link('<i class="fa fa-file-text-o fa-lg"></i> Generate Payslip','#printPayslip', array(
-	                         		'escape' => false,
-	                         		'data-type' => 'payslip',
-	                         		'class' => 'ble-link btn btn-primary pull-right summary-btn',
-	                         		'data-toggle' => 'modal',
-                         		 ));
+                     		echo $this->Html->link('<i class="fa fa-file-text-o fa-lg"></i> Generate Payslip','#printPayslip', array(
+                         		'escape' => false,
+                         		'data-type' => 'payslip',
+                         		'class' => 'ble-link btn btn-primary pull-right summary-btn',
+                         		'data-toggle' => 'modal',
+                     		 ));
 
                         endif; 
 
@@ -362,10 +423,8 @@ $(document).ready(function(){
 	
 	if ($('.alert-block').length >= 1) {
 
-		$.playSound(serverPath + '/sounds/notification');
+		$.playSound(serverPath + '/sounds/warning');
 	}
 
 });
-
-
 </script>

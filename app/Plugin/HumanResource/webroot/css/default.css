@@ -331,3 +331,10 @@ div.value {
 span.required {
   color: red;
 }
+#viewAll {
+  margin: 0 30px;
+}
+table.alert-table {
+  background: #fff none repeat scroll 0 0;
+  color: #000;
+}

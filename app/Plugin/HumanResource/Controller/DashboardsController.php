@@ -17,6 +17,8 @@ class DashboardsController  extends HumanResourceAppController {
 		$this->loadModel('HumanResource.WorkShift');
 
 		$this->loadModel('HumanResource.Holiday');
+
+		$this->loadModel('HumanResource.Contract');
 		
 		$date = date('Y-m-d');
 
@@ -40,7 +42,7 @@ class DashboardsController  extends HumanResourceAppController {
 		// pr($holidays);
 		// exit();
 
-		$conditions = array();
+		$conditions = array('Employee.status NOT' => 3 );
 
 		if (!empty($departmentId)) {
 
@@ -49,13 +51,14 @@ class DashboardsController  extends HumanResourceAppController {
 			));
 		}
 
+		$this->Employee->bind(array('Contract'));
+
 		$employees = $this->Employee->find('all',array(
 			'conditions' => $conditions,
 			'order' => array('Employee.last_name ASC'),
 			'fields' => array('id','code','full_name','date_hired','status','contract_id'),
 			'limit' => 10,
-			));
-
+		));
 
 		//check employee contract
 		$contracts = $this->Employee->checkContract($employees);
