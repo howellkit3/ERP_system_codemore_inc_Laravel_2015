@@ -25,6 +25,7 @@ class DeliveriesController extends DeliveryAppController {
         }
 
          $this->set(compact('noPermissionSales','clientsOrder','deliveryData', 'deliveryList', 'deliveryDetailList', 'clientsStatus', 'deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList'));
+    
     }
 
     public function apc_index() {
@@ -1277,10 +1278,6 @@ class DeliveriesController extends DeliveryAppController {
 
                         $gateData[$key]['QuotationItemDetail'] = $clientData['QuotationItemDetail']['quantity_unit_id'];
 
-                        // array_push($productList, $clientData['Product']['name']);
-                        // array_push($productQuantity, $drData['DeliveryDetail']['quantity']);
-                        // array_push($productUnit, $clientData['QuotationItemDetail']['quantity_unit_id']);
-                
                     }
                     
                 }
@@ -1293,10 +1290,9 @@ class DeliveriesController extends DeliveryAppController {
 
     
             }
-         
     }
 
-     public function gate_pass($deliveryScheduleId = null, $quotationId = null,$clientsOrderUuid = null, $companyId = null,$clientUuid = null){
+     public function gate_pass($deliveryScheduleId = null, $quotationId = null,$companyId = null, $clientsOrderUuid = null){
 
         $this->loadModel('Truck');
 
@@ -1315,9 +1311,11 @@ class DeliveriesController extends DeliveryAppController {
         $ClientDeliveryList = $this->ClientOrder->find('list',array('fields' => array('id', 'company_id')));
 
         $start = date('Y-m-d');
+
         $end = date('Y-m-d', strtotime('+1 day'));
 
-        $conditions = array('Delivery.created <=' => $end, 'Delivery.created >=' => $start , 'Delivery.company_id' => $companyId);
+        //$conditions = array('Delivery.created <=' => $end, 'Delivery.created >=' => $start , 'Delivery.company_id' => $companyId);
+        $conditions = array('Delivery.company_id' => $companyId);
 
         $dr_nos = $this->Delivery->find('all',array('conditions' =>  $conditions));
 
@@ -1326,7 +1324,6 @@ class DeliveriesController extends DeliveryAppController {
 
         $deliveryUserFName = $this->User->find('list',array('fields' => array('id', 'fullname'),'conditions' =>  array('User.role_id' => 5
                                             )));
-
 
         foreach ($deliveryUserFName as $key => $value) {
 
