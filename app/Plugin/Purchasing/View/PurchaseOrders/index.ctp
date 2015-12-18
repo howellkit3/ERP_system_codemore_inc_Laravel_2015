@@ -98,8 +98,6 @@
 
         purchasingStatus = 1;
 
-        //alert(purchasingStatus); 
-
         selectStatus(purchasingStatus);
 
     });

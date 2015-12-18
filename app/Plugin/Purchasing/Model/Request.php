@@ -61,7 +61,7 @@ class Request extends AppModel {
 		$this->recursive = 1;
 	}
 
-	public function saveRequest($requestData = null, $auth = null){
+	public function saveRequest($requestData = null, $auth = null, $editIndicator = null){
 
 		$month = date("m"); 
 
@@ -79,7 +79,12 @@ class Request extends AppModel {
 
 		$this->create();
 
-		$requestData['uuid'] = $code;
+		if(empty($editIndicator)){
+
+			$requestData['uuid'] = $code;
+
+		}
+
 		$requestData['status_id'] = 8;
 		$requestData['prepared_by'] = $auth;
 		$requestData['approved_by'] = $auth;

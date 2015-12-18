@@ -52,6 +52,8 @@
 		                                            								'class' => 'form-control item_type',
 								                                                    'label' => false,
 								                                                    'type' => 'hidden'));
+
+
 	                                            ?>
 											</div>
 										</div>
@@ -69,7 +71,17 @@
 	                                                    					'placeholder' => 'Item',
 	                                                    					'empty' => '--Select Category--'
 	                                                    					));
+
+	                                                echo $this->Form->input('Request.uuid', 
+															array( 
+																'class' => 'form-control required', 
+																'type' => 'hidden',
+										    					'label' => false,
+										    					'value' => $requestData['Request']['uuid']
+										    					));
+
 	                                            ?>
+
 											</div>
 										</div>
 

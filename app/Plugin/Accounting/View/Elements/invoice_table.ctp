@@ -5,7 +5,7 @@
         <tr class="">
 
             <td class="">
-                <?php echo $deliveryDataList['Delivery']['clients_order_id'] ?>  
+                CO-<?php echo $deliveryDataList['Delivery']['clients_order_id'] ?>  
             </td>
             <td class="">
                 <?php echo !empty($poNumber[$deliveryDataList['Delivery']['clients_order_id']]) ? $poNumber[$deliveryDataList['Delivery']['clients_order_id']] : "" ; ?>

@@ -495,10 +495,6 @@ class PurchaseOrdersController extends PurchasingAppController {
 
     }
 
-    public function facial(){
-
-    }
-
     public function search_order($hint = null, $status = null){
 
     	$this->loadModel('Supplier');
@@ -511,37 +507,12 @@ class PurchaseOrdersController extends PurchasingAppController {
 															'fields' => array('Supplier.id', 'Supplier.name'),
 															));
 
-	        $joins = array(
-
-	               array('table'=>'koufu_system.users', 
-	                     'alias' => 'User',
-	                     'type'=>'left',
-	                     'conditions'=> array(
-	                     'User.id = PurchaseOrder.created_by'
-	               )),
-
-	               array('table'=>'koufu_system.suppliers', 
-	                     'alias' => 'Supplier',
-	                     'type'=>'left',
-	                     'conditions'=> array(
-	                     'Supplier.id = PurchaseOrder.supplier_id'
-	               )),
-	        );
-
-	        $this->PurchaseOrder->bind(array('User', 'Supplier'));
-
-	        $purchaseOrderData = $this->PurchaseOrder->find('all',array(
-	        			'joins'=>$joins,
-	                  	'conditions' => array(
-	                    'OR' => array(
-	                    array('PurchaseOrder.po_number LIKE' => '%' . $hint . '%'),
-	                    array('PurchaseOrder.name LIKE' => '%' . $hint . '%'),
-	                    array('User.first_name LIKE' => '%' . $hint . '%'),
-	                    array('User.last_name LIKE' => '%' . $hint . '%'),
-	                    array('Supplier.name LIKE' => '%' . $hint . '%')
-	                      ),  'PurchaseOrder.status' => 8
-	                    ),
-	                  )); 
+	        $purchaseOrderData = $this->PurchaseOrder->query('SELECT PurchaseOrder.po_number, PurchaseOrder.supplier_id, 
+	        	PurchaseOrder.status, PurchaseOrder.id, PurchaseOrder.created_by, Request.uuid
+                FROM koufu_purchasing.purchase_orders AS PurchaseOrder
+                LEFT JOIN koufu_purchasing.requests AS Request
+                ON PurchaseOrder.request_id = Request.id 
+                WHERE PurchaseOrder.po_number LIKE "%'.$hint.'%" OR PurchaseOrder.name LIKE "%'.$hint.'%" AND PurchaseOrder.status = 8');
 
 			$userName = $this->User->find('list', array('fields' => array('id', 'fullname')));
 
@@ -560,38 +531,13 @@ class PurchaseOrdersController extends PurchasingAppController {
 															'fields' => array('Supplier.id', 'Supplier.name'),
 															));
 
-	        $joins = array(
+	        $purchaseOrderData = $this->PurchaseOrder->query('SELECT PurchaseOrder.po_number, PurchaseOrder.supplier_id, 
+	        	PurchaseOrder.status, PurchaseOrder.id, PurchaseOrder.created_by, Request.uuid
+                FROM koufu_purchasing.purchase_orders AS PurchaseOrder
+                LEFT JOIN koufu_purchasing.requests AS Request
+                ON PurchaseOrder.request_id = Request.id 
+                WHERE PurchaseOrder.po_number LIKE "%'.$hint.'%" OR PurchaseOrder.name LIKE "%'.$hint.'%" AND PurchaseOrder.status = 1');
 
-	               array('table'=>'koufu_system.users', 
-	                     'alias' => 'User',
-	                     'type'=>'left',
-	                     'conditions'=> array(
-	                     'User.id = PurchaseOrder.created_by'
-	               )),
-
-	               array('table'=>'koufu_system.suppliers', 
-	                     'alias' => 'Supplier',
-	                     'type'=>'left',
-	                     'conditions'=> array(
-	                     'Supplier.id = PurchaseOrder.supplier_id'
-	               )),
-	        );
-
-	        $this->PurchaseOrder->bind(array('User', 'Supplier'));
-
-	        $purchaseOrderData = $this->PurchaseOrder->find('all',array(
-	        			'joins'=>$joins,
-	                  	'conditions' => array(
-	                    'OR' => array(
-	                    array('PurchaseOrder.po_number LIKE' => '%' . $hint . '%'),
-	                    array('PurchaseOrder.name LIKE' => '%' . $hint . '%'),
-	                    array('User.first_name LIKE' => '%' . $hint . '%'),
-	                    array('User.last_name LIKE' => '%' . $hint . '%'),
-	                    array('Supplier.name LIKE' => '%' . $hint . '%')
-	                      ),'PurchaseOrder.status' => 1
-	                    ), 
-	                //  'limit' => 10
-	                  )); 
 
 			$userName = $this->User->find('list', array('fields' => array('id', 'fullname')));
 
@@ -610,38 +556,13 @@ class PurchaseOrdersController extends PurchasingAppController {
 															'fields' => array('Supplier.id', 'Supplier.name'),
 															));
 
-	        $joins = array(
+	        $purchaseOrderData = $this->PurchaseOrder->query('SELECT PurchaseOrder.po_number, PurchaseOrder.supplier_id, 
+	        	PurchaseOrder.status, PurchaseOrder.id, PurchaseOrder.created_by, Request.uuid
+                FROM koufu_purchasing.purchase_orders AS PurchaseOrder
+                LEFT JOIN koufu_purchasing.requests AS Request
+                ON PurchaseOrder.request_id = Request.id 
+                WHERE PurchaseOrder.po_number LIKE "%'.$hint.'%" OR PurchaseOrder.name LIKE "%'.$hint.'%" AND PurchaseOrder.status = 11');
 
-	               array('table'=>'koufu_system.users', 
-	                     'alias' => 'User',
-	                     'type'=>'left',
-	                     'conditions'=> array(
-	                     'User.id = PurchaseOrder.created_by'
-	               )),
-
-	               array('table'=>'koufu_system.suppliers', 
-	                     'alias' => 'Supplier',
-	                     'type'=>'left',
-	                     'conditions'=> array(
-	                     'Supplier.id = PurchaseOrder.supplier_id'
-	               )),
-	        );
-
-	        $this->PurchaseOrder->bind(array('User', 'Supplier'));
-
-	        $purchaseOrderData = $this->PurchaseOrder->find('all',array(
-	        			'joins'=>$joins,
-	                  	'conditions' => array(
-	                    'OR' => array(
-	                    array('PurchaseOrder.po_number LIKE' => '%' . $hint . '%'),
-	                    array('PurchaseOrder.name LIKE' => '%' . $hint . '%'),
-	                    array('User.first_name LIKE' => '%' . $hint . '%'),
-	                    array('User.last_name LIKE' => '%' . $hint . '%'),
-	                    array('Supplier.name LIKE' => '%' . $hint . '%')
-	                      ), 'PurchaseOrder.status' => 11
-	                    ),
-	                //  'limit' => 10
-	                  )); 
 
 			$userName = $this->User->find('list', array('fields' => array('id', 'fullname')));
 

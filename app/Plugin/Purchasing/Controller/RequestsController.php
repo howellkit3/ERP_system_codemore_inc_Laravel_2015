@@ -347,10 +347,8 @@ class RequestsController extends PurchasingAppController {
 															));
 
 		$requestData = $this->Request->find('first', array('conditions' => array('Request.id' => $requestId)));
-		
-		$requestRequestItem = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'])));
 
-		//pr($requestRequestItem); exit;
+		$requestRequestItem = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestData['Request']['uuid'])));
 
 	    foreach ($requestRequestItem as $key => $value) {
 			
@@ -386,8 +384,6 @@ class RequestsController extends PurchasingAppController {
 
 	    if ($this->request->is(array('post','put'))) {
 
-	    //	pr($this->request->data); exit;
-
 	    	foreach ($this->request->data['RequestItemIdHolder'] as $key => $value) {
 
     			
@@ -399,7 +395,7 @@ class RequestsController extends PurchasingAppController {
     			
     		}
 	    	
-			$requestUuid = $this->Request->saveRequest($this->request->data['Request'],$userData['User']['id']);
+			$requestUuid = $this->Request->saveRequest($this->request->data['Request'],$userData['User']['id'], 1);
 
 			$this->RequestItem->saveRequestItem($this->request->data ,$requestUuid);
 		
@@ -415,7 +411,7 @@ class RequestsController extends PurchasingAppController {
 	  
 	    $this->request->data = $requestData;
 
-    	$this->set(compact('requestId','purchasingTypeData','unitData','requestRequestItem'));
+    	$this->set(compact('requestId','purchasingTypeData','unitData','requestRequestItem','requestData'));
     }
 
     public function approved($requestId = null){
@@ -431,7 +427,6 @@ class RequestsController extends PurchasingAppController {
         $this->redirect( array(
                  'controller' => 'requests', 
                  'action' => 'view', $requestId
-
          ));
 
     }
