@@ -32,12 +32,23 @@
 
 <script>
 
+    var timeout;
+
     $("body").on('keyup','.searchOrder', function(e){
 
-        var searchInput = $(this).val();
-        var status = $(this).attr("val");
-        
-      
+        if(timeout) {
+            clearTimeout(timeout);
+            timeout = null;
+        }
+
+        timeout = setTimeout(searchSI,600)
+    })
+
+    function searchSI(searchInput) {
+
+        var searchInput = $('.searchOrder').val();
+        var status = $('.searchOrder').attr("val"); 
+
         if(searchInput != ''){
 
             $('.requestFields').hide();
@@ -71,8 +82,49 @@
                 
             }
         });
+    }
 
-    });
+    // $("body").on('keyup','.searchOrder', function(e){
+
+    //     var searchInput = $(this).val();
+    //     var status = $(this).attr("val");
+        
+      
+    //     if(searchInput != ''){
+
+    //         $('.requestFields').hide();
+    //         $('.searchAppend').show();
+    //         //alert('hide');
+
+    //     }else{
+    //         $('.requestFields').show();
+    //         $('.searchAppend').hide();
+    //         //alert('show');
+    //     }
+        
+    //     $.ajax({
+    //         type: "GET",
+    //         url: serverPath + "purchasing/purchase_orders/search_order/"+searchInput+"/"+status,
+    //         dataType: "html",
+    //         success: function(data) {
+
+    //             //alert(data);
+
+    //             if(data){
+
+    //                 $('.searchAppend').html(data);
+
+    //             } 
+    //             if (data.length < 5 ) {
+
+    //                 $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
+                     
+    //             }
+                
+    //         }
+    //     });
+
+    // });
 
 
 
