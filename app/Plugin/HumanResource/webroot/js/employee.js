@@ -1,5 +1,5 @@
 
-function ajaxCallSearchEmployee(DepartmentId,thisStatus,inputSearch,profile = 0,is_contract = 0){
+function ajaxCallSearchEmployee(DepartmentId,thisStatus,inputSearch,profile,is_contract){
 
     $container =  $('.append-table-department');
 
