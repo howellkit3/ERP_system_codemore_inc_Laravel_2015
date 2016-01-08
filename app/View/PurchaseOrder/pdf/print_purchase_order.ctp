@@ -54,11 +54,12 @@ for ($x = 0; $x <= 1; $x++) { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Contact Person</td>
-						<td style="width:150px;" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_person_id'] : ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']) . " " . ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
+						<td style="width:150px; font-size:5%" class="border-bot" >:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_person_id'] : ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']) . " " . ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
 						
 						<td align = "right" style="width:80px;">Terms :  
 						</td>
-						<td style="width:250px; font-size:10px" class="border-bot"><?php echo $paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]; ?>	
+						<?php $font_size = strlen($paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]) > 8 ? 'font-size:70%' : ''; ?>
+						<td style="width:120px; <?php echo $font_size; ?>" class="border-bot">:<?php echo $paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]; ?>	
 						</td>
 						
 					</tr>
@@ -68,15 +69,15 @@ for ($x = 0; $x <= 1; $x++) { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Contact Person</td>
-						<td style="width:250px;" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_person_id'] : ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']) . " " . ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
+						<td style="width:250px;  font-size:70%" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_person_id'] : ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']) . " " . ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
 						
 						<td align = "right" style="width:80px;"> 
 						<td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Terms 
 						</td>
-						<td style="width:120px;" class="border-bot">:<?php echo $paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]; ?>	
+						<?php $font_size = strlen($paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]) > 8 ? 'font-size:70%' : ''; ?>
+						<td style="width:120px; <?php echo $font_size; ?>" class="border-bot">:<?php echo $paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]; ?>	
 						</td>
-						
 					</tr>
 				</thead>
 			</table>
@@ -88,7 +89,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Telephone</td>
-						<td style="width:160px;" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_id'] : $telContactData['Contact']['number']; ?></td>
+						<td style="width:160px; " class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_id'] : $telContactData['Contact']['number']; ?></td>
 						
 						<td align = "right" style="width:120px; "> <?php echo  !empty($faxContactData['Contact']['number']) ? "Fax # :  " .  $faxContactData['Contact']['number'] : " "; ?> </td>
 						<td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -285,11 +286,12 @@ for ($x = 0; $x <= 1; $x++) { ?>
 		<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Contact Person</td>
-						<td style="width:150px;" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_person_id'] : ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']) . " " . ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
+						<td style="width:150px; font-size:70%" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_person_id'] : ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']) . " " . ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
 						
 						<td align = "right" style="width:80px;">Terms :  
 						</td>
-						<td style="width:250px; font-size:10px" class="border-bot"><?php echo $paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]; ?>	
+						<?php $font_size = strlen($paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]) > 8 ? 'font-size:70%' : ''; ?>
+						<td style="width:120px; <?php echo $font_size; ?>" class="border-bot">:<?php echo $paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]; ?>	
 						</td>
 						
 					</tr>
@@ -300,13 +302,14 @@ for ($x = 0; $x <= 1; $x++) { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Contact Person</td>
-						<td style="width:250px;" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_person_id'] : ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']) . " " . ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
+						<td style="width:250px;  font-size:70%" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_person_id'] : ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']) . " " . ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
 						
 						<td align = "right" style="width:80px;"> 
 						<td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Terms 
 						</td>
-						<td style="width:120px;" class="border-bot">:<?php echo $paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]; ?>	
+						<?php $font_size = strlen($paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]) > 8 ? 'font-size:70%' : ''; ?>
+						<td style="width:120px; <?php echo $font_size; ?>" class="border-bot">:<?php echo $paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]; ?>	
 						</td>
 						
 					</tr>
@@ -513,11 +516,11 @@ for ($x = 0; $x <= 1; $x++) { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Contact Person</td>
-						<td style="width:150px;" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_person_id'] : ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']) . " " . ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
+						<td style="width:150px;  font-size:70%" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_person_id'] : ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']) . " " . ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
 						
 						<td align = "right" style="width:80px;">Terms :  
 						</td>
-						<td style="width:250px; font-size:10px" class="border-bot"><?php echo $paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]; ?>	
+						<td style="width:250px;  font-size:70%" class="border-bot"><?php echo $paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]; ?>	
 						</td>
 						
 					</tr>
@@ -528,15 +531,15 @@ for ($x = 0; $x <= 1; $x++) { ?>
 			<table class="" style ="line-height: 13px; width:750px; padding:1px; border:1px solid black;">
 					<tr>
 						<td style="width:110px;" >Contact Person</td>
-						<td style="width:250px;" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_person_id'] : ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']) . " " . ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
+						<td style="width:250px;  font-size:70%" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_person_id'] : ucfirst($purchaseOrderData['SupplierContactPerson']['firstname']) . " " . ucfirst($purchaseOrderData['SupplierContactPerson']['lastname']); ?></td>
 						
 						<td align = "right" style="width:80px;"> 
 						<td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Terms 
 						</td>
-						<td style="width:120px;" class="border-bot">:<?php echo $paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]; ?>	
+						<?php $font_size = strlen($paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]) > 8 ? 'font-size:70%' : ''; ?>
+						<td style="width:120px; <?php echo $font_size; ?>" class="border-bot">:<?php echo $paymentTermData[$purchaseOrderData['PurchaseOrder']['payment_term']]; ?>	
 						</td>
-						
 					</tr>
 				</thead>
 			</table>
