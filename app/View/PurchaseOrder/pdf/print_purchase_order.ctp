@@ -7,8 +7,8 @@
 
 <?php 
 for ($x = 0; $x <= 1; $x++) { ?>
-    
-<div class = "one" width = "48%" height = "48%">
+<?php $style = count($purchaseItemData) > 1 ? 'padding-bottom:10px' : 'padding-bottom:15px'; ?>
+<div class = "one" width = "48%" height = "49%" style="<?php echo $style; ?>" >
 	<table class="layout" style =" margin:0px; line-height: 13px; padding:2px; width:750px; border:1px solid black;">
 				
 				<tr>
@@ -239,7 +239,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 <?php }  ?> <br><br>
 
 	 
-<div class = "one" width = "48%" height = "48%" > 
+<div class = "one" width = "48%" height = "48%"  > 
 
 	<table class="layout" style =" margin:0px; line-height: 13px; padding:2px; width:750px; border:1px solid black;">
 

@@ -5,7 +5,7 @@
             $quantity = $specs['ProductSpecification']['quantity']; 
             $rate  = !empty($formatDataSpecs['ProductSpecificationPart']['rate']) ? $formatDataSpecs['ProductSpecificationPart']['rate']  : 1;
             $stocks = !empty($specs['ProductSpecification']['stock']) ? $specs['ProductSpecification']['stock']  : 0;
-            
+
             $quantitySubtracted = $quantity - $stocks; 
             $product = $rate * $quantitySubtracted;
             $paper  = ceil($product / $outProduct);

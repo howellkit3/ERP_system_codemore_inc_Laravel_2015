@@ -98,15 +98,15 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 .one{
   width: 750px;
-  float:left;
   border: solid 0px #000;
   display :inline-block;
   margin-right: 8px;
   margin-left: 17px;
+  vertical-align: middle;
 }
 .one1{
+  margin-top: 10px;
   width: 300px;
-  float:left;
   border: solid 1px #000;
   display :inline-block;
 
