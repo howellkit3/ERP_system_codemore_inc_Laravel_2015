@@ -166,7 +166,21 @@
 							                        <tbody aria-relevant="all" aria-live="polite" role="alert">
 						                         		<tr>
 						                         			<td>
-						                         				<i class="fa fa-phone"></i>
+						                         				<?php switch ($contactNumber['type']) {
+						                         					case '1':
+						                         						$class = 'fa-home';
+						                         						$alt = 'Home';
+						                         						break;
+					                         						case '2':
+					                         							$class = 'fa-building';
+					                         							$alt = 'Business';
+					                         						break;
+					                         						default:
+						                         						$class = 'fa-suitcase';
+						                         						$alt = 'Work';
+						                         					break;
+						                         				}?>
+						                         				<i class="fa <?php echo $class; ?>" alt="<?php echo $alt; ?>"></i>
 						                         			</td>
 						                         			<td>
 						                         				<?php echo $contactNumber['number']; ?>

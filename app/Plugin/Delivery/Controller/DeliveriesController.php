@@ -158,14 +158,15 @@ class DeliveriesController extends DeliveryAppController {
         $this->Delivery->create();
 
         $this->id = $this->Delivery->saveDelivery($this->request->data,$userData['User']['id']);
+          //get latest delivery 
+        $latestDelivery =  $this->Delivery->read(null, $this->id );
+    
+        $this->request->data['DeliveryDetail']['delivery_id'] = $latestDelivery['Delivery']['id'];
 
+  
         $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
 
-        //get latest delivery 
-        $latestDelivery =  $this->Delivery->read(null, $this->id );
-
-
-
+      
         //save delivery reciep number
        $this->request->data['DeliveryReceipt']['dr_uuid'] = $latestDelivery['Delivery']['dr_uuid'];
        $this->request->data['DeliveryReceipt']['delivery_id'] = $latestDelivery['Delivery']['id'];
@@ -1093,10 +1094,13 @@ class DeliveriesController extends DeliveryAppController {
 
         $userData = $this->Session->read('Auth');
 
-          foreach ($DRRePrint as $key => $list) {
-                $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
+        pr($DRRePrint);
+        exit();
+
+        foreach ($DRRePrint as $key => $list) {
         
-     
+            $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
+
             //clientOrder = 
             $toPrint[$key] = $list;
 
@@ -1112,14 +1116,17 @@ class DeliveriesController extends DeliveryAppController {
                                                       
           }
 
+
+
         }   
          $measureList = $this->Measure->find('list',array('fields' => array('id','name')));
 
        
         $prepared = $userData;
-        $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),'conditions' => array('User.id' => $toPrint[0]['DeliveryDetail']['created_by'])
-                                                                    ));
-              
+        $approved = $this->User->find('first', 
+            array('fields' => array('id', 'first_name','last_name'),
+                'conditions' => array('User.id' => $toPrint[0]['DeliveryDetail']['created_by'])));
+
         $this->set(compact('toPrint','approved','toPrint','measureList','prepared','approved'));
         //to print
         $this->render('multiple_dr');
@@ -1580,7 +1587,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->Delivery->bindDeliveryById();
         
-        $conditions = array('Delivery.dr_uuid' => 't3');
+        $conditions = array('Delivery.dr_uuid NOT' => '','DeliveryDetail.id NOT' => '');
 
         $limit = 10;
 
@@ -1592,7 +1599,7 @@ class DeliveriesController extends DeliveryAppController {
         );
 
         $delivery = $this->paginate('Delivery');
-        // pr($delivery);
+
         // exit();
       // $delivery = $this->array_sort_by_column($delivery, 'dr_uuid');
         $this->set(compact('delivery'));

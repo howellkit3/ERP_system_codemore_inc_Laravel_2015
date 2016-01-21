@@ -23,15 +23,21 @@
    
     $toBePrinted = date("M/d/Y");
 
+
    foreach ($toPrint as $key => $print) {
 
-    
+
        # code...
    
         // $phpPrice = '';
         // $usdPrice = '';
         // $totalQty = $print['ClientOrder']['QuotationItemDetail']['quantity'] * $print['DeliveryDetail']['quantity'];
-         $dividend = $print['DeliveryDetail']['quantity'] / $print['DeliveryDetail']['pieces'];
+         $dividend = 0;
+         if ($print['DeliveryDetail']['quantity'] > 0) {
+              $dividend = $print['DeliveryDetail']['quantity'] / $print['DeliveryDetail']['pieces'];
+           
+         }
+       
          $difference = $print['DeliveryDetail']['quantity'] - (floor($dividend) * $print['DeliveryDetail']['pieces']);
          $preparedFName = ucwords($prepared['User']['first_name']) ;
          $preparedLName = ucwords($prepared['User']['last_name'])  ;
@@ -71,7 +77,7 @@
              
             if($difference == 0){
 
-                        $sheet->setCellValue('H'.$odd[$key], floor($dividend) . " x " .   $print['DeliveryDetail']['pieces'] . " / " . $measureList[$print['DeliveryDetail']['measure']] );
+                     $sheet->setCellValue('H'.$odd[$key], floor($dividend) . " x " .   $print['DeliveryDetail']['pieces'] . " / " . $measureList[$print['DeliveryDetail']['measure']] );
 
             }else{
 
