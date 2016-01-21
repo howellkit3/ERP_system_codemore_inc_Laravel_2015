@@ -20,6 +20,39 @@ class Delivery extends AppModel {
 		$this->save($data);
 	}
 
+	public function bindDeliveryById() {
+
+		$this->bindModel(array(
+			'hasOne' => array(
+				'DeliveryDetail' => array(
+					'className' => 'Delivery.DeliveryDetail',
+					'foreignKey' => false,
+					'conditions' => 'Delivery.id = DeliveryDetail.delivery_id'
+				),		
+				
+				'Transmittal' => array(
+					'className' => 'Delivery.Transmittal',
+					'foreignKey' => false,
+					'conditions' => 'Delivery.dr_uuid = Transmittal.dr_uuid'
+				),
+				'DeliveryReceipt' => array(
+					'className' => 'Delivery.DeliveryReceipt',
+					'foreignKey' => false,
+					'conditions' => array('DeliveryReceipt.dr_uuid = Delivery.dr_uuid')
+				),
+			
+			),
+			// 'hasMany' => array(
+			// 	'DeliveryReceiptItem' => array(
+			// 		'className' => 'Delivery.DeliveryReceipt',
+			// 		'foreignKey' => false,
+			// 		//'conditions' => array('DeliveryReceiptItem.dr_uuid' => 't3')
+			// 	)	
+			// )
+		));
+		$this->recursive = 1;
+
+	}
 	public function bindDelivery() {
 		$this->bindModel(array(
 			'hasOne' => array(

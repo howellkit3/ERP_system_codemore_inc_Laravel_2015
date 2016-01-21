@@ -2596,3 +2596,13 @@ ALTER TABLE `employees` ADD COLUMN `date_resigned`  datetime NULL AFTER `date_hi
 /* aldrin added this 12 - 15 -15 koufu_human_resources */
 ALTER TABLE `employees`
 ADD COLUMN `last_payroll`  int(11) NULL DEFAULT 0 AFTER `finger_code`;
+
+
+/* aldrin added this 01 - 21 -16 koufu_deliveries */
+ALTER TABLE `delivery_receipts`   
+  ADD COLUMN `delivery_id` INT NULL AFTER `dr_uuid`;
+
+
+ALTER TABLE `dev_koufu_delivery`.`delivery_details`   
+  DROP COLUMN `delivery_id`, 
+  ADD COLUMN `delivery_id` INT(11) NULL AFTER `delivery_uuid`;

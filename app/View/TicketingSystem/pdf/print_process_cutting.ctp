@@ -10,7 +10,7 @@ Configure::write('debug',2);
 </style>
 
 <?php 
-         $outs1  = !empty($part['ProductSpecificationPart']['outs1']) ? $part['ProductSpecificationPart']['outs1']  : 1;
+        $outs1  = !empty($part['ProductSpecificationPart']['outs1']) ? $part['ProductSpecificationPart']['outs1']  : 1;
         $outs2  = !empty($part['ProductSpecificationPart']['outs2']) ? $part['ProductSpecificationPart']['outs2']  : 1;
         $outProduct = $outs1 * $outs2; 
         $quantity = $specs['ProductSpecification']['quantity']; 
@@ -149,14 +149,21 @@ Configure::write('debug',2);
 								<?php echo $part['ProductSpecificationPart']['material']?>, 
 								<?php echo $part['ProductSpecificationPart']['size1']?> x
 								<?php echo $part['ProductSpecificationPart']['size2']?> >
-								<?php 
-								$total = $paper;
+								<?php  
+
+							//	pr($part);
+								//$outPaper = $paperQuantity / $part['ProductSpecificationPart']['outs1'];  
+								//echo round($outs); 
 								echo $paper;
-								?>
+								$total = $paper ?> 
 								<?php if(!empty($part['ProductSpecificationPart']['allowance'])){ ?>
 								+ <?php echo $part['ProductSpecificationPart']['allowance']; 
-								$total += $part['ProductSpecificationPart']['allowance']; ?>
-								<?php } ?>
+								$total += $part['ProductSpecificationPart']['allowance']?>
+
+								<?php } 
+
+								 ?>
+
 								<?php echo " = ".round($total); echo $unitData[$specs['ProductSpecification']['quantity_unit_id']]; ?>
 
 

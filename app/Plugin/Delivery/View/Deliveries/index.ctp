@@ -29,6 +29,7 @@
                     <div class="main-box clearfix">
                         <ul class="nav nav-tabs">
                                     <li class="<?php echo ($active_tab == 'tab-waiting') ? 'active' : '' ?> statusclick" alt="tab-waiting" value = "1"><a href="#tab-waiting" data-toggle="tab">Clients Orders</a></li>
+                                    <li class="<?php echo ($active_tab == 'tab-dr-num') ? 'active' : '' ?> statusclick" alt="tab-waiting" value="-1"><a href="#tab-dr-num" data-toggle="tab">DR #</a></li>
                                    <!--  <li class="<?php echo ($active_tab == 'tab-due') ? 'active' : '' ?> statusclick" alt="tab-due" value = "2"><a href="#tab-due" id = 'itemType' data-toggle="tab">Due</a></li>
                                     <li class="<?php echo ($active_tab == 'tab-approved') ? 'active' : '' ?> statusclick" alt="tab-approved" value = "3"><a href="#tab-approved" id = 'itemType' data-toggle="tab">Approved</a></li>
                                     <li class="<?php echo ($active_tab == 'tab-closed') ? 'active' : '' ?> statusclick" alt="tab-closed" value = "4"><a href="#tab-closed" id = 'itemType' data-toggle="tab">Closed</a></li>
@@ -74,9 +75,12 @@
             //alert('show');
         }
         
+        var url = serverPath + "delivery/deliveries/search_order/"+searchInput;
+
+
         $.ajax({
             type: "GET",
-            url: serverPath + "delivery/deliveries/search_order/"+searchInput,
+            url: serverPath,
             dataType: "html",
             success: function(data) {
 
@@ -113,9 +117,16 @@
 
     function selectStatus(deliveryStatus) {
 
+     var url =  serverPath + "delivery/deliveries/index_status/"+deliveryStatus;
+
+       if (deliveryStatus == '-1') {
+
+            url =  serverPath + "delivery/deliveries/search_by_number/"+deliveryStatus;
+        }
+
         $.ajax({
             type: "GET",
-            url: serverPath + "delivery/deliveries/index_status/"+deliveryStatus,
+            url: url,
             dataType: "html",
             success: function(data) {
 
@@ -140,7 +151,7 @@
     $('.statusclick').click(function() {
 
         deliveryStatus = $(this).val();
-
+        console.log(deliveryStatus);
         selectStatus(deliveryStatus);
 
     });
