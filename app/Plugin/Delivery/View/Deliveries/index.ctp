@@ -80,7 +80,7 @@
 
         $.ajax({
             type: "GET",
-            url: serverPath,
+            url: url,
             dataType: "html",
             success: function(data) {
 

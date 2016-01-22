@@ -42,7 +42,6 @@ class SalaryComputationComponent extends Component
 				'conditions' => array('Wage.name like' => '%Minimum%')
 			));
 
-
 			//$contributions = $Contibutions->find('list',array('fields' => array('id','schedules')));
 
 			$models['OvertimeRate'] = $OvertimeRate;
@@ -265,7 +264,9 @@ class SalaryComputationComponent extends Component
 						
 						$salary[$key]['Salary']	= !empty($employee['Salary']) ? $employee['Salary'] : array();
 
+
         		}
+
 
 				return $salary;
 			}
@@ -354,8 +355,7 @@ class SalaryComputationComponent extends Component
 					$timeIn = $today.' '.$data['MyWorkshift']['from'];
 				}
 
-
-					$timeOut = date('H:i:s',strtotime($data['Attendance']['out']));
+				$timeOut = date('H:i:s',strtotime($data['Attendance']['out']));
 
 				if (strtotime($timeOut) > strtotime($data['MyWorkshift']['to'])) {
 
@@ -422,7 +422,7 @@ class SalaryComputationComponent extends Component
 
 		// // $days['total_ho`urs'] += $days['total_hours'];
 
-		// pr($days['total_hours']);
+	
 	
 		} else {
 
@@ -458,7 +458,6 @@ class SalaryComputationComponent extends Component
 		}
 		
 		}
-		
 
     	return $days['total_hours'];
     }
@@ -1263,6 +1262,7 @@ class SalaryComputationComponent extends Component
     	$data['hours_regular'] = $data['regular_days'];
 
 
+
     	foreach ($differences as $key => $value) {
     	
     		$data['hours_regular'] -= '0.'.$value['minutes'];
@@ -1421,7 +1421,6 @@ class SalaryComputationComponent extends Component
 				$legal_holiday_work = 0.00;
 
 				$special_holiday_work = 0.00;
-
 
 
 				foreach ($models['Holiday'] as $holiday_key => $holiday) {
@@ -1891,6 +1890,7 @@ class SalaryComputationComponent extends Component
 
 	$data['hours_regular'] = $data['regular_days'];
 
+
 	if (!empty($differences)) {
 
 			foreach ($differences as $key => $value) {
@@ -1898,7 +1898,6 @@ class SalaryComputationComponent extends Component
 		$data['hours_regular'] -= '0.'.$value['minutes'];
 
 	}
-
 
 	}
 

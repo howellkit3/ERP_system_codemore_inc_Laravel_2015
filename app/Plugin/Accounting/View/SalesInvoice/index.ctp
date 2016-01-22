@@ -105,7 +105,10 @@
 				                            <?php
 
 				                            	echo $this->Html->link('<span class="fa-stack">
-							                    <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span> ', array('controller' => 'sales_invoice', 'action' => 'view',$invoiceDataList['SalesInvoice']['id']), array('class' =>' table-link','escape' => false, 'title'=>'View Sales Invoice'
+							                    <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span> ', array('controller' => 'sales_invoice', 'action' => 'view',$invoiceDataList['SalesInvoice']['id'],0,
+							                    	$invoiceDataList['SalesInvoice']['dr_uuid'],
+							                    	$invoiceDataList['SalesInvoice']['sales_invoice_no']
+							                    	), array('class' =>' table-link','escape' => false, 'title'=>'View Sales Invoice'
 							                    ));
 				        
 				                            ?>
@@ -113,7 +116,7 @@
 				                            <?php
 
 				                            	echo $this->Html->link('<span class="fa-stack">
-							                    <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-paper-plane  fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> Move</font></span></span> ', array('controller' => 'sales_invoice', 'action' => 'move',$invoiceDataList['SalesInvoice']['id']), array('class' =>' table-link' . $status ,'escape' => false, 'title'=>'Move to Statement of Acccount', 'confirm' => 'Do you want to move this Sales Invoice to Statement of Account?'
+							                    <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-paper-plane  fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> Move</font></span></span> ', array('controller' => 'sales_invoice', 'action' => 'move',$invoiceDataList['SalesInvoice']['id'],0,$invoiceDataList['SalesInvoice']['dr_uuid']), array('class' =>' table-link' . $status ,'escape' => false, 'title'=>'Move to Statement of Acccount', 'confirm' => 'Do you want to move this Sales Invoice to Statement of Account?'
 							                    ));
 				        
 				                            ?>

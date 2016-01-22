@@ -63,13 +63,16 @@ class SalesInvoice extends AppModel {
 		//$this->contain($giveMeTheTableRelationship);
 	}
   
-	public function addSalesInvoice($invoiceData = null, $auth = null){
+	public function addSalesInvoice($invoiceData = null, $auth = null,$drData = array()){
 
-		$this->create();
+		$date = date('Y-m-d H:i:s');
+
 		
+		$this->create();
+			
 		$invoiceData[$this->name]['created_by'] = $auth;
 		$invoiceData[$this->name]['modified_by'] = $auth;
-		$invoiceData[$this->name]['modified'] = date('Y-m-d H:i:s');
+		$invoiceData[$this->name]['modified'] = $date;
 
 		//pr($invoiceData); exit;
 		$this->save($invoiceData);

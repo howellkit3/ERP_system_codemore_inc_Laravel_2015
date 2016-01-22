@@ -5,6 +5,15 @@
                             <?php  echo $this->Form->create('InvoiceForm',array(
                                     'url'=>(array('controller' => 'sales_invoice','action' => 'add_invoice', $deliveryUUID )),'class' => 'form-horizontal'));  ?>
 
+
+                                      <?php 
+                                            echo $this->Form->input('SalesInvoice.multiple', array(
+                                                'type' => 'hidden',
+                                                'label' => false,
+                                                'value' => !empty($isMultiple) ? 1 : ''
+                                                ));
+                                        ?>
+
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label"><span style="color:red">*</span>Customer</label>
                                     <div class="col-lg-8">

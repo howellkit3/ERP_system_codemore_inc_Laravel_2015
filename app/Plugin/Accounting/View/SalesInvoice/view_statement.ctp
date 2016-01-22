@@ -35,7 +35,7 @@
 						<div class="col-lg-2"></div>
 						<div class="col-lg-6"></div>
 						<div class="col-lg-4">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
-							NO : <?php echo $invoiceData['SalesInvoice']['statement_no']?>
+							NO : <?php echo $invoiceData[0]['SalesInvoice']['statement_no']?>
 						</div>
 					</div>
 					<div class="form-group">

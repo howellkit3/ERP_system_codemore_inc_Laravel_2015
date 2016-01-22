@@ -129,7 +129,7 @@ class SalesInvoiceController extends AccountingAppController {
 
     }
 
-    public function view($invoiceId = null,$saNo = null){
+    public function view($invoiceId = null,$saNo = null,$drno = null,$sino = null){
 
         $userData = $this->Session->read('Auth');
 
@@ -167,9 +167,14 @@ class SalesInvoiceController extends AccountingAppController {
 
         Cache::write('currencyData', $currencyData);
 
+        $conditions = array('SalesInvoice.id' => $invoiceId);
+
+        // if (!empty($drno) && !empty($sino)) {
+        //          $conditions = array('SalesInvoice.dr_uuid' => $drno,'SalesInvoice.sales_invoice_no' => $sino );
+           
+        // }
         $invoiceData = $this->SalesInvoice->find('first', array(
-                                            'conditions' => array('SalesInvoice.id' => $invoiceId
-                                            )));
+                                            'conditions' => $conditions ));
 
         $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $invoiceData['SalesInvoice']['created_by'])
@@ -180,33 +185,78 @@ class SalesInvoiceController extends AccountingAppController {
 
             $this->Delivery->bindDelivery();
 
+            if ($invoiceData['SalesInvoice']['is_multiple'] == 1) {
 
-            $drData = $this->Delivery->find('first', array(
+                // $drData = $this->Delivery->find('all', array(
+                //                                 'conditions' => array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid']
+                //                                 )));
+
+                $drData = $this->Delivery->query('SELECT *
+                    FROM koufu_delivery.deliveries AS Delivery
+                    LEFT JOIN koufu_sale.client_orders AS ClientOrder
+                    ON ClientOrder.uuid = Delivery.clients_order_id
+                    LEFT JOIN koufu_delivery.delivery_details AS DeliveryDetail
+                    ON DeliveryDetail.delivery_id = Delivery.id
+                    LEFT JOIN koufu_sale.client_order_delivery_schedules AS ClientOrderDeliverySchedule
+                    ON ClientOrderDeliverySchedule.client_order_id = ClientOrder.id
+                    LEFT JOIN koufu_sale.quotations AS Quotation
+                    ON Quotation.id = ClientOrder.quotation_id
+                    LEFT JOIN koufu_sale.quotation_item_details AS QuotationItemDetail
+                    ON QuotationItemDetail.quotation_id = ClientOrder.quotation_id
+                    LEFT JOIN koufu_sale.companies AS Company
+                    ON Company.id = Quotation.company_id
+                    LEFT JOIN koufu_sale.products AS Product
+                    ON Product.company_id = Company.id
+                    LEFT JOIN koufu_sale.addresses AS Address
+                    ON Address.foreign_key = Company.id
+                    WHERE Delivery.dr_uuid = "'.$invoiceData['SalesInvoice']['dr_uuid'].'" group by Delivery.id');
+        
+  
+
+                  $noPermissionPay = "";
+
+                 $noPermissionReciv = "";
+                 $companyData =  $drData[0]['Company']['company_name'];
+
+
+            } else {
+                
+                $drData = $this->Delivery->find('first', array(
                                                 'conditions' => array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid']
                                                 )));
+
+
+                $conditions = array('ClientOrderDeliverySchedule.uuid' =>1450515693);
+
+                $clientData = $this->ClientOrderDeliverySchedule->find('first', array(
+                                        'conditions' => array($conditions
+                                        )));
+
+                $clientOrderId = $clientData['ClientOrder']['id'];
+
+                $companyData = $clientData['Company']['company_name'];
+
+                $noPermissionPay = "";
+
+                $noPermissionReciv = "";
+
+
+            }
+
+            
         }else{
 
             $drData = " ";
         }
 
 
-        $conditions = array('ClientOrderDeliverySchedule.uuid' => $drData['Delivery']['schedule_uuid']);
-      
-        $clientData = $this->ClientOrderDeliverySchedule->find('first', array(
-                                            'conditions' => array($conditions
-                                            )));
-
-        $clientOrderId = $clientData['ClientOrder']['id'];
-
-        $companyData = $clientData['Company']['company_name'];
-     
-        $noPermissionPay = "";
-
-        $noPermissionReciv = "";
-
-        $this->set(compact('invoiceId','prepared','approved','drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData', 'noPermissionPay', 'noPermissionReciv','quotationData', 'clientOrderId'));
+        $this->set(compact('deliveries','invoiceId','prepared','approved','drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData', 'noPermissionPay', 'noPermissionReciv','quotationData', 'clientOrderId'));
         
-        if (!empty($saNo)) {
+         if ($invoiceData['SalesInvoice']['is_multiple'] == 1 && empty($saNo)) {
+
+             $this->render('view_multiple');
+         }    
+         if (!empty($saNo)) {
 
             $this->render('view_statement');
 
@@ -263,7 +313,7 @@ class SalesInvoiceController extends AccountingAppController {
                 'order' => array('created DESC')
             ));
 
-        if (!empty($DRdata && $DRdata['SalesInvoice']['status'] != 3)) {
+        if (!empty($DRdata) && $DRdata['SalesInvoice']['status'] != 3) {
 
             $this->Session->setFlash(__('This Delivery No. already have a Sales Invoice No. '), 'error');
             $this->redirect( array(
@@ -272,13 +322,13 @@ class SalesInvoiceController extends AccountingAppController {
                     ));
         }
 
-            $this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id']);
+        $this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id'],$DRdata);
 
-            $this->Session->setFlash(__(' Sales Invoice No. completed. '), 'success');
-            $this->redirect( array(
-                         'controller' => 'sales_invoice', 
-                         'action' => 'index'
-                    ));
+        $this->Session->setFlash(__(' Sales Invoice No. completed. '), 'success');
+        $this->redirect( array(
+                     'controller' => 'sales_invoice', 
+                     'action' => 'index'
+                ));
 
     }
 
@@ -296,8 +346,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         $conditions = array();
 
-        $this->paginate = array(
-            'conditions' => $conditions,
+        $params =  array('conditions' => $conditions,
             'limit' => $limit,
             'fields' => array(
                 'Delivery.id',
@@ -306,8 +355,15 @@ class SalesInvoiceController extends AccountingAppController {
                 'Delivery.status',
                 'Delivery.dr_uuid', 
                 ),
-            'order' => 'Delivery.id DESC',
-        );
+            'order' => 'Delivery.id DESC');
+
+        if ($indicator == 'dr_num')  {
+
+            $params = array_merge($params,array('group' => 'Delivery.dr_uuid'));
+        }
+
+
+        $this->paginate = $params;
 
         $deliveryData = $this->paginate('Delivery');
 
@@ -339,6 +395,10 @@ class SalesInvoiceController extends AccountingAppController {
         if ($indicator == 'si_num') {
 
             $output = $this->render('add');
+
+        }else if($indicator == 'dr_num') {
+
+            $output = $this->render('add_by_dr');
 
         }else{
 
@@ -483,7 +543,111 @@ class SalesInvoiceController extends AccountingAppController {
         
     }
 
+    public function print_invoice_multiple($invoiceId = null ,$dr_uuid = null) {
+
+        $userData = $this->Session->read('Auth');
+
+        $this->loadModel('Sales.ClientOrderDeliverySchedule');
+
+        // $this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product', 'Quotation', 'QuotationItemDetail', 'Company', 'Address'));
+        
+        $this->loadModel('Delivery.Delivery');
+
+        // $this->loadModel('Sales.PaymentTermHolder');
+
+        // $this->loadModel('Unit');
+
+        // $this->loadModel('Currency');
+
+        // $units = $this->Unit->getList();
+
+        // $this->loadModel('User');
+
+        // $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
+        //                                                     'conditions' => array('User.id' => $userData['User']['id'])
+        //                                                     )); 
+         
+        // $paymentTermData = Cache::read('paymentTerms');
+        
+        // if (!$paymentTermData) {
+
+        //     $paymentTermData = $this->PaymentTermHolder->getList(null,array('id','name'));
+        //     Cache::write('paymentTerms', $paymentTermData);
+
+        // }
+
+        // $currencyData = Cache::read('currencyData');
+      
+        // $currencyData = $this->Currency->find('list', array('fields' => array('id', 'name'),
+        //                                                 'order' => array('Currency.name' => 'ASC')
+        //                                                 ));
+
+        // Cache::write('currencyData', $currencyData);
+
+        // $invoiceData = $this->SalesInvoice->find('first', array(
+        //                                     'conditions' => array('SalesInvoice.id' => $invoiceId
+        //                                     )));
+
+        // $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
+        //                                                     'conditions' => array('User.id' => $invoiceData['SalesInvoice']['created_by'])
+        //                                                     )); 
+ 
+        // $this->Delivery->bindDelivery();
+
+        // $drData = $this->Delivery->find('first', array(
+        //                                     'conditions' => array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid']
+        //                                     )));
+
+        // $clientData = $this->ClientOrderDeliverySchedule->find('first', array(
+        //                                     'conditions' => array('ClientOrder.id' => $clientsId
+        //                                     )));
+
+        
+
+            $drData = $this->Delivery->query('SELECT *
+                FROM koufu_delivery.deliveries AS Delivery
+                LEFT JOIN koufu_sale.client_orders AS ClientOrder
+                ON ClientOrder.uuid = Delivery.clients_order_id
+                LEFT JOIN koufu_delivery.delivery_details AS DeliveryDetail
+                ON DeliveryDetail.delivery_id = Delivery.id
+                LEFT JOIN koufu_sale.client_order_delivery_schedules AS ClientOrderDeliverySchedule
+                ON ClientOrderDeliverySchedule.client_order_id = ClientOrder.id
+                LEFT JOIN koufu_sale.quotations AS Quotation
+                ON Quotation.id = ClientOrder.quotation_id
+                LEFT JOIN koufu_sale.quotation_item_details AS QuotationItemDetail
+                ON QuotationItemDetail.quotation_id = ClientOrder.quotation_id
+                LEFT JOIN koufu_sale.companies AS Company
+                ON Company.id = Quotation.company_id
+                LEFT JOIN koufu_sale.products AS Product
+                ON Product.company_id = Company.id
+                LEFT JOIN koufu_sale.addresses AS Address
+                ON Address.foreign_key = Company.id
+                WHERE Delivery.dr_uuid = "'.$dr_uuid.'" group by Delivery.id');
+        
+  
+
+         $noPermissionPay = "";
+
+         $noPermissionReciv = "";
+         $companyData =  $drData[0]['Company']['company_name'];
+
+
+        $this->set(compact('prepared','approved','drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData'));
+           
+        if (!empty($saNo)) {
+
+            $output = $this->render('print_statement');
+
+        }else{
+
+            $output = $this->render('print_invoice_multiple');
+        }
+
+    }
+
     public function receivable(){
+
+        Configure::write('debug',2);
 
         $userData = $this->Session->read('Auth');
 
@@ -510,19 +674,37 @@ class SalesInvoiceController extends AccountingAppController {
 
         $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')
                                                             ));
-       
+        
+
+
         $invoiceList = $this->SalesInvoice->find('list',array('fields' => array('id','dr_uuid'),
             'conditions' => array('NOT' => array('SalesInvoice.status' => 0)),
             'order' => 'SalesInvoice.id DESC'
             ));
 
-        $invoiceData = $this->SalesInvoice->find('all',array(
-            'conditions' => array('NOT' => array('SalesInvoice.status' => 0)),
-            'order' => 'SalesInvoice.id DESC'
-            ));
+        // $invoiceData = $this->SalesInvoice->find('all',array(
+        //     'conditions' => array('NOT' => array('SalesInvoice.status' => 0)),
+        //     'order' => 'SalesInvoice.id DESC'
+        //     ));
+
+        $params =  array(
+                'conditions' => array('SalesInvoice.status' => 0),
+                'limit' => 10,
+                'order' => 'SalesInvoice.id DESC',
+        );
+
+        $this->paginate = $params;
+
+        $invoiceData = $this->paginate('SalesInvoice');
+
+ 
+
+      //  pr();
         
         $deliveryData = $this->Delivery->find('all',array(
-            'conditions' => array('dr_uuid' => $invoiceList)
+            'conditions' => array('dr_uuid' => $invoiceList),
+            'limit' => 10,
+            'order' => 'Delivery.id DESC'
             ));
 
         $clientsId = array();
@@ -539,7 +721,8 @@ class SalesInvoiceController extends AccountingAppController {
 
         $deliveryDetails = $this->DeliveryDetail->find('all',array(
             'conditions' => array('delivery_uuid' => $invoiceList),
-            'order' => 'DeliveryDetail.id DESC'
+            'order' => 'DeliveryDetail.id DESC',
+            'limit' => 10
             ));
         
         foreach ($deliveryDetails as $key => $value) {
@@ -1099,7 +1282,7 @@ class SalesInvoiceController extends AccountingAppController {
 
     }
 
-    public function invoice_modal($deliveryId = null, $deliveryUUID = null, $indicator = null) {
+    public function invoice_modal($deliveryId = null, $deliveryUUID = null, $indicator = null,$isMultiple = false) {
 
         if($indicator == "si_num"){
 
@@ -1147,7 +1330,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         }
 
-        $this->set(compact('deliveryUUID', 'seriesSalesNo', 'indicator'));
+        $this->set(compact('deliveryUUID', 'seriesSalesNo', 'indicator','isMultiple'));
 
         if (!empty($deliveryId)) {
 

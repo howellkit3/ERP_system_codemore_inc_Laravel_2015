@@ -168,13 +168,13 @@ class DeliveriesController extends DeliveryAppController {
 
       
         //save delivery reciep number
-       $this->request->data['DeliveryReceipt']['dr_uuid'] = $latestDelivery['Delivery']['dr_uuid'];
-       $this->request->data['DeliveryReceipt']['delivery_id'] = $latestDelivery['Delivery']['id'];
-       $this->request->data['DeliveryReceipt']['location'] = $scheduleInfo['ClientOrderDeliverySchedule']['location'];
-       $this->request->data['DeliveryReceipt']['quantity'] = $scheduleInfo['ClientOrderDeliverySchedule']['quantity'];
-       $this->request->data['DeliveryReceipt']['created_by']  = $userData['User']['id'];
+       // $this->request->data['DeliveryReceipt']['dr_uuid'] = $latestDelivery['Delivery']['dr_uuid'];
+       // $this->request->data['DeliveryReceipt']['delivery_id'] = $latestDelivery['Delivery']['id'];
+       // $this->request->data['DeliveryReceipt']['location'] = $scheduleInfo['ClientOrderDeliverySchedule']['location'];
+       // $this->request->data['DeliveryReceipt']['quantity'] = $scheduleInfo['ClientOrderDeliverySchedule']['quantity'];
+       // $this->request->data['DeliveryReceipt']['created_by']  = $userData['User']['id'];
 
-       $this->DeliveryReceipt->saveDeliveryReceipt($this->request->data,$userData['User']['id']);
+       // $this->DeliveryReceipt->saveDeliveryReceipt($this->request->data,$userData['User']['id']);
     
         $this->Session->setFlash(__('Delivery receipt was issued'));
 
@@ -802,7 +802,7 @@ class DeliveriesController extends DeliveryAppController {
             ON Product.id = QuotationDetail.product_id
             WHERE JobTicket.uuid LIKE "%'.$hint.'%" OR ClientOrder.po_number LIKE "%'.$hint.'%"
             OR Company.company_name LIKE "%'.$hint.'%" OR Product.name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%" LIMIT 10 ');
-
+        
         $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status')));
 
         $this->Delivery->bindDelivery();
@@ -1094,12 +1094,10 @@ class DeliveriesController extends DeliveryAppController {
 
         $userData = $this->Session->read('Auth');
 
-        pr($DRRePrint);
-        exit();
 
         foreach ($DRRePrint as $key => $list) {
         
-            $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
+            $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product',));
 
             //clientOrder = 
             $toPrint[$key] = $list;
@@ -1113,11 +1111,30 @@ class DeliveriesController extends DeliveryAppController {
             $toPrint[$key]['Company'] = $this->Company->find('first', array(
                                             'conditions' => array('Company.id' =>$clientOrder['ClientOrder']['company_id']
                                             )));
+
+
+           // pr($clientOrder['ClientOrderDeliverySchedule'][0]);
+                 //save delivery reciep number
+
+           $this->request->data['DeliveryReceipt']['delivety_id'] = $list['Delivery']['id'];
+           $this->request->data['DeliveryReceipt']['dr_uuid'] = $list['Delivery']['dr_uuid'];
+           $this->request->data['DeliveryReceipt']['delivery_id'] = $list['Delivery']['id'];
+           $this->request->data['DeliveryReceipt']['location'] = $clientOrder['ClientOrderDeliverySchedule'][0]['location'];
+           $this->request->data['DeliveryReceipt']['quantity'] = $clientOrder['ClientOrderDeliverySchedule'][0]['quantity'];
+
+           $this->request->data['DeliveryReceipt']['schedule'] = $clientOrder['ClientOrderDeliverySchedule'][0]['schedule'];
+           $this->request->data['DeliveryReceipt']['created_by']  = $userData['User']['id'];
+           $this->request->data['DeliveryReceipt']['printed_by']  = $userData['User']['id'];
+
+           $this->request->data['DeliveryReceipt']['printed']  = date('Y-m-d H:i:s');
+
+           $this->request->data['DeliveryReceipt']['aprroved_by']  = $list['DeliveryDetail']['created_by'];
+
+           $this->DeliveryReceipt->saveDeliveryReceipt($this->request->data,$userData['User']['id']);
                                                       
           }
 
-
-
+         // exit();
         }   
          $measureList = $this->Measure->find('list',array('fields' => array('id','name')));
 
