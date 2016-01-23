@@ -112,6 +112,8 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Delivery.DeliveryReceipt');
 
+        $this->loadModel('Delivery.DeliveryConnection');
+
         $this->ClientOrderDeliverySchedule->bind(array('ClientOrder'));
 
         $scheduleInfo = $this->ClientOrderDeliverySchedule->find('first', array(
@@ -163,8 +165,22 @@ class DeliveriesController extends DeliveryAppController {
     
         $this->request->data['DeliveryDetail']['delivery_id'] = $latestDelivery['Delivery']['id'];
 
-  
-        $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
+        $deliveryDetailId = $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
+
+        //save delivery connection
+        $saveData['DeliveryConnection']['delivery_id'] =  $latestDelivery['Delivery']['id'];
+
+        $saveData['DeliveryConnection']['delivery_id'] =  $latestDelivery['Delivery']['id'];
+
+        $saveData['DeliveryConnection']['delivery_details_id'] = $this->DeliveryDetail->id;  
+
+        $saveData['DeliveryConnection']['dr_uuid'] =  $latestDelivery['Delivery']['dr_uuid']; 
+
+        if($this->DeliveryConnection->saveDetail($saveData,$userData['User']['id'])) {
+
+        } else {
+          //  pr($this->DeliveryConnection->validationErrors);
+        }
 
       
         //save delivery reciep number
@@ -283,7 +299,7 @@ class DeliveriesController extends DeliveryAppController {
                 $this->redirect( array(
                              'controller' => 'deliveries', 
                              'action' => 'view'
-                        ));
+                          ));
             }
             $this->Session->setFlash(__('Unable to update your post.'));
         }
@@ -1602,20 +1618,22 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Sales.ClientOrder');
 
-        $this->Delivery->bindDeliveryById();
+        $this->loadModel('Delivery.DeliveryConnection');
+
+        $this->DeliveryConnection->bindDeliveryById();
         
-        $conditions = array('Delivery.dr_uuid NOT' => '','DeliveryDetail.id NOT' => '');
+        $conditions = array('DeliveryConnection.dr_uuid NOT' => '','DeliveryConnection.id NOT' => '');
 
         $limit = 10;
 
         $this->paginate = array(
             'conditions' => $conditions,
             'limit' => $limit,
-            'order' => 'Delivery.dr_uuid',
-            'group' => 'Delivery.id'
+            'order' => 'DeliveryConnection.dr_uuid',
+            'group' => 'DeliveryConnection.id'
         );
 
-        $delivery = $this->paginate('Delivery');
+        $delivery = $this->paginate('DeliveryConnection');
 
         // exit();
       // $delivery = $this->array_sort_by_column($delivery, 'dr_uuid');
