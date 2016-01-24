@@ -2603,8 +2603,7 @@ ALTER TABLE `delivery_receipts`
   ADD COLUMN `delivery_id` INT NULL AFTER `dr_uuid`;
 
 
-ALTER TABLE .`delivery_details`   
-  DROP COLUMN `delivery_id`, 
+ALTER TABLE .`delivery_details` 
   ADD COLUMN `delivery_id` INT(11) NULL AFTER `delivery_uuid`;
 
 /* aldrin added this 01 - 21 -16 koufu_deliveries */

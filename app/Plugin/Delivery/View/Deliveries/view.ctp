@@ -622,7 +622,7 @@ $totalremaining = 0;
                 $('.print_dr').attr('href',$multiple_print+'/'+newData.Delivery.dr_uuid);
             } else {
 
-                $('.print_dr').attr('href',$single_print+'/'+newData.Delivery.dr_uuid+'/'+newData.ClientOrder.ClientOrderDeliverySchedule.id+'/'+newData.ClientOrder.ClientOrder.id);
+                $('.print_dr').attr('href',$single_print+'/'+newData.Delivery.dr_uuid+'/'+newData.Delivery.schedule_uuid+'/'+newData.ClientOrder.ClientOrder.id);
             }
               
             }
