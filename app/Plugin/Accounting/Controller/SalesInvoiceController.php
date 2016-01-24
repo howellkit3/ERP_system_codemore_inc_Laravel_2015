@@ -185,7 +185,7 @@ class SalesInvoiceController extends AccountingAppController {
 
             $this->Delivery->bindDelivery();
 
-            if ($invoiceData['SalesInvoice']['is_multiple'] == 1) {
+            if (!empty($invoiceData['SalesInvoice']['is_multiple']) && $invoiceData['SalesInvoice']['is_multiple'] == 1) {
 
                 // $drData = $this->Delivery->find('all', array(
                 //                                 'conditions' => array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid']

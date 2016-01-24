@@ -6,7 +6,6 @@ $totaldifference = 0;
 $totalremaining = 0;
 
 ?>
-
 <div class="row1">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
@@ -416,13 +415,23 @@ $totalremaining = 0;
                                             echo $this->Html->link('<span class="fa-stack">
                                                         <i class="fa fa-square fa-stack-2x"></i>
                                                         <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> APC</font></span>
-                                                        </span>', array('controller' => 'deliveries', 'action' => 'apc',$deliveryDataList['Delivery']['dr_uuid'],$clientsOrder['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link '. $activeStatus,'escape' => false,'title'=>'Print Delivery Receipt'));
+                                                        </span>', array('controller' => 'deliveries', 'action' => 'apc',$deliveryDataList['Delivery']['dr_uuid'],$clientsOrder['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link '. $activeStatus,'escape' => false,'title'=>'Print Delivery Receipt',
+                                                            'data-delivery-id' => $deliveryDataList['Delivery']['id'],
+                                                    'data-dr-uuid' =>  $deliveryDataList['Delivery']['dr_uuid']
+                                                            ));
                                         }
 
                                         echo $this->Html->link('<span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Print </font></span>
-                                                </span>', array('controller' => 'deliveries', 'action' => 'dr',$deliveryDataList['Delivery']['dr_uuid'],$clientsOrder['ClientOrderDeliverySchedule']['uuid'],$clientsOrder['ClientOrder']['id']),array('class' =>' table-link  refresh ' . $activeStatus,'escape' => false,'title'=>'Print Delivery Receipt'));  
+                                                </span>', '#printDelivery',array('class' =>' table-link  refresh ' . $activeStatus,
+                                                    'escape' => false,
+                                                    'title'=>'Print Delivery Receipt',
+                                                    'data-toggle' => 'modal',
+                                                    'class' => 'print_delivery',
+                                                    'data-delivery-id' => $deliveryDataList['Delivery']['id'],
+                                                    'data-dr-uuid' =>  $deliveryDataList['Delivery']['dr_uuid']
+                                                    ));  
 
                                          ?>
 
@@ -531,8 +540,12 @@ $totalremaining = 0;
             </div>
         </div>
     </div>
+
+
+
 </div>   
 
+ 
 <?php 
 
      echo $this->element('modals',array(
@@ -562,6 +575,60 @@ $totalremaining = 0;
             location.reload();
         }, 1000); 
         
+    });
+
+    $('.print_delivery').click(function(e){
+
+        $appendCont = $('#printDelivery .result');
+
+        $drID = $(this).attr('data-delivery-id');
+        $drUuID = $(this).attr('data-dr-uuid');
+
+
+        //multiple 
+
+        //singe
+        $single_print = serverPath + 'delivery/deliveries/dr';
+        $multiple_print = serverPath + 'delivery/deliveries/multiple_dr';
+
+        $.ajax({
+        url: serverPath + "delivery/deliveries/check_dr_to_print",
+        type: "POST",
+        data: {"dr_id": $drID , "dr_uuid": $drUuID  },
+        dataType: "json",
+        success: function(data) {
+
+             for (var i in data.result) {
+
+                     var newData = data.result[i];
+               }
+
+            $html  = '<div class="content">';
+            $html  += '<div class="count"> There are <span class="label label-success">'+data.total+'</span> Item on this DR </div>';
+            $html += '<div class="clients"><ul>';
+
+             $.each(data.result, function(key, value){
+
+                 $html += '<li> CLient Order :' + value.Delivery.clients_order_id + '</li>';
+
+            });
+            $html += '</ul></div>';
+            $html += '<div>';
+
+            $appendCont.html($html);
+
+            if (data.multiple == true) {
+
+                $('.print_dr').attr('href',$multiple_print+'/'+newData.Delivery.dr_uuid);
+            } else {
+
+                $('.print_dr').attr('href',$single_print+'/'+newData.Delivery.dr_uuid+'/'+newData.ClientOrder.ClientOrderDeliverySchedule.id+'/'+newData.ClientOrder.ClientOrder.id);
+            }
+              
+            }
+        });
+
+
     });
 
 

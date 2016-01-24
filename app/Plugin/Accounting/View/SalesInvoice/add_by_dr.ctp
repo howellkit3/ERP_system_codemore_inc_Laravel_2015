@@ -7,6 +7,7 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
+              <?php echo $this->element('invoice_option'); ?>
             <header class="main-box-header clearfix">
                 <h2 class="pull-left"><b>Create Sales Invoice</b></h2>
                 
@@ -33,7 +34,7 @@
 
 
 
-     <div class="panel panel-default">
+     <div class="panel panel-default active">
              <?php if ($dr != $deliveryDataList['Delivery']['dr_uuid']) : ?>
                    
                         <div class="panel-heading">
@@ -43,7 +44,7 @@
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#<?php echo $deliveryDataList['Delivery']['dr_uuid']; ?>">
                                     <span class="title"> DR # : </span> <?php echo str_pad($deliveryDataList['Delivery']['dr_uuid'],5,'0',STR_PAD_LEFT); ?>   
                                     </a>
-                            </h4>
+                                 </h4>
                             </div>
                         </div>
                         <div id="<?php echo $deliveryDataList['Delivery']['dr_uuid']; ?>" class="panel-collapse collapse" style="height: 2px;">

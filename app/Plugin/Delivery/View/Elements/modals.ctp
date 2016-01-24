@@ -418,6 +418,48 @@
         </div>
     </div>
 
+
+ <div class="modal fade" id="printDelivery" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content margintop">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Print Delivery Reciept</h4>
+                </div>
+                    <div class="modal-body">
+                        <div class="result"></div>
+                            <br>
+                        <div class="modal-footer">
+                            <a href="/delivery/">
+                             <a class="print_dr" href="#">
+                             <button type="submit" class="btn btn-primary"><i class="fa fa-print fa-lg"></i> Print </button>
+                         </a>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            
+                        </div>
+                   
+                    <?php echo $this->Form->end(); ?>   
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <script>
+    
+        jQuery(document).ready(function(){
+            $("#ClientOrderDeliveryScheduleViewForm").validate();
+            $('#date').datepicker({
+                format: 'yyyy-mm-dd'
+            });
+          
+        });
+
+       
+
+    </script>
+
+    
     <script>
     
         jQuery(document).ready(function(){

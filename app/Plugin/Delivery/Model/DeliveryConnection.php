@@ -34,7 +34,7 @@ class DeliveryConnection extends AppModel {
 				'Delivery' => array(
 					'className' => 'Delivery.Delivery',
 					'foreignKey' => false,
-					'conditions' => array('DeliveryDetail.id' => 'DeliveryConnection.delivery_id')
+					'conditions' => array('Delivery.id = DeliveryConnection.delivery_id')
 				),		
 				'DeliveryReceipt' => array(
 					'className' => 'Delivery.DeliveryReceipt',
