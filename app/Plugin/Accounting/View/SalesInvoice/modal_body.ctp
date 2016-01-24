@@ -7,7 +7,7 @@
 
 
                                       <?php 
-                                            echo $this->Form->input('SalesInvoice.multiple', array(
+                                            echo $this->Form->input('SalesInvoice.is_multiple', array(
                                                 'type' => 'hidden',
                                                 'label' => false,
                                                 'value' => !empty($isMultiple) ? 1 : ''

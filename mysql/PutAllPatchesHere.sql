@@ -2610,3 +2610,6 @@ ALTER TABLE .`delivery_details`
 ALTER TABLE `sales_invoices`
 ADD COLUMN `is_multiple`  int(11) NULL DEFAULT 0 AFTER `modified`;
 
+ALTER TABLE `delivery_details`
+ADD COLUMN `delivery_id`  int(11) NULL AFTER `created`;
+

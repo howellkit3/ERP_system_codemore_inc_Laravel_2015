@@ -192,10 +192,10 @@ class SalesInvoiceController extends AccountingAppController {
                 //                                 )));
 
                 $drData = $this->Delivery->query('SELECT *
-                    FROM koufu_delivery.deliveries AS Delivery
+                    FROM deliveries AS Delivery
                     LEFT JOIN koufu_sale.client_orders AS ClientOrder
                     ON ClientOrder.uuid = Delivery.clients_order_id
-                    LEFT JOIN koufu_delivery.delivery_details AS DeliveryDetail
+                    LEFT JOIN delivery_details AS DeliveryDetail
                     ON DeliveryDetail.delivery_id = Delivery.id
                     LEFT JOIN koufu_sale.client_order_delivery_schedules AS ClientOrderDeliverySchedule
                     ON ClientOrderDeliverySchedule.client_order_id = ClientOrder.id
@@ -211,7 +211,7 @@ class SalesInvoiceController extends AccountingAppController {
                     ON Address.foreign_key = Company.id
                     WHERE Delivery.dr_uuid = "'.$invoiceData['SalesInvoice']['dr_uuid'].'" group by Delivery.id');
         
-  
+            
 
                   $noPermissionPay = "";
 
@@ -605,10 +605,10 @@ class SalesInvoiceController extends AccountingAppController {
         
 
             $drData = $this->Delivery->query('SELECT *
-                FROM koufu_delivery.deliveries AS Delivery
+                FROM deliveries AS Delivery
                 LEFT JOIN koufu_sale.client_orders AS ClientOrder
                 ON ClientOrder.uuid = Delivery.clients_order_id
-                LEFT JOIN koufu_delivery.delivery_details AS DeliveryDetail
+                LEFT JOIN delivery_details AS DeliveryDetail
                 ON DeliveryDetail.delivery_id = Delivery.id
                 LEFT JOIN koufu_sale.client_order_delivery_schedules AS ClientOrderDeliverySchedule
                 ON ClientOrderDeliverySchedule.client_order_id = ClientOrder.id
@@ -630,7 +630,6 @@ class SalesInvoiceController extends AccountingAppController {
 
          $noPermissionReciv = "";
          $companyData =  $drData[0]['Company']['company_name'];
-
 
         $this->set(compact('prepared','approved','drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData'));
            

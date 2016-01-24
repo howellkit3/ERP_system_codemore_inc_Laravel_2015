@@ -22,7 +22,7 @@ class AccountingFunctionHelper extends AppHelper {
 
 
 		$items = $Delivery->query('SELECT *
-        FROM koufu_delivery.deliveries AS Delivery
+        FROM deliveries AS Delivery
         LEFT JOIN koufu_sale.client_orders AS ClientOrder
         ON ClientOrder.uuid = Delivery.clients_order_id
         LEFT JOIN koufu_sale.client_order_delivery_schedules AS ClientOrderDeliverySchedule

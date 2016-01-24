@@ -128,7 +128,7 @@
 
         $delivery_date[] = date('M d, Y', strtotime($list['Delivery']['created']));
 
-        $sheet->setCellValue('B'.$start, $list['ClientOrder']['po_number']);
+        // $sheet->setCellValue('B'.$start, $list['ClientOrder']['po_number']);
         $sheet->setCellValue('F'.$start, ucfirst($list['Product']['name']));
         $sheet->setCellValue('D'.$start, number_format($list['DeliveryDetail']['quantity']));
         $sheet->setCellValue('I'.$start, number_format($list['QuotationItemDetail']['unit_price'],2));
@@ -136,7 +136,8 @@
         $unitPrice = (float) $list['QuotationItemDetail']['unit_price'];
         $quantity = (float) $list['DeliveryDetail']['quantity'] ;
         $totalQty = $quantity * $unitPrice;
-        $sheet->setCellValue('K'.$start, number_format($totalQty,2)); $total += $totalQty;
+
+        $sheet->setCellValue('K'.$start, $totalQty); $total += $totalQty;
 
         $start++;
     }   
@@ -165,7 +166,7 @@
                 // ->setCellValue('K32', $vat12)
                 // ->setCellValue('K33', $currency.' '. $totalAmount);  
               //  ->setCellValue('K33', 'd');      
-   // prepare download
+   //prepare download
     $filename = mt_rand(1,100000).'.xlsx'; //just some random filename
     header('Content-Type: application/vnd.ms-office');
     header('Content-Disposition: attachment;filename="'.$filename.'"');
