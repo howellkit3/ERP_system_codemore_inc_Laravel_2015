@@ -137,7 +137,7 @@
             $quantity = (float) $list['DeliveryDetail']['quantity'] ;
             $totalQty = $quantity * $unitPrice;
             $sheet->setCellValue('K'.$start, number_format($totalQty,2)); $total += $totalQty;
-        $sheet->setCellValue('K'.$start, $totalQty); $total += $totalQty;
+        $sheet->setCellValue('K'.$start, $totalQty);
 
             $start++;
         }   
