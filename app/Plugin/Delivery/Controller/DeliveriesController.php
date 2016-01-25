@@ -112,6 +112,8 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Delivery.DeliveryReceipt');
 
+        $this->loadModel('Delivery.DeliveryConnection');
+
         $this->ClientOrderDeliverySchedule->bind(array('ClientOrder'));
 
         $scheduleInfo = $this->ClientOrderDeliverySchedule->find('first', array(
@@ -163,8 +165,21 @@ class DeliveriesController extends DeliveryAppController {
     
         $this->request->data['DeliveryDetail']['delivery_id'] = $latestDelivery['Delivery']['id'];
 
-  
-        $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
+        $deliveryDetailId = $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
+
+        //save delivery connection
+
+        $saveData['DeliveryConnection']['delivery_id'] =  $latestDelivery['Delivery']['id'];
+
+        $saveData['DeliveryConnection']['delivery_details_id'] = $this->DeliveryDetail->id;  
+
+        $saveData['DeliveryConnection']['dr_uuid'] =  $latestDelivery['Delivery']['dr_uuid']; 
+
+        if($this->DeliveryConnection->saveDetail($saveData,$userData['User']['id'])) {
+
+        } else {
+          //  pr($this->DeliveryConnection->validationErrors);
+        }
 
       
         //save delivery reciep number
@@ -283,7 +298,7 @@ class DeliveriesController extends DeliveryAppController {
                 $this->redirect( array(
                              'controller' => 'deliveries', 
                              'action' => 'view'
-                        ));
+                          ));
             }
             $this->Session->setFlash(__('Unable to update your post.'));
         }
@@ -1060,17 +1075,19 @@ class DeliveriesController extends DeliveryAppController {
 
 
     public function multiple_dr($uuid = null) {
-
-
+        
         if (!empty($uuid)) {
 
-        $this->Delivery->bindDeliveryById();
+        $this->loadModel('Delivery.DeliveryConnection');
+       
+        $this->DeliveryConnection->bindDeliveryById();
 
-        $DRRePrint = $this->Delivery->find('all', array(
+        $DRRePrint = $this->DeliveryConnection->find('all', array(
                                         'limit' => 4,
-                                        'conditions' => array('delivery.dr_uuid' => $uuid),
-                                        'group' => array('Delivery.id')
+                                        'conditions' => array('DeliveryConnection.dr_uuid' => $uuid),
+                                       // 'group' => array('Delivery.id')
                                      ));
+
 
         $toPrint = array();
 
@@ -1596,27 +1613,29 @@ class DeliveriesController extends DeliveryAppController {
 
     public function search_by_number() {
 
+        Configure::write('debug',2);
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
         $this->loadModel('Sales.ClientOrder');
 
-        $this->Delivery->bindDeliveryById();
+        $this->loadModel('Delivery.DeliveryConnection');
+
+        $this->DeliveryConnection->bindDeliveryById();
         
-        $conditions = array('Delivery.dr_uuid NOT' => '','DeliveryDetail.id NOT' => '');
+        $conditions = array('DeliveryConnection.dr_uuid NOT' => '','DeliveryConnection.id NOT' => '');
 
         $limit = 10;
 
         $this->paginate = array(
             'conditions' => $conditions,
             'limit' => $limit,
-            'order' => 'Delivery.dr_uuid',
-            'group' => 'Delivery.id'
+            'order' => 'DeliveryConnection.dr_uuid',
+            //'group' => 'DeliveryConnection.dr_uuid'
         );
 
-        $delivery = $this->paginate('Delivery');
-
+        $delivery = $this->paginate('DeliveryConnection');
         // exit();
       // $delivery = $this->array_sort_by_column($delivery, 'dr_uuid');
         $this->set(compact('delivery'));
@@ -1988,6 +2007,69 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->render('export_dr');
         
+    }
+
+    public function check_dr_to_print() {
+
+        $delivery = array('');
+        
+        if (!empty($this->request->data)) {
+            
+            $data = $this->request->data;
+
+            $this->loadModel('Delivery.DeliveryConnection');
+
+            $this->loadModel('Delivery.DeliveryDetail');
+
+            $this->loadModel('Sales.ClientOrder');
+
+            $this->loadModel('Sales.ClientOrderDeliverySchedule');
+            
+            $multiple = false;
+            // $delivery = $this->DeliveryConnection->find('all',array(
+            //     'conditions' => array('DeliveryConnection.dr_uuid' => $data['dr_uuid'])
+            // ));
+
+            $delivery = $this->DeliveryConnection->query('SELECT *
+                FROM koufu_delivery_system.delivery_connection AS DeliveryConnection
+                LEFT JOIN koufu_delivery_system.deliveries AS Delivery
+                ON Delivery.id = DeliveryConnection.delivery_id 
+                WHERE DeliveryConnection.dr_uuid = "'.$data['dr_uuid'].'" ');
+
+            if (!empty($delivery)) {
+
+               
+                $multiple = true;
+            } else {
+                
+                $multiple = false;
+
+                $this->DeliveryDetail->bind(array('Delivery'));
+
+                $delivery[0] = $this->DeliveryDetail->find('first',array('conditions' => array(
+                        'DeliveryDetail.delivery_uuid' => $data['dr_uuid']
+                )));
+
+                $this->ClientOrder->bindDelivery();
+
+                $clientOrder =  $this->ClientOrder->find('first',array(
+                        'conditions' => array(
+                                'ClientOrder.uuid' => $delivery[0]['Delivery']['clients_order_id']
+                            )
+                ));
+
+                $delivery[0]['ClientOrder'] = $clientOrder;
+
+            }
+
+            $count = count($delivery);
+
+        }
+
+        echo json_encode(array('result' => $delivery,'total' =>  $count ,'multiple' => $multiple ));
+
+        exit();
+
     }
 
     

@@ -1,6 +1,4 @@
-
-            
-            <div class="main-box-body clearfix ">
+   <div class="main-box-body clearfix ">
                 <div class="table-responsive">
                     <table class="table table-striped table-hover ">
                         <thead>
@@ -25,7 +23,7 @@
                                 
                                       ?>
 
-                                         <tr class="">
+                                         <tr class=" <?php echo ( $list['Delivery']['dr_uuid'] != $old_value )  ? 'main' : ''; ?>">
                                               <td class="text-center">
 
                                                 <?php 

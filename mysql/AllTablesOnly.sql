@@ -1696,3 +1696,16 @@ CREATE TABLE IF NOT EXISTS `salary_reports` (
   `total_pay` decimal(8,2) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+DROP TABLE IF EXISTS `delivery_connection`;
+CREATE TABLE `delivery_connection` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `delivery_id` int(11) DEFAULT NULL,
+  `delivery_details_id` int(11) DEFAULT NULL,
+  `delivery_receipt_id` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  `dr_uuid` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;

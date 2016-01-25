@@ -137,6 +137,7 @@
             $quantity = (float) $list['DeliveryDetail']['quantity'] ;
             $totalQty = $quantity * $unitPrice;
             $sheet->setCellValue('K'.$start, number_format($totalQty,2)); $total += $totalQty;
+        $sheet->setCellValue('K'.$start, $totalQty); $total += $totalQty;
 
             $start++;
         }   
@@ -167,7 +168,7 @@
                 // ->setCellValue('K33', $currency.' '. $totalAmount);  
               //  ->setCellValue('K33', 'd');      
    
-   // prepare download
+   //prepare download
     $filename = mt_rand(1,100000).'.xlsx'; //just some random filename
     header('Content-Type: application/vnd.ms-office');
     header('Content-Disposition: attachment;filename="'.$filename.'"');

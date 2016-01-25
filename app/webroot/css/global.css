@@ -405,3 +405,11 @@ body.dragging, body.dragging * {
   font-size: 10px;
   width: 30%;
 }
+
+tr.main {
+  background: #aaf4f3 none repeat scroll 0 0 !important;
+}
+.clients > ul {
+  margin: 14px;
+  padding: 0;
+}
