@@ -413,3 +413,7 @@ tr.main {
   margin: 14px;
   padding: 0;
 }
+
+.footable-row-detail-inner {
+  width: 100%;
+}

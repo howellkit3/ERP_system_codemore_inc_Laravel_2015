@@ -13,9 +13,11 @@
                 
                 <div class="filter-block pull-right">
                     <div class="form-group pull-left">
-                
-                        <input placeholder="Search..." class="form-control searchDR"  />
+                        <?php echo $this->Form->create('SalesInvoice',array('url' => array('controller' => 'sales_invoice','action' => 'add','dr_num')));?>
+                        <input placeholder="Search..." class="form-control searchDR" value="<?php echo $search; ?>"  name="search"/>
                         <i class="fa fa-search search-icon"></i>
+
+                        <?php echo $this->Form->end(); ?>
                     
                 </div>
 
@@ -24,43 +26,70 @@
 
             <div class="main-box-body clearfix">
 
-         
- <div class="panel-group accordion" id="accordion">                   
+
+<table class="table footable toggle-circle-filled" data-page-size="6" data-filter="#filter" data-filter-text-only="true">
+<thead>
+<tr>
+<th>Delivery Number</th>
+<th>Delivery Sched</th>
+<th data-hide="phone">Company</th>
+<th data-hide="phone,tablet" class="text-center">Action</th>
+
+<th data-hide="all" class="text-right"> 
+&nbsp </th>
+</tr>
+</thead>
+<tbody>
 <?php 
     $dr = '';
     foreach ($deliveryData as $deliveryDataList ):
     //pr($deliveryDataList['Delivery']['clients_order_id']); exit;
-    if($deliveryDataList['Delivery']['status'] != 2 ){  ?>
+    if($deliveryDataList['Delivery']['status'] != 2 ){ 
 
+    $clientData = $this->AccountingFunction->getDetails($deliveryDataList['Delivery']['clients_order_id']);
 
+    $items = $this->AccountingFunction->getItems($deliveryDataList['Delivery']['dr_uuid']);
 
-     <div class="panel panel-default active">
-             <?php if ($dr != $deliveryDataList['Delivery']['dr_uuid']) : ?>
-                   
-                        <div class="panel-heading">
-                       
-                            <div class="col-lg">
-                                 <h4 class="panel-title">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#<?php echo $deliveryDataList['Delivery']['dr_uuid']; ?>">
-                                    <span class="title"> DR # : </span> <?php echo str_pad($deliveryDataList['Delivery']['dr_uuid'],5,'0',STR_PAD_LEFT); ?>   
-                                    </a>
-                                 </h4>
-                            </div>
-                        </div>
-                        <div id="<?php echo $deliveryDataList['Delivery']['dr_uuid']; ?>" class="panel-collapse collapse" style="height: 2px;">
-                            <div class="panel-body">
-
-                            <?php $items = $this->AccountingFunction->getItems($deliveryDataList['Delivery']['dr_uuid']);
-
-
-                            if (!empty($items) && is_array($items)) { ?>
-
+ ?>
+<tr>
+<td>
+<a href="#"> #<?php echo str_pad($deliveryDataList['Delivery']['dr_uuid'],5,'0',STR_PAD_LEFT); ?> </a>
+</td>
+<td>
+<?php echo !empty($clientData[0]['ClientOrderDeliverySchedule']['schedule']) ? $clientData[0]['ClientOrderDeliverySchedule']['schedule'] : '' ?>
+</td>
+<td>
+<a href="#"><?php echo !empty($clientData[0]['Company']['company_name']) ? $clientData[0]['Company']['company_name'] : '' ?></a>
+</td>
+<td class="text-center">
 
                             <a href="#processModal" class="modal_button" data-toggle="modal" data-id="<?php echo $deliveryDataList['Delivery']['id'] ?>" data-uuid="<?php echo $deliveryDataList['Delivery']['dr_uuid'] ?>">
                             <button class="btn btn-success" href="print_sales_invoice">
                                     PRINT S.I
                             </button>
                             </a>
+</td>
+
+
+
+                                   
+
+<td class="text-right">
+  <!--   <ul>
+         <?php foreach ($items as $key => $value) : ?>
+                    <li> <span>Purchase Order : </span><?php echo !empty($value['ClientOrder']['po_number']) ? $value['ClientOrder']['po_number'] : '' ?><br>
+                        <span>CLient Order : </span><?php echo !empty($value['ClientOrder']['uuid']) ? $value['ClientOrder']['uuid'] : '' ?><br>
+
+                    </li>
+
+         <?php endforeach; ?>
+    </ul> -->
+
+
+
+                            <?php if (!empty($items) && is_array($items)) { ?>
+
+
                             <table class="table table-striped table-hover ">
                                 <thead>
                                     <tr>
@@ -96,24 +125,15 @@
 
                            
                            <?php  }  ?> 
-                                        
-                            </div>
-                        </div>
-                
+</td>
+</tr>
 
-            <?php endif; ?>
- </div>
+<?php } ?>
+<?php endforeach; ?>
+</tbody>
+</table>
 
-<?php 
 
-$dr =$deliveryDataList['Delivery']['dr_uuid'];
- }
-
- endforeach; ?> 
-
-</div>
-
-</div>
 
     <div class="modal fade" id="processModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -146,10 +166,14 @@ $dr =$deliveryDataList['Delivery']['dr_uuid'];
                 </div>
             </div>
     </div>
-
+</div>
 <script>
 
     jQuery(document).ready(function($){
+
+        $('.footable').footable();
+  
+
         $("#SalesInvoiceAddForm").validate();
 
 
@@ -178,57 +202,58 @@ $dr =$deliveryDataList['Delivery']['dr_uuid'];
             
     });
 
-    function searchDR(searchInput) {
+    // function searchDR(searchInput) {
 
-        var searchInput = $('.searchDR').val();
+    //     var searchInput = $('.searchDR').val();
 
-        var indicator = $('.indicator').attr("value");
+    //     var indicator = $('.indicator').attr("value");
 
-        var view = "index";
+    //     var view = "index";
 
-        if(searchInput != ''){
+    //     if(searchInput != ''){
 
-            $('.OrderFields').hide();
-            $('.searchAppend').show();
+    //         $('.OrderFields').hide();
+    //         $('.searchAppend').show();
 
-        }else{
-            $('.OrderFields').show();
-            $('.searchAppend').hide();
-        }
+    //     }else{
+    //         $('.OrderFields').show();
+    //         $('.searchAppend').hide();
+    //     }
 
-        type = 1;
+    //     type = 1;
 
-        $.ajax({
-                type: "GET",
-                url: serverPath + "accounting/sales_invoice/search_order/"+view+"/"+searchInput+"/"+type+"/"+indicator,
-                dataType: "html",
-                success: function(data) {
+    //     $.ajax({
+    //             type: "POST",
+    //             url: serverPath + "accounting/sales_invoice/add",
+    //             data : {"search" : searchInput },
+    //             dataType: "html",
+    //             success: function(data) {
 
-                    if(data){
+    //                 if(data){
 
-                        $('.searchAppend').html(data);
+    //                     $('.searchAppend').html(data);
 
-                    } 
-                    if (data.length < 5 ) {
+    //                 } 
+    //                 if (data.length < 5 ) {
 
-                        $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
+    //                     $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
                          
-                    }
+    //                 }
                     
-                }
-            });
-    }
+    //             }
+    //         });
+    // }
 
-    var timeout;
+    // var timeout;
 
-    $('.searchDR').keypress(function() {
+    // $('.searchDR').keypress(function() {
 
-        if(timeout) {
-            clearTimeout(timeout);
-            timeout = null;
-        }
+    //     if(timeout) {
+    //         clearTimeout(timeout);
+    //         timeout = null;
+    //     }
 
-        timeout = setTimeout(searchDR,600)
-    })
+    //     timeout = setTimeout(searchDR,600)
+    // })
 
 </script>

@@ -36,6 +36,27 @@ class AccountingFunctionHelper extends AppHelper {
 
 }
 
+
+public function getDetails($clientOrderId = null) {
+		$items = array();
+		if (!empty($clientOrderId)) {
+		
+		$ClientOrder = ClassRegistry::init('Sales.ClientOrder');	
+
+		$items = $ClientOrder->query('SELECT ClientOrder.id,ClientOrder.po_number,ClientOrder.uuid,Company.company_name,
+		ClientOrderDeliverySchedule.id,ClientOrderDeliverySchedule.schedule 
+		FROM koufu_sale.client_orders AS ClientOrder
+        LEFT JOIN koufu_sale.client_order_delivery_schedules AS ClientOrderDeliverySchedule 
+        ON ClientOrderDeliverySchedule.client_order_id = ClientOrder.id
+        LEFT JOIN koufu_sale.companies AS Company 
+        ON Company.id = ClientOrder.company_id
+        WHERE ClientOrder.uuid = "'.$clientOrderId.'"');
+		
+		}
+
+		return $items;
+}
+
 	// public function getItems($clientsOrderId = null) {
 
 	// 	$ClientsOrder = ClassRegistry::init('Sales.ClientOrder');

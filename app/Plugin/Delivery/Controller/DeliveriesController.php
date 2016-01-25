@@ -1614,6 +1614,7 @@ class DeliveriesController extends DeliveryAppController {
     public function search_by_number() {
 
         Configure::write('debug',2);
+
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
@@ -1628,6 +1629,14 @@ class DeliveriesController extends DeliveryAppController {
 
         $limit = 10;
 
+        if (!empty($this->request->query('s'))) {
+                
+                $search = $this->request->query('s');
+
+                $conditions = array_merge($conditions,array(
+                        'Delivery.dr_uuid like' => '%'.$search.'%'
+                    ));
+        }
         $this->paginate = array(
             'conditions' => $conditions,
             'limit' => $limit,
@@ -1639,6 +1648,11 @@ class DeliveriesController extends DeliveryAppController {
         // exit();
       // $delivery = $this->array_sort_by_column($delivery, 'dr_uuid');
         $this->set(compact('delivery'));
+
+        // if ($this->request->isAjax() && !empty($this->request->query('s'))) {
+
+        //     $this->render('ajax/search_by_number');
+        // }
     }
 
     public function index_status($status = null) {
@@ -2028,11 +2042,11 @@ class DeliveriesController extends DeliveryAppController {
             $multiple = false;
             // $delivery = $this->DeliveryConnection->find('all',array(
             //     'conditions' => array('DeliveryConnection.dr_uuid' => $data['dr_uuid'])
-            // ));
+            // ));functio
 
             $delivery = $this->DeliveryConnection->query('SELECT *
-                FROM koufu_delivery_system.delivery_connection AS DeliveryConnection
-                LEFT JOIN koufu_delivery_system.deliveries AS Delivery
+                FROM delivery_connection AS DeliveryConnection
+                LEFT JOIN deliveries AS Delivery
                 ON Delivery.id = DeliveryConnection.delivery_id 
                 WHERE DeliveryConnection.dr_uuid = "'.$data['dr_uuid'].'" ');
 

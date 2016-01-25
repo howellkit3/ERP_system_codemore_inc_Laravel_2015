@@ -133,6 +133,9 @@ class SalesInvoiceController extends AccountingAppController {
 
         $userData = $this->Session->read('Auth');
 
+
+        $this->loadModel('Sales.ClientOrder');
+
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
         $this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product', 'Quotation', 'QuotationItemDetail', 'Company', 'Address'));
@@ -176,6 +179,8 @@ class SalesInvoiceController extends AccountingAppController {
         $invoiceData = $this->SalesInvoice->find('first', array(
                                             'conditions' => $conditions ));
 
+
+
         $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $invoiceData['SalesInvoice']['created_by'])
                                                             )); 
@@ -211,8 +216,7 @@ class SalesInvoiceController extends AccountingAppController {
                     ON Address.foreign_key = Company.id
                     WHERE Delivery.dr_uuid = "'.$invoiceData['SalesInvoice']['dr_uuid'].'" group by Delivery.id');
         
-            
-
+      
                   $noPermissionPay = "";
 
                  $noPermissionReciv = "";
@@ -225,12 +229,17 @@ class SalesInvoiceController extends AccountingAppController {
                                                 'conditions' => array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid']
                                                 )));
 
+              // $this->ClientOrder->bind('ClientOrderDeliverySchedule');
 
-                $conditions = array('ClientOrderDeliverySchedule.uuid' =>1450515693);
+                $clientOrder = $this->ClientOrder->find('first',array('conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id'])));
+
+
+                $conditions = array('ClientOrderDeliverySchedule.client_order_id' =>$clientOrder['ClientOrder']['id']);
 
                 $clientData = $this->ClientOrderDeliverySchedule->find('first', array(
                                         'conditions' => array($conditions
-                                        )));
+                                        )));    
+
 
                 $clientOrderId = $clientData['ClientOrder']['id'];
 
@@ -239,6 +248,9 @@ class SalesInvoiceController extends AccountingAppController {
                 $noPermissionPay = "";
 
                 $noPermissionReciv = "";
+
+                // pr( $drData );
+                // exit();
 
 
             }
@@ -332,6 +344,8 @@ class SalesInvoiceController extends AccountingAppController {
 
     }
 
+ 
+
     public function add($indicator = null){
 
         $userData = $this->Session->read('Auth');
@@ -344,7 +358,18 @@ class SalesInvoiceController extends AccountingAppController {
 
         $limit = 10;
 
+        $search = '';
+
         $conditions = array();
+
+        if (!empty($this->request->data['search'])) {
+
+            $search = $this->request->data['search'];
+
+            $conditions  =array_merge($conditions,array(
+                'Delivery.dr_uuid like' => '%'. $search .'%'       
+            ));
+        }
 
         $params =  array('conditions' => $conditions,
             'limit' => $limit,
@@ -355,7 +380,9 @@ class SalesInvoiceController extends AccountingAppController {
                 'Delivery.status',
                 'Delivery.dr_uuid', 
                 ),
-            'order' => 'Delivery.id DESC');
+                'order' => 'Delivery.id DESC'
+
+            );
 
         if ($indicator == 'dr_num')  {
 
@@ -364,6 +391,9 @@ class SalesInvoiceController extends AccountingAppController {
 
 
         $this->paginate = $params;
+
+
+        $this->Delivery->bindDelivery();
 
         $deliveryData = $this->paginate('Delivery');
 
@@ -390,7 +420,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         $noPermissionReciv = "";
 
-        $this->set(compact('seriesSalesNo', 'indicator','noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData', 'companyData', 'poNumber'));
+        $this->set(compact('seriesSalesNo','search','indicator','noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData', 'companyData', 'poNumber'));
         
         if ($indicator == 'si_num') {
 

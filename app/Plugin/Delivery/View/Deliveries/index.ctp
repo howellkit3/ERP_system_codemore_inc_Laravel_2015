@@ -73,10 +73,17 @@
             $('.OrderFields').show();
             $('.searchAppend').hide();
             //alert('show');
-        }
+        }   
+          $append = $('.searchAppend');
         
         var url = serverPath + "delivery/deliveries/search_order/"+searchInput;
 
+        if ( $this.hasClass('by_dr') == true) {
+
+             url = serverPath + "delivery/deliveries/search_by_number?s="+searchInput; 
+
+             $append = $('.appendHere');
+        }
 
         $.ajax({
             type: "GET",
@@ -88,12 +95,12 @@
 
                 if(data){
 
-                    $('.searchAppend').html(data);
+                    $append.html(data);
 
                 } 
                 if (data.length < 5 ) {
 
-                    $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
+                    $append.html('<font color="red"><b>No result..</b></font>');
                      
                 }
                 
@@ -117,25 +124,33 @@
 
     function selectStatus(deliveryStatus) {
 
+    $('.main-box-body .appendHere').html('<img class="loader" src="'+serverPath+'/img/loader.gif">');
+
      var url =  serverPath + "delivery/deliveries/index_status/"+deliveryStatus;
 
        if (deliveryStatus == '-1') {
 
             url =  serverPath + "delivery/deliveries/search_by_number/"+deliveryStatus;
+
+            $('.searchOrder').addClass('by_dr');
+        } else {
+             $('.searchOrder').removeClass('by_dr');
         }
 
+    
         $.ajax({
             type: "GET",
             url: url,
             dataType: "html",
             success: function(data) {
+                
+                $('.loader').remove();
 
                 if(data){
 
                     $('.appendHere').html(data);
 
                 } 
-                
             }
         });
     }

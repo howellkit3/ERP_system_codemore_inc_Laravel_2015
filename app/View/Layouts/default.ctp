@@ -44,7 +44,8 @@
 	            'libs/nifty-component',
 				'/css/font-awesome/css/font-awesome',
 				'bootstrap-tagsinput/bootstrap-tagsinput',
-				'sweet-alert'
+				'sweet-alert',
+					'libs/footable.core',
 			));
 
 		 	echo $this->Html->script('jquery');
@@ -197,7 +198,15 @@
 	    	//face detection
 	    	echo $this->Html->script('jquery.facedetection');
 	    	echo $this->Html->script('jquery.facedetection.min');
-	    	
+			
+			//footable 
+			echo $this->Html->script(array(
+				'footable',
+				'footable.sort',
+				'footable.paginate',
+				'footable.filter.js'
+
+			));	    	
 	    	// all sortable table js
 	    	echo $this->Html->script('sortable');
 	    ?>

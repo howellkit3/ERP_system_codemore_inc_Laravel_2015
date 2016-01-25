@@ -58,7 +58,10 @@
                                     <?php 
                                      $old_value = $list['Delivery']['dr_uuid'];
                                     endforeach; ?>
-                              <?php } ?> 
+                              <?php } else {
+
+                                    echo "<spna class='error' color='red'>No Result Found</span>";
+                                } ?> 
 
                         </tbody>
                         <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" >
