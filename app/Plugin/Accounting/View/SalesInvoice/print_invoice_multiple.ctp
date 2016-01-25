@@ -122,25 +122,26 @@
 
     $start = 12;
 
-    $total = 0;
-    $delivery_date = array();
-    foreach ($drData as $key => $list) {
+        $total = 0;
+        $delivery_date = array();
+        foreach ($drData as $key => $list) {
 
-        $delivery_date[] = date('M d, Y', strtotime($list['Delivery']['created']));
+            $delivery_date[] = date('M d, Y', strtotime($list['Delivery']['created']));
 
-        $sheet->setCellValue('B'.$start, $list['ClientOrder']['po_number']);
-        $sheet->setCellValue('F'.$start, ucfirst($list['Product']['name']));
-        $sheet->setCellValue('D'.$start, number_format($list['DeliveryDetail']['quantity']));
-        $sheet->setCellValue('I'.$start, number_format($list['QuotationItemDetail']['unit_price'],2));
+            $sheet->setCellValue('B'.$start, $list['ClientOrder']['po_number']);
+            $sheet->setCellValue('F'.$start, ucfirst($list['Product']['name']));
+            $sheet->setCellValue('D'.$start, number_format($list['DeliveryDetail']['quantity']));
+            $sheet->setCellValue('I'.$start, number_format($list['QuotationItemDetail']['unit_price'],2));
 
-        $unitPrice = (float) $list['QuotationItemDetail']['unit_price'];
-        $quantity = (float) $list['DeliveryDetail']['quantity'] ;
-        $totalQty = $quantity * $unitPrice;
-        $sheet->setCellValue('K'.$start, number_format($totalQty,2)); $total += $totalQty;
+            $unitPrice = (float) $list['QuotationItemDetail']['unit_price'];
+            $quantity = (float) $list['DeliveryDetail']['quantity'] ;
+            $totalQty = $quantity * $unitPrice;
+            $sheet->setCellValue('K'.$start, number_format($totalQty,2)); $total += $totalQty;
 
-        $start++;
-    }   
-         $sheet->setCellValue('K33', $currency.' '. number_format($total,2)); 
+            $start++;
+        }   
+        
+        $sheet->setCellValue('K33', $currency.' '. number_format($total,2)); 
         
         $sheet->setCellValue('J7', $drData[0]['Delivery']['created']); 
 
@@ -165,6 +166,7 @@
                 // ->setCellValue('K32', $vat12)
                 // ->setCellValue('K33', $currency.' '. $totalAmount);  
               //  ->setCellValue('K33', 'd');      
+   
    // prepare download
     $filename = mt_rand(1,100000).'.xlsx'; //just some random filename
     header('Content-Type: application/vnd.ms-office');
