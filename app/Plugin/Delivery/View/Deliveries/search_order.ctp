@@ -77,10 +77,9 @@
                                         <td class="text-center">
 
                                            <?php 
+                                                $uuidClientsOrder = $scheduleDataList['ClientOrderDeliverySchedule']['uuid'];
 
-                                                      $uuidClientsOrder = $scheduleDataList['ClientOrderDeliverySchedule']['uuid'];
-                                                     
-
+                                               
                                                       $arr = array();
 
                                                        foreach ($deliveryStatus as $key => $value) {
@@ -89,11 +88,11 @@
 
                                                           if($value['Delivery']['schedule_uuid'] == $scheduleDataList['ClientOrderDeliverySchedule']['uuid'] &&  $value['DeliveryDetail']['status'] == 3 ){  
 
-                                                            if($value['DeliveryDetail']['status'] != 5){
+                                                            if ($value['DeliveryDetail']['status'] != 5) {
                                                          
-                                                            array_push($arr,$value['DeliveryDetail']['delivered_quantity']);
+                                                              array_push($arr,$value['DeliveryDetail']['delivered_quantity']);
 
-                                                          }
+                                                            }
 
                                                         }  
                                                           

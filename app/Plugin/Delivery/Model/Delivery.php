@@ -18,6 +18,7 @@ class Delivery extends AppModel {
 		$data['Delivery']['created_by'] = $auth;
 
 		$this->save($data);
+
 	}
 
 	public function bindDeliveryById() {

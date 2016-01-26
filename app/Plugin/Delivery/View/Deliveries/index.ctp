@@ -89,6 +89,7 @@
             type: "GET",
             url: url,
             dataType: "html",
+            'data': {'search' : searchInput } ,
             success: function(data) {
 
                 //alert(data);

@@ -56,7 +56,7 @@
                                             <label class="col-lg-2 control-label"> </label>
                                             <div class="col-lg-8">
                                                 <div class="checkbox-nice">
-                                                    <input type="checkbox" class="check-ref-uuid " id="checkbox-<?php echo $key ?>" checked="checked">
+                                                    <input type="checkbox" class="check-ref-uuid " id="checkbox-<?php echo $key ?>"">
                                                     <label for="checkbox-<?php echo $key ?>">
                                                         <?php echo $value['Delivery']['dr_uuid'] ;?>
                                                     </label>
