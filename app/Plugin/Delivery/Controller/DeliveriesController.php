@@ -315,7 +315,7 @@ class DeliveriesController extends DeliveryAppController {
     public function add_schedule($idDelivery = null, $idDeliveryDetail = null,$deliveryScheduleId = null) {
         //pr($idDelivery);  pr($idDelividDeliveryeryDetail); pr($deliveryScheduleId);  pr($clientUuid); exit;
         
-        Configure::write('debug',2);
+        //Configure::write('debug',2);
 
         $userData = $this->Session->read('Auth');
 
@@ -364,6 +364,7 @@ class DeliveriesController extends DeliveryAppController {
 
 
             $data =  $this->request->data;
+
            // if (!empty($DRdata) && $DRdata['Delivery']['status'] == 1) {
             if (count( $DRdata ) > 4) {
 
@@ -423,7 +424,7 @@ class DeliveriesController extends DeliveryAppController {
             $this->redirect( array(
                            'controller' => 'deliveries', 
                            'action' => 'view',
-                            $data['Delivery']['schedule_uuid'],
+                            $data['ClientOrderDeliverySchedule']['delivery_schedule_id'],
                             $data['Delivery']['clients_order_id'],
                             $clientOrder['ClientOrder']['uuid']
                       ));

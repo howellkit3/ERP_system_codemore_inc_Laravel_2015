@@ -190,6 +190,13 @@
                                                                     'label' => false,
                                                                      'value' => !empty($deliveryEdit[0]['DeliveryDetail']['location']) ? $deliveryEdit[0]['DeliveryDetail']['location'] : " "                                                                    ));
                                 ?>
+
+                                
+                        <?php echo $this->Form->input('delivery_schedule_id'
+                                            ,array(
+                                                'value' => $deliveryScheduleId,
+                                                'type' => 'hidden'
+                                            )); ?>
                             </div>
                         </div>
 
@@ -404,6 +411,7 @@
                                 ?>
                             </div>
                         </div>
+
 
                         <div class="modal-footer">
                              <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>
