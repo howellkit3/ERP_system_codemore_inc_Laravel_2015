@@ -79,6 +79,21 @@ class Delivery extends AppModel {
 		$this->recursive = 1;
 	}
 
+	public function bindDeliveryCount() {
+
+		$this->bindModel(array(
+			'hasOne' => array(
+				'DeliveryDetail' => array(
+					'className' => 'Delivery.DeliveryDetail',
+					'foreignKey' => false,
+					'conditions' => 'Delivery.dr_uuid = DeliveryDetail.delivery_uuid'
+				)
+			)
+		));
+
+		$this->recursive = 1;
+	}
+
 	public function bindDeliveryView() {
 		$this->bindModel(array(
 			'hasOne' => array(
@@ -150,6 +165,40 @@ class Delivery extends AppModel {
 		));
 		$this->recursive = 1;
 
+	}
+
+	public function findBySched($uuidClientsOrder = null,$status = 3) {
+
+			$arr = array();
+
+		if (!empty($uuidClientsOrder)) {
+
+			$this->bindDeliveryCount();
+
+			$delivery = $this->find('all',array(
+				'conditions' => array(
+					'schedule_uuid' => $uuidClientsOrder,
+					//'status' => $status
+				),
+				'fields' => array(
+						'Delivery.id',
+						'Delivery.schedule_uuid',
+						'Delivery.status',
+						'Delivery.clients_order_id',
+						'DeliveryDetail.id',
+						'DeliveryDetail.delivered_quantity',
+						'DeliveryDetail.status',
+						'DeliveryDetail.quantity',
+						'Delivery.dr_uuid',
+				),
+				'group' => 'Delivery.id'
+				
+			));
+
+
+			return $delivery;
+		
+		}
 	}
 
 }

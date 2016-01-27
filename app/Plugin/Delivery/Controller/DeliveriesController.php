@@ -275,18 +275,16 @@ class DeliveriesController extends DeliveryAppController {
                                        'order' => 'Delivery.id DESC'
                                    ));
 
-        // pr( $deliveryEdit  );
-        // exit();
 
-        $this->Delivery->bindDelivery();
+       // $this->Delivery->bindDelivery();
         
-        $deliveryStatus = $this->Delivery->find('all');
+       //  $deliveryStatus = $this->Delivery->find('all');
 
-        $deliveryList = $this->Delivery->find('list',array('fields' => array('schedule_uuid', 'dr_uuid')));
+       //  $deliveryList = $this->Delivery->find('list',array('fields' => array('schedule_uuid', 'dr_uuid')));
 
-        $orderListHelper = $this->Delivery->find('list',array('fields' => array('clients_order_id', 'dr_uuid')));
+       //  $orderListHelper = $this->Delivery->find('list',array('fields' => array('clients_order_id', 'dr_uuid')));
 
-        $companyAddress = $this->Address->find('list',array('fields' => array('address1','address1','foreign_key')));
+       //  $companyAddress = $this->Address->find('list',array('fields' => array('address1','address1','foreign_key')));
  
         $measureList = $this->Measure->find('list',array('fields' => array('id', 'name'))); 
 
@@ -870,19 +868,24 @@ class DeliveriesController extends DeliveryAppController {
             OR Company.company_name LIKE "%'.$hint.'%" OR Product.name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%" LIMIT 10 ');
         
 
-        $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status')));
+        // $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status')));
 
-        $this->Delivery->bindDelivery();
+        // $this->Delivery->bindDelivery();
 
-        $deliveryStatus = $this->Delivery->find('all',array('fields' => array(
-            'DeliveryDetail.delivered_quantity','Delivery.id','DeliveryDetail.status',
-            'Delivery.id','Delivery.dr_uuid','Delivery.schedule_uuid',
-            'Delivery.clients_order_id'
-        )));
+        // $deliveryStatus = $this->Delivery->find('all',array('fields' => array(
+        //     'DeliveryDetail.delivered_quantity','Delivery.id','DeliveryDetail.status',
+        //     'Delivery.id','Delivery.dr_uuid','Delivery.schedule_uuid',
+        //     'Delivery.clients_order_id'
+        // ),
+        //     'limit' => 5
+        // ));
 
-        $deliveryList = $this->Delivery->find('list',array('fields' => array('schedule_uuid', 'dr_uuid')));
+        // pr($deliveryStatus);
+        // exit();
 
-        $orderListHelper = $this->Delivery->find('list',array('fields' => array('clients_order_id', 'dr_uuid')));
+        // $deliveryList = $this->Delivery->find('list',array('fields' => array('schedule_uuid', 'dr_uuid')));
+
+        // $orderListHelper = $this->Delivery->find('list',array('fields' => array('clients_order_id', 'dr_uuid')));
 
         $this->set(compact('clientsOrder','noPermissionSales',  'deliveryStatus', 'deliveryList', 'orderListHelper', 'orderDeliveryList', 'deliveryDetailList' , 'deliveryData', 'jobTicketData'));
 
@@ -1724,7 +1727,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->Delivery->bindDelivery();
 
-        $deliveryStatus = $this->Delivery->find('all');        
+       //$deliveryStatus = $this->Delivery->find('all');        
 
         //$orderDeliveryList = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid', 'uuid')));
 
@@ -1761,18 +1764,16 @@ class DeliveriesController extends DeliveryAppController {
 
         foreach ($clientsOrder as $key => $value){
 
-            foreach ($deliveryStatus as $key1 => $valueofDelivery){
+            $items = $this->Delivery->findBySched($value['ClientOrderDeliverySchedule']['uuid']);
+
+            foreach ( $items as $key1 => $valueofDelivery){
     
-                if($value['ClientOrderDeliverySchedule']['uuid'] == $valueofDelivery['Delivery']['schedule_uuid']){
-
-
                     $clientsOrder[$key]['DeliveryDetail']['quantity'] = $valueofDelivery['DeliveryDetail']['quantity'];
                     $clientsOrder[$key]['DeliveryDetail']['delivered_quantity'] = $valueofDelivery['DeliveryDetail']['delivered_quantity'];
                     $clientsOrder[$key]['Delivery']['status'] = $valueofDelivery['Delivery']['status'];
                     $clientsOrder[$key]['Delivery']['dr_uuid'] = $valueofDelivery['Delivery']['dr_uuid'];
                     $clientsOrder[$key]['DeliveryDetail']['status'] = $valueofDelivery['DeliveryDetail']['status'];
 
-                }
             }
         }
 

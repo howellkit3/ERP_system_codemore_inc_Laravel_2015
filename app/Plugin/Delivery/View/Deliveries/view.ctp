@@ -113,36 +113,43 @@ $totalremaining = 0;
                                             <?php 
                                                 $uuidClientsOrder = $clientsOrder['ClientOrderDeliverySchedule']['uuid'];
 
-                                                $arr = array();
+                                                $arr = $deliveryStatus = array();
 
-                                                foreach ($deliveryStatus as $key => $value) {
+                                                $checkItem = $this->DeliveryFunction->getbyScheduleID($uuidClientsOrder);
 
-                                                    $IdClientsOrder = $orderListHelper[$value['Delivery']['clients_order_id']];
-                                                
-                                                    if($value['Delivery']['schedule_uuid'] == $uuidClientsOrder){  
 
-                                                        if($value['DeliveryDetail']['status'] != 5 && $value['Delivery']['status'] != 2){
-                                                   
-                                                        array_push($arr,$value['DeliveryDetail']['delivered_quantity']);
+                                                foreach ($checkItem as $key => $inner) {
+                                                  
+                                                    if($inner['DeliveryDetail']['status'] != 5 && $inner['Delivery']['status'] != 2 ){
+                                                        array_push($arr,$inner['DeliveryDetail']['delivered_quantity']);
+                                                      }
 
-                                                     }
+                                                       $deliveryStatus[] = $inner['Delivery']['status'];
+                                                  }  
 
-                                                    }  
-
-                                                }
+                                                  //echo(array_sum($arrholder));
 
                                                 $arrDelivered = array();
 
-                                                foreach ($deliveryStatus as $key => $value) {
+                                                foreach ($checkItem as $key => $value) {
+                                                    
+                                                    $DeliveredHolder = $value['DeliveryDetail']['delivered_quantity'];
 
-                                                  $DeliveredHolder = $value['DeliveryDetail']['delivered_quantity'];
+                                                    if ($value['DeliveryDetail']['status'] != 5) {
+                                                        array_push($arrDelivered,$DeliveredHolder);
+                                                      }
+                                                }  
+
+                                                // foreach ($deliveryStatus as $key => $value) {
+
+                                                //   $DeliveredHolder = $value['DeliveryDetail']['delivered_quantity'];
   
-                                                    if($value['Delivery']['schedule_uuid'] == $uuidClientsOrder AND $value['DeliveryDetail']['status'] != 5  ){  
+                                                //     if($value['Delivery']['schedule_uuid'] == $uuidClientsOrder AND $value['DeliveryDetail']['status'] != 5  ){  
 
-                                                      array_push($arrDelivered,$DeliveredHolder);
+                                                //       array_push($arrDelivered,$DeliveredHolder);
 
-                                                    }  
-                                                }
+                                                //     }  
+                                                // }
 
                                                 $sumDelivered = array_sum($arrDelivered);
 
@@ -150,7 +157,7 @@ $totalremaining = 0;
                                                 
                                                 $Currentdate = date("Y-m-d H:i:s");
 
-                                                if (!empty($deliveryList[$clientsOrder['ClientOrderDeliverySchedule']['uuid']])) {   
+                                                if (!empty($checkItem)) {   
 
                                                     if (array_sum($arr) == $clientsOrder['ClientOrderDeliverySchedule']['quantity']){ 
 

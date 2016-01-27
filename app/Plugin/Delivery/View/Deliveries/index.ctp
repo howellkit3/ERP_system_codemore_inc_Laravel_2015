@@ -61,6 +61,9 @@
 
         $this = $('.searchOrder');
 
+
+        $('.main-box-body .searchAppend').html('<img class="loader" src="'+serverPath+'/img/loader.gif">');
+
         var searchInput = $('.searchOrder').val();
 
         if(searchInput != ''){
@@ -92,6 +95,7 @@
             'data': {'search' : searchInput } ,
             success: function(data) {
 
+                 $('.loader').remove();
                 //alert(data);
 
                 if(data){

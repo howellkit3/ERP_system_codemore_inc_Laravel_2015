@@ -39,7 +39,7 @@ class DeliveryFunctionHelper extends AppHelper {
 
 	}
 
-	public function getBySchedule($uuidClientsOrder = null) {
+	public function getbyScheduleID($uuidClientsOrder = null,$status = 3) {
 
 		$arr = array();
 
@@ -47,21 +47,29 @@ class DeliveryFunctionHelper extends AppHelper {
 
 			$Delivery = ClassRegistry::init('Delivery.Delivery');
 
+			$Delivery->bindDeliveryCount();
+
 			$delivery = $Delivery->find('all',array(
 				'conditions' => array(
 					'schedule_uuid' => $uuidClientsOrder,
-				)
+					//'status' => $status
+				),
+				'fields' => array(
+						'Delivery.id',
+						'Delivery.schedule_uuid',
+						'Delivery.status',
+						'Delivery.clients_order_id',
+						'DeliveryDetail.id',
+						'DeliveryDetail.delivered_quantity',
+						'DeliveryDetail.status',
+						'DeliveryDetail.quantity'
+				),
+				'group' => 'Delivery.id'
 				
 			));
 
-			foreach ($delivery as $key => $list) {
-				
-				 if( $list['DeliveryDetail']['status'] != 5 && $value['Delivery']['status'] != 2 ){
-                                                   
-                   		array_push($arr,$value['DeliveryDetail']['delivered_quantity']);
-				 }
-			}
 
+			return $delivery;
 		}
 	}
 }

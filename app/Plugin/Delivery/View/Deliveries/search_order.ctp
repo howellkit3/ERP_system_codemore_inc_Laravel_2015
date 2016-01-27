@@ -47,28 +47,36 @@
                                         <td class="text-center" >
 
                                           <?php 
-                                            
-                                            $uuidClients = $scheduleDataList['ClientOrderDeliverySchedule']['uuid'];
-                                               
-                                                $arrholder = array();
 
-                                                 foreach ($deliveryStatus as $key => $value) {
+                                            $arrholder = array();
+                                           
+                                            $checkItem = $this->DeliveryFunction->getbyScheduleID($scheduleDataList['ClientOrderDeliverySchedule']['uuid']);
 
-                                                  $IdClientsOrder = $orderListHelper[$value['Delivery']['clients_order_id']];
-  
-                                                    if($value['Delivery']['schedule_uuid'] == $scheduleDataList['ClientOrderDeliverySchedule']['uuid']  ){  
+                                            foreach ($checkItem as $key => $value) {
+                                              
+                                                // if($value['DeliveryDetail']['status'] != 5){
+                                                //     array_push($arrholder,$value['DeliveryDetail']['delivered_quantity']);
+                                                //   }
 
-                                                      if($value['DeliveryDetail']['status'] != 5){
-                                                   
-                                                      array_push($arrholder,$value['DeliveryDetail']['delivered_quantity']);
+                                                  if($value['DeliveryDetail']['status'] == 3 && $value['Delivery']['status'] == 1){
+                                    
+                                                      $difference = empty($value['DeliveryDetail']['delivered_quantity']) ? $value['DeliveryDetail']['quantity'] : $value['DeliveryDetail']['delivered_quantity'] ; 
 
-                                                      }
+                                                        array_push($arrholder,$difference);
+                                                      
+                                                  }else if ($value['DeliveryDetail']['status'] != 5 && $value['Delivery']['status'] == 1){
 
-                                                    }  
-                                                                                                    
+                                                      $difference = $value['DeliveryDetail']['quantity']; 
+
+                                                        array_push($arrholder,$difference);
+                                        
                                                   }
-                                            
-                                            echo(array_sum($arrholder));?> 
+
+                                            }
+                                             echo (intval($scheduleDataList['ClientOrderDeliverySchedule']['quantity']) - (array_sum($arrholder)));
+
+                                           
+                                              ?> 
 
                                             <br>
 
@@ -77,60 +85,55 @@
                                         <td class="text-center">
 
                                            <?php 
-                                                $uuidClientsOrder = $scheduleDataList['ClientOrderDeliverySchedule']['uuid'];
-
-                                               
+                                                 //uuidClientsOrder = $scheduleDataList['ClientOrderDeliverySchedule']['uuid'];
                                                       $arr = array();
 
-                                                       foreach ($deliveryStatus as $key => $value) {
+                                                      $deliveryStatus = [];
 
-                                                        $IdClientsOrder = !empty($scheduleDataList['Delivery']['dr_uuid']) ? $scheduleDataList['Delivery']['dr_uuid'] : "";
-
-                                                          if($value['Delivery']['schedule_uuid'] == $scheduleDataList['ClientOrderDeliverySchedule']['uuid'] &&  $value['DeliveryDetail']['status'] == 3 ){  
-
-                                                            if ($value['DeliveryDetail']['status'] != 5) {
-                                                         
-                                                              array_push($arr,$value['DeliveryDetail']['delivered_quantity']);
-
-                                                            }
-
-                                                        }  
-                                                          
-                                                      }
-
-                                                      $Scheddate = $scheduleDataList['ClientOrderDeliverySchedule']['schedule'];
-
-                                                      $Currentdate = date("Y-m-d H:i:s");
-
-                                                      $Scheddate = str_replace('-', '', $Scheddate);
-                                                      
-                                                      $Currentdate = str_replace('-', '', $Currentdate); 
-
-                                                      if (array_sum($arr) == $scheduleDataList['ClientOrderDeliverySchedule']['quantity']){ 
-
-                                                          echo "<span class='label label-success'>Completed</span>";
-                                        
-                                                      }elseif (array_sum($arrholder) != 0) { 
-                                                            
-                                                           echo "<span class='label label-warning'>Approved</span>"; ?> &nbsp<?php
+                                                      foreach ($checkItem as $key => $inner) {
                                                         
+                                                        if ($inner['DeliveryDetail']['status'] == 3) {
+                                                          
+                                                          if($inner['DeliveryDetail']['status'] != 5){
+                                                              array_push($arr,$inner['DeliveryDetail']['delivered_quantity']);
+                                                            }
+                                                        }
+                                                        
+                                                        $deliveryStatus[] = $inner['Delivery']['status'];
+                                                     } 
 
-                                                      }else{
 
-                                                          echo "<span class='label label-default'>Waiting</span>"; ?> &nbsp
+                                                    $Scheddate = $scheduleDataList['ClientOrderDeliverySchedule']['schedule'];
+
+                                                    $Currentdate = date("Y-m-d H:i:s");
+
+                                                  if (!empty($checkItem)) {   
+
+                                                          if (array_sum($arr) == $scheduleDataList['ClientOrderDeliverySchedule']['quantity']){ 
+
+                                                                echo "<span class='label label-success'>Completed</span>";
+                                              
+                                                            }
+                                                          elseif (array_sum($arr) == 0 || (!empty($deliveryStatus) && !in_array('0', $deliveryStatus ))) { 
+                                                          
+                                                               echo "<span class='label label-warning'>Approved</span>"; ?> &nbsp<?php
+                                                          }
 
 
-                                                          <?php    
+                                                  } else {
 
-                                                            $Scheddate = date('Y-m-d',strtotime($Scheddate)).' 23:00:00';
 
-                                                          if(strtotime($Currentdate) >= strtotime( $Scheddate ))
-                                                          {
-                                                              echo "<span class='label label-danger'>Due</span>"; 
-                                                          } 
-                                                            
-                                                           
-                                                  } ?>
+                                                       echo "<span class='label label-default'>Waiting</span>"; 
+
+                                                          $Scheddate = date('Y-m-d',strtotime($Scheddate)).' 23:00:00';
+
+                                                        if(strtotime($Currentdate) >= strtotime( $Scheddate ))
+                                                        {
+                                                            echo "<span class='label label-danger'>Due</span>"; 
+                                                        } 
+
+                                                    } ?>
+                                                      
                                         </td>
 
                                         <td class="text-center">

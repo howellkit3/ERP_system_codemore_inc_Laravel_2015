@@ -63,39 +63,38 @@
 
                                               <td class="text-center" >
 
-                                                <?php 
+                                                <?php
                                                   
-                                                  $uuidClients = $scheduleDataList['ClientOrderDeliverySchedule']['uuid'];
-                                                      $arrholder = array();
+                                                  $checkItem = $this->DeliveryFunction->getbyScheduleID($scheduleDataList['ClientOrderDeliverySchedule']['uuid']);
 
-                                                       foreach ($deliveryStatus as $key => $value) {
-
+                                                    $arrholder = array();
                                                     
-                                                        $IdClientsOrder = !empty($scheduleDataList['Delivery']['dr_uuid']) ? $scheduleDataList['Delivery']['dr_uuid'] : "";
+                                                    foreach ($checkItem as $key => $value) {
+                                                    
+                                                      // if($value['DeliveryDetail']['status'] != 5){
+                                                      //     array_push($arrholder,$value['DeliveryDetail']['delivered_quantity']);
+                                                      //   }
 
-                                                                      
-                                                          if($value['Delivery']['schedule_uuid'] == $scheduleDataList['ClientOrderDeliverySchedule']['uuid'] && $value['Delivery']['clients_order_id'] == $scheduleDataList['ClientOrder']['uuid']){  
+                                                        if($value['DeliveryDetail']['status'] == 3 && $value['Delivery']['status'] == 1){
+                                          
+                                                            $difference = empty($value['DeliveryDetail']['delivered_quantity']) ? $value['DeliveryDetail']['quantity'] : $value['DeliveryDetail']['delivered_quantity'] ; 
 
-                                                            if($value['DeliveryDetail']['status'] == 3 && $value['Delivery']['status'] == 1){
+                                                              array_push($arrholder,$difference);
+                                                            
+                                                        }else if ($value['DeliveryDetail']['status'] != 5 && $value['Delivery']['status'] == 1){
+
+                                                            $difference = $value['DeliveryDetail']['quantity']; 
+
+                                                              array_push($arrholder,$difference);
                                               
-                                                                $difference = empty($value['DeliveryDetail']['delivered_quantity']) ? $value['DeliveryDetail']['quantity'] : $value['DeliveryDetail']['delivered_quantity'] ; 
-
-                                                                  array_push($arrholder,$difference);
-                                                                
-                                                            }else if ($value['DeliveryDetail']['status'] != 5 && $value['Delivery']['status'] == 1){
-
-                                                                $difference = $value['DeliveryDetail']['quantity']; 
-
-                                                                  array_push($arrholder,$difference);
-                                                  
-                                                            }
-
-                                                          }  
-                                                                                                          
                                                         }
 
+                                                  }
 
-                                                   echo($scheduleDataList['ClientOrderDeliverySchedule']['quantity'] - array_sum($arrholder));?> 
+                                                 echo (intval($scheduleDataList['ClientOrderDeliverySchedule']['quantity']) - (array_sum($arrholder)));
+
+                                                ?> 
+
 
                                                   <br>
 
@@ -103,28 +102,26 @@
 
                                               <td class="text-center">
 
+                                                  
+                                                    
                                                       <?php 
 
                                                       $uuidClientsOrder = $scheduleDataList['ClientOrderDeliverySchedule']['uuid'];
                                                      
 
-                                                      $arr = array();
+                                                      $deliveryStatus = $arr = array();
 
-                                                       foreach ($deliveryStatus as $key => $value) {
-
-                                                        $IdClientsOrder = !empty($scheduleDataList['Delivery']['dr_uuid']) ? $scheduleDataList['Delivery']['dr_uuid'] : "";
-
-                                                          if($value['Delivery']['schedule_uuid'] == $scheduleDataList['ClientOrderDeliverySchedule']['uuid'] &&  $value['DeliveryDetail']['status'] == 3 ){  
-
-                                                            if($value['DeliveryDetail']['status'] != 5){
-                                                         
-                                                            array_push($arr,$value['DeliveryDetail']['delivered_quantity']);
-
-                                                          }
-
-                                                        }  
+                                                      foreach ($checkItem as $key => $inner) {
+                                                        
+                                                        if ($inner['DeliveryDetail']['status'] == 3) {
                                                           
-                                                      }
+                                                          if($inner['DeliveryDetail']['status'] != 5){
+                                                              array_push($arr,$inner['DeliveryDetail']['delivered_quantity']);
+                                                            }
+                                                        }
+                                                        
+                                                        $deliveryStatus[] = $inner['Delivery']['status'];
+                                                     } 
 
                                                       $Scheddate = $scheduleDataList['ClientOrderDeliverySchedule']['schedule'];
 
