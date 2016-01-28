@@ -75,32 +75,15 @@
 
 <script>
 
-    $("body").on('keyup','.searchSupplier', function(e){
 
-        var searchInput = $(this).val();
-    
-        
-       // alert(searchInput);
-        if(searchInput != ''){
+function searchSupplier(searchInput) {
 
-            $('.supplierFields').hide();
-            $('.searchAppend').show();
-            //alert('hide');
-
-        }else{
-            $('.supplierFields').show();
-            $('.searchAppend').hide();
-            //alert('show');
-        }
-        
         $.ajax({
             type: "POST",
             url: serverPath + "purchasing/suppliers/search_supplier/"+searchInput,
             dataType: "html",
             success: function(data) {
-
                 //alert(data);
-
                 if(data){
 
                     $('.appendtable').html(data);
@@ -116,34 +99,88 @@
         });
 
 
+}
 
-          $('body').on('click','.pagination a',function(e) {
+var globalTimeout = null;  
 
-        $url = $(this).attr('href');
+$('.searchSupplier').keyup(function() {
 
-
-        $.ajax({
-            type: "GET",
-            url: $url,
-            dataType: "html",
-            success: function(data) {
-
-                if(data){
-
-                    $('.appendtable').html(data);
-
-                } 
+     var searchInput = $(this).val();
                 
-            }
+    // alert(searchInput);
+    if(searchInput != ''){
+        $('.supplierFields').hide();
+        $('.searchAppend').show();
+        //alert('hide');
+
+    } else {
+        $('.supplierFields').show();
+        $('.searchAppend').hide();
+        //alert('show');
+    }
+
+
+  if (globalTimeout != null) {
+    clearTimeout(globalTimeout);
+  }
+  globalTimeout = setTimeout(function() {
+    globalTimeout = null;  
+
+    searchSupplier(searchInput)
+
+  }, 200);  
+});
+
+
+ //   var timeout;
+
+
+    // $("body").on('keypress','.searchSupplier', function(e){
+
+
+    //             var searchInput = $(this).val();
+                
+    //             // alert(searchInput);
+    //             if(searchInput != ''){
+
+    //                 $('.supplierFields').hide();
+    //                 $('.searchAppend').show();
+    //                 //alert('hide');
+
+    //             }else{
+    //                 $('.supplierFields').show();
+    //                 $('.searchAppend').hide();
+    //                 //alert('show');
+    //             }
+
+    //             if(timeout) {
+    //             clearTimeout(timeout);
+    //             timeout = null;
+    //         }
+
+    //     timeout = setTimeout(searchSupplier(searchInput),1000);
+    // });
+    
+    $('body').on('click','.pagination a',function(e) {
+
+            $url = $(this).attr('href');
+
+            $.ajax({
+                type: "GET",
+                url: $url,
+                dataType: "html",
+                success: function(data) {
+
+                    if(data){
+
+                        $('.appendtable').html(data);
+
+                    } 
+                    
+                }
+            });
+
+
+            e.preventDefault();
         });
-
-
-        e.preventDefault();
-    });
-
-
-
-    });
-
 </script>
-

@@ -264,17 +264,30 @@ class DeliveriesController extends DeliveryAppController {
 
         }
 
-        $this->Delivery->bindDelivery();
+       $this->Delivery->bindDelivery();
 
         $deliveryConditions = array('Delivery.schedule_uuid' => $clientsOrderUuid,
                                                'Delivery.clients_order_id' => $clientUuid);
 
-        $deliveryEdit = $this->Delivery->find('all', array(
+        $partial = $this->Delivery->find('all', array(
                                        'group' => 'Delivery.id',
                                        'conditions' => $deliveryConditions ,
                                        'order' => 'Delivery.id DESC'
                                    ));
 
+    
+        foreach ($partial as $key => $new) {
+         $deliveryEdit[$key] = $new;
+
+         //find delivery_details_id
+
+            $detail = $this->DeliveryDetail->findBYId($new['Delivery']['id']);
+
+            if (!empty($detail)) {
+                $deliveryEdit[$key]['DeliveryDetail'] = $detail['DeliveryDetail'];
+            }
+             
+        }
 
        // $this->Delivery->bindDelivery();
         
@@ -284,7 +297,7 @@ class DeliveriesController extends DeliveryAppController {
 
        //  $orderListHelper = $this->Delivery->find('list',array('fields' => array('clients_order_id', 'dr_uuid')));
 
-       //  $companyAddress = $this->Address->find('list',array('fields' => array('address1','address1','foreign_key')));
+        $companyAddress = $this->Address->find('list',array('fields' => array('address1','address1','foreign_key')));
  
         $measureList = $this->Measure->find('list',array('fields' => array('id', 'name'))); 
 
@@ -315,6 +328,9 @@ class DeliveriesController extends DeliveryAppController {
         
         //Configure::write('debug',2);
 
+
+        $data = $this->request->data;
+
         $userData = $this->Session->read('Auth');
 
         $this->loadModel('Delivery.DeliveryDetail');
@@ -331,7 +347,7 @@ class DeliveriesController extends DeliveryAppController {
                                   'Delivery.schedule_uuid' => $this->request->data['Delivery']['schedule_uuid']),
                                   'order' => 'Delivery.id DESC'));
 
-        //get clientiorder
+        //get clientiorder  
         $this->ClientOrder->bind(array('ClientOrderDeliverySchedule'));
 
         $clientOrder = $this->ClientOrder->find('first',array(
@@ -343,7 +359,8 @@ class DeliveriesController extends DeliveryAppController {
                     )
         ));
 
-        if ($this->request->is(array('post', 'put'))) {
+
+        if (!empty($this->request->data)) {
 
             $this->Delivery->id = $idDelivery;
             $this->DeliveryDetail->id = $idDeliveryDetail;
@@ -371,20 +388,12 @@ class DeliveriesController extends DeliveryAppController {
                 $this->redirect( array(
                            'controller' => 'deliveries',   
                            'action' => 'view',
+                            $data['ClientOrderDeliverySchedule']['delivery_schedule_id'],
                             $data['Delivery']['schedule_uuid'],
-                            $data['Delivery']['clients_order_id'],
-                            $clientOrder['ClientOrder']['uuid']
+                            $data['Delivery']['clients_order_id']
 
                       ));  
-            }// } else if (!empty($DRdata) && $DRdata['DeliveryDetail']['status'] == 2) {
-
-            //     $disableValidation = 1;
-
-            //      $this->request->data['Delivery']['id'] = $DRdata['Delivery']['id'];
-            //         $this->request->data['DeliveryDetail']['id'] = $DRdata['DeliveryDetail']['id'];
-            //       $this->request->data['DeliveryDetail']['status'] = 1;
-
-            // }
+            }
 
             $this->request->data['Delivery']['company_id'] = $deliveryData[0]['Delivery']['company_id']; 
             $this->request->data['DeliveryDetail']['delivery_uuid'] =  $this->request->data['Delivery']['dr_uuid']; 
@@ -392,7 +401,7 @@ class DeliveriesController extends DeliveryAppController {
             $this->request->data['Delivery']['created_by'] = $idDelivery;
             $this->request->data['Delivery']['status'] =  '1';   
             $this->request->data['Delivery']['modified_by'] =  $userData['User']['id'];
-
+            
 
             //pr($this->request->data); exit;
             $this->Delivery->saveDelivery($this->request->data,$userData['User']['id']);
@@ -401,17 +410,35 @@ class DeliveriesController extends DeliveryAppController {
 
             $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
 
-            $saveData['DeliveryConnection']['delivery_id'] =  $deliveryData[0]['Delivery']['id'];
+            $saveData['DeliveryConnection']['id'] = null;
+            $saveData['DeliveryConnection']['delivery_id'] = $this->Delivery->id;
 
-            $saveData['DeliveryConnection']['delivery_details_id'] = $this->DeliveryDetail->id;  
+            $saveData['DeliveryConnection']['delivery_details_id'] = $this->DeliveryDetail->id;
 
-            $saveData['DeliveryConnection']['dr_uuid'] =  $deliveryData[0]['Delivery']['dr_uuid']; 
+            $saveData['DeliveryConnection']['dr_uuid'] =  $this->request->data['Delivery']['dr_uuid']; 
 
-            if($this->DeliveryConnection->saveDetail($saveData,$userData['User']['id'])) {
+
+            if( $this->DeliveryConnection->saveDetail($saveData,$userData['User']['id']) ) {
 
             } else {
-              //  pr($this->DeliveryConnection->validationErrors);
+
+                $this->Delivery->delete($idDelivery);
+
+                $this->DeliveryDetail->delete($idDelivery);
+
+                $this->Session->setFlash(__('There\'s an error saving the data'),'error');
+
+
+                 $this->redirect( array(
+                           'controller' => 'deliveries', 
+                           'action' => 'view',
+                             $data['ClientOrderDeliverySchedule']['delivery_schedule_id'],
+                            $data['Delivery']['schedule_uuid'],
+                            $data['Delivery']['clients_order_id']
+                      ));
+            
             }
+
 
   
             $this->Session->setFlash(__('Schedule has been updated.'),'success');
@@ -422,16 +449,16 @@ class DeliveriesController extends DeliveryAppController {
             $this->redirect( array(
                            'controller' => 'deliveries', 
                            'action' => 'view',
-                            $data['ClientOrderDeliverySchedule']['delivery_schedule_id'],
-                            $data['Delivery']['clients_order_id'],
-                            $clientOrder['ClientOrder']['uuid']
+                             $data['ClientOrderDeliverySchedule']['delivery_schedule_id'],
+                            $data['Delivery']['schedule_uuid'],
+                            $data['Delivery']['clients_order_id']
                       ));
             
             $this->Session->setFlash(__('Unable to update your post.'));
-        }
+        
 
         $this->set(compact('scheduleInfo',  'deliveryData'));
-        
+        }
     }
 
     public function delivery_return($deliveryScheduleId = null,$clientsOrderUuid =null,$clientUuid = null) {
@@ -1689,14 +1716,14 @@ class DeliveriesController extends DeliveryAppController {
 
         $limit = 10;
 
-        if (!empty($this->request->query('s'))) {
+        // if (!empty($this->request->query('s'))) {
                 
-                $search = $this->request->query('s');
+        //         $search = $this->request->query('s');
 
-                $conditions = array_merge($conditions,array(
-                        'Delivery.dr_uuid like' => '%'.$search.'%'
-                    ));
-        }
+        //         $conditions = array_merge($conditions,array(
+        //                 'Delivery.dr_uuid like' => '%'.$search.'%'
+        //             ));
+        // }
         $this->paginate = array(
             'conditions' => $conditions,
             'limit' => $limit,

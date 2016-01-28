@@ -44,8 +44,7 @@ class DeliveryDetail extends AppModel {
 		$this->create();
 
 		$data['DeliveryDetail']['modified_by'] = $auth;
-				
-
+	
 		if ($novalidate) {
 
 			$this->validate = array();
@@ -60,6 +59,16 @@ class DeliveryDetail extends AppModel {
 
 
 
+	}
+
+	public function findBYId($deliveryId = null) {
+
+		if (!empty($deliveryId)) {
+
+		return	$this->find('first',array(
+				'conditions' => array('DeliveryDetail.delivery_id' => $deliveryId)
+				));
+		}
 	}
 	
 }

@@ -88,7 +88,7 @@
                                                  //uuidClientsOrder = $scheduleDataList['ClientOrderDeliverySchedule']['uuid'];
                                                       $arr = array();
 
-                                                      $deliveryStatus = [];
+                                                      $deliveryStatus = array();
 
                                                       foreach ($checkItem as $key => $inner) {
                                                         

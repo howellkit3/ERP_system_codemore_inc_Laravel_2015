@@ -61,15 +61,13 @@ class DeliveryConnection extends AppModel {
 		$this->create();
 
 		$data['DeliveryConnection']['modified_by'] = $auth;
-		
-		$return;				
 
 		if ($novalidate) {
 
 			$this->validate = array();
 		}
 
-		if ($this->save($data)) {
+		if ($this->save($data['DeliveryConnection'])) {
 
 			$return = true;
 		} else {

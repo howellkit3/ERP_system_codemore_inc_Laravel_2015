@@ -3,8 +3,7 @@ function ajaxCallSearchEmployee(DepartmentId,thisStatus,inputSearch,profile,is_c
 
     $container =  $('.append-table-department');
 
-     $container.html('<img src="'+serverPath+'/img/loader.gif"/>');
-
+    $container.html('<img src="'+serverPath+'/img/loader.gif"/>');
 
     $.ajax({
         type: "GET",
