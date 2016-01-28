@@ -1199,13 +1199,13 @@ class EmployeesController  extends HumanResourceAppController {
 
 					//$pdf->HTMLCell(100, 50, 10, 10, '<img src="'.$background .'" height="150" /> Curabitur at porta dui...');
 
-					$pdf->SetXY(24, 49);
+					$pdf->SetXY(27, 52);
 					$pdf->SetFont('Arial','',10);
 	
 					$pdf->Write(10,$employee['Employee']['code']);	
 
 
-					$pdf->SetXY(10, 60);
+					$pdf->SetXY(12, 63.5);
 					// $pdf->SetFont('Arial','B',10);
 					$pdf->SetFont('Arial','',8);
 
@@ -1228,7 +1228,7 @@ class EmployeesController  extends HumanResourceAppController {
 					$pdf->MultiCell(40, 1 , ucwords(utf8_decode($name)) , '', 'C');	
 
 					//department
-					$pdf->SetXY(13, 64);
+					$pdf->SetXY(14, 67.5);
 					$department = !empty($employee['Department']['notes']) ? $employee['Department']['notes'] : '';
 
 					//$pdf->Write(7,$department);	
@@ -1240,7 +1240,7 @@ class EmployeesController  extends HumanResourceAppController {
 					//$pdf->MultiCell( 35, 5, $position,2);
 					$position = !empty($employee['Position']['name']) ? $employee['Position']['name'] : '';
 					
-					$pdf->SetXY(10, 69);
+					$pdf->SetXY(10, 72.3);
 					 $pdf->SetFont('Arial','B',8);
 					$pdf->MultiCell(38, 1 , utf8_decode($position), '', 'C');
 
@@ -1258,7 +1258,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 					//SSS
 
-					$pdf->SetXY(19.5, 8.5);
+					$pdf->SetXY(19.5,11.7);
 
 					$sss = !empty($employee['SSS']['value']) ? $employee['SSS']['value'] : ''; 
 
@@ -1266,7 +1266,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 					//tin
 
-					$pdf->SetXY(19.5, 13);
+					$pdf->SetXY(19.5, 16.3);
 
 					$tin = !empty($employee['TIN']['value']) ? $employee['TIN']['value'] : ''; 
 
@@ -1274,7 +1274,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 
 					//department
-					$pdf->SetXY(19.5, 17.5);
+					$pdf->SetXY(19.5, 20.7);
 
 					$dateHired = !empty($employee['Employee']['date_hired']) ? date('Y / m / d',strtotime($employee['Employee']['date_hired'])) : ''; 
 
@@ -1283,11 +1283,10 @@ class EmployeesController  extends HumanResourceAppController {
 
 					//contact person
 
-					$pdf->SetXY(19.5, 23.5);
+					$pdf->SetXY(19.5, 26);
 					$pdf->SetFont('Arial','',7);
 					
 					//
-
 
 					$contactPerson = '';
 
@@ -1300,7 +1299,7 @@ class EmployeesController  extends HumanResourceAppController {
 					//echo $contactPesronName;
 					$pdf->Write(10, ucwords(utf8_decode($contactPerson)));	
 
-					$pdf->SetXY(19.5, 30.5);
+					$pdf->SetXY(19.5, 33.7);
 
 					$pdf->SetFont('Arial','',6);
 
@@ -1317,29 +1316,14 @@ class EmployeesController  extends HumanResourceAppController {
 						$pdf->SetFont('Arial','',5);	
 					}
 
-					// $addressprovince = stripslashes($addressprovince);
-					// //$pdf->Multicell(0,3,$dateHired);
-
-					// $pdf->MultiCell( 35, 4, trim(utf8_decode($address)));
-
-
-					// $pdf->SetXY(19.5, 36);
-					// $pdf->MultiCell( 40,4, trim(utf8_decode($addresscity)));
-					// $pdf->SetXY(19.5, 40.5);
-					// $pdf->MultiCell( 40, 4, trim(utf8_decode($addressprovince)));
-
-
-
 
 				
 					if (strlen($address) > 30) {
 						$pdf->SetFont('Arial','',5);	
 					}
 
-
+					
 					if (strlen($address) > 35) {
-
-
 
 					$addressprovince = stripslashes($addressprovince);
 					//$pdf->Multicell(0,3,$dateHired);
@@ -1353,7 +1337,7 @@ class EmployeesController  extends HumanResourceAppController {
 					// $pdf->MultiCell( 40,4, trim(utf8_decode($addresscity)));
 
 
-					$pdf->SetXY(19.5, 40);
+					$pdf->SetXY(19.5, 42);
 					$pdf->MultiCell( 40, 4, trim(utf8_decode($addressprovince)));
 
 
@@ -1367,11 +1351,11 @@ class EmployeesController  extends HumanResourceAppController {
 					$pdf->MultiCell( 35, 4, trim(utf8_decode($address)),'',false);
 
 
-					$pdf->SetXY(19.5, 35);
+					$pdf->SetXY(19.5, 38);
 					$pdf->MultiCell( 40,4, trim(utf8_decode($addresscity)),'',false);
 
 
-					$pdf->SetXY(19.5, 40);
+					$pdf->SetXY(19.5, 42.2);
 					$pdf->MultiCell( 40, 4, trim(utf8_decode($addressprovince)),'',false);
 
 					}
@@ -1382,7 +1366,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 					$contact_number = !empty($employee['ContactPersonNumber']['number']) ? $employee['ContactPersonNumber']['number'] : '';
 
-					$pdf->SetXY(19.5, 43.5);		
+					$pdf->SetXY(19.5, 47);		
 					//$pdf->Write(10,$contact_number);
 					$pdf->MultiCell( 35, 5, $contact_number,2);
 
@@ -1393,7 +1377,7 @@ class EmployeesController  extends HumanResourceAppController {
 			// Output the new PDF
 			$pdfData = $pdf->Output($employee['Employee']['code'].'.pdf', 'D');
 
-			//$pdf->Output();
+			//	$pdf->Output();
 
 
 			//return true;
