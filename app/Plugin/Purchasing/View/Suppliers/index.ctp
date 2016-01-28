@@ -27,7 +27,7 @@
                 </div>
             </header>
             
-            <div class="main-box-body clearfix">
+            <div class="main-box-body clearfix appendtable" >
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
                         <thead>
@@ -59,13 +59,13 @@
                     <hr>
                 </div>
 
-            <ul class="pagination pull-right">
-                    <?php 
-                     echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
-                     echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
-                     echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); ?>
-               
-              </ul>
+                <ul class="pagination pull-right">
+                        <?php 
+                         echo $this->Paginator->prev('< ' . __('previous'), array('before' => 'a','tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'prev disabled'));
+                         echo $this->Paginator->numbers(array('separator' => '','tag' => 'li'));
+                         echo $this->Paginator->next(__('next') . ' >', array('tag' => 'li','currentClass' => 'current-link'), null, array('class' => 'next disabled')); ?>
+                   
+                  </ul>
               
             </div>
     
@@ -103,18 +103,47 @@
 
                 if(data){
 
-                    $('.searchAppend').html(data);
+                    $('.appendtable').html(data);
 
                 } 
                 if (data.length < 5 ) {
 
-                    $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
+                    $('.appendtable').html('<font color="red"><b>No result..</b></font>');
                      
                 }
                 
             }
         });
 
+
+
+          $('body').on('click','.pagination a',function(e) {
+
+        $url = $(this).attr('href');
+
+
+        $.ajax({
+            type: "GET",
+            url: $url,
+            dataType: "html",
+            success: function(data) {
+
+                if(data){
+
+                    $('.appendtable').html(data);
+
+                } 
+                
+            }
+        });
+
+
+        e.preventDefault();
+    });
+
+
+
     });
 
 </script>
+

@@ -207,16 +207,21 @@ class SuppliersController extends PurchasingAppController {
 	public function search_supplier($hint = null){
 
         $this->Supplier->bind(array('Address','Email','Contact','SupplierContactPerson'));
+        
+        $limit = 10;
 
-        $suppliers = $this->Supplier->find('all',array(
-                      'conditions' => array(
-                        'OR' => array(
-                        array('Supplier.name LIKE' => '%' . $hint . '%')
-                          )
-                        ),
-                      'limit' => 10
-                      )); 
+        $conditions = array( 'OR' => array(
+                            array('Supplier.name LIKE' => '%' . $hint . '%')
+                          ));
 
+         $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array('id', 'name', 'description','website','created','tin'),
+            'order' => 'Supplier.created DESC',
+        );
+
+        $suppliers = $this->paginate();
 
        $this->set(compact('suppliers'));
 
