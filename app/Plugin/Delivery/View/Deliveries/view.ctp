@@ -217,13 +217,9 @@ $totalremaining = 0;
 
                     <div class = "pull-right"> 
 
-                    <?php if (!empty($value['Delivery']['status'])) { ;
-
-                        if(($totalremaining) == 0) {
-
-                            if($value['Delivery']['status'] == '1'  ) { 
-
-                                foreach ($deliveryEdit as $deliveryDataList): 
+                    <?php 
+                    if (!empty($deliveryEdit)) : 
+                    foreach ($deliveryEdit as $deliveryDataList): 
 
 
                                      if($deliveryDataList['DeliveryDetail']['status'] == 3 && $deliveryDataList['Delivery']['status'] == 1){
@@ -263,7 +259,8 @@ $totalremaining = 0;
                                     <a data-toggle="modal" href="#myModalDeliveries" class="btn btn-primary   "><i class="fa fa-edit fa-lg"></i> Add Schedule</a>
 
 
-                    <?php  }  } } } ?>
+                             <?php  } ?>
+                    <?php endif; ?>
                     &nbsp; 
                     <?php 
                    // pr($deliveryDataList); exit;
