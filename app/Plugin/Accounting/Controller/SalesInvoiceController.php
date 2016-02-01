@@ -356,7 +356,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         $this->loadModel('Sales.Company');
 
-        $limit = 10;
+        $limit = 5;
 
         $search = '';
 
@@ -397,8 +397,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         $deliveryData = $this->paginate('Delivery');
 
-        $poNumber = $this->ClientOrder->find('list', array('fields' => array('uuid', 'po_number')));
-
+      //  $poNumber = $this->ClientOrder->find('list', array('fields' => array('uuid', 'po_number')));
         $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
 
         $seriesNo = $this->SalesInvoice->find('first', array(
