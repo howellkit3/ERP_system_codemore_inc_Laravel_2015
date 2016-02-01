@@ -57,6 +57,18 @@ public function getDetails($clientOrderId = null) {
 		return $items;
 }
 
+
+public function findByClientOrder($clientOrderId = null) {
+
+
+		$ClientOrder = ClassRegistry::init('Sales.ClientOrder');	
+
+		$items = $ClientOrder->query('SELECT ClientOrder.id,ClientOrder.po_number
+		FROM koufu_sale.client_orders AS ClientOrder
+        WHERE ClientOrder.uuid = "'.$clientOrderId.'"');
+
+		return $items;
+}
 	// public function getItems($clientsOrderId = null) {
 
 	// 	$ClientsOrder = ClassRegistry::init('Sales.ClientOrder');

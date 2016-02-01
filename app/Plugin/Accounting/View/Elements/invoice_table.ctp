@@ -8,7 +8,13 @@
                 CO-<?php echo $deliveryDataList['Delivery']['clients_order_id'] ?>  
             </td>
             <td class="">
-                <?php echo !empty($poNumber[$deliveryDataList['Delivery']['clients_order_id']]) ? $poNumber[$deliveryDataList['Delivery']['clients_order_id']] : "" ; ?>
+                <?php 
+
+                $po_number  = $this->AccountingFunction->findByClientOrder($deliveryDataList['Delivery']['clients_order_id']);
+
+                echo  $po_number[0]['ClientOrder']['po_number'];
+                
+                // echo !empty($poNumber[$deliveryDataList['Delivery']['clients_order_id']]) ? $poNumber[$deliveryDataList['Delivery']['clients_order_id']] : "" ; ?>
                 
             </td>
             <td class="">
