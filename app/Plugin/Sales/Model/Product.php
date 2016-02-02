@@ -99,8 +99,8 @@ class Product extends AppModel {
 
 				'JobTicket' => array(
 					'className' => 'Ticket.JobTicket',
-					'foreignKey' => 'product_id',
-					//'conditions' => 'Product.id = JobTicket.product_id'
+					//'foreignKey' => 'product_id',
+					'conditions' => 'Product.id = JobTicket.product_id'
 				),		
 			)
 		));

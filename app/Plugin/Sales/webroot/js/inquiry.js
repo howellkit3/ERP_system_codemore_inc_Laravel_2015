@@ -204,7 +204,7 @@ jQuery(function($){
         seconds = "0" + seconds;
     }
 
-    timestamp = event.timeStamp;
+    timestamp = jQuery.now();
     var timeToString = timestamp.toString();
 
     timeSlice = timeToString.slice(-6);
