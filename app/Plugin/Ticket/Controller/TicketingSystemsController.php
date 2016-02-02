@@ -117,6 +117,7 @@ class TicketingSystemsController extends TicketAppController {
 
         $details = $this->test($productUuid, $ticketId, $clientOrderId);
 
+
         $ticketData = $details['ticketData'];
 
         $formatDataSpecs = $details['formatDataSpecs'];
@@ -205,7 +206,7 @@ class TicketingSystemsController extends TicketAppController {
             pr( $productData );
         }
 
-		$this->set(compact('userData','delData','ticketData','formatDataSpecs','specs','machines','unitData','subProcess','productData','companyData','clientOrderId','noPermissionSales','subProcessData'));
+		$this->set(compact('userData','delData','ticketData','formatDataSpecs','specs','machines','unitData','subProcess','productData','companyData','clientOrderId','noPermissionSales','subProcessData','productUuid','ticketId','clientOrderId'));
 	}
 
 	public function updatePendingStatus($ticketId = null) {
@@ -617,13 +618,13 @@ class TicketingSystemsController extends TicketAppController {
     public function test($productUuid = null , $ticketId = null, $clientOrderId = null,$processHolder = 'ProductSpecificationProcessHolder' ){
 
        // $details = '';
-        $this->JobTicket->bindTicketSchedule();
+        $this->JobTicket->bindTicketScheduleCompany();
 
         $ticketData = $this->JobTicket->find('first',array(
         'conditions' => array('JobTicket.id' => $ticketId)));
 
-        //pr($productUuid); exit;
-              $productConditions = array('Product.uuid' => $productUuid);
+       
+        $productConditions = array('Product.uuid' => $productUuid);
         //$productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid) ,'order' => 'Product.id DESC'));
      //   pr($ticketData); exit;
         $specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $ticketData['Product']['id'])));
@@ -708,12 +709,15 @@ class TicketingSystemsController extends TicketAppController {
         }
       //  pr($specs); exit;
 
-        if (!empty($delData)) {
+        if (!empty($ticketData['Product']) ) {
 
-            $productConditions = array_merge( $productConditions,array('company_id' => $delData['ClientOrder']['company_id']));
+            $productData['Product'] = $ticketData['Product'];
+        } else {
+
+             $productData = $this->Product->find('first',array('conditions' => $productConditions ,'order' => 'Product.id DESC'));
+ 
         }
-        $productData = $this->Product->find('first',array('conditions' => $productConditions ,'order' => 'Product.id DESC'));
-
+       
         $outs1  = !empty($formatDataSpecs['ProductSpecificationPart']['outs1']) ? $formatDataSpecs['ProductSpecificationPart']['outs1']  : 1;
         $outs2  = !empty($formatDataSpecs['ProductSpecificationPart']['outs2']) ? $formatDataSpecs['ProductSpecificationPart']['outs2']  : 1;
         $outProduct = $outs1 * $outs2; 
@@ -783,7 +787,7 @@ class TicketingSystemsController extends TicketAppController {
         // $ticketData = $this->JobTicket->find('first',array(
         //     'conditions' => array('JobTicket.uuid' => $ticketUuid,'JobTicket.id' => $ticketId )));
 
-        $details = $this->test($productUuid, $ticketId, $clientOrderId);
+        $details = $this->test($productUuid, $ticketUuid, $clientOrderId);
 
         $ticketData = $details['ticketData'];
 
@@ -795,7 +799,7 @@ class TicketingSystemsController extends TicketAppController {
 
         $productData = $details['productData'];
 
-        //pr($details); exit;
+ 
 
         if (!empty($_GET['test'])) {
 
@@ -803,7 +807,7 @@ class TicketingSystemsController extends TicketAppController {
             Configure::write('debug',0);
                    pr($ticketData);
 
-        exit();
+            exit();
 
         }
 
