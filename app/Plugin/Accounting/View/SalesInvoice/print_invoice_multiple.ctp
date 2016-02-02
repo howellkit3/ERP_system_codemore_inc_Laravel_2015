@@ -123,7 +123,7 @@
     $start = 12;
 
         $total = 0;
-        $delivery_date = array();
+        $delivery_date = $vat = $unitPriceID =array();
         foreach ($drData as $key => $list) {
 
             $delivery_date[] = date('M d, Y', strtotime($list['Delivery']['created']));
@@ -137,38 +137,70 @@
             $quantity = (float) $list['DeliveryDetail']['quantity'] ;
             $totalQty = $quantity * $unitPrice;
             $sheet->setCellValue('K'.$start, number_format($totalQty,2)); $total += $totalQty;
-        $sheet->setCellValue('K'.$start, $totalQty);
+            $sheet->setCellValue('K'.$start, $totalQty);
+
+
+
+            $vat[] = $list['QuotationItemDetail']['vat_status'];
+            $unitPriceID[] = $list['QuotationItemDetail']['unit_price_currency_id'];
+
 
             $start++;
-        }   
-        
-        $sheet->setCellValue('K33', $currency.' '. number_format($total,2)); 
+        }  
+
+
+    $totalAmount = '';
+    $currency = '';
+    $unitPrice = $unitPrice;
+
+    if (in_array('Vatable Sale', $vat)) {
+        $vatSale = number_format($total,2);
+    }
+
+    $vatExem = '';
+    if (in_array('Vat Exempt', $vat)) {
+        $vatExem =  number_format($total,2);
+
+    }
+
+    $vat12 = '';
+     if (in_array('Vatable Sale', $vat) && in_array(2, $unitPriceID)) {
+   
+
+        $totalVat = $total * .12;
+        $vat12 = number_format($totalVat,2);
+
+    }
+
+    $zeroRated = '';
+    if (in_array('Zero Rated Sale', $vat)) {
+        $zeroRated =  number_format($total,2);
+
+    }
+
+
+  if (in_array('Vatable Sale', $vat) && in_array(2, $unitPriceID)) {
+   
+        $totalVat = $total * .12;
+        $fullVat = $total + $totalVat;
+        $currency = $currencyData[$drData[0]['QuotationItemDetail']['unit_price_currency_id']];
+        $totalAmount = number_format($fullVat,2);
+
+    }else{
+
+        $currency = $currencyData[$drData[0]['QuotationItemDetail']['unit_price_currency_id']];
+        $totalAmount = number_format($total,2);
+
+    } 
+         
+        $sheet->setCellValue('K33', $currency.' '. $totalAmount); 
         
         $sheet->setCellValue('J7', $drData[0]['Delivery']['created']); 
 
         $sheet->setCellValue('D26', 'DR#'.$drData[0]['Delivery']['dr_uuid']);
         
-                // ->setCellValue('C7', ucwords($drData[0]['Company']['company_name']))
-                // ->setCellValue('C8', ucwords($Addresspart1))
-                // ->setCellValue('C9', ucwords($Addresspart2))
-                // ->setCellValue('C10', ucwords($Addresspart3))
-                // ->setCellValue('J7', date('M d, Y', strtotime($drData['Delivery']['created'])))
-                // ->setCellValue('J8', $clientData['Company']['tin'])
-                // ->setCellValue('J9', $paymentTermData[$clientData['ClientOrder']['payment_terms']])
-                // ->setCellValue('B12', $clientData['ClientOrder']['po_number'])
-                // ->setCellValue('F12', ucfirst($clientData['Product']['name']))
-                // ->setCellValue('D12', number_format($drData['DeliveryDetail']['quantity']))
-                // ->setCellValue('I12', number_format($unitPrice,4))
-                // ->setCellValue('K12', number_format($totalQty,2))
-                // ->setCellValue('D26', 'DR#'.$drNum)
-                // ->setCellValue('K29', $vatSale)
-                // ->setCellValue('K30', $vatExem)
-                // ->setCellValue('K31', $zeroRated)
-                // ->setCellValue('K32', $vat12)
-                // ->setCellValue('K33', $currency.' '. $totalAmount);  
-              //  ->setCellValue('K33', 'd');      
-   
-   //prepare download
+  
+  // prepare download
     $filename = mt_rand(1,100000).'.xlsx'; //just some random filename
     header('Content-Type: application/vnd.ms-office');
     header('Content-Disposition: attachment;filename="'.$filename.'"');

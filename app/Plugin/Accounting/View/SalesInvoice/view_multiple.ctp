@@ -115,7 +115,10 @@
 								<td><center><b>PRICE</b></center></td>
 								<td><center><b>AMOUNT</b></center></td>
 							</tr>
-						<?php  $total =0; 
+						<?php  
+						$vat = array();
+						$unitPriceID = array();
+						$total =0; 
 						foreach ($drData as $key => $list) : ?>
 							<tr>
 								<td><center><?php echo $list['ClientOrder']['po_number']?></center></td>
@@ -139,8 +142,9 @@
 									</center>
 								</td>
 							</tr>
-
 						<?php 
+						$vat[] = $list['QuotationItemDetail']['vat_status'];
+						$unitPriceID[] = $list['QuotationItemDetail']['unit_price_currency_id'];
 						endforeach; ?>
 							<tr>
 								<td>-</td>
@@ -172,6 +176,10 @@
 					</table>
 				</div>
 				<div class="col-lg-5 pull-right">
+					<?php 
+					if (!empty($_GET['test'])) {
+						pr($vat);
+					} ?>
 					<div class="table-responsive">
 						<table class="table ">
 							<thead>
@@ -188,7 +196,12 @@
 											// 	echo "-";
 											// }
 
-										echo number_format((float)$total, 4, '.', '');
+										if (in_array('Vatable Sale', $vat)) {
+											echo number_format((float)$total, 4, '.', '');
+										} else {
+											echo "-";
+										}
+
 										?>
 									</td>
 								</tr>
@@ -196,13 +209,14 @@
 									<td><b>VAT EXEMPT</b></td>
 									<td>
 										<?php 
-											if($drData[0]['QuotationItemDetail']['vat_status'] == 'Vat Exempt'){
-												
-												echo number_format((float)$total, 4, '.', '');
-												//echo number_format((float)$totalQty, 4, '.', '');
-											}else{
-												echo "-";
-											}
+											
+
+										if (in_array('Vat Exempt', $vat)) {
+											echo number_format((float)$total, 4, '.', '');
+										} else {
+											echo "-";
+										}
+
 										?>
 									</td>
 								</tr>
@@ -210,7 +224,7 @@
 									<td><b>ZERO RATED SALE</b></td>
 									<td>
 										<?php 
-											if($drData[0]['QuotationItemDetail']['vat_status'] == 'Zero Rated Sale'){
+											if (in_array('Zero Rated Sale', $vat)) {	
 												echo number_format($total,2);
 											}else{
 												echo "-";
@@ -223,9 +237,9 @@
 									<td>
 										<?php //pr($clientData); exit;
 
-											if($drData[0]['QuotationItemDetail']['unit_price_currency_id'] == 2 && $drData[0]['QuotationItemDetail']['vat_status'] == "Vatable Sale"){
+											if (in_array('Vatable Sale', $vat) && in_array(2, $unitPriceID)) {
 												$totalVat = $total * .12;
-												echo number_format($total,2);
+												echo number_format($totalVat,2);
 											}else{
 												echo "-";
 											}
@@ -236,9 +250,9 @@
 									<td><b>TOTAL AMOUNT DUE</b></td>
 									<td>
 										<?php 
-											if($drData[0]['QuotationItemDetail']['unit_price_currency_id'] == 2 && $drData[0]['QuotationItemDetail']['vat_status'] == "Vatable Sale"){
-												$totalVat = $totalQty * .12;
-												$fullVat = $totalQty + $totalVat;
+											if (in_array('Vatable Sale', $vat) && in_array(2, $unitPriceID)) {
+												$totalVat = $total * .12;
+												$fullVat = $total + $totalVat;
 												echo $currencyData[$drData[0]['QuotationItemDetail']['unit_price_currency_id']] . " ";
 												echo number_format($fullVat,2);
 												
@@ -296,52 +310,71 @@
                 <?php 
 
                     echo $this->Form->create('QuotationItemDetail',array(
-                        'url'=>(array('controller' => 'sales_invoice','action' => 'change_vat_status', $invoiceId) ),'class' => 'form-horizontal')); 
+                        'url'=>(array('controller' => 'sales_invoice','action' => 'change_vat_status_multiple', $invoiceId) ),'class' => 'form-horizontal')); 
                 ?>
 
-                	<div class="form-group" id="existing_items">
-                        <label class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
-                        <div class="col-lg-5">
+                	<div classs="items">
 
-                            <?php 
+             		<?php foreach ($drData as $key => $itemList) { ?> 
 
-                                 echo $this->Form->input('QuotationItemDetail.quantity', array(
-                                    'empty' => 'None',
-                                    'required' => 'required',
-                                    'class' => 'form-control item_type editable limitQuantity',
-                                    'label' => false,
-                                    'readonly' => 'readonly',
-                                    'value' => $clientData['QuotationItemDetail']['quantity']
-                                    ));
+         				<div class="form-group" id="existing_items">
 
-                                 	echo $this->Form->input('QuotationItemDetail.id', array(
-                                    'class' => 'form-control item_type editable required maxQuantity',
-                                    'label' => false,
-                                    'type' => 'hidden',
-                                    'readonly' => 'readonly',
-                                    'value' => $clientData['QuotationItemDetail']['id']));
+							<table class="table table-bordered">
+						
+							<tr>
+								<td><center><b>P.O NO.</b></center></td>
+								<td><center><b>Description</b></center></td>
+								<td><center><b> <label class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label> </b></center></td>
+							</tr>
+							<tr>
+								<td><center><?php echo $itemList['ClientOrder']['po_number']?></center></td>
+								<td><center><?php echo ucfirst($itemList['Product']['name'])?></center></td>
 
-                            ?>
-                        </div>
+								<td><center>
+								<?php
 
-                        <div class="col-lg-4">
+	                                 echo $this->Form->input('QuotationItemDetail.Item.'.$key.'.quantity', array(
+	                                    'empty' => 'None',
+	                                    'required' => 'required',
+	                                    'class' => 'form-control item_type editable limitQuantity',
+	                                    'label' => false,
+	                                    'readonly' => 'readonly',
+	                                    'value' => $itemList['QuotationItemDetail']['quantity']
+	                                    ));
 
-                            <?php echo $this->Form->input('QuotationItemDetail.quantity_unit_id', array(
-                                'options' => array($units),  
-                                'label' => false,
-                                'readonly' => 'readonly',
-                                'default' => $clientData['QuotationItemDetail']['quantity_unit_id'],
-                                'class' => 'form-control required ',
-                                'empty' => '---Select Unit---'
-                                 )); 
+	                                 echo $this->Form->input('QuotationItemDetail.Item.'.$key.'.id', array(
+	                                    'class' => 'form-control item_type editable required maxQuantity',
+	                                    'label' => false,
+	                                    'type' => 'hidden',
+	                                    'readonly' => 'readonly',
+	                                    'value' => $itemList['QuotationItemDetail']['id']));
 
-					        ?>
+	                                 	echo "<p></p>";
 
-                        </div>
+	                                    echo $this->Form->input('QuotationItemDetail.Item.'.$key.'.quantity_unit_id', array(
+	                                'options' => array($units),  
+	                                'label' => false,
+	                                'readonly' => 'readonly',
+	                                'default' => $itemList['QuotationItemDetail']['quantity_unit_id'],
+	                                'class' => 'form-control required ',
+	                                'empty' => '---Select Unit---'
+	                                 )); 
+								?>
+							</center></td>
+							</tr>
+						</table>
 
-                    </div>
+         				</div>
 
-                    <div class="form-group" id="existing_items">
+	                    <hr>
+
+					<?php } ?>
+
+
+                	</div>
+                	
+
+                   <!--  <div class="form-group" id="existing_items">
                         <label class="col-lg-2 control-label"><span style="color:red">*</span>Unit Price</label>
                         <div class="col-lg-5">
 
@@ -378,23 +411,23 @@
 					        ?>
                         </div>
 
-                    </div>
+                    </div> -->
 
                     <?php
 
                     $displayMe = '';
 					$displayMe1 = '';
 
-					if ($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2) {
+					// if ($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2) {
 
-						$displayMe = 'dsplayShow';
-						$hide = 'hide-me-first';
+					// 	$displayMe = 'dsplayShow';
+					// 	$hide = 'hide-me-first';
 													
-					}else {
+					// }else {
 
-						$displayMe1 = 'dsplayShow1';
-						$hide = '';
-					}
+					// 	$displayMe1 = 'dsplayShow1';
+					// 	$hide = '';
+					// }
 
 					?>
 
@@ -412,32 +445,32 @@
 									2 => 'Vat Exempt',
 									3 => 'Zero Rated Sale');
 
-							if($clientData['QuotationItemDetail']['vat_status'] == 'Vatable Sale'){
+							// if($clientData['QuotationItemDetail']['vat_status'] == 'Vatable Sale'){
 
-								$vatName = 1;
+							// 	$vatName = 1;
 
-							} else if($clientData['QuotationItemDetail']['vat_status'] == 'Vat Exempt'){
+							// } else if($clientData['QuotationItemDetail']['vat_status'] == 'Vat Exempt'){
 
-								$vatName = 2;
+							// 	$vatName = 2;
 
-							} else{
+							// } else{
 
 
-								$vatName = 3;
-							}
+							// 	$vatName = 3;
+							//}
 
                             echo $this->Form->input('QuotationItemDetail.vat_status', array( 
                                 'options' => array($vatType),  
                                 'label' => false,
-                                'default' => $vatName,
+                               // 'default' => $vatName,
                                 'disabled' => true,
-                                'class' => 'hide-me-first form-control for-php required select-vat-status '.$displayMe,
+                                'class' => 'form-control for-php required select-vat-status '.$displayMe,
                                 'empty' => '---Select Vat Type---'
                                  ));
 
 							echo $this->Form->input('QuotationItemDetail.vat_status', array( 
 								'options' => array($vatTypeUSD),
-								'default' => $vatName,    
+								//'default' => $vatName,    
                                 'label' => false,
                                 'disabled' => true,
                                 'empty' => '---Select Vat Type---',
@@ -448,7 +481,7 @@
                         </div>
                     </div>
 
-	                <div class = "vat <?php echo $hide?>">
+	                <div class = "vat <?php //echo $hide?>">
 
 	                    <div class = "vat-option">
 	                    	<div class="form-group" id="existing_items">
@@ -462,7 +495,7 @@
 		                                    'required' => 'required',
 		                                    'class' => 'form-control item_type editable limitQuantity vat-price',
 		                                    'label' => false,
-		                                    'value' => $clientData['QuotationItemDetail']['vat_price']
+		                                   // 'value' => $clientData['QuotationItemDetail']['vat_price']
 		                                    ));
 
 		                            ?>
@@ -470,7 +503,7 @@
 
 	                    	</div>
 	                    
-							<div class="form-group">
+			<!-- 				<div class="form-group">
 								<label class="col-lg-1  control-label"></label>
 								<div class="col-lg-5">	
 									<input id="checkbox-1" class="checkvat checkIn checkbox-nice vat-price" type="checkbox" data-section='quotationItemDetail' name="[QuotationItemDetail][0][vat_price]" rel=".12"><label><font color="gray">&nbsp;Click to Compute the Vat Price</font></label>
@@ -486,8 +519,8 @@
 								</div>
 
 								
-							</div>
-
+							</div> -->
+<!-- 
 							<div class="form-group">
 								<label class="col-lg-1 control-label"></label>
 
@@ -503,10 +536,7 @@
 									<font color="gray">&nbsp;Clear All</font></label>
 
 								</div>
-
-
-
-							</div>
+							</div> -->
 
 						</div>
 					</div>

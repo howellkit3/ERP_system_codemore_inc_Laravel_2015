@@ -1248,7 +1248,7 @@ class DeliveriesController extends DeliveryAppController {
             array('fields' => array('id', 'first_name','last_name'),
                 'conditions' => array('User.id' => $toPrint[0]['DeliveryDetail']['created_by'])));
 
-        $this->set(compact('toPrint','approved','toPrint','measureList','prepared','approved'));
+        $this->set(compact('toPrint','approved','measureList','prepared','approved'));
         //to print
         $this->render('multiple_dr');
     }
@@ -1727,7 +1727,7 @@ class DeliveriesController extends DeliveryAppController {
         $this->paginate = array(
             'conditions' => $conditions,
             'limit' => $limit,
-            'order' => 'DeliveryConnection.dr_uuid',
+            'order' => 'DeliveryConnection.dr_uuid DESC',
             //'group' => 'DeliveryConnection.dr_uuid'
         );
 

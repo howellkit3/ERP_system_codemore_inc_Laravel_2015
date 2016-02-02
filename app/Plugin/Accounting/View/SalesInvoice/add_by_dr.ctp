@@ -24,115 +24,118 @@
                 </div>
             </header>
 
-            <div class="main-box-body clearfix">
+<div class="main-box-body clearfix" id="result-table-list">
+
+        <table class="table footable toggle-circle-filled" data-page-size="6" data-filter="#filter" data-filter-text-only="true">
+        <thead>
+        <tr>
+        <th>Delivery Number</th>
+        <th>Delivery Sched</th>
+        <th data-hide="phone">Company</th>
+        <th data-hide="phone,tablet" class="text-center">Action</th>
+
+        <th data-hide="all" class="text-right"> 
+        &nbsp </th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php 
+            $dr = '';
+            foreach ($deliveryData as $deliveryDataList ):
+            //pr($deliveryDataList['Delivery']['clients_order_id']); exit;
+            if($deliveryDataList['Delivery']['status'] != 2 ){ 
+
+            $clientData = $this->AccountingFunction->getDetails($deliveryDataList['Delivery']['clients_order_id']);
+
+            $items = $this->AccountingFunction->getItems($deliveryDataList['Delivery']['dr_uuid']);
+
+         ?>
+        <tr>
+        <td>
+        <a href="#"> #<?php echo str_pad($deliveryDataList['Delivery']['dr_uuid'],5,'0',STR_PAD_LEFT); ?> </a>
+        </td>
+        <td>
+        <?php echo !empty($clientData[0]['ClientOrderDeliverySchedule']['schedule']) ? $clientData[0]['ClientOrderDeliverySchedule']['schedule'] : '' ?>
+        </td>
+        <td>
+        <a href="#"><?php echo !empty($clientData[0]['Company']['company_name']) ? $clientData[0]['Company']['company_name'] : '' ?></a>
+        </td>
+        <td class="text-center">
+
+                                    <a href="#processModal" class="modal_button" data-toggle="modal" data-id="<?php echo $deliveryDataList['Delivery']['id'] ?>" data-uuid="<?php echo $deliveryDataList['Delivery']['dr_uuid'] ?>">
+                                    <button class="btn btn-success" href="print_sales_invoice">
+                                            PRINT S.I
+                                    </button>
+                                    </a>
+        </td>
 
 
-<table class="table footable toggle-circle-filled" data-page-size="6" data-filter="#filter" data-filter-text-only="true">
-<thead>
-<tr>
-<th>Delivery Number</th>
-<th>Delivery Sched</th>
-<th data-hide="phone">Company</th>
-<th data-hide="phone,tablet" class="text-center">Action</th>
 
-<th data-hide="all" class="text-right"> 
-&nbsp </th>
-</tr>
-</thead>
-<tbody>
-<?php 
-    $dr = '';
-    foreach ($deliveryData as $deliveryDataList ):
-    //pr($deliveryDataList['Delivery']['clients_order_id']); exit;
-    if($deliveryDataList['Delivery']['status'] != 2 ){ 
+                                           
 
-    $clientData = $this->AccountingFunction->getDetails($deliveryDataList['Delivery']['clients_order_id']);
-
-    $items = $this->AccountingFunction->getItems($deliveryDataList['Delivery']['dr_uuid']);
-
- ?>
-<tr>
-<td>
-<a href="#"> #<?php echo str_pad($deliveryDataList['Delivery']['dr_uuid'],5,'0',STR_PAD_LEFT); ?> </a>
-</td>
-<td>
-<?php echo !empty($clientData[0]['ClientOrderDeliverySchedule']['schedule']) ? $clientData[0]['ClientOrderDeliverySchedule']['schedule'] : '' ?>
-</td>
-<td>
-<a href="#"><?php echo !empty($clientData[0]['Company']['company_name']) ? $clientData[0]['Company']['company_name'] : '' ?></a>
-</td>
-<td class="text-center">
-
-                            <a href="#processModal" class="modal_button" data-toggle="modal" data-id="<?php echo $deliveryDataList['Delivery']['id'] ?>" data-uuid="<?php echo $deliveryDataList['Delivery']['dr_uuid'] ?>">
-                            <button class="btn btn-success" href="print_sales_invoice">
-                                    PRINT S.I
-                            </button>
-                            </a>
-</td>
+        <td class="text-right">
+                        
+                        <?php if (!empty($items) && is_array($items)) { ?>
 
 
+                                    <table class="table table-striped table-hover ">
+                                        <thead>
+                                            <tr>
+                                                <th><span>CLients Order # </span></th>
+                                                <th><span>DR #</span></th>
+                                                <th><span>PO number </span></th>
+                                                <th class="text-center"><span>Schedule</span></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            <?php foreach ($items as $key => $value) : ?>
+                                                    
+                                                <tr>
+                                                <td>
+                                               <?php echo $value['ClientOrder']['uuid']?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $value['Delivery']['dr_uuid']?>
+                                                </td>
+                                                 <td>
+                                                    <?php echo $value['ClientOrder']['po_number']?>
+                                                </td>
+                                                
+                                                <td class="text-center">
+                                                  <?php echo !empty($value['ClientOrderDeliverySchedule']['schedule']) ? date('Y-m-d', strtotime($value['ClientOrderDeliverySchedule']['schedule'])) : '' ?>
+                                                </td>
+                                                </tr>
+
+                                        <?php endforeach; ?>
+                                         </tbody>
+                                            </table>
 
                                    
+                                   <?php  }  ?> 
+        </td>
+        </tr>
 
-<td class="text-right">
-  <!--   <ul>
-         <?php foreach ($items as $key => $value) : ?>
-                    <li> <span>Purchase Order : </span><?php echo !empty($value['ClientOrder']['po_number']) ? $value['ClientOrder']['po_number'] : '' ?><br>
-                        <span>CLient Order : </span><?php echo !empty($value['ClientOrder']['uuid']) ? $value['ClientOrder']['uuid'] : '' ?><br>
+        <?php } ?>
+        <?php endforeach; ?>
+        </tbody>
+        </table>
+<section class = "indicator" value = "<?php echo $indicator;?>"> </section>
 
-                    </li>
+                    <div class="paging" id="dr_pagination">
+                            <?php
 
-         <?php endforeach; ?>
-    </ul> -->
+                            echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'Delivery','model' => 'Delivery'), null, array('class' => 'disable','model' => 'Delivery'));
+                            echo $this->Paginator->numbers(array('separator' => '','paginate' => 'Delivery'), array('paginate' => 'Delivery'));
+                            echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'Delivery','model' => 'Delivery'), null, array('class' => 'disable'));
+                            ?>
 
-
-
-                            <?php if (!empty($items) && is_array($items)) { ?>
-
-
-                            <table class="table table-striped table-hover ">
-                                <thead>
-                                    <tr>
-                                        <th><span>CLients Order # </span></th>
-                                        <th><span>DR #</span></th>
-                                        <th><span>PO number </span></th>
-                                        <th class="text-center"><span>Schedule</span></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    <?php foreach ($items as $key => $value) : ?>
-                                            
-                                        <tr>
-                                        <td>
-                                       <?php echo $value['ClientOrder']['uuid']?>
-                                        </td>
-                                        <td>
-                                            <?php echo $value['Delivery']['dr_uuid']?>
-                                        </td>
-                                         <td>
-                                            <?php echo $value['ClientOrder']['po_number']?>
-                                        </td>
-                                        
-                                        <td class="text-center">
-                                          <?php echo !empty($value['ClientOrderDeliverySchedule']['schedule']) ? date('Y-m-d', strtotime($value['ClientOrderDeliverySchedule']['schedule'])) : '' ?>
-                                        </td>
-                                        </tr>
-
-                                <?php endforeach; ?>
-                                 </tbody>
-                                    </table>
-
-                           
-                           <?php  }  ?> 
-</td>
-</tr>
-
-<?php } ?>
-<?php endforeach; ?>
-</tbody>
-</table>
-
+                   </div>
+               
+ </div>
+            </div>
+    </div>
+</div>
 
 
     <div class="modal fade" id="processModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -151,22 +154,8 @@
             </div>
         </div>
     </div>
-     <section class = "indicator" value = "<?php echo $indicator;?>"> </section>
 
-                    <div class="paging" id="dr_pagination">
-                            <?php
 
-                            echo $this->Paginator->prev('< ' . __('previous'), array('paginate' => 'Delivery','model' => 'Delivery'), null, array('class' => 'disable','model' => 'Delivery'));
-                            echo $this->Paginator->numbers(array('separator' => '','paginate' => 'Delivery'), array('paginate' => 'Delivery'));
-                            echo $this->Paginator->next(__('next') . ' >',  array('paginate' => 'Delivery','model' => 'Delivery'), null, array('class' => 'disable'));
-                            ?>
-
-                   </div>
-               
-                </div>
-            </div>
-    </div>
-</div>
 <script>
 
     jQuery(document).ready(function($){
@@ -202,58 +191,61 @@
             
     });
 
-    // function searchDR(searchInput) {
+    function searchDR(searchInput) {
 
-    //     var searchInput = $('.searchDR').val();
+        var searchInput = $('.searchDR').val();
 
-    //     var indicator = $('.indicator').attr("value");
+        var indicator = $('.indicator').attr("value");
 
-    //     var view = "index";
+        var view = "index";
 
-    //     if(searchInput != ''){
+        // if(searchInput != ''){
 
-    //         $('.OrderFields').hide();
-    //         $('.searchAppend').show();
+        //     $('.OrderFields').hide();
+        //     $('.searchAppend').show();
 
-    //     }else{
-    //         $('.OrderFields').show();
-    //         $('.searchAppend').hide();
-    //     }
+        // }else{
+        //     $('.OrderFields').show();
+        //     $('.searchAppend').hide();
+        // }
 
-    //     type = 1;
+        type = 1;
 
-    //     $.ajax({
-    //             type: "POST",
-    //             url: serverPath + "accounting/sales_invoice/add",
-    //             data : {"search" : searchInput },
-    //             dataType: "html",
-    //             success: function(data) {
+        $.ajax({
+                type: "POST",
+                url: serverPath + "accounting/sales_invoice/add/dr_num",
+                data : {"search" : searchInput },
+                dataType: "html",
+                success: function(data) {
 
-    //                 if(data){
+                    if(data){
 
-    //                     $('.searchAppend').html(data);
+                        $('#result-table-list').html(data);
 
-    //                 } 
-    //                 if (data.length < 5 ) {
+                    } 
+                    if (data.length < 5 ) {
 
-    //                     $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
+                        $('#result-table-list').html('<font color="red"><b>No result..</b></font>');
                          
-    //                 }
+                    }
+
+                   $('.footable').footable();
                     
-    //             }
-    //         });
-    // }
+                    
+                }
+            });
+    }
 
-    // var timeout;
+    var timeout;
 
-    // $('.searchDR').keypress(function() {
+    $('.searchDR').keypress(function() {
 
-    //     if(timeout) {
-    //         clearTimeout(timeout);
-    //         timeout = null;
-    //     }
+        if(timeout) {
+            clearTimeout(timeout);
+            timeout = null;
+        }
 
-    //     timeout = setTimeout(searchDR,600)
-    // })
+        timeout = setTimeout(searchDR,600)
+    })
 
 </script>

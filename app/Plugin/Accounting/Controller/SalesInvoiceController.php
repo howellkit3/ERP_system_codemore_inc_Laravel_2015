@@ -206,17 +206,19 @@ class SalesInvoiceController extends AccountingAppController {
                     ON ClientOrderDeliverySchedule.client_order_id = ClientOrder.id
                     LEFT JOIN koufu_sale.quotations AS Quotation
                     ON Quotation.id = ClientOrder.quotation_id
+                     LEFT JOIN koufu_sale.quotation_details AS QuotationDetail
+                    ON QuotationDetail.quotation_id = ClientOrder.quotation_id
                     LEFT JOIN koufu_sale.quotation_item_details AS QuotationItemDetail
                     ON QuotationItemDetail.quotation_id = ClientOrder.quotation_id
                     LEFT JOIN koufu_sale.companies AS Company
                     ON Company.id = Quotation.company_id
                     LEFT JOIN koufu_sale.products AS Product
-                    ON Product.company_id = Company.id
+                    ON Product.id = QuotationDetail.product_id
                     LEFT JOIN koufu_sale.addresses AS Address
                     ON Address.foreign_key = Company.id
                     WHERE Delivery.dr_uuid = "'.$invoiceData['SalesInvoice']['dr_uuid'].'" group by Delivery.id');
         
-      
+   
                   $noPermissionPay = "";
 
                  $noPermissionReciv = "";
@@ -425,9 +427,17 @@ class SalesInvoiceController extends AccountingAppController {
 
             $output = $this->render('add');
 
-        }else if($indicator == 'dr_num') {
+        }else if($indicator == 'dr_num') { 
+
+            if ($this->request->is('ajax')) {
+
+            $output = $this->render('SalesInvoice/ajax/add_by_dr');
+            
+            } else {
 
             $output = $this->render('add_by_dr');
+            }
+
 
         }else{
 
@@ -582,58 +592,17 @@ class SalesInvoiceController extends AccountingAppController {
         
         $this->loadModel('Delivery.Delivery');
 
-        // $this->loadModel('Sales.PaymentTermHolder');
+        $this->loadModel('Sales.PaymentTermHolder');
 
-        // $this->loadModel('Unit');
-
-        // $this->loadModel('Currency');
-
-        // $units = $this->Unit->getList();
-
-        // $this->loadModel('User');
-
-        // $approved = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
-        //                                                     'conditions' => array('User.id' => $userData['User']['id'])
-        //                                                     )); 
-         
-        // $paymentTermData = Cache::read('paymentTerms');
+        $paymentTermData = Cache::read('paymentTerms');
         
-        // if (!$paymentTermData) {
+        if (!$paymentTermData) {
+            $paymentTermData = $this->PaymentTermHolder->getList(null,array('id','name'));
+            Cache::write('paymentTerms', $paymentTermData);
+        }
+        $currencyData = Cache::read('currencyData');
 
-        //     $paymentTermData = $this->PaymentTermHolder->getList(null,array('id','name'));
-        //     Cache::write('paymentTerms', $paymentTermData);
-
-        // }
-
-        // $currencyData = Cache::read('currencyData');
-      
-        // $currencyData = $this->Currency->find('list', array('fields' => array('id', 'name'),
-        //                                                 'order' => array('Currency.name' => 'ASC')
-        //                                                 ));
-
-        // Cache::write('currencyData', $currencyData);
-
-        // $invoiceData = $this->SalesInvoice->find('first', array(
-        //                                     'conditions' => array('SalesInvoice.id' => $invoiceId
-        //                                     )));
-
-        // $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
-        //                                                     'conditions' => array('User.id' => $invoiceData['SalesInvoice']['created_by'])
-        //                                                     )); 
- 
-        // $this->Delivery->bindDelivery();
-
-        // $drData = $this->Delivery->find('first', array(
-        //                                     'conditions' => array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid']
-        //                                     )));
-
-        // $clientData = $this->ClientOrderDeliverySchedule->find('first', array(
-        //                                     'conditions' => array('ClientOrder.id' => $clientsId
-        //                                     )));
-
-        
-
-            $drData = $this->Delivery->query('SELECT *
+        $drData = $this->Delivery->query('SELECT *
                 FROM deliveries AS Delivery
                 LEFT JOIN koufu_sale.client_orders AS ClientOrder
                 ON ClientOrder.uuid = Delivery.clients_order_id
@@ -643,24 +612,25 @@ class SalesInvoiceController extends AccountingAppController {
                 ON ClientOrderDeliverySchedule.client_order_id = ClientOrder.id
                 LEFT JOIN koufu_sale.quotations AS Quotation
                 ON Quotation.id = ClientOrder.quotation_id
+                LEFT JOIN koufu_sale.quotation_details AS QuotationDetail
+                ON QuotationDetail.quotation_id = ClientOrder.quotation_id
                 LEFT JOIN koufu_sale.quotation_item_details AS QuotationItemDetail
                 ON QuotationItemDetail.quotation_id = ClientOrder.quotation_id
                 LEFT JOIN koufu_sale.companies AS Company
                 ON Company.id = Quotation.company_id
                 LEFT JOIN koufu_sale.products AS Product
-                ON Product.company_id = Company.id
+                ON Product.id = QuotationDetail.product_id
                 LEFT JOIN koufu_sale.addresses AS Address
                 ON Address.foreign_key = Company.id
                 WHERE Delivery.dr_uuid = "'.$dr_uuid.'" group by Delivery.id');
         
-  
 
          $noPermissionPay = "";
 
          $noPermissionReciv = "";
          $companyData =  $drData[0]['Company']['company_name'];
 
-        $this->set(compact('prepared','approved','drData','clientData','companyData','units','invoiceData','paymentTermData','currencyData'));
+        $this->set(compact('prepared','approved','drData','clientData','currencyData','companyData','units','invoiceData','paymentTermData','currencyData'));
            
         if (!empty($saNo)) {
 
@@ -1476,7 +1446,7 @@ class SalesInvoiceController extends AccountingAppController {
 
     }
 
-        public function change_vat_status($invoiceId = null){
+    public function change_vat_status($invoiceId = null){
 
             $this->loadModel('Sales.QuotationItemDetail');
 
@@ -1489,6 +1459,68 @@ class SalesInvoiceController extends AccountingAppController {
                 'action' => 'view',
                 $invoiceId
             ));  
+     }
+
+     public function change_vat_status_multiple($invoiceId = null) {
+
+
+        $this->loadModel('Sales.QuotationItemDetail');
+        
+        if (!empty($this->request->data)) {
+
+            $data = $this->request->data;
+
+            $newData = array();
+
+            foreach ( $data['QuotationItemDetail']['Item'] as $key => $value) {
+              
+              $newData['QuotationItemDetail']['id'] = $value['id'];
+
+              $newData['QuotationItemDetail']['quantity'] = $value['quantity'];  
+
+                if($data['QuotationItemDetail']['vat_status'] == 1){
+
+                    $newData['QuotationItemDetail']['vat_status'] = 'Vatable Sale';
+                }
+
+                if($data['QuotationItemDetail']['vat_status'] == 2){
+
+                    $newData['QuotationItemDetail']['vat_status'] = 'Vat Exempt';
+                }
+
+                if($data['QuotationItemDetail']['vat_status'] == 3){
+
+                    $newData['QuotationItemDetail']['vat_status'] = 'Zero Rated Sale';
+                }
+
+                if (!empty($data['QuotationItemDetail']['vat_price'])) {
+                         $newData['QuotationItemDetail']['vat_price'] = $data['QuotationItemDetail']['vat_price'];
+                }
+
+               // pr($newData);
+            $this->QuotationItemDetail->create();
+            //pr($data); exit;
+            $save = $this->QuotationItemDetail->save($newData);
+
+
+            }
+
+            if ($save) {
+                 $this->Session->setFlash(__('Vat Details has been Updated'), 'success');
+      
+            } else {
+
+                 $this->Session->setFlash(__('There\'s an error updating vat'), 'error');
+      
+            }
+        }   
+
+        $this->redirect( array(
+                'controller' => 'sales_invoice',   
+                'action' => 'view',
+                $invoiceId
+            ));
+
      }
 
     public function company_filter_payables($from = null, $to = null,$company = null){
