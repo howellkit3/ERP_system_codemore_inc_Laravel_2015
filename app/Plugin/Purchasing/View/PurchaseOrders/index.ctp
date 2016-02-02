@@ -52,12 +52,12 @@
         if(searchInput != ''){
 
             $('.requestFields').hide();
-            $('.searchAppend').show();
+            $('#result-table').show();
             //alert('hide');
 
         }else{
             $('.requestFields').show();
-            $('.searchAppend').hide();
+            $('#result-table').hide();
             //alert('show');
         }
         
@@ -71,12 +71,12 @@
 
                 if(data){
 
-                    $('.searchAppend').html(data);
+                    $('#result-table').html(data);
 
                 } 
                 if (data.length < 5 ) {
 
-                    $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
+                    $('#result-table').html('<font color="red"><b>No result..</b></font>');
                      
                 }
                 

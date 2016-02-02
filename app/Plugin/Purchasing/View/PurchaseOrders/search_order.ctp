@@ -1,4 +1,21 @@
-<?php  foreach ($purchaseOrderData as $purchaseOrderDataList ): ?>
+<div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                               <!--  <th>Purchase Order No</th> -->
+                                <th>Purchase Order No.</th>
+                                <th>Request No.</th>
+                                <th>Supplier</th>
+                                <th>Prepared by</th>
+                                <th class="text-center">Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+
+                        <tbody aria-relevant="all" aria-live="polite" class="requestFields" role="alert" >
+        <?php if(!empty($purchaseOrderData)) : ?>                     
+      <?php  foreach ($purchaseOrderData as $purchaseOrderDataList ): ?>
     
 
         <tr class="">
@@ -66,3 +83,18 @@
         </tr>
 
 <?php endforeach; ?> 
+     <?php else : ?>
+        <tr>
+            <td colspan="6">   <span style="color:red">No Result </span> </td>
+         </tr>   
+      
+     <?php endif; ?>
+    </tbody>
+    <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" >
+    </tbody>
+
+   
+        
+ </table>
+<hr>
+</div>

@@ -508,11 +508,15 @@ class PurchaseOrdersController extends PurchasingAppController {
 															));
 
 	        $purchaseOrderData = $this->PurchaseOrder->query('SELECT PurchaseOrder.po_number, PurchaseOrder.supplier_id, 
-	        	PurchaseOrder.status, PurchaseOrder.id, PurchaseOrder.created_by, Request.uuid
+	        	PurchaseOrder.status, PurchaseOrder.id, PurchaseOrder.created_by, Request.uuid,
+	        	Supplier.id, Supplier.name 
                 FROM koufu_purchasing.purchase_orders AS PurchaseOrder
                 LEFT JOIN koufu_purchasing.requests AS Request
                 ON PurchaseOrder.request_id = Request.id 
-                WHERE PurchaseOrder.po_number LIKE "%'.$hint.'%" OR PurchaseOrder.name LIKE "%'.$hint.'%" AND PurchaseOrder.status = 8');
+                LEFT JOIN koufu_system.suppliers AS Supplier
+                ON Supplier.id = PurchaseOrder.supplier_id 
+                WHERE PurchaseOrder.po_number LIKE "%'.$hint.'%" OR PurchaseOrder.name LIKE "%'.$hint.'%" AND PurchaseOrder.status = 8 
+                OR Supplier.name like "%'.$hint.'%" OR Request.uuid like "%'.$hint.'%" ');
 
 			$userName = $this->User->find('list', array('fields' => array('id', 'fullname')));
 
@@ -536,7 +540,10 @@ class PurchaseOrdersController extends PurchasingAppController {
                 FROM koufu_purchasing.purchase_orders AS PurchaseOrder
                 LEFT JOIN koufu_purchasing.requests AS Request
                 ON PurchaseOrder.request_id = Request.id 
-                WHERE PurchaseOrder.po_number LIKE "%'.$hint.'%" OR PurchaseOrder.name LIKE "%'.$hint.'%" AND PurchaseOrder.status = 1');
+                LEFT JOIN koufu_system.suppliers AS Supplier
+                ON Supplier.id = PurchaseOrder.supplier_id 
+                WHERE PurchaseOrder.po_number LIKE "%'.$hint.'%" OR PurchaseOrder.name LIKE "%'.$hint.'%" AND PurchaseOrder.status = 1 
+                OR Supplier.name like "%'.$hint.'%" OR Request.uuid like "%'.$hint.'%" ');
 
 
 			$userName = $this->User->find('list', array('fields' => array('id', 'fullname')));
@@ -561,7 +568,10 @@ class PurchaseOrdersController extends PurchasingAppController {
                 FROM koufu_purchasing.purchase_orders AS PurchaseOrder
                 LEFT JOIN koufu_purchasing.requests AS Request
                 ON PurchaseOrder.request_id = Request.id 
-                WHERE PurchaseOrder.po_number LIKE "%'.$hint.'%" OR PurchaseOrder.name LIKE "%'.$hint.'%" AND PurchaseOrder.status = 11');
+                LEFT JOIN koufu_system.suppliers AS Supplier
+                ON Supplier.id = PurchaseOrder.supplier_id 
+                WHERE PurchaseOrder.po_number LIKE "%'.$hint.'%" OR PurchaseOrder.name LIKE "%'.$hint.'%" AND PurchaseOrder.status = 11 
+                 OR Supplier.name like "%'.$hint.'%" OR Request.uuid like "%'.$hint.'%" ');
 
 
 			$userName = $this->User->find('list', array('fields' => array('id', 'fullname')));

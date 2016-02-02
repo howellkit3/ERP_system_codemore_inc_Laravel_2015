@@ -28,9 +28,9 @@
                 
             </header>
             
-            <div class="main-box-body clearfix">
+            <div class="main-box-body clearfix" id="result-table">
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover">
+                    <table class="table table-striped table-hover" >
                         <thead>
                             <tr>
                                <!--  <th>Purchase Order No</th> -->
