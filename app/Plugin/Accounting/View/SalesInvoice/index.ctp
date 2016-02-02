@@ -61,8 +61,15 @@
 
 				                        <td class="">
 				                            <?php  
+				                            // $company = $this->AccountingFunction->getCompany($invoiceDataList['Delivery']['clients_order_id'],$companyName);
+				                            // echo $companyName[$clientDataHolder[$deliveryNumHolder[$invoiceDataList['SalesInvoice']['dr_uuid']]]];
+				                            // echo "<br>";
+				                            echo $companyName[ $invoiceDataList['Delivery']['company_id'] ];
 
-				                            echo $companyName[$clientDataHolder[$deliveryNumHolder[$invoiceDataList['SalesInvoice']['dr_uuid']]]];?>
+				                            // echo "<br>";
+
+				                            // echo $company;
+				                            ?>
 				                        </td> 
 				                        
 				                        <td class="text-center">
@@ -107,7 +114,8 @@
 				                            	echo $this->Html->link('<span class="fa-stack">
 							                    <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span> ', array('controller' => 'sales_invoice', 'action' => 'view',$invoiceDataList['SalesInvoice']['id'],0,
 							                    	$invoiceDataList['SalesInvoice']['dr_uuid'],
-							                    	$invoiceDataList['SalesInvoice']['sales_invoice_no']
+							                    	$invoiceDataList['SalesInvoice']['sales_invoice_no'],
+							                    	$invoiceDataList['SalesInvoice']['delivery_id']
 							                    	), array('class' =>' table-link','escape' => false, 'title'=>'View Sales Invoice'
 							                    ));
 				        

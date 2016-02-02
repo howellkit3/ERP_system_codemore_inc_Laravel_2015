@@ -12,7 +12,7 @@ class SalesInvoice extends AppModel {
 
  	//public $recursive = -1;
 
-	// public $actsAs = array('Containable');
+	public $actsAs = array('Containable');
 
     public function bindInvoice() {
 		
@@ -62,13 +62,41 @@ class SalesInvoice extends AppModel {
 		$this->recursive = 1;
 		//$this->contain($giveMeTheTableRelationship);
 	}
-  
+  	
+
+  	public function bindDelivery() {
+		$this->bindModel(array(
+			'belongsTo' => array(
+				'Delivery' => array(
+					'className' => 'Delivery.Delivery',
+					'foreignKey' => false,
+					'conditions' => 'Delivery.dr_uuid = SalesInvoice.3256'
+				),
+
+				// 'ClientOrder' => array(
+				// 	'className' => 'Sales.ClientOrder',
+				// 	'foreignKey' => false,
+				// 	'conditions' => array('ClientOrder.id = Delivery.clients_order_id')
+				// ),
+
+			)
+		)
+
+		);
+
+		$this->recursive = 1;
+	}
+
+
 	public function addSalesInvoice($invoiceData = null, $auth = null,$drData = array()){
 
 		$date = date('Y-m-d H:i:s');
-
 		
 		$this->create();
+
+		if (!empty($invoiceData['InvoiceForm']['delivery_id'])) {
+			$invoiceData[$this->name]['delivery_id'] = $invoiceData['InvoiceForm']['delivery_id'];
+		}
 			
 		$invoiceData[$this->name]['created_by'] = $auth;
 		$invoiceData[$this->name]['modified_by'] = $auth;

@@ -2613,3 +2613,9 @@ ADD COLUMN `is_multiple`  int(11) NULL DEFAULT 0 AFTER `modified`;
 ALTER TABLE `delivery_details`
 ADD COLUMN `delivery_id`  int(11) NULL AFTER `created`;
 
+
+
+/* aldrin added this 02 - 02 - 16 */
+ALTER TABLE `sales_invoices`
+ADD COLUMN `delivery_id`  int(11) NULL AFTER `dr_uuid`;
+

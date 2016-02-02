@@ -31,11 +31,13 @@ class SalesInvoiceController extends AccountingAppController {
                 'SalesInvoice.statement_no',  
                 'SalesInvoice.dr_uuid', 
                 'SalesInvoice.status',
+                'SalesInvoice.delivery_id'
                 ),
             'order' => 'SalesInvoice.id DESC',
         );
 
         $invoiceData = $this->paginate('SalesInvoice');
+
 
         $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
 
@@ -47,6 +49,7 @@ class SalesInvoiceController extends AccountingAppController {
           
            $keyHolder = ltrim($key, '0');
            $deliveryNum[$keyHolder] = $deliveryList;
+           
         }
       
       
@@ -129,7 +132,7 @@ class SalesInvoiceController extends AccountingAppController {
 
     }
 
-    public function view($invoiceId = null,$saNo = null,$drno = null,$sino = null){
+    public function view($invoiceId = null,$saNo = null,$drno = null,$sino = null,$deliveryId = null){
 
         $userData = $this->Session->read('Auth');
 
@@ -187,8 +190,15 @@ class SalesInvoiceController extends AccountingAppController {
         
        
         if(!empty($invoiceData['SalesInvoice']['dr_uuid'])){
+           
+            if (!empty($deliveryId)) {
+                   
+                   $this->Delivery->bindDeliverybyId();  
+            
+            } else {
 
-            $this->Delivery->bindDelivery();
+                    $this->Delivery->bindDelivery();  
+            }
 
             if (!empty($invoiceData['SalesInvoice']['is_multiple']) && $invoiceData['SalesInvoice']['is_multiple'] == 1) {
 
@@ -226,11 +236,15 @@ class SalesInvoiceController extends AccountingAppController {
 
 
             } else {
+
+                $drConditions = array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid'] );
+
+                if (!empty($deliveryId)) {
+                    $drConditions = array_merge($drConditions,array('Delivery.id' => $deliveryId));
+                }
                 
                 $drData = $this->Delivery->find('first', array(
-                                                'conditions' => array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid']
-                                                )));
-
+                                                'conditions' => $drConditions ));
               // $this->ClientOrder->bind('ClientOrderDeliverySchedule');
 
                 $clientOrder = $this->ClientOrder->find('first',array('conditions' => array('ClientOrder.uuid' => $drData['Delivery']['clients_order_id'])));
@@ -241,8 +255,7 @@ class SalesInvoiceController extends AccountingAppController {
                 $clientData = $this->ClientOrderDeliverySchedule->find('first', array(
                                         'conditions' => array($conditions
                                         )));    
-
-
+           
                 $clientOrderId = $clientData['ClientOrder']['id'];
 
                 $companyData = $clientData['Company']['company_name'];
@@ -335,6 +348,7 @@ class SalesInvoiceController extends AccountingAppController {
                          'action' => 'add'
                     ));
         }
+
 
         $this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id'],$DRdata);
 
@@ -509,7 +523,7 @@ class SalesInvoiceController extends AccountingAppController {
 
     public function create_sales_invoice(){ }
  
-    public function print_invoice($invoiceId = null ,$clientsId = null, $saNo = null) {
+    public function print_invoice($invoiceId = null ,$clientsId = null, $saNo = null,$deliveryId = null) {
 
         $userData = $this->Session->read('Auth');
 
@@ -560,9 +574,21 @@ class SalesInvoiceController extends AccountingAppController {
  
         $this->Delivery->bindDelivery();
 
-        $drData = $this->Delivery->find('first', array(
-                                            'conditions' => array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid']
-                                            )));
+        $drConditions = array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid'] );
+
+        if (!empty($deliveryId)) {
+            $this->Delivery->bindDeliverybyId();  
+            $drConditions = array_merge($drConditions,array('Delivery.id' => $deliveryId));
+        } else {
+
+
+            $this->Delivery->bindDelivery();  
+        }
+
+         $drData = $this->Delivery->find('first', array(
+                                        'conditions' => $drConditions ));
+           
+        
 
         $clientData = $this->ClientOrderDeliverySchedule->find('first', array(
                                             'conditions' => array('ClientOrder.id' => $clientsId
@@ -1328,7 +1354,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         }
 
-        $this->set(compact('deliveryUUID', 'seriesSalesNo', 'indicator','isMultiple'));
+        $this->set(compact('deliveryUUID', 'seriesSalesNo', 'indicator','isMultiple','deliveryId'));
 
         if (!empty($deliveryId)) {
 
@@ -1354,7 +1380,7 @@ class SalesInvoiceController extends AccountingAppController {
                 ON ClientOrder.company_id = Company.id 
                 WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR ClientOrder.po_number LIKE "%'.$hint.'%"
                 OR Company.company_name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%"   ');
-
+            
             $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData',  'poNumber', 'companyData','indicator'));
             
             if ($hint == ' ') {

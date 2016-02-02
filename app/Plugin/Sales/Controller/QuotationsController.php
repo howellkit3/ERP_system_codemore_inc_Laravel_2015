@@ -32,7 +32,7 @@ class QuotationsController extends SalesAppController {
     }
 	
 	public function index() {
-
+		
 		$this->loadModel('Sales.Company');
 
 		$this->loadModel('RolesPermission');
@@ -51,7 +51,8 @@ class QuotationsController extends SalesAppController {
 															'RolesPermission.role_id' => $userData['User']['role_id'])
 													));
 
-		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail', 'Product','Company'));
+		
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','Product'));
 
 		$limit = 10;
 
@@ -73,7 +74,7 @@ class QuotationsController extends SalesAppController {
             	'Quotation.status',
             	'Quotation.company_id',
             	'Product.name',
-            	'Company.company_name'
+            	//'Company.company_name'
 
             ),
             'order' => 'Quotation.id DESC',
