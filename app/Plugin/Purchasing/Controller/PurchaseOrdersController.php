@@ -571,7 +571,7 @@ class PurchaseOrdersController extends PurchasingAppController {
                 LEFT JOIN koufu_system.suppliers AS Supplier
                 ON Supplier.id = PurchaseOrder.supplier_id 
                 WHERE PurchaseOrder.po_number LIKE "%'.$hint.'%" OR PurchaseOrder.name LIKE "%'.$hint.'%" AND PurchaseOrder.status = 11 
-                 OR Supplier.name like "%'.$hint.'%" OR Request.uuid like "%'.$hint.'%" ');
+                OR Supplier.name like "%'.$hint.'%" OR Request.uuid like "%'.$hint.'%" ');
 
 
 			$userName = $this->User->find('list', array('fields' => array('id', 'fullname')));

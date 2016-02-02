@@ -142,6 +142,7 @@
 	            if (!empty($this->request->data)) {
 
 
+	            	$data = $this->request->data;
 
 	            	$this->ClientOrder->bind(array('ClientOrderDeliverySchedule','ClientOrderItemDetail'));
 
@@ -186,7 +187,7 @@
 	            	$this->Session->setFlash(__('Client Order was successfully added in the system.'));
 
 	    			$this->redirect(
-	            		array('controller' => 'create_order', 'action' => 'view_specs',$this->request->data['Product']['id'],$checkSpec,$clientOrderId)
+	            		array('controller' => 'create_order', 'action' => 'view_specs',$data['Product']['id'],$checkSpec,$clientOrderId)
 	       			);
 	            	
 	            	
@@ -281,7 +282,8 @@
 
 			$productData = $this->Product->findById($productId);
 
-			
+
+
 			
 			$specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
 			

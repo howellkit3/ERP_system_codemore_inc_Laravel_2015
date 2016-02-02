@@ -32,7 +32,7 @@ class QuotationsController extends SalesAppController {
     }
 	
 	public function index() {
-		
+
 		$this->loadModel('Sales.Company');
 
 		$this->loadModel('RolesPermission');

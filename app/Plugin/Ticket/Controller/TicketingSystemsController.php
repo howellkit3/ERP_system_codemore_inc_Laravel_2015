@@ -614,7 +614,7 @@ class TicketingSystemsController extends TicketAppController {
        
     }
 
-    public function test($productUuid = null , $ticketId = null, $clientOrderId = null){
+    public function test($productUuid = null , $ticketId = null, $clientOrderId = null,$processHolder = 'ProductSpecificationProcessHolder' ){
 
        // $details = '';
         $this->JobTicket->bindTicketSchedule();
@@ -623,8 +623,8 @@ class TicketingSystemsController extends TicketAppController {
         'conditions' => array('JobTicket.id' => $ticketId)));
 
         //pr($productUuid); exit;
-        
-        $productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid) ,'order' => 'Product.id DESC'));
+              $productConditions = array('Product.uuid' => $productUuid);
+        //$productData = $this->Product->find('first',array('conditions' => array('Product.uuid' => $productUuid) ,'order' => 'Product.id DESC'));
      //   pr($ticketData); exit;
         $specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $ticketData['Product']['id'])));
 
@@ -635,6 +635,7 @@ class TicketingSystemsController extends TicketAppController {
             $delData = $this->ClientOrder->find('first',array('conditions' => array('id' => $clientOrderId)));
 
             $formatDataSpecs = $this->ProductSpecificationDetail->findData($productUuid);
+
 
         }else{
 
@@ -658,12 +659,17 @@ class TicketingSystemsController extends TicketAppController {
                     //  $model = 'ProductSpecificationMainPanel';
                     //  break;
                     case 'Component':
+
+                        $this->loadModel('Sales.ProductSpecificationComponent');
                         $model = 'ProductSpecificationComponent';
                         break;
                     case 'Part':
+
+                        $this->loadModel('Sales.ProductSpecificationPart');
                         $model = 'ProductSpecificationPart';
                         break;
                     case 'Process':
+                        $this->loadModel('Sales.ProductSpecificationProcess');
                         $model = 'ProductSpecificationProcess';
                         break;
                 }
@@ -678,13 +684,15 @@ class TicketingSystemsController extends TicketAppController {
                     
                     if($model == 'ProductSpecificationProcess') {
 
+                        $this->loadModel('Sales.ProductSpecificationProcessHolder');
 
                         // if ( $productionSchedule == true) {
 
                             
-                        // }
+                        // } 
+
                         
-                        $processData = $processHolder->find('all',array(
+                        $processData = $this->$processHolder->find('all',array(
                                             'conditions' => array(
                                                 'product_specification_process_id' => $dataArray[$key][$model]['id']),
                                             'order' => 'order ASC'));
@@ -699,6 +707,12 @@ class TicketingSystemsController extends TicketAppController {
 
         }
       //  pr($specs); exit;
+
+        if (!empty($delData)) {
+
+            $productConditions = array_merge( $productConditions,array('company_id' => $delData['ClientOrder']['company_id']));
+        }
+        $productData = $this->Product->find('first',array('conditions' => $productConditions ,'order' => 'Product.id DESC'));
 
         $outs1  = !empty($formatDataSpecs['ProductSpecificationPart']['outs1']) ? $formatDataSpecs['ProductSpecificationPart']['outs1']  : 1;
         $outs2  = !empty($formatDataSpecs['ProductSpecificationPart']['outs2']) ? $formatDataSpecs['ProductSpecificationPart']['outs2']  : 1;
@@ -721,6 +735,7 @@ class TicketingSystemsController extends TicketAppController {
         $details['formatDataSpecs'] = $formatDataSpecs;
         $details['specs'] = $specs;
         $details['productData'] = $productData;
+
 
         if(!empty($delData)){
 
