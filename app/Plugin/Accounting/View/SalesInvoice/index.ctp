@@ -62,9 +62,9 @@
 				                        <td class="">
 				                            <?php  
 				                            // $company = $this->AccountingFunction->getCompany($invoiceDataList['Delivery']['clients_order_id'],$companyName);
-				                            // echo $companyName[$clientDataHolder[$deliveryNumHolder[$invoiceDataList['SalesInvoice']['dr_uuid']]]];
+				                             echo $companyName[$clientDataHolder[$deliveryNumHolder[$invoiceDataList['SalesInvoice']['dr_uuid']]]];
 				                            // echo "<br>";
-				                            echo $companyName[ $invoiceDataList['Delivery']['company_id'] ];
+				                           // echo $companyName[ $invoiceDataList['Delivery']['company_id'] ];
 
 				                            // echo "<br>";
 
