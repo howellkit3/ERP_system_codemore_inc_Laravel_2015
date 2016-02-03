@@ -5,7 +5,7 @@ $(document).ready(function() {
 
     $this = $('.searchQuotation');
 
-    $container = $('.searchAppend');
+    $container = $('#quotation-table');
 
     var searchInput = $('.searchQuotation').val();
     

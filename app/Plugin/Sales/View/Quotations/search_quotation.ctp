@@ -1,3 +1,21 @@
+
+<div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th><a href="#"><span>Quotation No.</span></a></th>
+                                <th><a href="#"><span>Item Name</span></a></th>
+                                <th><a href="#"><span>Company</span></a></th>
+                                <th class="text-center"><a href="#"><span>Validity Date</span></a></th>
+                                <th class="text-center"><a href="#"><span>Status</span></a></th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <!--nocache-->
+                        <tbody aria-relevant="all" aria-live="polite" class="quotationFields" role="alert">
+                                
+                            
+
 <?php if (!empty($quotationData)) { ?>
     <?php foreach ($quotationData as $quotationList): 
         if($quotationList['Quotation']['status'] != 2 ){ 
@@ -73,3 +91,21 @@
 <?php }else{
     echo "<font color='red'><b>No result..</b></font>";
     } ?> 
+
+                                
+                        </tbody>
+                        <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" style="display:none;">
+                        </tbody>
+                        <!--/nocache-->
+                    </table>
+                   
+                    <hr>
+
+                    <div class="paging">
+                    <?php
+
+                    // echo $this->Paginator->prev('< ' . __('previous'), null, null, array('class' => 'disable'));
+                    // echo $this->Paginator->numbers(array('separator' => ''));
+                    // echo $this->Paginator->next(__('next') . ' >', null, null, array('class' => 'disable'));
+                    ?>
+</div>
