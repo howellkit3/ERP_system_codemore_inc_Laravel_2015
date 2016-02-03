@@ -52,7 +52,7 @@ $('.searchQuotation').keypress(function() {
         timeout = null;
     }
 
-    timeout = setTimeout(searchQuotation,400)
+    timeout = setTimeout(searchQuotation,500)
 })
 
 
