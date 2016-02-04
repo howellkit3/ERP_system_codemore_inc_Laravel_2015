@@ -91,7 +91,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 						<td style="width:110px;" >Telephone</td>
 						<td style="width:160px; " class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_id'] : $telContactData['Contact']['number']; ?></td>
 						
-						<td align = "right" style="width:120px; "> <?php echo  !empty($faxContactData['Contact']['number']) ? "Fax # :  " .  $faxContactData['Contact']['number'] : " "; ?> </td>
+						<td align = "right" style="width:120px; font-size:70% "> <?php echo  !empty($faxContactData['Contact']['number']) ? "Fax # :  " .  $faxContactData['Contact']['number'] : " "; ?> </td>
 						<td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delivery Date:
 						</td>
@@ -138,10 +138,13 @@ for ($x = 0; $x <= 1; $x++) { ?>
 
 						<tr>
 							<td align="center" style="width:2%; border:1px solid black; "><?php echo $key ?></td>
-							<?php $lengthName = strlen($value[$modelTable]['name'] . $itemdescription)?>
+							<?php $lengthName = strlen($value[$modelTable]['name'] . $itemdescription); 
+
+							//echo  $lengthName;
+							?>
 
 							
-							<?php if($lengthName >= 35 && $lengthName <= 70){ ?>
+							<?php if($lengthName >= 50 && $lengthName <= 70){ ?>
 
 								<td class="td-heigth; " style = "border:1px solid black;" ><span style="font-size:55% !important; word-spacing: 0px;white-space: nowrap;  "><center><?php echo $itemdescription ?></center></td>
 
@@ -323,7 +326,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 						<td style="width:110px;" >Telephone</td>
 						<td style="width:120px;" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_id'] : $telContactData['Contact']['number']; ?></td>
 						
-						<td align = "right" style="width:160px; "> <?php echo  !empty($faxContactData['Contact']['number']) ? "Fax # :  " .  $faxContactData['Contact']['number'] : " "; ?> </td>
+						<td align = "right" style="width:160px;  font-size:70%"> <?php echo  !empty($faxContactData['Contact']['number']) ? "Fax # :  " .  $faxContactData['Contact']['number'] : " "; ?> </td>
 						<td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delivery Date:
 						</td>
@@ -372,7 +375,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 							<?php $lengthName = strlen($value[$modelTable]['name'] . $itemdescription)?>
 
 							
-							<?php if($lengthName >= 35 && $lengthName <= 70){ ?>
+							<?php if($lengthName >= 50 && $lengthName <= 70){ ?>
 
 								<td class="td-heigth; " style = "border:1px solid black;" ><span style="font-size:55% !important; word-spacing: 0px;white-space: nowrap;  "><center><?php echo $itemdescription?></center></td>
 
@@ -552,7 +555,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 						<td style="width:120px;" class="border-bot">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['contact_id'] : $telContactData['Contact']['number']; ?></td>
 						
 						
-						<td align = "right" style="width:160px; "> <?php echo  !empty($faxContactData['Contact']['number']) ? "Fax # :  " .  $faxContactData['Contact']['number'] : " "; ?> </td>
+						<td align = "right" style="width:160px;  font-size:70% "> <?php echo  !empty($faxContactData['Contact']['number']) ? "Fax # :  " .  $faxContactData['Contact']['number'] : " "; ?> </td>
 						<td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delivery Date:
 						</td>
@@ -601,7 +604,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 							<?php $lengthName = strlen($value[$modelTable]['name'] . $itemdescription)?>
 
 							
-							<?php if($lengthName >= 35 && $lengthName <= 70){ ?>
+							<?php if($lengthName >= 50 && $lengthName <= 70){ ?>
 
 								<td class="td-heigth; " style = "border:1px solid black;" ><span style="font-size:55% !important; word-spacing: 0px;white-space: nowrap;  "><center><?php echo $itemdescription?></center></td>
 

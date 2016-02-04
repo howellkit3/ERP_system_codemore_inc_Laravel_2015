@@ -20,7 +20,7 @@ body { margin: 5px; }
 						<td><h2 style="font-size:12px">Koufu Packaging Corp.</h2></td>
 				</tr>
 				<tr>
-						<td><h1 style="font-size:12px">Main Job Ticket</h1></td>  <td class="text-right"> <b>Date</b> <?php echo date('Y/m/d'); ?> </td>
+						<td><h1 style="font-size:11px">Main Job Ticket</h1></td>  <td class="text-right"> <b>Date</b> <?php echo date('Y/m/d'); ?> </td>
 				</tr>
 
 		</table>
@@ -137,14 +137,100 @@ body { margin: 5px; }
 
 
 										<?php 
-										 if ($countSpecs < 20) : 
+											if (count($formatDataSpecs) < 15) : 
 
 										$minimunTd = !empty($ticketData['JobTicket']['remarks']) ?  4 : 4;
 
 
+										$line = 30 - count($formatDataSpecs);
 
-										for ($i=$countSpecs; $i <= $minimunTd ; $i++) { ?>
+										for ($i=1; $i <= $line ; $i++) { ?>
+										
+
+
+											 <tr>
+											<td class="td-heigth" style="width:120px;border:1px solid #EAEAEA;"> <i style="color:#fff"> i <i>
+											</td>
+											<td class="td-heigth" style="width:150px;border:1px solid #EAEAEA;">  <i style="color:#fff"> i <i> 
+											</td>
+											<td class="td-heigth" style="width:228px; border:1px solid #EAEAEA;"> <i style="color:#fff"> i <i> 
+											</td>
+											</tr> 
+										<?php } ?>
+																					<?php endif; ?>
+											
+									</thead>
+							    </table>
+
+						   	</div> 
+
+						   	<?php 
+						   	if (count($formatDataSpecs) > 10) :  ?>
+						   	<div style="page-break-before: always;"></div>
+
+
+		<table class="border full-width" style="font-size:10px">
+				<tr>
+						<td><h2 style="font-size:12px">Koufu Packaging Corp.</h2></td>
+				</tr>
+				<tr>
+						<td><h1 style="font-size:11px">Main Job Ticket</h1></td>  <td class="text-right"> <b>Date</b> <?php echo date('Y/m/d'); ?> </td>
+				</tr>
+
+		</table>
+
+		<table class="border full-width" style="font-size:10px; margin:0px">
+
+				<tr class="border">
+					<td >
+						<table class="small-font full-width" style="font-size:9px">
+							<tr>
+								<td class="border-bottom-dashed" style="font-size:9px"> <?php 
 									
+										echo !empty($companyData[$productData['Product']['company_id']]) ? ucfirst($companyData[$ticketData['Product']['company_id']]) : '' ;
+
+									?> </td>
+								<td class="text-right border-bottom-dashed"><label class="strong">Schedule No</label> <?php echo $ticketUuid; ?></td>
+							</tr>
+							<tr>
+								<td class="border-bottom-dashed"><label class="strong">Item</label> <?php echo $ticketData['Product']['name']; ?></td>
+								<td class="text-right border-bottom-dashed"><label>   </label> <?php echo $ticketData['JobTicket']['po_number']; ?> </td>
+							</tr>
+							
+							<tr>
+								<td ><label class="strong">Item Size</label> 
+
+									<?php if(empty($specs['ProductSpecification']['size1']) && empty($specs['ProductSpecification']['size2']) && empty($specs['ProductSpecification']['size3'])){ ?>
+
+									<?php }else{?>
+
+									<?php echo !empty($specs['ProductSpecification']['size1']) ? $specs['ProductSpecification']['size1'] : '0' ?>
+
+									<?php echo !empty($specs['ProductSpecification']['size2']) ? ' x ' .  $specs['ProductSpecification']['size2'] : '' ?>
+									
+									<?php echo !empty($specs['ProductSpecification']['size3']) ? ' x ' .  $specs['ProductSpecification']['size3'] : '' ?></td>
+
+									<?php }  ?>
+								<td class="text-right"><label class="strong">Del Date</label> <?php 
+								echo !empty($delData['ClientOrderDeliverySchedule'][0]['schedule']) ? date('M d, Y', strtotime($delData['ClientOrderDeliverySchedule'][0]['schedule'])) : ''; ?>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+		</table>
+
+					<div class="border">
+								<table class="table small-font">
+									<thead>
+								<?php  if ($countSpecs < 20) : 
+
+										$minimunTd = !empty($ticketData['JobTicket']['remarks']) ?  4 : 4;
+
+										for ($i=1; $i <= 30 ; $i++) { ?>
+										
+
+
 											<tr>
 											<td class="td-heigth" style="width:120px;border:1px solid #EAEAEA;"> <i style="color:#fff"> i <i>
 											</td>
@@ -153,14 +239,12 @@ body { margin: 5px; }
 											<td class="td-heigth" style="width:228px; border:1px solid #EAEAEA;"> <i style="color:#fff"> i <i> 
 											</td>
 											</tr>
-										<?php } ?>
-
-										<?php endif; ?>
-											
-									</thead>
-							    </table>
-
-						   	</div> 
+										<?php  } ?>
+								<?php endif; ?>
+							</thead>
+								</table>
+							</div>
+						   <?php endif; ?>
 
 						   	<?php if (!empty($ticketData['JobTicket']['remarks'])) : ?>
 						   		<table class="border full-width">
