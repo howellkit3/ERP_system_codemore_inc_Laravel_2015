@@ -12,7 +12,7 @@
             $product = $rate * $quantitySubtracted;
             $paper  = ceil($product / $outProduct);
             
-            if ($_GET['test'] != '') {
+            if (!empty($_GET['test'])) {
 
                 Configure::write('debug',2);
                 pr($quantity);

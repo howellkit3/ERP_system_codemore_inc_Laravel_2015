@@ -31,7 +31,7 @@
                 </div>
             </header>
             
-            <div class="main-box-body clearfix">
+            <div class="main-box-body clearfix" id="quotation-table">
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
                         <thead>
@@ -45,7 +45,7 @@
                             </tr>
                         </thead>
                         <!--nocache-->
-                        <tbody aria-relevant="all" aria-live="polite" class="quotationFields" role="alert">
+                        <tbody aria-relevant="all" aria-live="polite" class="quotationFields" role="alert" >
                             <?php echo $this->element('quotation_table'); ?>
                         </tbody>
                         <tbody aria-relevant="all" aria-live="polite" class="searchAppend" role="alert" style="display:none;">

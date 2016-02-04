@@ -32,7 +32,8 @@ body { margin: 5px; }
 						<table class="small-font full-width" style="font-size:9px">
 							<tr>
 								<td class="border-bottom-dashed" style="font-size:9px"> <?php 
-										echo !empty($companyData[$productData['Product']['company_id']]) ? ucfirst($companyData[$ticketData['ClientOrder']['company_id']]) : '' ;
+									
+										echo !empty($companyData[$productData['Product']['company_id']]) ? ucfirst($companyData[$ticketData['Product']['company_id']]) : '' ;
 
 									?> </td>
 								<td class="text-right border-bottom-dashed"><label class="strong">Schedule No</label> <?php echo $ticketUuid; ?></td>

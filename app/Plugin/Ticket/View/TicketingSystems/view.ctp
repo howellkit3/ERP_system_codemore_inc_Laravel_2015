@@ -35,7 +35,7 @@
 
 							echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> (Job Ticket) PDF ', array(
 					        	'controller' => 'ticketing_systems', 
-					        	'action' => 'print_ticket_export',$productData['Product']['uuid'],$ticketData['JobTicket']['uuid'],$clientOrderId,'pdf',$ticketData['JobTicket']['id']),
+					        	'action' => 'print_ticket_export',$productUuid,$ticketId,$clientOrderId,'pdf',$ticketData['JobTicket']['id']),
 					        	array('class' =>'btn btn-info pull-right','target' => '_blank','escape' => false));
 
 							echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i>Edit Specs', array(

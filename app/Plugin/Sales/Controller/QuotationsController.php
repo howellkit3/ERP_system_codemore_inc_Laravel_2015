@@ -51,7 +51,8 @@ class QuotationsController extends SalesAppController {
 															'RolesPermission.role_id' => $userData['User']['role_id'])
 													));
 
-		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail', 'Product','Company'));
+		
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','Product'));
 
 		$limit = 10;
 
@@ -73,7 +74,7 @@ class QuotationsController extends SalesAppController {
             	'Quotation.status',
             	'Quotation.company_id',
             	'Product.name',
-            	'Company.company_name'
+            	//'Company.company_name'
 
             ),
             'order' => 'Quotation.id DESC',
@@ -1395,8 +1396,7 @@ class QuotationsController extends SalesAppController {
 
     	$this->loadModel('User');
 
-		$this->Quotation->bind(array('Inquiry','QuotationDetail','QuotationItemDetail','ProductDetail', 'Product','Company'));
-
+		$this->Quotation->bind(array('QuotationDetail','QuotationItemDetail', 'Product','Company'));
 		$quotationData = $this->Quotation->find('all',array(
 									'fields' => array(
 										'Quotation.id',
@@ -1417,10 +1417,44 @@ class QuotationsController extends SalesAppController {
 											array('Product.name LIKE' => '%' . $hint . '%')
 											)
 										),
-									'limit' => 10,
+									//'limit' => 10,
 									'group' => 'Quotation.id'
 								)
 		);
+
+
+		// $this->Quotation->bind(array('QuotationDetail','QuotationItemDetail','Product'));
+
+		// $limit = 10;
+
+		// $conditions = array(
+  //       'NOT' => array(
+  //           'Quotation.status' => array(2, 3)
+  //       	)
+  //   	);
+
+		// $this->paginate = array(
+  //           'conditions' => $conditions,
+  //           'limit' => $limit,
+  //           'fields' => array(
+  //           	'Quotation.id',
+  //           	'Quotation.uuid', 
+  //           	'Quotation.name',
+  //           	'Quotation.inquiry_id',
+  //           	'Quotation.validity',
+  //           	'Quotation.status',
+  //           	'Quotation.company_id',
+  //           	'Product.name',
+  //           	//'Company.company_name'
+
+  //           ),
+  //           'order' => 'Quotation.id DESC',
+  //           'group' => 'Quotation.id'
+  //       );
+
+
+		// $quotationData = $this->paginate();
+
 		//pr($quotationData); exit;
 		$userData = $this->User->read(null,$this->Session->read('Auth.User.id'));
 

@@ -22,7 +22,10 @@
         	'controller' => 'sales_invoice', 
         	'action' => 'print_invoice',
         	$invoiceId,
-        	$clientOrderId),
+        	$clientOrderId,
+        	0,
+        	$drData['Delivery']['id']
+        	),
         	array('class' =>'btn btn-info pull-right ','escape' => false));
 	?>
 

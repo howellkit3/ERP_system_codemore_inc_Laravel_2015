@@ -5,7 +5,7 @@ $(document).ready(function() {
 
     $this = $('.searchQuotation');
 
-    $container = $('.searchAppend');
+    $container = $('#quotation-table');
 
     var searchInput = $('.searchQuotation').val();
     
@@ -52,7 +52,7 @@ $('.searchQuotation').keypress(function() {
         timeout = null;
     }
 
-    timeout = setTimeout(searchQuotation,400)
+    timeout = setTimeout(searchQuotation,500)
 })
 
 

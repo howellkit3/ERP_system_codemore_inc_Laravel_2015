@@ -78,6 +78,8 @@
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
                                 </div>
+
+                                <?php echo $this->Form->input('delivery_id',array('type' => 'text' ,'value' => $deliveryId)); ?>
                             
                             <?php echo $this->Form->end();  ?> 
 
@@ -122,6 +124,8 @@
                                         'value' => 2
                                         ));
                                 ?>
+                                
+                                <?php echo $this->Form->input('delivery_id',array('type' => 'text' ,'value' => $deliveryId)); ?>
 
                                 <div class="modal-footer">
 

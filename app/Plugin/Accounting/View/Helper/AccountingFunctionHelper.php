@@ -69,18 +69,30 @@ public function findByClientOrder($clientOrderId = null) {
 
 		return $items;
 }
-	// public function getItems($clientsOrderId = null) {
 
-	// 	$ClientsOrder = ClassRegistry::init('Sales.ClientOrder');
+public function getCompany($deliveryUuid = null ,$clientsOrderId = null,$companyList = null) {
 
-	// 	if (!empty($clientsOrderId)) {
+		$ClientsOrder = ClassRegistry::init('Sales.ClientOrder');
 
-	// 		$clientsOrder = $ClientsOrder->find('first',array(
-	// 			'conditions' => array('id' => $clientsOrderId)
-	// 		));	
-	// 	}
+		$delivery = ClassRegistry::init('Delivery.Delivery');
 
-	// 	return $clientsOrder;
+		$company = '';
 
-	// }
+		if (!empty($clientsOrderId)) {
+
+			$company = $ClientsOrder->find('first',array(
+				'conditions' => array('uuid' => $clientsOrderId),
+				'fields' =>  array('id','company_id','uuid')
+			));
+
+
+			$company = $companyList[$company['ClientOrder']['company_id']];
+
+
+		}
+
+		return $company;
+
+	}
+
 }
