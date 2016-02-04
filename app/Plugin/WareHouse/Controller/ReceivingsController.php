@@ -1394,7 +1394,7 @@ class ReceivingsController extends WareHouseAppController {
           
             $this->redirect( array(
                 'controller' => 'receivings',   
-                'action' => 'receive_receipt'
+                'action' => 'recieve'
             )); 
 
 		}
