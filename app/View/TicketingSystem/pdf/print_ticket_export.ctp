@@ -36,7 +36,8 @@ body { margin: 5px; }
 										echo !empty($companyData[$productData['Product']['company_id']]) ? ucfirst($companyData[$ticketData['Product']['company_id']]) : '' ;
 
 									?> </td>
-								<td class="text-right border-bottom-dashed"><label class="strong">Schedule No</label> <?php echo $ticketUuid; ?></td>
+								<td class="text-right border-bottom-dashed"><label class="strong">Schedule No</label> 
+								<?php echo $ticketData['JobTicket']['uuid']; ?></td>
 							</tr>
 							<tr>
 								<td class="border-bottom-dashed"><label class="strong">Item</label> <?php echo $ticketData['Product']['name']; ?></td>
@@ -137,12 +138,14 @@ body { margin: 5px; }
 
 
 										<?php 
-											if (count($formatDataSpecs) < 15) : 
+
+
+											if (count($formatDataSpecs) < 5) : 
 
 										$minimunTd = !empty($ticketData['JobTicket']['remarks']) ?  4 : 4;
 
 
-										$line = 30 - count($formatDataSpecs);
+										$line = 10 - count($formatDataSpecs);
 
 										for ($i=1; $i <= $line ; $i++) { ?>
 										
@@ -223,7 +226,9 @@ body { margin: 5px; }
 					<div class="border">
 								<table class="table small-font">
 									<thead>
-								<?php  if ($countSpecs < 20) : 
+								<?php 
+
+								 if ($countSpecs < 20) : 
 
 										$minimunTd = !empty($ticketData['JobTicket']['remarks']) ?  4 : 4;
 
