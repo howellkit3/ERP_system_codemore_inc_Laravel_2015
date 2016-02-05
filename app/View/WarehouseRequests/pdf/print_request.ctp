@@ -65,21 +65,26 @@ th, td {
 					<tr>
 						<td  align = "center" style="border:1px solid black; width:10px;   word-wrap: break-word; "><span style="font-size:70%"; ><?php echo $key + 1 ?></span></td>
 
-						<?php $lengthName = strlen($value['name'])?>
+						<?php $lengthName = strlen($value['name']); ?>
 
-						<?php if($lengthName >= 30 && $lengthName <= 70){ ?>
+						<?php if($lengthName >= 45 && $lengthName <= 69){ ?>
 
-							<td style="border:1px solid black; "><span style="font-size:45%"; ><?php echo $value['name']?></span>
+							<td style="border:1px solid black; "><span style="font-size:70%"; ><?php echo $value['name'] ?></span>
 							</td>
 
-						<?php } else if($lengthName >= 70) { ?>
+						<?php } else if($lengthName >= 70 && $lengthName <= 74) { ?>
 
+							<td style="border:1px solid black; "><span style="font-size:60%"; ><?php echo $value['name']?></span>
+							</td>
+
+						<?php } else if($lengthName >= 74) { ?>
+							
 							<td style="border:1px solid black; "><span style="font-size:40%"; ><?php echo $value['name']?></span>
 							</td>
 
-						<?php }else{ ?>
+						<?php } else { ?>
 
-							<td style="border:1px solid black; "><span style="font-size:70%"; ><?php echo $value['name']?></span>
+							<td style="border:1px solid black; "><span style="font-size:80%"; ><?php echo $value['name']?></span>
 							</td>
 
 						<?php } ?>
@@ -210,23 +215,27 @@ th, td {
 
 						<?php $lengthName = strlen($value['name'])?>
 
-						<?php if($lengthName >= 30 && $lengthName <= 70){ ?>
+							<?php if($lengthName >= 45 && $lengthName <= 69){ ?>
 
-							<td style="border:1px solid black; "><span style="font-size:45%"; ><?php echo $value['name']?></span>
+							<td style="border:1px solid black; "><span style="font-size:70%"; ><?php echo $value['name'] ?></span>
 							</td>
 
-						<?php } else if($lengthName >= 70) { ?>
+						<?php } else if($lengthName >= 70 && $lengthName <= 74) { ?>
 
+							<td style="border:1px solid black; "><span style="font-size:60%"; ><?php echo $value['name']?></span>
+							</td>
+
+						<?php } else if($lengthName >= 74) { ?>
+							
 							<td style="border:1px solid black; "><span style="font-size:40%"; ><?php echo $value['name']?></span>
 							</td>
 
-						<?php }else{ ?>
+						<?php } else { ?>
 
-							<td style="border:1px solid black; "><span style="font-size:70%"; ><?php echo $value['name']?></span>
+							<td style="border:1px solid black; "><span style="font-size:80%"; ><?php echo $value['name']?></span>
 							</td>
 
 						<?php } ?>
-
 						<td align = "center"style="border:1px solid black; font-size:80% "><?php echo $value['quantity'] ?></td>
 						
 						<td align = "center" style="border:1px solid black; font-size:70% "><?php echo $unitData[$value['quantity_unit_id']]?></td>

@@ -600,11 +600,14 @@
 			                                    	<label class="col-lg-2 control-label">Validity</label>
 													<div class="col-lg-8">
 														<?php 
+
+															$validity = $this->DateFormat->isValidDateTimeString($quotationData['Quotation']['validity']);
 			                                                echo $this->Form->input('Quotation.validityField',array( 
                                                 						'class' => 'form-control item_type ', 
                                                     					'label' => false,
                                                     					'disabled' => 'disabled',
-                                                    					'value' => date('M d, Y', strtotime($quotationData['Quotation']['validity']))  
+                                                    					'value' => ($validity) ? date('M d, Y', strtotime($quotationData['Quotation']['validity']) 
+                                                    						) : ''
                                                     					));
 
 			                                            ?>

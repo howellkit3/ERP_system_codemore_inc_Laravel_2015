@@ -6,4 +6,7 @@ App::import('model','Purchasing.Company');
 App::import('model','Purchasing.SupplierContactPerson');
 class PurchasingAppController extends AppController {
 
+
+public $helpers = array('Purchasing.DateFormat');
+
 }
