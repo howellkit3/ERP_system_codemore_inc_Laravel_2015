@@ -34,6 +34,7 @@ class ReceivedItem extends AppModel {
 					$valueOfvalue['quantity_unit_id'] =!empty($valueOfvalue['quantity_unit_id']) ? $valueOfvalue['quantity_unit_id'] : 14;
 					$valueOfvalue['reject_quantity'] = !empty($valueOfvalue['rejectQuantity']) ? $valueOfvalue['rejectQuantity'] : 0;
 					$valueOfvalue['request_uuid'] = $data['ReceivedItems']['request_id'];
+					$valueOfvalue['pieces'] = !empty($valueOfvalue['pieces']) ? $valueOfvalue['pieces'] : '';
 			 		$this->save($valueOfvalue);
 				}
  

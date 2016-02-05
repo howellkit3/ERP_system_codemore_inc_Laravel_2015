@@ -71,7 +71,9 @@
 									
 								</div>
 							</div>
-						
+							
+
+
 							<div class="main-box-body clearfix">
 
 								<section class="cloneMe">
@@ -184,6 +186,63 @@
 									                ?>
 												</div>
 											</div>
+
+
+											  <div class="form-group">
+                                    <label class="col-lg-2 control-label">Delivery Number</label>
+                                    <div class="col-lg-8">
+                                        <?php 
+                                            echo $this->Form->input('ReceiveReceipt.dr_num', array(
+                                                                            'class' => 'form-control item_type',
+                                                                            'label' => false,
+                                                                            'type' => 'number',
+                                                                            'fields' =>array('name')
+                                                                            ));
+                                        ?>
+
+
+                                    </div>
+                                </div>      
+
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">Sales Invoice Number</label>
+                                    <div class="col-lg-8">
+                                        <?php 
+                                            echo $this->Form->input('ReceiveReceipt.si_num', array(
+                                                                            'class' => 'form-control item_type',
+                                                                            'label' => false,
+                                                                            'type' => 'number',
+                                                                            'fields' =>array('name')
+                                                                            ));
+                                        ?>
+
+
+                                    </div>
+                                </div>  
+
+                               <!--  <div class="form-group">
+                                        <label class="col-lg-2 control-label">Tracking Number</label>
+                                        <div class="col-lg-8">
+                                            <?php 
+                                                echo $this->Form->input('ReceiveReceipt.tracking',array( 
+                                                                        'class' => 'form-control ', 
+                                                                        'label' => false,
+                                                                        'placeholder' => 'Tracking Number',
+                                                                        'id' => 'generate-poNumber' 
+                                                                        ));
+                                            ?>
+                                        </div>
+                                    </div> -->
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label"></label>
+                                        <div class="col-lg-8">
+                                            <div class="checkbox-nice">
+                                                <input id="checkbox-1" type="checkbox" class="generate-poNumber">
+                                                <label for="checkbox-1"> Generate Tracking Number </label>
+                                            </div>
+                                        </div>
+                                    </div>
 										</div>
 									    
 									</div>
@@ -388,6 +447,71 @@
 
         }
         
+    });
+
+  $('.generate-poNumber').change(function(){
+
+        var currentTime = new Date()
+    var month = currentTime.getMonth() + 1
+    var year = currentTime.getFullYear()
+    var hour = currentTime.getHours()
+    var minute = currentTime.getMinutes()
+    var seconds = currentTime.getSeconds()
+
+    year = year.toString().substr(2,2);
+
+    month = month + "";
+
+    hour = hour + "";
+
+    minute = minute + "";
+
+    seconds = seconds + "";
+
+    if (month.length == 1)
+    {
+        month = "0" + month;
+    }
+
+    if (hour.length == 1)
+    {
+        hour = "0" + hour;
+    }
+
+    if (minute.length == 1)
+    {
+        minute = "0" + minute;
+    }
+
+    if (seconds.length == 1)
+    {
+        seconds = "0" + seconds;
+    }
+
+    timestamp = jQuery.now();
+    var timeToString = timestamp.toString();
+
+    timeSlice = timeToString.slice(-6);
+
+    var ranDom = Math.floor(Math.random()*9000) + 1000;
+    var code = year.concat( month, timeSlice);
+        
+        if($(this).is( ":checked" ) == true){
+            
+            var data = "RCV-" + code;
+            
+            $('#generate-poNumber').val(data);
+            
+            $('#generate-poNumber').attr('readonly','true');
+        }
+        
+        if($(this).is( ":checked" ) == false){
+            
+            $('#generate-poNumber').val('');
+            $('#generate-poNumber').removeAttr("readonly");
+           
+        }
+    
     });
 
 </script>

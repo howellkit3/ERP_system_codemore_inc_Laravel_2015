@@ -34,6 +34,11 @@ class ReceivedReceiptItem extends AppModel {
 				$value['number_of_boxes'] = $data['pack_quantity'];
 				$value['quantity_per_boxes'] = $data['quantity_per_box'];
 				$value['remarks'] = $data['remarks'];
+
+				$value['dr_num'] = !empty($data['dr_num']) ? $data['dr_num'] : '';
+				$value['si_num'] = !empty($data['si_num']) ? $data['si_num'] : '';
+				$value['tracking'] = !empty($data['tracking']) ? $data['tracking'] : '';
+				
 				//pr( $value); exit;
 		 		$this->save($value);
 

@@ -282,8 +282,17 @@
 
                                     $unitHolder = !empty($requestDataList[$itemHolder]['unit_id']) ? $unitData[$requestDataList[$itemHolder]['unit_id']] : " ";
 
-                                    echo $requestDataList[$itemHolder]['good_quantity'] . " " . $unitHolder ?> 
+                                    echo $requestDataList[$itemHolder]['good_quantity'] . " " . $unitHolder;
 
+                                ?> 
+
+                                <?php 
+
+                                if(!empty($requestDataList[$itemHolder]['unit_id'] == '27' && !empty($requestDataList[$itemHolder]['pieces']))) :  ?>
+                                <br>
+                                <i class="fa fa-puzzle-piece"></i>
+                                   <?php echo $requestDataList[$itemHolder]['pieces']. ' pcs / box ';
+                                 endif; ?>
                                 <?php } ?>
                                 </span>
                                 <span class="warranty">

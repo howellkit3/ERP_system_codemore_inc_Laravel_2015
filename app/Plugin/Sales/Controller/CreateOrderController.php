@@ -4,6 +4,10 @@
 
 	class CreateOrderController extends SalesAppController {
 
+
+		public $helpers = array('Sales.DateFormat');
+
+
 		public function beforeFilter() {
 
 	        parent::beforeFilter();

@@ -2619,3 +2619,15 @@ ADD COLUMN `delivery_id`  int(11) NULL AFTER `created`;
 ALTER TABLE `sales_invoices`
 ADD COLUMN `delivery_id`  int(11) NULL AFTER `dr_uuid`;
 
+
+/* aldrin added this 02 - 04 - 16 */
+ALTER TABLE `received_items`
+ADD COLUMN `pieces`  int(11) NULL AFTER `quantity_unit_id`;
+
+ALTER TABLE `received_receipt_items`
+ADD COLUMN `dr_num`  varchar(255) NULL AFTER `remarks`,
+ADD COLUMN `si_num`  varchar(255) NULL AFTER `dr_num`,
+ADD COLUMN `tracking`  varchar(255) NULL AFTER `si_num`;
+ALTER TABLE `received_orders`
+ADD COLUMN `si_num`  varchar(255) NULL AFTER `dr_num`;
+

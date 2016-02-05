@@ -13,18 +13,16 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
             <div class="col-lg-12">
                 <div class="main-box">
                     <header class="main-box-header clearfix">
-
                         <h2 class="pull-left">Purchased Order</h2>
-
                     </header>
-
                     <div class="top-space"></div>  
+                    
                     <div class="main-box-body clearfix">
                         <div class="main-box-body clearfix">
                             <div class="form-horizontal">  
 
                                 <div class="form-group">
-                                    <label class="col-lg-2 control-label">Purchase Order Number</label>
+                                    <label class="col-lg-2 control-label"> Purchase Order Number </label>
                                     
                                     <div class="col-lg-8">
 
@@ -36,18 +34,14 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                                             'label' => false,       
                                                                             'value' => $purchaseOrderData['PurchaseOrder']['id'],
                                                                             'fields' =>array('name')));
-                                        ?>
-
-                                        <?php 
+                                        
                                             echo $this->Form->input('ReceivedItems.request_id', array(
                                                                             'class' => 'form-control item_type',
                                                                             'type' => 'hidden',
                                                                             'label' => false,       
                                                                             'value' => $purchaseOrderData['Request']['uuid'],
                                                                             'fields' =>array('name')));
-                                        ?>
-
-                                        <?php 
+                                       
                                             echo $this->Form->input('DeliveredOrders.po_number', array(
                                                                             'class' => 'form-control item_type',
                                                                             'readonly' => 'readonly',
@@ -152,7 +146,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                     $deliveredQuantityHolder = $requestDataList[$itemHolder]['delivered_quantity'];
                                 }
 
-                                $remainingQuantity =  $requestDataList[$itemHolder]['original_quantity'] -  $requestDataList[$itemHolder]['good_quantity'];
+                                $remainingQuantity =  $requestDataList[$itemHolder]['original_quantity'] - $requestDataList[$itemHolder]['good_quantity'];
 
                                 $remainingQuantitySum = $remainingQuantitySum + $remainingQuantity;
 
@@ -193,11 +187,11 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                             ?>
                                         </div>
 
-                                        <?php  if($unitType[$requestDataList[$itemHolder]['unit_id']] != 1){ ?>
+                                        <?php  if($unitType[$requestDataList[$itemHolder]['unit_id']] != 1) { ?>
 
                                                 <div class="col-lg-2 ">
                                                     <?php 
-                                                        echo $this->Form->input('requestPurchasingItem.'.$key.'.condition', array(         
+                                                     echo $this->Form->input('requestPurchasingItem.'.$key.'.condition', array(         
                                                                                 'required' => 'required',
                                                                                 'class' => 'form-control required condition ',
                                                                                 'options' => array('good', 'reject'),
@@ -207,19 +201,17 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                                                 'type' => 'select',
                                                                                 'required' => 'required',
                                                                                 ));
-                                                    ?>
-                                            <?php
-                                                        echo $this->Form->input('requestPurchasingItem.'.$key.'.model', array(                    'type' => 'hidden',
+
+                                                     echo $this->Form->input('requestPurchasingItem.'.$key.'.model', array(                    'type' => 'hidden',
                                                                                 'class' => 'form-control toBeDisabled',
                                                                                 'disabled' => 'disabled',
                                                                                 'value' => $requestDataList[$itemHolder]['model'],
                                                                                 'label' => false,
                                                                                 
                                                                                 ));
-                                            ?>
 
-                                            <?php
-                                                        echo $this->Form->input('requestPurchasingItem.'.$key.'.unit_price', array(                   
+                                       
+                                                    echo $this->Form->input('requestPurchasingItem.'.$key.'.unit_price', array(                   
                                                                                 'type' => 'hidden',
                                                                                 'class' => 'form-control toBeDisabled',
                                                                                 'disabled' => 'disabled',
@@ -227,9 +219,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                                                 'label' => false,
                                                                                 
                                                                                 ));
-                                            ?>
-
-                                            <?php
+                                           
                                                         echo $this->Form->input('requestPurchasingItem.'.$key.'.original_quantity', array(        
                                                                                 'type' => 'hidden',
                                                                                 'disabled' => 'disabled',
@@ -303,9 +293,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                                                 'disabled' => 'disabled',
                                                                                 'required' => 'required',
                                                                                 ));
-                                                    ?>
-
-                                                    <?php
+                                                  
                                                         echo $this->Form->input('requestPurchasingItem.'.$key.'.model', array(                    'type' => 'hidden',
                                                                                 'class' => 'form-control toBeDisabled',
                                                                                 'value' => $requestDataList[$itemHolder]['model'],
@@ -313,9 +301,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                                                 'label' => false,
                                                                                 
                                                                                 ));
-                                                     ?>
-
-                                                     <?php
+                                                    
                                                         echo $this->Form->input('requestPurchasingItem.'.$key.'.unit_price', array(                   
                                                                                 'type' => 'hidden',
                                                                                 'class' => 'form-control toBeDisabled',
@@ -324,9 +310,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                                                 'label' => false,
                                                                                 
                                                                                 ));
-                                            ?>
-
-                                                     <?php
+                                          
                                                         echo $this->Form->input('requestPurchasingItem.'.$key.'.quantity_unit_id', array(                    
                                                                                 'type' => 'hidden',
                                                                                 'class' => 'form-control toBeDisabled',
@@ -335,9 +319,7 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
                                                                                 'label' => false,
                                                                                 
                                                                                 ));
-                                                     ?>
-
-                                                    <?php
+                                                  
                                                         echo $this->Form->input('requestPurchasingItem.'.$key.'.original_quantity', array(        
                                                                                 'type' => 'hidden',
                                                                                 'class' => 'form-control limiter toBeDisabled',
@@ -352,7 +334,29 @@ echo $this->Form->create('Receivings',array('url'=>(array('controller' => 'recei
 
                                     <?php } ?>
                                     
-                                    </div>                  
+                                    </div>
+
+                                    <?php if (!empty($requestDataList[$itemHolder]['unit_id']) && in_array($requestDataList[$itemHolder]['unit_id'],array('27'))) : ?>
+
+                                        <div class="form-group pieces">
+                                             <label class="col-lg-2 control-label">Piece(s)</label>
+
+                                             <div class="col-lg-2">
+                                             <?php  echo $this->Form->input('requestPurchasingItem.'.$key.'.pieces', array(         
+                                                                                'required' => 'required',
+                                                                                'class' => 'form-control required condition ',
+                                                                                //'options' => array('good', 'reject'),
+                                                                                'value' => 0,
+                                                                                'label' => false,
+                                                                                'disabled' => 'disabled',
+                                                                                //'type' => 'select',
+                                                                                'required' => 'required',
+                                                                                ));
+                                            ?>
+                                            </div>
+                                        </div>
+
+                                    <?php endif; ?>                  
                                 </div>
                             </div>
                               
@@ -475,6 +479,8 @@ jQuery("body").ready(function(){
 
             $(this).parents('.bgcolor').find('.reject').prop('disabled', false);
 
+            $(this).parents('.bgcolor').find('.pieces input').prop('disabled', false);
+
             $(this).parents('.bgcolor').css("background-color", "#eee");
 
         } else{
@@ -486,6 +492,8 @@ jQuery("body").ready(function(){
             $(this).parents('.bgcolor').find('.reject').prop('disabled', true);
 
             $(this).parents('.bgcolor').find('.toBeDisabled').prop('disabled', true);
+
+            $(this).parents('.bgcolor').find('.pieces input').prop('disabled', true);
 
             $(this).parents('.bgcolor').css("background-color", "#FFFFFF");
 
@@ -583,7 +591,7 @@ jQuery("body").ready(function(){
         seconds = "0" + seconds;
     }
 
-    timestamp = event.timeStamp;
+    timestamp = jQuery.now();
     var timeToString = timestamp.toString();
 
     timeSlice = timeToString.slice(-6);
