@@ -48,6 +48,27 @@ if(!empty($employeeData)){
                <?php echo !empty($employee['Employee']['gender']) ? $employee['Employee']['gender'] : '';  ?>
             </td>
 
+            <td>
+            <?php if(!empty($employee['Contact'])) : ?>
+
+            <?php 
+
+            foreach ($employee['Contact'] as $key => $list) {
+
+            echo $list['number'];
+
+            if ($key >= 1) {
+
+            echo "<br>";
+            }
+
+            }
+            ?>
+
+            <?php endif; ?>
+            </td>
+
+
            	<td>
                 <?php echo $this->Html->link('<span class="fa-stack">
                     <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>&nbsp;<span class ="post"><font size = "1px"> View </font></span></span> ', array('controller' => 'employees', 'action' => 'view',$employee['Employee']['id']), array('class' =>' table-link','escape' => false, 'title'=>'View Sales Invoice'
