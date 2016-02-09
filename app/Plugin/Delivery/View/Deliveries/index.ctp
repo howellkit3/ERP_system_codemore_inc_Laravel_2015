@@ -113,21 +113,8 @@
         });
     }
 
-    var timeout;
 
-    $('.searchOrder').keypress(function() {
-
-
-        if(timeout) {
-            clearTimeout(timeout);
-            timeout = null;
-        }
-
-        timeout = setTimeout(searchOrder,600)
-    })
-
-
-    function selectStatus(deliveryStatus) {
+        function selectStatus(deliveryStatus) {
 
     $('.main-box-body .appendHere').html('<img class="loader" src="'+serverPath+'/img/loader.gif">');
 
@@ -160,13 +147,25 @@
         });
     }
 
-    $( document ).ready(function() {
+
+    $( document ).ready(function($) {
+
+        var timeout;
+
+        $('.searchOrder').keypress(function() {
+
+
+            if(timeout) {
+                clearTimeout(timeout);
+                timeout = null;
+            }
+
+            timeout = setTimeout(searchOrder,600)
+        })
 
         deliveryStatus = 1;
 
         selectStatus(deliveryStatus);
-
-    });
 
     $('.statusclick').click(function() {
 
@@ -175,7 +174,8 @@
         selectStatus(deliveryStatus);
 
     });
-     $('body').on('click','#item_type_pagination a',function(e) {
+
+    $('body').on('click','#item_type_pagination a',function(e) {
 
         $url = $(this).attr('href');
 
@@ -199,5 +199,6 @@
         e.preventDefault();
     });
 
+  });
 
 </script>

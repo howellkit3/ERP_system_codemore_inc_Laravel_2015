@@ -581,22 +581,47 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Sales.Address');
 
-        $this->Delivery->bindDelivery();
+        $delivery_conditions = array('DeliveryDetail.delivery_uuid' => $dr_uuid );
+
+
+        if (!empty($this->request->params['named']['delivery_id'])) {
+
+
+            $this->Delivery->bindDeliveryById();
+
+            $delivery_conditions = array_merge($delivery_conditions,array(
+                            'Delivery.id' => $this->request->params['named']['delivery_id']
+                ));
+
+        } else {
+
+
+            $this->Delivery->bindDelivery();
+        }
 
         $deliveryEdit = $this->Delivery->find('first', array(
-                                         'conditions' => array(
-                                        'DeliveryDetail.delivery_uuid' => $dr_uuid
-                                        )
+                                         'conditions' =>   $delivery_conditions 
                                     ));
 
-        $this->Delivery->bindDelivery();
+
+        if (!empty($this->request->params['named']['delivery_id'])) {
+
+            $this->Delivery->bindDeliveryById();
+
+        } else {
+            
+            $this->Delivery->bindDelivery();
+        }
+
         $deliveryData = $this->Delivery->find('all', array(
                                        'conditions' => array(
-                                      'Delivery.schedule_uuid' => $clientsOrderUuid
+                                         'Delivery.schedule_uuid' => $clientsOrderUuid
                                       )
                                   ));
 
+
         $this->ClientOrder->bindDelivery();
+
         $scheduleInfo = $this->ClientOrder->find('first', array(
                                          'conditions' => array(
                                           'ClientOrderDeliverySchedule.uuid' => $clientsOrderUuid
@@ -616,11 +641,15 @@ class DeliveriesController extends DeliveryAppController {
  
         if ($this->request->is(array('post', 'put'))) {
 
+            $data = $this->request->data;
+
             $this->request->data['DeliveryDetail']['remaining_quantity'] = ($this->request->data['ClientOrderDeliverySchedule']['quantity']) - ($this->request->data['DeliveryDetail']['quantity']);
                
             $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
                     
             $this->Session->setFlash(__('Delivery Receipt has been updated.'),'success');
+
+
 
             $this->redirect( array(
                  'controller' => 'deliveries', 
@@ -1169,9 +1198,11 @@ class DeliveriesController extends DeliveryAppController {
        
         $this->DeliveryConnection->bindDeliveryById();
 
+        $drConditions =  array('DeliveryConnection.dr_uuid' => $uuid,'Delivery.status !=' => 2);
+
         $DRRePrint = $this->DeliveryConnection->find('all', array(
                                         'limit' => 4,
-                                        'conditions' => array('DeliveryConnection.dr_uuid' => $uuid),
+                                        'conditions' => $drConditions,
                                        // 'group' => array('Delivery.id')
                                      ));
 
@@ -1748,15 +1779,15 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
-        $this->loadModel('Ticket.JobTicket');
+            $this->loadModel('Ticket.JobTicket');
 
-        $jobTicketData = $this->JobTicket->find('list',array('fields' => array('client_order_id', 'uuid')));
+            $jobTicketData = $this->JobTicket->find('list',array('fields' => array('client_order_id', 'uuid')));
 
-        $this->Delivery->bindDelivery();
+        // $this->Delivery->bindDelivery();
 
-       //$deliveryStatus = $this->Delivery->find('all');        
+     //  $deliveryStatus = $this->Delivery->find('all');        
 
-        //$orderDeliveryList = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid', 'uuid')));
+        $orderDeliveryList = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('uuid', 'uuid')));
 
         $this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product'));
 
@@ -2133,7 +2164,10 @@ class DeliveriesController extends DeliveryAppController {
                 FROM delivery_connection AS DeliveryConnection
                 LEFT JOIN deliveries AS Delivery
                 ON Delivery.id = DeliveryConnection.delivery_id 
-                WHERE DeliveryConnection.dr_uuid = "'.$data['dr_uuid'].'" ');
+                WHERE DeliveryConnection.dr_uuid = "'.$data['dr_uuid'].'" 
+                AND Delivery.status != "2"
+                ');
+
 
             if (!empty($delivery)) {
 

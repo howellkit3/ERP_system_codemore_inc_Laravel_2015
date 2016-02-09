@@ -200,6 +200,22 @@
                             </div>
                         </div>
 
+                          <div class="form-group" id="existing_items">
+                            <label class="col-lg-2 control-label"> Remarks </label>
+                            <div class="col-lg-9">
+                                <?php 
+                                    echo $this->Form->input('DeliveryDetail.remarks', array(
+                                                                    'empty' => 'None',
+                                                                    'class' => 'form-control item_type editable',
+                                                                    'label' => false,
+                                                                    'type' => 'textarea'
+                                                                    // 'value' => $deliveryEdit['DeliveryDetail']['quantity']
+                                                                    ));
+                                ?>
+                            </div>
+
+                        </div>
+
                         <div class="modal-footer">
                              <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

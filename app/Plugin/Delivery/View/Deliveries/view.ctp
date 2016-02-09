@@ -412,7 +412,9 @@ $totalremaining = 0;
                                         echo $this->Html->link('<span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class="fa fa-pencil  fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Edit</font></span>
-                                                </span>', array('controller' => 'deliveries', 'action' => 'delivery_edit',$deliveryDataList['Delivery']['dr_uuid'], $clientsOrder['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link '. $activeStatus,'escape' => false,'title'=>'Review Inquiry'));
+                                                </span>', array('controller' => 'deliveries', 'action' => 'delivery_edit',$deliveryDataList['Delivery']['dr_uuid'], $clientsOrder['ClientOrderDeliverySchedule']['uuid'],0,
+                                                  'delivery_id' =>  $deliveryDataList['DeliveryDetail']['delivery_id']
+                                                    ),array('class' =>' table-link '. $activeStatus,'escape' => false,'title'=>'Review Inquiry'));
 
                                         if($clientsOrder['ClientOrder']['company_id'] == '1223' || $clientsOrder['ClientOrder']['company_id'] =='3' || $clientsOrder['ClientOrder']['company_id'] == '4' || $clientsOrder['ClientOrder']['company_id'] == '5' || $clientsOrder['ClientOrder']['company_id'] == '6' || $clientsOrder['ClientOrder']['company_id'] =='60' || $clientsOrder['ClientOrder']['company_id'] == '102' ){
                                             
@@ -428,11 +430,10 @@ $totalremaining = 0;
                                         echo $this->Html->link('<span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Print </font></span>
-                                                </span>', '#printDelivery',array('class' =>' table-link  refresh ' . $activeStatus,
+                                                </span>', '#printDelivery',array('class' =>' table-link  refresh print_delivery ' . $activeStatus,
                                                     'escape' => false,
                                                     'title'=>'Print Delivery Receipt',
                                                     'data-toggle' => 'modal',
-                                                    'class' => 'print_delivery',
                                                     'data-delivery-id' => $deliveryDataList['Delivery']['id'],
                                                     'data-dr-uuid' =>  $deliveryDataList['Delivery']['dr_uuid']
                                                     ));  
@@ -445,7 +446,7 @@ $totalremaining = 0;
 
                                             echo $this->Html->link('<span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i><i class="fa fa-trash fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Delete </font></span></span> ', array('controller' => 'deliveries', 'action' => 'remove_dr_sched', $deliveryDataList['Delivery']['dr_uuid'], $deliveryScheduleId,$clientsOrderUuid,$clientUuid ),
-                                                            array( 'label' => false,'class' =>' table-link '. $deleteStatus,'escape' => false,'title'=>'Edit Information', 'confirm' => 'Are you sure you want to delete this schedule ? '
+                                                            array( 'label' => false,'class' =>' table-link','escape' => false,'title'=>'Edit Information', 'confirm' => 'Are you sure you want to delete this schedule ? '
                                                               ));
 
                                       ?>
