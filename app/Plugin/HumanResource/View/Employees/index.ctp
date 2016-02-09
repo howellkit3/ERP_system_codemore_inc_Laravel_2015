@@ -138,6 +138,7 @@ $page = !empty($this->params['named']['page']) ? $this->params['named']['page'] 
 											<th class="text-center"><a href="#"><span>Position</span></a></th>
 											<th class="text-center"><a href="#"><span>Status</span></a></th>
 											<th class="text-center"><a href="#"><span>Gender</span></a></th>
+											<th class="text-center"><a href="#"><span>Contact #</span></a></th>
 											<th><a href="#"><span>Actions</span></a></th>
 										</tr>
 									</thead>
@@ -194,6 +195,29 @@ $page = !empty($this->params['named']['page']) ? $this->params['named']['page'] 
 								                        <td>
 								                           <?php echo !empty($employee['Employee']['gender']) ? $employee['Employee']['gender'] : '';  ?>
 								                        </td>
+
+
+								                          <td>
+								                          <?php if(!empty($employee['Contact'])) : ?>
+
+								                          <?php 
+
+								                          	foreach ($employee['Contact'] as $key => $list) {
+								                          		
+								                          		echo $list['number'];
+
+								                          		if ($key >= 1) {
+
+								                          			echo "<br>";
+								                          		}
+
+								                          	}
+								                          ?>
+
+								                          <?php endif; ?>
+								                        </td>
+
+
 
 								                       	<td>
 								                            <?php 

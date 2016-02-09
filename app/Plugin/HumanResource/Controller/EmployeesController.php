@@ -23,6 +23,8 @@ class EmployeesController  extends HumanResourceAppController {
 		$this->loadModel('HumanResource.Department');
 		$this->loadModel('HumanResource.Status');
 
+		$this->loadModel('HumanResource.Contact');
+
 		$this->Employee->bind(array('Position','Department','Status'));
 
 		//array_push($departmentData, "All");
@@ -32,7 +34,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 	 	if ( (empty($this->params['named']['model'])) ||  $this->params['named']['model'] == 'Employee' ) {
 	 		
-	 		$this->Employee->bind(array('Position','Department','Status'));
+	 		$this->Employee->bind(array('Position','Department','Status','Contact'));
 
 	        $this->paginate = array(
 	            'conditions' => $conditions,
@@ -43,6 +45,7 @@ class EmployeesController  extends HumanResourceAppController {
 	        );
 
 	        $employees = $this->paginate();
+
 
 	        $totalEmployee = $this->Employee->find('count',array('conditions' => $conditions, 'group' => array('Employee.id'), 'recursive' => -1));
 	
@@ -88,7 +91,9 @@ class EmployeesController  extends HumanResourceAppController {
 		$this->loadModel('HumanResource.Department');
 		$this->loadModel('HumanResource.Status');
 		$this->loadModel('HumanResource.Contract');
-		$this->Employee->bind(array('Position','Department','Status','Contract'));
+
+		$this->loadModel('HumanResource.Contact');
+		$this->Employee->bind(array('Position','Department','Status','Contract','Contact'));
 
 		$conditions = array();
 
@@ -126,14 +131,31 @@ class EmployeesController  extends HumanResourceAppController {
 		}
 
 
+		//check contact number
+
+		$contacts = $this->Contact->find('all',array('conditions' => array(
+				'Contact.number like' => '%'. $hintKey .'%'
+		),
+		'fields' => array('id' => 'foreign_key')
+		));
+
+
+		if (!empty($contacts)) {
+
+			$numbers = array();
+			foreach ($contacts as $key => $value) {
+				$numbers[] = $value['Contact']['foreign_key'];
+			}
+
+			$conditions['OR'][3] = array('Employee.id' => $numbers);
+		}
+
 
 		$employeeData = $this->Employee->find('all',array(
 			'conditions' => $conditions,
 			'order' => array('Employee.code DESC'),
 			//'fields' => array(),
 		));
-		
-
 
 		if ($type == 'json') {
 
