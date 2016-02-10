@@ -417,3 +417,7 @@ tr.main {
 .footable-row-detail-inner {
   width: 100%;
 }
+
+th.actions {
+  min-width: 178px;
+}

@@ -79,7 +79,7 @@
 
                                 </div>
 
-                                <?php echo $this->Form->input('delivery_id',array('type' => 'text' ,'value' => $deliveryId)); ?>
+                                <?php echo $this->Form->input('delivery_id',array('type' => 'hidden' ,'value' => $deliveryId)); ?>
                             
                             <?php echo $this->Form->end();  ?> 
 
@@ -125,7 +125,7 @@
                                         ));
                                 ?>
                                 
-                                <?php echo $this->Form->input('delivery_id',array('type' => 'text' ,'value' => $deliveryId)); ?>
+                                <?php echo $this->Form->input('delivery_id',array('type' => 'hidden' ,'value' => $deliveryId)); ?>
 
                                 <div class="modal-footer">
 

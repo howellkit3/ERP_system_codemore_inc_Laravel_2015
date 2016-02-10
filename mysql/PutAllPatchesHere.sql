@@ -2615,12 +2615,12 @@ ADD COLUMN `delivery_id`  int(11) NULL AFTER `created`;
 
 
 
-/* aldrin added this 02 - 02 - 16 */
+/* aldrin added this 02 - 02 - 16 accounting */
 ALTER TABLE `sales_invoices`
 ADD COLUMN `delivery_id`  int(11) NULL AFTER `dr_uuid`;
 
 
-/* aldrin added this 02 - 04 - 16 */
+/* aldrin added this 02 - 04 - 16  warehouse */
 ALTER TABLE `received_items`
 ADD COLUMN `pieces`  int(11) NULL AFTER `quantity_unit_id`;
 

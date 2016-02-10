@@ -372,7 +372,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         $this->loadModel('Sales.Company');
 
-        $limit = 5;
+        $limit = 10;
 
         $search = '';
 
@@ -396,7 +396,8 @@ class SalesInvoiceController extends AccountingAppController {
                 'Delivery.status',
                 'Delivery.dr_uuid', 
                 ),
-                'order' => 'Delivery.id DESC'
+                'order' => 'Delivery.id DESC',
+                'group' => 'Delivery.id'
 
             );
 
@@ -408,10 +409,10 @@ class SalesInvoiceController extends AccountingAppController {
 
         $this->paginate = $params;
 
-
-        $this->Delivery->bindDelivery();
+       // $this->Delivery->bindDelivery();
 
         $deliveryData = $this->paginate('Delivery');
+
 
       //  $poNumber = $this->ClientOrder->find('list', array('fields' => array('uuid', 'po_number')));
         $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
@@ -614,12 +615,15 @@ class SalesInvoiceController extends AccountingAppController {
 
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
+        $this->loadModel('Currency');
+
         // $this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product', 'Quotation', 'QuotationItemDetail', 'Company', 'Address'));
         
         $this->loadModel('Delivery.Delivery');
 
         $this->loadModel('Sales.PaymentTermHolder');
 
+            
         $paymentTermData = Cache::read('paymentTerms');
         
         if (!$paymentTermData) {
@@ -627,6 +631,11 @@ class SalesInvoiceController extends AccountingAppController {
             Cache::write('paymentTerms', $paymentTermData);
         }
         $currencyData = Cache::read('currencyData');
+       
+        $currencyData = $this->Currency->find('list', array('fields' => array('id', 'name'),
+                                                        'order' => array('Currency.name' => 'ASC')
+                                                        ));
+
 
         $drData = $this->Delivery->query('SELECT *
                 FROM deliveries AS Delivery

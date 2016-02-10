@@ -3,7 +3,7 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/statement_account.xlsx");
+    $objTpl = PHPExcel_IOFactory::load("./img/statement_updated.xls");
 
     $statementnum = "SA".str_pad($invoiceData['SalesInvoice']['statement_no'], 6, '0', STR_PAD_LEFT); 
     $drnum = "DR".str_pad($drData['Delivery']['dr_uuid'], 6, '0', STR_PAD_LEFT);
@@ -52,22 +52,42 @@
       
     }
 
-    $objTpl->setActiveSheetIndex(0)
-                ->setCellValue('C7', ucwords($clientData['Company']['company_name']))
-                ->setCellValue('C8', $Addresspart1)
-                ->setCellValue('C9', $Addresspart2)
-                ->setCellValue('I6', $statementnum)
-                ->setCellValue('I8', $clientData['Company']['tin'])
-                ->setCellValue('F12', number_format($drData['DeliveryDetail']['quantity']))
-                ->setCellValue('H12', $clientData['QuotationItemDetail']['unit_price'])
-                ->setCellValue('I9', $paymentTermData[$clientData['ClientOrder']['payment_terms']])      
-                ->setCellValue('I7', date('M d, Y', strtotime($drData['Delivery']['created'])))
-                ->setCellValue('C12', ucfirst($clientData['Product']['name']))
-                ->setCellValue('A12', $clientData['ClientOrder']['po_number'])
-                ->setCellValue('C25', $drnum);
+
+    $totalAmount = '';
+    $currency = '';
+    $unitPrice = $clientData['QuotationItemDetail']['unit_price'];
+
+    if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2 && $clientData['QuotationItemDetail']['vat_status'] == "Vatable Sale"){
+
+        $currency = $currencyData[$clientData['QuotationItemDetail']['unit_price_currency_id']];
+
+    }else{
+
+        $currency = $currencyData[$clientData['QuotationItemDetail']['unit_price_currency_id']];
+
+    }
+
+
+    $cell =  $objTpl->setActiveSheetIndex(0);
+    $cell->setCellValue('C7', ucwords($clientData['Company']['company_name']));
+    $cell->setCellValue('C8', $Addresspart1);
+    $cell->setCellValue('C9', $Addresspart2);
+    $cell->setCellValue('I6', $statementnum);
+    $cell->setCellValue('I8', $clientData['Company']['tin']);
+    $cell->setCellValue('F12', number_format($drData['DeliveryDetail']['quantity']));
+    $cell->setCellValue('H12', $clientData['QuotationItemDetail']['unit_price']);
+    $amount = $drData['DeliveryDetail']['quantity'] * $clientData['QuotationItemDetail']['unit_price'];
+    $cell->setCellValue('J12',number_format($amount,2));
+    $cell->setCellValue('I9', $paymentTermData[$clientData['ClientOrder']['payment_terms']]);
+    $cell->setCellValue('I7', date('M d, Y', strtotime($drData['Delivery']['created'])));
+    $cell->setCellValue('C12', ucfirst($clientData['Product']['name']));
+    $cell->setCellValue('A12', $clientData['ClientOrder']['po_number']);
+    $cell->setCellValue('C25', $drnum);
+
+    $cell->setCellValue('I31',$currency.' '.number_format($amount,2));
                    
     //prepare download
-    $filename = mt_rand(1,100000).'.xlsx'; //just some random filename
+    $filename = 'statement-'.date('ymd').'-'.mt_rand(1,100000).'.xlsx'; //just some random filename
     header('Content-Type: application/vnd.ms-office');
     header('Content-Disposition: attachment;filename="'.$filename.'"');
     header('Cache-Control: max-age=0');

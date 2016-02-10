@@ -34,7 +34,7 @@
                                     <li class="<?php echo ($active_tab == 'tab-approved') ? 'active' : '' ?> statusclick" alt="tab-approved" value = "3"><a href="#tab-approved" id = 'itemType' data-toggle="tab">Approved</a></li>
                                     <li class="<?php echo ($active_tab == 'tab-closed') ? 'active' : '' ?> statusclick" alt="tab-closed" value = "4"><a href="#tab-closed" id = 'itemType' data-toggle="tab">Closed</a></li>
                                     <li class="<?php echo ($active_tab == 'tab-completed') ? 'active' : '' ?> statusclick" alt="tab-completed" value = "5"><a href="#tab-completed" id = 'itemType' data-toggle="tab">Completed</a></li> -->
-                                </ul>
+                         </ul>
                         <div class="main-box-body clearfix">
                             <div class="tabs-wrapper">                  
                                 <div class="tab-content">

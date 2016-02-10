@@ -3,7 +3,7 @@
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
 
-    $objTpl = PHPExcel_IOFactory::load("./img/InvoiceMultiple.xlsx");
+    $objTpl = PHPExcel_IOFactory::load("./img/invoice_multiple.xlsx");
 
     $unitPrice = 0;
 
@@ -43,19 +43,19 @@
 	$currency = '';
     $unitPrice = $drData[0]['QuotationItemDetail']['unit_price'];
 
-	// if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2 && $clientData['QuotationItemDetail']['vat_status'] == "Vatable Sale"){
+	if($drData[0]['QuotationItemDetail']['unit_price_currency_id'] == 2 && $drData[0]['QuotationItemDetail']['vat_status'] == "Vatable Sale"){
 
-	// 	$totalVat = $totalQty * .12;
-	// 	$fullVat = $totalQty + $totalVat;
-	// 	$currency = $currencyData[$clientData['QuotationItemDetail']['unit_price_currency_id']];
-	// 	$totalAmount = number_format($fullVat,2);
+		$totalVat = $totalQty * .12;
+		$fullVat = $totalQty + $totalVat;
+		$currency = $currencyData[$drData[0]['QuotationItemDetail']['unit_price_currency_id']];
+		$totalAmount = number_format($fullVat,2);
 
-	// }else{
+	}else{
 
-	// 	$currency = $currencyData[$clientData['QuotationItemDetail']['unit_price_currency_id']];
-	// 	$totalAmount = number_format($totalQty,2);
+		$currency = $currencyData[$drData[0]['QuotationItemDetail']['unit_price_currency_id']];
+		$totalAmount = number_format($totalQty,2);
 
-	// }
+	}
 
     $words = explode(" ", $drData[0]['DeliveryDetail']['location']);
 
@@ -120,13 +120,22 @@
     $sheet->setCellValue('C9', ucwords( $Addresspart2 ));
     $sheet->setCellValue('C10', ucwords( $Addresspart3 ));
 
+    $sheet->setCellValue('J8', $drData[0]['Company']['tin']);
+    $sheet->setCellValue('J9', $paymentTermData[$drData[0]['ClientOrder']['payment_terms']]);
+    
     $start = 12;
+
+       $styleArrayHeader = array(
+                  'alignment' => array(
+                    'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_RIGHT,
+                  )
+              );
 
         $total = 0;
         $delivery_date = $vat = $unitPriceID =array();
         foreach ($drData as $key => $list) {
 
-            $delivery_date[] = date('M d, Y', strtotime($list['Delivery']['created']));
+            $sheet->setCellValue('J7', date('M d, Y', strtotime($list['Delivery']['created'])));
 
             $sheet->setCellValue('B'.$start, $list['ClientOrder']['po_number']);
             $sheet->setCellValue('F'.$start, ucfirst($list['Product']['name']));
@@ -139,6 +148,7 @@
             $sheet->setCellValue('K'.$start, number_format($totalQty,2)); $total += $totalQty;
             $sheet->setCellValue('K'.$start, $totalQty);
 
+            $sheet->getStyle('K'.$start)->applyFromArray($styleArrayHeader);   
 
 
             $vat[] = $list['QuotationItemDetail']['vat_status'];
@@ -194,8 +204,11 @@
     } 
          
         $sheet->setCellValue('K33', $currency.' '. $totalAmount); 
-        
-        $sheet->setCellValue('J7', $drData[0]['Delivery']['created']); 
+        $sheet->setCellValue('K29', $vatSale);
+        $sheet->setCellValue('K30', $vatExem);
+        $sheet->setCellValue('K31', $zeroRated);
+        $sheet->setCellValue('K32', $vat12);
+      //  $sheet->setCellValue('J7', $drData[0]['Delivery']['created']); 
 
         $sheet->setCellValue('D26', 'DR#'.$drData[0]['Delivery']['dr_uuid']);
         

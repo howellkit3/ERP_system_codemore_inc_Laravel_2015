@@ -134,7 +134,7 @@
 											$totalQty = $drData['DeliveryDetail']['quantity'] * $clientData['QuotationItemDetail']['unit_price']?>
 
 											<?php 
-												echo $currencyData[$clientData['QuotationItemDetail']['unit_price_currency_id']];
+												echo $currencyData[$clientData['QuotationItemDetail']['unit_price_currency_id']].' ';
 												echo number_format($totalQty,2); 
 										?>
 									</td>

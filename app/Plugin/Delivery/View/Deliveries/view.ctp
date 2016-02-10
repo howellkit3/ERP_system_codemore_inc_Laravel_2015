@@ -285,7 +285,7 @@ $totalremaining = 0;
                             <th class=""><a href="#"><span>Delivered</span></a></th>
                             <th class=""><a href="#"><span>Replaced</span></a></th>
                             <th class=""><a href="#"><span>Status</span></a></th>
-                            <th class=""><a href="#"><span>Action</span></a></th>
+                            <th class="actions"><a href="#"><span>Action</span></a></th>
                         </tr>
                     </thead>
 
@@ -421,7 +421,7 @@ $totalremaining = 0;
                                             echo $this->Html->link('<span class="fa-stack">
                                                         <i class="fa fa-square fa-stack-2x"></i>
                                                         <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> APC</font></span>
-                                                        </span>', array('controller' => 'deliveries', 'action' => 'apc',$deliveryDataList['Delivery']['dr_uuid'],$clientsOrder['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link '. $activeStatus,'escape' => false,'title'=>'Print Delivery Receipt',
+                                                        </span>', array('controller' => 'deliveries', 'action' => 'multiple_apc',$deliveryDataList['Delivery']['dr_uuid'],$clientsOrder['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link '. $activeStatus,'escape' => false,'title'=>'Print Delivery Receipt',
                                                             'data-delivery-id' => $deliveryDataList['Delivery']['id'],
                                                     'data-dr-uuid' =>  $deliveryDataList['Delivery']['dr_uuid']
                                                             ));
@@ -430,7 +430,7 @@ $totalremaining = 0;
                                         echo $this->Html->link('<span class="fa-stack">
                                                 <i class="fa fa-square fa-stack-2x"></i>
                                                 <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> Print </font></span>
-                                                </span>', '#printDelivery',array('class' =>' table-link  refresh print_delivery ' . $activeStatus,
+                                                </span>', '#printDelivery',array('class' =>' table-link  refresh print_delivery ',
                                                     'escape' => false,
                                                     'title'=>'Print Delivery Receipt',
                                                     'data-toggle' => 'modal',
