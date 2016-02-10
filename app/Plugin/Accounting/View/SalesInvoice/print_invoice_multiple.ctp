@@ -148,9 +148,6 @@
             $sheet->setCellValue('K'.$start, number_format($totalQty,2)); $total += $totalQty;
             $sheet->setCellValue('K'.$start, $totalQty);
 
-            $sheet->getStyle('K'.$start)->applyFromArray($styleArrayHeader);   
-
-
             $vat[] = $list['QuotationItemDetail']['vat_status'];
             $unitPriceID[] = $list['QuotationItemDetail']['unit_price_currency_id'];
 
@@ -210,7 +207,7 @@
         $sheet->setCellValue('K32', $vat12);
       //  $sheet->setCellValue('J7', $drData[0]['Delivery']['created']); 
 
-        $sheet->setCellValue('D26', 'DR#'.$drData[0]['Delivery']['dr_uuid']);
+        $sheet->setCellValue('D26', 'DR#'.$drNum);
         
   
   // prepare download
