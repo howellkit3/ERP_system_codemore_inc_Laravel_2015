@@ -121,7 +121,7 @@
 
     }
 
-    $filename = mt_rand(1,100000).'.xls'; //just some random filename
+    $filename = 'dr-'.date('ymd').'-'.mt_rand(1,100000).'.xls'; //just some random filename
     header('Content-Type: application/vnd.ms-office');
     header('Content-Disposition: attachment;filename="'.$filename.'"');
     header('Cache-Control: max-age=0');

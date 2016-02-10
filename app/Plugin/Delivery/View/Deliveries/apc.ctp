@@ -12,12 +12,10 @@
 
 
 //address
-
     $cell->setCellValue('A3',$toPrint[0]['Company']['Company']['company_name']);
 
     $cell->setCellValue('A4',$toPrint[0]['DeliveryDetail']['location']);
-
-
+    
     $cell->setCellValue('H4',date('Y-m-d'));
 
     $start = 11;
@@ -45,7 +43,7 @@
     //     ->setCellValue('C11', $clientData['ClientOrder']['po_number'])
     //     ->setCellValue('F5',  date('F d, Y', strtotime($clientData['ClientOrderDeliverySchedule']['schedule'])));
    
-    $filename = 'apc-'.date('Ymd').mt_rand(1,100000).'.xlsx'; 
+    $filename = 'apc-'.date('ymd').mt_rand(1,100000).'.xlsx'; 
     header('Content-Type: application/vnd.ms-office');
     header('Content-Disposition: attachment;filename="'.$filename.'"');
     header('Cache-Control: max-age=0');
