@@ -421,7 +421,7 @@ $totalremaining = 0;
                                             echo $this->Html->link('<span class="fa-stack">
                                                         <i class="fa fa-square fa-stack-2x"></i>
                                                         <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> APC</font></span>
-                                                        </span>', array('controller' => 'deliveries', 'action' => 'multiple_apc',$deliveryDataList['Delivery']['dr_uuid'],$clientsOrder['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link '. $activeStatus,'escape' => false,'title'=>'Print Delivery Receipt',
+                                                        </span>', array('controller' => 'deliveries', 'action' => 'multiple_apc',$deliveryDataList['Delivery']['dr_uuid'],$clientsOrder['ClientOrderDeliverySchedule']['uuid']),array('class' =>' table-link ','escape' => false,'title'=>'Print Delivery Receipt',
                                                             'data-delivery-id' => $deliveryDataList['Delivery']['id'],
                                                     'data-dr-uuid' =>  $deliveryDataList['Delivery']['dr_uuid']
                                                             ));

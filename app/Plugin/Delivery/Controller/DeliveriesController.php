@@ -1420,11 +1420,7 @@ class DeliveriesController extends DeliveryAppController {
 
         }
 
-
-
-         $measureList = $this->Measure->find('list',array('fields' => array('id','name')));
-
-       
+        $measureList = $this->Measure->find('list',array('fields' => array('id','name')));
         $prepared = $userData;
         $approved = $this->User->find('first', 
             array('fields' => array('id', 'first_name','last_name'),
