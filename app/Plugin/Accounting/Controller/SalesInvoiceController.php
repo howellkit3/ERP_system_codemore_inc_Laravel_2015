@@ -219,7 +219,7 @@ class SalesInvoiceController extends AccountingAppController {
                      LEFT JOIN koufu_sale.quotation_details AS QuotationDetail
                     ON QuotationDetail.quotation_id = ClientOrder.quotation_id
                     LEFT JOIN koufu_sale.quotation_item_details AS QuotationItemDetail
-                    ON QuotationItemDetail.quotation_id = ClientOrder.quotation_id
+                    ON QuotationItemDetail.id = ClientOrder.client_order_item_details_id
                     LEFT JOIN koufu_sale.companies AS Company
                     ON Company.id = Quotation.company_id
                     LEFT JOIN koufu_sale.products AS Product
@@ -233,6 +233,7 @@ class SalesInvoiceController extends AccountingAppController {
 
                  $noPermissionReciv = "";
                  $companyData =  $drData[0]['Company']['company_name'];
+
 
 
             } else {
@@ -650,7 +651,7 @@ class SalesInvoiceController extends AccountingAppController {
                 LEFT JOIN koufu_sale.quotation_details AS QuotationDetail
                 ON QuotationDetail.quotation_id = ClientOrder.quotation_id
                 LEFT JOIN koufu_sale.quotation_item_details AS QuotationItemDetail
-                ON QuotationItemDetail.quotation_id = ClientOrder.quotation_id
+                ON QuotationItemDetail.id = ClientOrder.client_order_item_details_id
                 LEFT JOIN koufu_sale.companies AS Company
                 ON Company.id = Quotation.company_id
                 LEFT JOIN koufu_sale.products AS Product
@@ -658,7 +659,7 @@ class SalesInvoiceController extends AccountingAppController {
                 LEFT JOIN koufu_sale.addresses AS Address
                 ON Address.foreign_key = Company.id
                 WHERE Delivery.dr_uuid = "'.$dr_uuid.'" group by Delivery.id');
-        
+
 
          $noPermissionPay = "";
 

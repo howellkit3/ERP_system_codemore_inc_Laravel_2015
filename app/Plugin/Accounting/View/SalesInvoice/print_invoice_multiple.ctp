@@ -140,9 +140,9 @@
             $sheet->setCellValue('B'.$start, $list['ClientOrder']['po_number']);
             $sheet->setCellValue('F'.$start, ucfirst($list['Product']['name']));
             $sheet->setCellValue('D'.$start, number_format($list['DeliveryDetail']['quantity']));
-            $sheet->setCellValue('I'.$start, number_format($list['QuotationItemDetail']['unit_price'],2));
+            $sheet->setCellValue('I'.$start, number_format($list['QuotationItemDetail']['unit_price'],4));
 
-            $unitPrice = (float) $list['QuotationItemDetail']['unit_price'];
+            $unitPrice = number_format($list['QuotationItemDetail']['unit_price'],4);
             $quantity = (float) $list['DeliveryDetail']['quantity'] ;
             $totalQty = $quantity * $unitPrice;
             $sheet->setCellValue('K'.$start, number_format($totalQty,2)); $total += $totalQty;
