@@ -214,6 +214,7 @@
         }else{
             $('.OrderFields').show();
             $('.searchAppend').hide();
+            
             //alert('show');
         }   
           $append = $('.searchAppend');
@@ -241,15 +242,27 @@
 
                     $append.html(data);
 
+                         if(searchInput != ''){
+
+                            $('#item_type_pagination').hide();
+                         } else {
+                                 $('#item_type_pagination').show();
+                         }
+
                 } 
                 if (data.length < 5 ) {
 
                     $append.html('<font color="red"><b>No result..</b></font>');
                      
                 }
+
+
+
                 
             }
         });
+
+           //$('#item_type_pagination').show();
     }
 
 
@@ -282,6 +295,9 @@
                     $('.appendHere').html(data);
 
                 } 
+
+
+                $('#item_type_pagination').show();
             }
         });
     }
@@ -363,7 +379,6 @@
         $value = $(this).val();
 
         $container = $('#resultBox');
-
 
         $container.html('<img class="loader" src="'+serverPath+'/img/loader.gif">');
 
