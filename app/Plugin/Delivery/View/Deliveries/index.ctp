@@ -108,6 +108,8 @@
                     $append.html('<font color="red"><b>No result..</b></font>');
                      
                 }
+
+                $('#item_type_pagination').hide();
                 
             }
         });
@@ -143,6 +145,8 @@
                     $('.appendHere').html(data);
 
                 } 
+
+                $('#item_type_pagination').show();
             }
         });
     }
@@ -177,7 +181,15 @@
 
     $('body').on('click','#item_type_pagination a',function(e) {
 
+
         $url = $(this).attr('href');
+
+
+        if ($('.searchOrder').val() != '') {
+
+            $url + '?s=' + $('.searchOrder').val();
+
+        }
 
 
         $.ajax({
@@ -196,7 +208,6 @@
         });
 
 
-        e.preventDefault();
     });
 
   });
