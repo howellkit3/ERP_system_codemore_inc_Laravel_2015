@@ -14,17 +14,25 @@ class DeliveriesController extends DeliveryAppController {
 
     public function index() {
 
-         $userData = $this->Session->read('Auth');
+        $userData = $this->Session->read('Auth');
+        
+        $this->loadModel('Sales.Company');
 
         if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
 
             $noPermissionSales = 'disabled not-active';
 
-        }else{
+        } else {
+            
             $noPermissionSales = ' ';
         }
 
-        $this->set(compact('noPermissionSales','clientsOrder','deliveryData', 'deliveryList', 'deliveryDetailList', 'clientsStatus', 'deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList'));
+
+        $companyData = $this->Company->find('list', array(
+            'fields' => array('id', 'company_name'),
+            'order' => 'Company.company_name ASC'
+        ));
+        $this->set(compact('noPermissionSales','clientsOrder','deliveryData', 'deliveryList', 'deliveryDetailList', 'clientsStatus', 'deliveryStatus', 'orderList', 'orderListHelper', 'orderDeliveryList','companyData'));
     
     }
 
@@ -1345,7 +1353,6 @@ class DeliveriesController extends DeliveryAppController {
 
         $DRRePrint = array();
 
-
         $toPrint = array();
 
         $this->loadModel('Sales.ClientOrder');
@@ -1422,6 +1429,7 @@ class DeliveriesController extends DeliveryAppController {
 
 
         }
+
 
         $measureList = $this->Measure->find('list',array('fields' => array('id','name')));
         $prepared = $userData;
@@ -2312,6 +2320,194 @@ class DeliveriesController extends DeliveryAppController {
 
     }
 
+
+    public function find_clients_order() {
+
+        $clientsOrder = array();
+
+        if (!empty($this->request->query)) {
+
+            $this->loadModel('Sales.ClientOrder');
+            
+            $this->loadModel('Sales.ClientOrderItemDetails');
+
+            $this->loadModel('Sales.ClientOrderDeliverySchedule');
+
+            $this->loadModel('Delivery.Measure');
+
+            $query = $this->request->query;
+
+            $conditions = array(
+                    'ClientOrder.company_id' =>  $query['company_id'],
+                    'ClientOrder.status_id' => NULL
+                );
+
+            $this->ClientOrder->bindDelivery();
+
+            $clientsOrder = $this->ClientOrder->find('all',array(
+                'conditions' => $conditions,
+                'order' => 'ClientOrder.created DESC'
+            ));
+
+          //  echo json_encode($clientsOrder);
+        }
+
+        $measureList = $this->Measure->find('list',array('fields' => array('id', 'name')));    
+
+
+        $this->set(compact('clientsOrder','measureList'));
+
+        $this->render('/Deliveries/ajax/search_client_order');
+    }
+
+    public function create_delivery_dr() {
+
+        if (!empty($this->request->data)) {
+
+        $data = $this->request->data;
+            
+        $userData = $this->Session->read('Auth');
+      
+        $this->loadModel('Sales.ClientOrderDeliverySchedule');
+
+        $this->loadModel('Delivery.DeliveryReceipt');
+
+        $this->loadModel('Delivery.DeliveryConnection');
+
+        $this->ClientOrderDeliverySchedule->bind(array('ClientOrder'));
+
+        $DRdata = $this->Delivery->find('count', array(
+                    'conditions' => array(
+                      'Delivery.dr_uuid' => $data['Delivery']['dr_uuid'])
+                    ));
+
+        /* disable this so that they can have the same DR # */
+        
+        if (!empty($DRdata) && $DRdata >= 4) {
+
+            $this->Session->setFlash(__('Their are already 4 items in that DR,Choose another or remove item on the DR'), 'error');
+          
+            $this->redirect( array(
+                'controller' => 'deliveries',   
+                'action' => 'view',
+                $deliveryScheduleId,
+                $scheduleInfo['ClientOrderDeliverySchedule']['uuid'],
+                $scheduleInfo['ClientOrder']['uuid']
+            ));  
+        } 
+
+
+        if (!empty( $data['Item'] )) {
+
+            $saveData = array();    
+
+
+            pr($data);
+            exit();
+
+            foreach ($data['Item'] as $key => $value) {
+                  
+                    $scheduleInfo = $this->ClientOrderDeliverySchedule->find('first', array(
+                                                                         'conditions' => array(
+                                                                          'ClientOrderDeliverySchedule.id' => $value['client_order_delivery_schedule']
+                                                                        )
+                                                                    ));
+
+                    $saveData['Delivery']['schedule_uuid'] =  $scheduleInfo['ClientOrderDeliverySchedule']['uuid'];
+
+                    $saveData['Delivery']['clients_order_id'] =  $value['ClientOrder']['uuid'];
+
+                    $saveData['Delivery']['status'] =  '1';
+                    
+                    $saveData['Delivery']['company_id']  = $scheduleInfo['ClientOrder']['company_id'];
+
+                     // $saveData['DeliveryDetail']['location']  = $scheduleInfo['ClientOrderDeliverySchedule']['location'];
+                     // $saveData['DeliveryDetail']['quantity']  = $scheduleInfo['ClientOrderDeliverySchedule']['quantity'];
+                     // $saveData['DeliveryDetail']['schedule']  = $scheduleInfo['ClientOrderDeliverySchedule']['schedule'];
+
+                     $this->Delivery->create();
+
+                    $this->id = $this->Delivery->saveDelivery($saveData,$userData['User']['id']);
+                    //get latest delivery 
+                    $latestDelivery =  $this->Delivery->read(null, $this->id );
+
+            }
+        }
+
+        exit();
+
+      
+        
+
+        // $this->request->data['Delivery']['schedule_uuid'] = $scheduleInfo['ClientOrderDeliverySchedule']['uuid'];
+        // $this->request->data['Delivery']['clients_order_id']  = $scheduleInfo['ClientOrder']['uuid'];
+        // $this->request->data['Delivery']['status']  = '1';
+        // $this->request->data['DeliveryDetail']['location']  = $scheduleInfo['ClientOrderDeliverySchedule']['location'];
+        // $this->request->data['DeliveryDetail']['quantity']  = $scheduleInfo['ClientOrderDeliverySchedule']['quantity'];
+        // $this->request->data['DeliveryDetail']['schedule']  = $scheduleInfo['ClientOrderDeliverySchedule']['schedule'];
+        // $this->request->data['DeliveryDetail']['created_by']  = $userData['User']['id'];
+        // $this->request->data['Delivery']['modified_by']  = $userData['User']['id'];
+        // $this->request->data['DeliveryDetail']['modified_by']  = $userData['User']['id'];
+        // $this->request->data['DeliveryDetail']['delivery_uuid']  = $this->request->data['Delivery']['dr_uuid'];
+        // $this->request->data['DeliveryDetail']['remaining_quantity'] = ($this->request->data['ClientOrderDeliverySchedule']['quantity']) - ($this->request->data['DeliveryDetail']['quantity']);
+        // $this->request->data['Delivery']['company_id']  = $scheduleInfo['ClientOrder']['company_id'];
+        
+        // $Scheddate = $scheduleInfo['ClientOrderDeliverySchedule']['schedule'];
+
+        // $this->Delivery->create();
+
+        // $this->id = $this->Delivery->saveDelivery($this->request->data,$userData['User']['id']);
+        //   //get latest delivery 
+        // $latestDelivery =  $this->Delivery->read(null, $this->id );
+    
+        // $this->request->data['DeliveryDetail']['delivery_id'] = $latestDelivery['Delivery']['id'];
+
+        // $deliveryDetailId = $this->DeliveryDetail->saveDeliveryDetail($this->request->data,$userData['User']['id']);
+
+        // //save delivery connection
+
+        // $saveData['DeliveryConnection']['delivery_id'] =  $latestDelivery['Delivery']['id'];
+
+        // $saveData['DeliveryConnection']['delivery_details_id'] = $this->DeliveryDetail->id;  
+
+        // $saveData['DeliveryConnection']['dr_uuid'] =  $latestDelivery['Delivery']['dr_uuid']; 
+
+        // if($this->DeliveryConnection->saveDetail($saveData,$userData['User']['id'])) {
+
+        // } else {
+        //   //  pr($this->DeliveryConnection->validationErrors);
+        // }
+
+      
+        //save delivery reciep number
+       // $this->request->data['DeliveryReceipt']['dr_uuid'] = $latestDelivery['Delivery']['dr_uuid'];
+       // $this->request->data['DeliveryReceipt']['delivery_id'] = $latestDelivery['Delivery']['id'];
+       // $this->request->data['DeliveryReceipt']['location'] = $scheduleInfo['ClientOrderDeliverySchedule']['location'];
+       // $this->request->data['DeliveryReceipt']['quantity'] = $scheduleInfo['ClientOrderDeliverySchedule']['quantity'];
+       // $this->request->data['DeliveryReceipt']['created_by']  = $userData['User']['id'];
+
+       // $this->DeliveryReceipt->saveDeliveryReceipt($this->request->data,$userData['User']['id']);
+    
+        $this->Session->setFlash(__('Delivery receipt was issued'));
+
+        $this->redirect(
+
+            array('controller' => 'deliveries', 'action' => 'view',
+               $deliveryScheduleId,
+                $scheduleInfo['ClientOrderDeliverySchedule']['uuid'],
+                $scheduleInfo['ClientOrder']['uuid'])
+
+        );
+
+      
+
+        $this->set(compact('scheduleInfo','measureList'));
+        
+
+            pr($this->request->data);
+            exit();
+        }
+    }
     
 
 }

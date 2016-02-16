@@ -13,14 +13,17 @@
 
                 <div class="filter-block pull-right">
 
+
                 <div class="form-group pull-left">
                 
                         <input placeholder="Search..." class="form-control searchOrder"  />
                         <i class="fa fa-search search-icon"></i>
-                    
-                </div>
+                 </div>
 
-            </div> 
+                   <a href="#CustomerDr" class="" data-toggle="modal"><button class="btn btn-success"> <i class="fa fa-paper"></i> Create DR </button></a>
+ 
+
+             </div> 
                 
             </header>
 
@@ -53,6 +56,142 @@
         </div>
     </div>
 </div>
+
+ <div class="modal fade" id="CustomerDr" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content margintop">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Create Delivery Reciept</h4>
+                </div>
+                 <?php echo $this->Form->create('Delivery',array('url' => array(
+                        'controller' => 'deliveries',
+                        'action' => 'create_delivery_dr'
+                 ))); ?>
+                     
+                    <div class="modal-body">
+
+                        <div class="form-group" id="existing_items">
+
+                            <label class="col-lg-2 control-label"><span style="color:red">*</span> Customer </label>
+                            
+                            <div class="col-lg-10">
+                                <?php 
+                                    
+                                    echo $this->Form->input('company_id', array(
+                                                            'class' => 'form-control item_type required',
+                                                            'label' => false,
+                                                            'required' => 'required',
+                                                            'options' => $companyData
+                                                           // 'value' => $deliveryDataList['Delivery']['dr_uuid']
+                                                            ));
+
+
+                                 ?>
+                            </div>
+
+                            
+
+                        </div> 
+
+                        <div class="clearfix"></div>
+                        <br>
+                    <div class="form-group" id="existing_items">
+
+                           
+
+                              <label class="col-lg-2 control-label"><span style="color:red">*</span> DR # </label>
+                            
+                            <div class="col-lg-4">
+                                <?php 
+                                    
+                                    echo $this->Form->input('dr_uuid', array(
+                                                            'class' => 'form-control item_type required',
+                                                            'label' => false,
+                                                            'required' => 'required',
+                                                           // 'value' => $deliveryDataList['Delivery']['dr_uuid']
+                                                            ));
+
+
+                                 ?>
+                            </div>
+
+                             <label class="col-lg-2 control-label"><span style="color:red">*</span> DR Type </label>
+                            
+                            <div class="col-lg-4">
+                                <?php 
+                                    
+                                    echo $this->Form->input('dr_type', array(
+                                                            'class' => 'form-control item_type required',
+                                                            'label' => false,
+                                                            'required' => 'required',
+                                                            'options' => array(
+                                                                'dr' => 'Regular',
+                                                                'apc' => 'APC',
+                                                            )
+                                                           // 'value' => $deliveryDataList['Delivery']['dr_uuid']
+                                                            ));
+
+
+                                 ?>
+                            </div>
+
+                        </div> 
+
+                        <div class="clearfix"></div>
+
+
+                        <br>
+                        <div class="form-group" >
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                 <th><input type="checkbox" name="select_all" id="selectAll"></th>
+                                <th><a href="#"><span>Item</span></a></th>
+                                <th><a class="desc" href="#"><span> Po Number </span></a></th>
+                                <th><a class="asc" href="#"><span>Quantity</span></a></th>
+                                <th class="text-left"><span>Pieces</span></th>
+                                <th class="text-right"><span>Remarks</span></th>
+                                </tr>
+                                </thead>
+                                <tbody id="resultBox">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
+                        <div class="clearfix"></div>
+                         <div class="form-group" >
+                               <label class="col-lg-3 control-label"> Remarks </label>
+                            
+
+                                <?php echo $this->Form->input('remarks',array(
+                                        'label' => false,
+                                        'class' => 'form-control',
+                                        'type' => 'text',
+                                        'type' => 'textarea'
+                                )); ?>
+                         </div>
+                         <div class="clearfix"></div>
+                        <div class="result"></div>
+                            <br>
+                        <div class="modal-footer">
+                            <a href="/delivery/">
+                             <a class="print_dr" href="#">
+                             <button type="submit" class="btn btn-primary"><i class="fa fa-save fa-lg"></i> Submit </button>
+                         </a>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            
+                        </div>
+                   
+                </div>
+
+                    <?php echo $this->Form->end(); ?>   
+                
+            </div>
+        </div>
+    </div>
 
 
 <script>
@@ -108,8 +247,6 @@
                     $append.html('<font color="red"><b>No result..</b></font>');
                      
                 }
-
-                $('#item_type_pagination').hide();
                 
             }
         });
@@ -145,8 +282,6 @@
                     $('.appendHere').html(data);
 
                 } 
-
-                $('#item_type_pagination').show();
             }
         });
     }
@@ -181,15 +316,7 @@
 
     $('body').on('click','#item_type_pagination a',function(e) {
 
-
         $url = $(this).attr('href');
-
-
-        if ($('.searchOrder').val() != '') {
-
-            $url + '?s=' + $('.searchOrder').val();
-
-        }
 
 
         $.ajax({
@@ -197,18 +324,86 @@
             url: $url,
             dataType: "html",
             success: function(data) {
-
-                if(data){
-
-                    $('.appendHere').html(data);
-
-                } 
                 
+                if (data) {
+                    
+                    $('.appendHere').html(data);
+                
+                } 
+            
             }
         });
 
 
+        e.preventDefault();
     });
+
+
+    $('#selectAll').click(function() {
+    var checkboxes = $('#DeliveryIndexForm #resultBox :checkbox');
+         if($(this).prop('checked')) {
+
+            checkboxes.prop('checked', true);
+
+        } else {
+          
+          checkboxes.prop('checked', false);
+        }
+    });
+
+    $('a[href="#CustomerDr"]').click(function(e){
+
+        $('#DeliveryCompanyId').change();
+    });
+
+    $('#DeliveryCompanyId').change(function(e){
+
+        $url = serverPath + 'delivery/deliveries/find_clients_order/';
+
+        $value = $(this).val();
+
+        $container = $('#resultBox');
+
+
+        $container.html('<img class="loader" src="'+serverPath+'/img/loader.gif">');
+
+        $.ajax({
+            type: "GET",
+            url: $url,
+            data : { 'company_id' : $value },
+            dataType: "Html",
+            success: function(data) {
+                    
+            // $html = '';
+
+            // $keys = 0;
+            //  $.each(data, function (key, item) {
+                
+            //               $html = "<tr>";
+            //               $html += "<td> <input class='form-control' type='checkbox' value="+item.ClientOrder.id+" name='data[Item]["+$keys+"][client_order_id]'/> ";
+            //               $html += "<input class='form-control' type='hidden' value="+item.ClientOrderDeliverySchedule.id+" name='data[Item]["+$keys+"][client_order_delivery_schedule]'/>"; 
+            //               $html += "<input class='form-control' type='hidden' value="+item.ClientOrder.uuid+" name='data[Item]["+$keys+"][client_order_id]'/>"; 
+            //               $html += "</td>";
+
+            //               $html += "<td></td>"; 
+            //               $html += "<td>" + item.Product.name + " <input class='form-control' type='hidden' value="+item.ClientOrder.id+" name='data[Item]["+$keys+"][product_id]'/> </td>";
+            //               $html += "<td>" + item.ClientOrder.po_number + "</td>";  
+            //               $html += "<td><input class='form-control required' type='text' name='data[Item]["+$keys+"][quantity]'/></td>";  
+            //               $html += "<td><input class='form-control required' type='text' name='data[Item]["+$keys+"][pieces]'/></td>";
+            //                $html += "<td><input class='form-control required' type='text' name='data[Item]["+$keys+"][remarks]'/></td>";
+            //               $html += '</tr>'; 
+
+            //                $keys++;
+            // });
+
+             $container.html(data);
+
+            }
+        });
+
+        e.preventDefault();
+    });
+
 
   });
 
