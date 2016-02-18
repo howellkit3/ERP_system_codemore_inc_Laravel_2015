@@ -887,7 +887,8 @@ class DeliveriesController extends DeliveryAppController {
 
     public function search_order($hint = null){
 
-        Configure::write('debug',2);
+
+
         $userData = $this->Session->read('Auth');
 
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
@@ -907,6 +908,7 @@ class DeliveriesController extends DeliveryAppController {
             $hint = $_GET['search'];
         }
 
+    if (!empty($hint)) {
 
       $clientsOrder = $this->ClientOrderDeliverySchedule->query('SELECT 
             ClientOrder.id, ClientOrder.client_order_item_details_id,
@@ -929,7 +931,7 @@ class DeliveriesController extends DeliveryAppController {
             LEFT JOIN koufu_sale.products AS Product
             ON Product.id = QuotationDetail.product_id
             WHERE JobTicket.uuid LIKE "%'.$hint.'%" OR ClientOrder.po_number LIKE "%'.$hint.'%"
-            OR Company.company_name LIKE "%'.$hint.'%" OR Product.name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%" LIMIT 10 ');
+            OR Company.company_name LIKE "%'.$hint.'%" OR Product.name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%"');
         
 
         // $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status')));
@@ -958,6 +960,7 @@ class DeliveriesController extends DeliveryAppController {
         }else{
             $this->render('search_order');
         }
+      }
     }
 
     public function search_delivery_receipt($hint = null){
@@ -1891,9 +1894,9 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
-            $this->loadModel('Ticket.JobTicket');
+        $this->loadModel('Ticket.JobTicket');
 
-            $jobTicketData = $this->JobTicket->find('list',array('fields' => array('client_order_id', 'uuid')));
+        $jobTicketData = $this->JobTicket->find('list',array('fields' => array('client_order_id', 'uuid')));
 
         // $this->Delivery->bindDelivery();
 
