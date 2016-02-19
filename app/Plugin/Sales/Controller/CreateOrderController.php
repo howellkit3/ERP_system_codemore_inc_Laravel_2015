@@ -505,7 +505,8 @@
 			if (!empty($this->request->data)) {
 				
 				$this->JobTicket->saveTicket($this->request->data['JobTicket'],$userData['User']['id'],$this->request->data['JobTicket']['ClientOrder']['id']);
-				if(!empty($this->request->data['IdHolder'])){
+				
+                                if(!empty($this->request->data['IdHolder'])){
 					
 					$this->Product->ProductSpecification->delete($this->request->data['ProductSpecification']['id']);
 					$this->ProductSpecificationComponent->deleteData($this->request->data['IdHolder']);
@@ -662,6 +663,106 @@
 			}
 
 	    }
+            
+            public function reissue_ticket($productId = null,$ifSpec = null,$clientsOrderid = null) {
+                  
+                
+                $this->loadModel('Ticket.JobTicket');
+                
+                $this->loadModel('Sales.Product');
+
+                $this->loadModel('Sales.ProductSpecificationDetail');
+
+                $this->loadModel('Unit');
+
+                $this->loadModel('SubProcess');
+
+                $this->loadModel('Process');
+
+                $this->loadModel('Sales.Company');
+
+                $this->loadModel('Sales.ProductSpecification');
+                
+                if (!empty($productId)) {
+                    
+                    //clientsOrder
+                    $ClientsOrder = $this->ClientOrder->read(null,$clientsOrderid);
+                        
+                    //create new job ticket     
+                    $data['JobTicket']['product_id'] = $productId;
+                    $data['JobTicket']['clients_order_id'] = $clientsOrderid;
+                    $data['JobTicket']['po_number'] =  $ClientsOrder['ClientOrder']['po_number'];
+                    $data['JobTicket']['status_production_id'] = 0;
+                     
+                    if ( $this->JobTicket->save($data['JobTicket'])) {
+                            
+                       
+
+			$clientOrderData = $this->ClientOrder->find('first',array('conditions' => array('ClientOrder.id' => $clientsOrderid)));
+
+			$subProcess = $this->SubProcess->find('list',
+											array('fields' => 
+												array('SubProcess.id',
+												 	'SubProcess.name'
+												 )
+												));
+
+			//set to cache in first load
+			$unitData = Cache::read('unitData');
+
+
+			if (!$unitData) {
+				
+				$unitData = $this->Unit->find('list', array('fields' => array('id', 'unit'),
+																'order' => array('Unit.unit' => 'ASC')
+																));
+
+	            Cache::write('unitData', $unitData);
+	        }
+
+	        //set to cache in first load
+			$companyData = Cache::read('companyData');
+			
+			//if (!$companyData) {
+				$companyData = $this->Company->find('list', array(
+	     											'fields' => array( 
+	     												'id','company_name')
+	     										));
+
+	            Cache::write('companyData', $companyData);
+	       	// }
+
+	        $processData = $this->Process->find('list',
+											array('fields' => 
+												array('Process.id',
+												 	'Process.name'
+												 )
+												));
+
+	        $this->Product->bindProduct();
+
+			$productData = $this->Product->findById($productId);
+
+
+
+			
+			$specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
+			
+			//find if product has specs
+			$formatDataSpecs = $this->ProductSpecificationDetail->findData($productData['Product']['uuid']);
+
+			$noPermission = ' '; 
+
+
+			$this->set(compact('noPermission','clientOrderData','companyData','processData','specs','productId','productData','clientOrderId','formatDataSpecs','unitData','subProcess'));
+
+			if($ifSpec == 0){
+				$this->render('view_specs_check');
+			}
+                        
+                    }
+                }
+            }
 
 
 	}
