@@ -60,7 +60,7 @@
                
                 <?php
 
-                    if(in_array($userData['User']['role_id'],array('1','2','7'))) { 
+                    if(in_array($userData['User']['role_id'],array('1','2','7','16'))) { 
                         
                         echo $this->Html->link('<span class="fa-stack">
                         <i class="fa fa-square fa-stack-2x"></i>

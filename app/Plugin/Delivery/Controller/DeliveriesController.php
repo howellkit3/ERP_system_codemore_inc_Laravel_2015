@@ -267,7 +267,18 @@ class DeliveriesController extends DeliveryAppController {
             ON Company.id = ClientOrder.company_id
             LEFT JOIN addresses AS Address
             ON Address.foreign_key = Company.id
-            WHERE  ClientOrderDeliverySchedule.uuid = "'.$clientsOrderUuid.'" ');
+            WHERE  ClientOrderDeliverySchedule.uuid = "'.$clientsOrderUuid.'" AND  ClientOrderDeliverySchedule.id = "'.$deliveryScheduleId.'"');
+    
+     if (!empty($this->request->query('test'))) {
+
+                Configure::write('debug',2);
+
+                pr( $clientsOrder );
+
+                exit();
+            }
+
+
 
         foreach ($clientsOrder as $key => $value) {
             
@@ -940,6 +951,17 @@ class DeliveriesController extends DeliveryAppController {
             WHERE JobTicket.uuid LIKE "%'.$hint.'%" OR ClientOrder.po_number LIKE "%'.$hint.'%"
             OR Company.company_name LIKE "%'.$hint.'%" OR Product.name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%"');
         
+    
+
+     if (!empty($this->request->query('test'))) {
+
+                Configure::write('debug',2);
+
+                pr( $clientsOrder );
+
+                exit();
+            }
+
 
         // $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status')));
 
@@ -1860,7 +1882,7 @@ class DeliveriesController extends DeliveryAppController {
 
     public function search_by_number() {
 
-        Configure::write('debug',2);
+        //Configure::write('debug',2);
 
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
 
@@ -1876,14 +1898,14 @@ class DeliveriesController extends DeliveryAppController {
 
         $limit = 10;
 
-        // if (!empty($this->request->query('s'))) {
+        if (!empty($this->request->query('s'))) {
                 
-        //         $search = $this->request->query('s');
+                $search = $this->request->query('s');
 
-        //         $conditions = array_merge($conditions,array(
-        //                 'Delivery.dr_uuid like' => '%'.$search.'%'
-        //             ));
-        // }
+                $conditions = array_merge($conditions,array(
+                        'Delivery.dr_uuid like' => '%'.$search.'%'
+                    ));
+        }
         $this->paginate = array(
             'conditions' => $conditions,
             'limit' => $limit,

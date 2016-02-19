@@ -1389,8 +1389,9 @@ class SalesInvoiceController extends AccountingAppController {
                 LEFT JOIN koufu_sale.companies AS Company
                 ON ClientOrder.company_id = Company.id 
                 WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR ClientOrder.po_number LIKE "%'.$hint.'%"
-                OR Company.company_name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%"   ');
+                OR Company.company_name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%" GROUP by Delivery.id DESC ');
             
+
             $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData',  'poNumber', 'companyData','indicator'));
             
             if ($hint == ' ') {
@@ -1447,7 +1448,9 @@ class SalesInvoiceController extends AccountingAppController {
                 LEFT JOIN koufu_sale.companies AS Company
                 ON ClientOrder.company_id = Company.id 
                 WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR SalesInvoice.sales_invoice_no LIKE "%'.$hint.'%"
-                OR Company.company_name LIKE "%'.$hint.'%" AND SalesInvoice.status = 1');
+                OR Company.company_name LIKE "%'.$hint.'%" AND SalesInvoice.status = 1 Group by SalesInvoice.id DESC');
+
+
 
             $this->set(compact('companyData','invoiceData','noPermissionReciv','noPermissionPay', 'deliveryNumHolder','indicator'));
 
@@ -1460,6 +1463,10 @@ class SalesInvoiceController extends AccountingAppController {
             }
 
         }
+
+
+           
+
     }
 
     public function cancel($invoiceId = null){
