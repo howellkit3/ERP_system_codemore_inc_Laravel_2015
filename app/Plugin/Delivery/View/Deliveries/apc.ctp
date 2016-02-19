@@ -1,4 +1,5 @@
 <?php
+
     // create new empty worksheet and set default font
     $this->PhpExcel->createWorksheet()
         ->setDefaultFont('Calibri', 12);
@@ -16,7 +17,13 @@
 
     $cell->setCellValue('A4',$toPrint[0]['DeliveryDetail']['location']);
     
-    $cell->setCellValue('H4',date('Y-m-d'));
+    $cell->setCellValue('H4',date('y-M-d'));
+
+
+
+    $cell->setCellValue('E6',!empty($plants['Plant']['name']) ? $plants['Plant']['name'] : '' );
+
+    $cell->setCellValue('F5',date('F d,Y'));
 
     $start = 11;
 

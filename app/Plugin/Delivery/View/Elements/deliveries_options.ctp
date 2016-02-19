@@ -109,6 +109,21 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
         </li>
 
 
+      <li class="dropdown hidden-xs">
+            <?php $page =($active_page == 'deliveries' && $active_action == 'plants') ? 'active tab' : '' ?>
+            <?php echo $this->Html->link("<span class='count'>Settings</span>", array(
+                                                                                   'controller' => 'plants', 
+                                                                                    'action' => 'index?'.rand(1000,9999).'='.date("is")
+                                                                                    ),
+                                                                            array(
+                                                                                   'escape' => false,
+                                                                                   'class' => 'btn '.$page.' '.$noPermissionSales 
+                                                                                   )); 
+            ?>
+           
+        </li>
+
+
    
     </ul>
 </div>

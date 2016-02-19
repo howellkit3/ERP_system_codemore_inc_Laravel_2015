@@ -425,6 +425,17 @@ $totalremaining = 0;
                                                             'data-delivery-id' => $deliveryDataList['Delivery']['id'],
                                                     'data-dr-uuid' =>  $deliveryDataList['Delivery']['dr_uuid']
                                                             ));
+
+                                            echo $this->Html->link('<span class="fa-stack">
+                                                        <i class="fa fa-square fa-stack-2x"></i>
+                                                        <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> APC</font></span>
+                                                        </span>','#apcPreview',array(
+                                                            'escape' => false,
+                                                            'data-toggle' => 'modal',
+                                                            'data-delivery-id' => $deliveryDataList['Delivery']['id'],
+                                                            'data-uuid' => $deliveryDataList['Delivery']['dr_uuid'],
+                                                            'id' => 'DeliveryReview'
+                                                        ));
                                         }
 
                                         echo $this->Html->link('<span class="fa-stack">
@@ -550,6 +561,44 @@ $totalremaining = 0;
 
 </div>   
 
+
+ <div class="modal fade" id="apcPreview" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content margintop">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">APC DELIVERY RECIEPT</h4>
+                </div>
+                    <div class="modal-body">
+                        <div class="result"></div>
+
+                        <div class="planes">
+
+                            <?php echo $this->Form->input('plant_id',array(
+                                'options' => $plants,
+                                'class' => 'form-control'
+                            )) ?>
+                        </div>
+
+
+                            <br>
+                        <div class="modal-footer">
+                            <a href="/delivery/">
+                             <a class="print_dr" href="#">
+                             <button type="submit" class="btn btn-primary"><i class="fa fa-print fa-lg"></i> Print </button>
+                         </a>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            
+                        </div>
+                   
+                    <?php echo $this->Form->end(); ?>   
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
  
 <?php 
 
@@ -563,6 +612,74 @@ $totalremaining = 0;
 
  
 <script>
+
+    $('#DeliveryReview').click(function(){
+
+        $appendCont = $('#apcPreview .result');
+
+        $drID = $(this).attr('data-delivery-id');
+        $drUuID = $(this).attr('data-uuid');
+
+
+        $plantId = $('#plant_id').val();
+        //singe
+        $url = serverPath + 'delivery/deliveries/multiple_apc';
+
+
+         $.ajax({
+        url: serverPath + "delivery/deliveries/check_apc_to_print",
+        type: "POST",
+        data: {"dr_id": $drID , "dr_uuid": $drUuID , 'plant' : $plantId },
+        dataType: "json",
+        success: function(data) {
+
+             for (var i in data.result) {
+
+                     var newData = data.result[i];
+               }
+
+            $html  = '<div class="content">';
+            $html  += '<div class="count"> There are <span class="label label-success">'+data.total+'</span> Item on this DR </div>';
+            $html += '<div class="clients"><ul>';
+
+             $.each(data.result, function(key, value){
+
+                 $html += '<li> CLient Order :' + value.Delivery.clients_order_id + '</li>';
+
+            });
+            $html += '</ul></div>';
+            $html += '<div>';
+
+            $appendCont.html($html);
+
+            // if (data.multiple == true) {
+
+            //     $('.print_dr').attr('href',$multiple_print+'/'+newData.Delivery.dr_uuid);
+            // } else { 
+
+                $('.print_dr').attr('data-uuid',newData.Delivery.dr_uuid);
+
+                $('.print_dr').attr('data-sched-id',newData.Delivery.schedule_uuid);
+
+                $('.print_dr').attr('href',$url+'/'+newData.Delivery.dr_uuid+'/'+newData.Delivery.schedule_uuid+'/'+ $plantId);
+           // }
+              
+            }
+        });
+
+
+    });
+
+    $('#plant_id').change(function(){
+
+        $url = serverPath + 'delivery/deliveries/multiple_apc';
+
+        $drUuID = $('.print_dr').data('uuid');
+
+        $sched = $('.print_dr').data('sched-id');
+
+        $('.print_dr').attr('href',$url+'/'+$drUuID+'/'+$sched+'/'+ $(this).val());
+    });
     
     jQuery(document).ready(function(){
 

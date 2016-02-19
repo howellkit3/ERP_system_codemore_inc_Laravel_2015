@@ -240,6 +240,9 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Delivery.Measure');
 
+
+        $this->loadModel('Delivery.Plant');
+
         $clientsOrder = $this->ClientOrderDeliverySchedule->query('SELECT ClientOrder.id, ClientOrder.client_order_item_details_id,
             ClientOrder.po_number, ClientOrder.company_id, ClientOrder.quotation_id,  ClientOrder.uuid,
             ClientOrderDeliverySchedule.id, ClientOrderDeliverySchedule.client_order_id,ClientOrderDeliverySchedule.modified,
@@ -327,7 +330,11 @@ class DeliveriesController extends DeliveryAppController {
 
         $noPermissionSales = ' ';
 
-        $this->set(compact('companyAddress','noPermissionSales','driverList','helperList','truckList','clientUuid','deliveryScheduleId','clientsOrderUuid','scheduleInfo','deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit','deliveryList','deliveryStatus', 'orderListHelper', 'clientsOrder', 'drData', 'deliveryDetailsData', 'DeliveryReceiptData', 'measureList', 'indicator'));
+        $plants = $this->Plant->find('list',array(
+             'order' => 'Plant.name ASC',
+             'fields' => array('id','name')
+            ));
+        $this->set(compact('companyAddress','plants','noPermissionSales','driverList','helperList','truckList','clientUuid','deliveryScheduleId','clientsOrderUuid','scheduleInfo','deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit','deliveryList','deliveryStatus', 'orderListHelper', 'clientsOrder', 'drData', 'deliveryDetailsData', 'DeliveryReceiptData', 'measureList', 'indicator'));
         
     }
 
@@ -1344,7 +1351,7 @@ class DeliveriesController extends DeliveryAppController {
     }
 
 
-    public function multiple_apc($dr_uuid = null,$schedule_uuid = null) {
+    public function multiple_apc($dr_uuid = null,$schedule_uuid = null,$plantId = null) {
 
         $this->loadModel('Delivery.DeliveryConnection');
 
@@ -1369,6 +1376,8 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('User');
 
+        $this->loadModel('Delivery.Plant');
+        
         $units = $this->Unit->getList();
 
         $this->Company->bind('Address');
@@ -1432,13 +1441,18 @@ class DeliveriesController extends DeliveryAppController {
 
 
         $measureList = $this->Measure->find('list',array('fields' => array('id','name')));
+        $plants = $this->Plant->find('first',array(
+                'conditions' => array(
+                        'Plant.id' => $plantId
+                )
+            ));
         $prepared = $userData;
         $approved = $this->User->find('first', 
             array('fields' => array('id', 'first_name','last_name'),
                 'conditions' => array('User.id' => $toPrint[0]['DeliveryDetail']['created_by'])));
 
 
-        $this->set(compact('toPrint','approved','measureList','prepared','approved'));
+        $this->set(compact('toPrint','approved','measureList','prepared','approved','plants'));
         //to print
         $this->render('apc');
         }
@@ -2321,6 +2335,74 @@ class DeliveriesController extends DeliveryAppController {
     }
 
 
+    public function check_apc_to_print() {
+
+        $delivery = array('');
+        
+        if (!empty($this->request->data)) {
+            
+            $data = $this->request->data;
+
+            $this->loadModel('Delivery.DeliveryConnection');
+
+            $this->loadModel('Delivery.DeliveryDetail');
+
+            $this->loadModel('Sales.ClientOrder');
+
+            $this->loadModel('Sales.ClientOrderDeliverySchedule');
+            
+            $multiple = false;
+            // $delivery = $this->DeliveryConnection->find('all',array(
+            //     'conditions' => array('DeliveryConnection.dr_uuid' => $data['dr_uuid'])
+            // ));functio
+
+            $delivery = $this->DeliveryConnection->query('SELECT *
+                FROM delivery_connection AS DeliveryConnection
+                LEFT JOIN deliveries AS Delivery
+                ON Delivery.id = DeliveryConnection.delivery_id 
+                WHERE DeliveryConnection.dr_uuid = "'.$data['dr_uuid'].'" 
+                AND Delivery.status != "2"
+                ');
+
+
+            if (!empty($delivery)) {
+
+               
+                $multiple = true;
+            } else {
+                
+                $multiple = false;
+
+                $this->DeliveryDetail->bind(array('Delivery'));
+
+                $delivery[0] = $this->DeliveryDetail->find('first',array('conditions' => array(
+                        'DeliveryDetail.delivery_uuid' => $data['dr_uuid']
+                )));
+
+                $this->ClientOrder->bindDelivery();
+
+                $clientOrder =  $this->ClientOrder->find('first',array(
+                        'conditions' => array(
+                                'ClientOrder.uuid' => $delivery[0]['Delivery']['clients_order_id']
+                            )
+                ));
+
+                $delivery[0]['ClientOrder'] = $clientOrder;
+
+            }
+
+            $count = count($delivery);
+
+        }
+
+        echo json_encode(array('result' => $delivery,'total' =>  $count ,'multiple' => $multiple ));
+
+        exit();
+
+    }
+
+
+
     public function find_clients_order() {
 
         $clientsOrder = array();
@@ -2508,6 +2590,7 @@ class DeliveriesController extends DeliveryAppController {
             exit();
         }
     }
+
     
 
 }
