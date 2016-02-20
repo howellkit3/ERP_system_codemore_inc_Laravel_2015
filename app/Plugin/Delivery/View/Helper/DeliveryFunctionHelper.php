@@ -28,7 +28,7 @@ class DeliveryFunctionHelper extends AppHelper {
 
 		$ClientsOrder = ClassRegistry::init('Sales.ClientOrder');
 
-		$orders = array();
+		$clientsOrder = array();
 
 		if (!empty($clientsOrderId)) {
 
@@ -37,7 +37,7 @@ class DeliveryFunctionHelper extends AppHelper {
 			));	
 		}
 
-		return $orders;
+		return $clientsOrder;
 
 	}
 

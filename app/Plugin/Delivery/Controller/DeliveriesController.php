@@ -267,13 +267,14 @@ class DeliveriesController extends DeliveryAppController {
             ON Company.id = ClientOrder.company_id
             LEFT JOIN addresses AS Address
             ON Address.foreign_key = Company.id
-            WHERE  ClientOrderDeliverySchedule.uuid = "'.$clientsOrderUuid.'" ');
+            WHERE  ClientOrderDeliverySchedule.uuid = "'.$clientsOrderUuid.'" AND ClientOrderDeliverySchedule.id = "'.$deliveryScheduleId.'"');
 
-        foreach ($clientsOrder as $key => $value) {
-            
-            $clientsOrder =  $value;
 
-        }
+            foreach ($clientsOrder as $key => $value) {
+                
+                $clientsOrder =  $value;
+
+            }
 
        $this->Delivery->bindDelivery();
 
@@ -1872,18 +1873,26 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->DeliveryConnection->bindDeliveryById();
         
-        $conditions = array('DeliveryConnection.dr_uuid NOT' => '','DeliveryConnection.id NOT' => '');
+        $conditions = array(
+            'DeliveryConnection.dr_uuid NOT' => '',
+            'DeliveryConnection.id NOT' => '',
+            // 'AND' => array(
+            //         'Delivery.status NOT' => 2,
+            //         'DeliveryDetail.status NOT' => 4
+            //     )
+            );
 
         $limit = 10;
 
-        // if (!empty($this->request->query('s'))) {
+        if (!empty($this->request->query('s'))) {
                 
-        //         $search = $this->request->query('s');
+                $search = $this->request->query('s');
 
-        //         $conditions = array_merge($conditions,array(
-        //                 'Delivery.dr_uuid like' => '%'.$search.'%'
-        //             ));
-        // }
+                $conditions = array_merge($conditions,array(
+                        'Delivery.dr_uuid like' => '%'.$search.'%'
+                    ));
+        }
+
         $this->paginate = array(
             'conditions' => $conditions,
             'limit' => $limit,
@@ -1892,6 +1901,7 @@ class DeliveriesController extends DeliveryAppController {
         );
 
         $delivery = $this->paginate('DeliveryConnection');
+
         // exit();
       // $delivery = $this->array_sort_by_column($delivery, 'dr_uuid');
         $this->set(compact('delivery'));

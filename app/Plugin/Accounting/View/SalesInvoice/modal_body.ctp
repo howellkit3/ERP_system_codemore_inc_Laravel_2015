@@ -101,6 +101,15 @@
                                     </div>
                                 </div>
 
+                                
+                                      <?php 
+                                            echo $this->Form->input('SalesInvoice.is_multiple', array(
+                                                'type' => 'hidden',
+                                                'label' => false,
+                                                'value' => !empty($isMultiple) ? 1 : ''
+                                                ));
+                                        ?>
+
                                 <div class="form-group delivery_number" >
                                     <label class="col-lg-3 control-label"><span style="color:red">*</span>Delivery Number</label>
                                     <div class="col-lg-8">

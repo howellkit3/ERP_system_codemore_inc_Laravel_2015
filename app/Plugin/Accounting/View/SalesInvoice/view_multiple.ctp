@@ -22,7 +22,9 @@
         	'controller' => 'sales_invoice', 
         	'action' => 'print_invoice_multiple',
         	$invoiceId,$drData[0]['Delivery']['dr_uuid']),
-        	array('class' =>'btn btn-info pull-right ','escape' => false));
+        	array('class' =>'btn btn-info pull-right','escape' => false));
+
+		
 	?>
 
 	<a data-toggle="modal" href="#myModalChangeVatStatus" class="btn btn-primary mrg-b-lg pull-right "><i class="fa fa-edit fa-lg"></i>Change Vat Status</a>

@@ -1,7 +1,7 @@
 <?php
 // header("Content-disposition: attachment; filename="'this.pdf');
 // header("Content-type: application/pdf");
-Configure::write('debug',2);
+Configure::write('debug',0);
 ?>
 <style>
 <?php include('word.css'); ?>
@@ -20,7 +20,7 @@ body { margin: 5px; }
 						<td><h2 style="font-size:12px">Koufu Packaging Corp.</h2></td>
 				</tr>
 				<tr>
-						<td><h1 style="font-size:11px">Main Job Ticket</h1></td>  <td class="text-right"> <b>Date</b> <?php echo date('Y/m/d'); ?> </td>
+					<td><h1 style="font-size:11px">Main Job Ticket</h1></td>  <td class="text-right"> <b>Date</b> <?php echo date('Y/m/d'); ?> </td>
 				</tr>
 
 		</table>

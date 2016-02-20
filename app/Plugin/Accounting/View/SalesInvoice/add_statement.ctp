@@ -7,6 +7,8 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
+
+                <?php echo $this->element('statement_option'); ?>
             <header class="main-box-header clearfix">
                 <h2 class="pull-left"><b>Create Statement of Account</b></h2>
                 

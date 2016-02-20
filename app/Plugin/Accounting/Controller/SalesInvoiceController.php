@@ -188,7 +188,9 @@ class SalesInvoiceController extends AccountingAppController {
                                                             'conditions' => array('User.id' => $invoiceData['SalesInvoice']['created_by'])
                                                             )); 
         
-       
+        
+
+
         if(!empty($invoiceData['SalesInvoice']['dr_uuid'])){
            
             if (!empty($deliveryId)) {
@@ -233,7 +235,6 @@ class SalesInvoiceController extends AccountingAppController {
 
                  $noPermissionReciv = "";
                  $companyData =  $drData[0]['Company']['company_name'];
-
 
 
             } else {
@@ -286,7 +287,14 @@ class SalesInvoiceController extends AccountingAppController {
          }    
          if (!empty($saNo)) {
 
-            $this->render('view_statement');
+            if ($invoiceData['SalesInvoice']['is_multiple'] == 1) {
+
+                $this->render('view_statement_multiple');
+
+            } else {
+                    
+                $this->render('view_statement');
+            }
 
         } 
     }
@@ -305,16 +313,16 @@ class SalesInvoiceController extends AccountingAppController {
 
                 if (!empty($DRdata && $DRdata['SalesInvoice']['status'] != 3)) {
 
-                    $this->Session->setFlash(__('This Delivery No. has been used. '), 'error');
-                    $this->redirect( array(
-                                 'controller' => 'salesInvoice', 
-                                 'action' => 'add'
-                            ));
+                        $this->Session->setFlash(__('This Delivery No. has been used. '), 'error');
+                        $this->redirect( array(
+                                     'controller' => 'salesInvoice', 
+                                     'action' => 'add'
+                                ));
                 }
 
                 $this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id']);
 
-                $this->Session->setFlash(__(' Sales Invoice No. completed. '), 'success');
+                $this->Session->setFlash(__(' Sales Statement completed. '), 'success');
                 $this->redirect( array(
                              'controller' => 'sales_invoice', 
                              'action' => 'statement'
@@ -455,7 +463,10 @@ class SalesInvoiceController extends AccountingAppController {
             }
 
 
-        }else{
+        } else if($indicator == 'sa_dr_num') { 
+
+             $output = $this->render('sa_add_by_dr');
+        } else {
 
             $output = $this->render('add_statement');
         }
@@ -676,6 +687,75 @@ class SalesInvoiceController extends AccountingAppController {
 
             $output = $this->render('print_invoice_multiple');
         }
+
+    }
+
+
+
+    public function print_sa_multiple($invoiceId = null ,$dr_uuid = null) {
+
+        $userData = $this->Session->read('Auth');
+
+        $this->loadModel('Sales.ClientOrderDeliverySchedule');
+
+        $this->loadModel('Currency');
+
+        // $this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product', 'Quotation', 'QuotationItemDetail', 'Company', 'Address'));
+        
+        $this->loadModel('Delivery.Delivery');
+
+        $this->loadModel('Sales.PaymentTermHolder');
+            
+        $paymentTermData = Cache::read('paymentTerms');
+        
+        if (!$paymentTermData) {
+            $paymentTermData = $this->PaymentTermHolder->getList(null,array('id','name'));
+            Cache::write('paymentTerms', $paymentTermData);
+        }
+
+        $currencyData = Cache::read('currencyData');
+       
+        $currencyData = $this->Currency->find('list', array('fields' => array('id', 'name'),
+                                                        'order' => array('Currency.name' => 'ASC')
+                                                        ));
+           $invoiceData = $this->SalesInvoice->find('first',array(
+            'conditions' => array('SalesInvoice.id' => $invoiceId),
+            'order' => 'SalesInvoice.id DESC'
+            ));
+
+
+        $drData = $this->Delivery->query('SELECT *
+                FROM deliveries AS Delivery
+                LEFT JOIN koufu_sale.client_orders AS ClientOrder
+                ON ClientOrder.uuid = Delivery.clients_order_id
+                LEFT JOIN delivery_details AS DeliveryDetail
+                ON DeliveryDetail.delivery_id = Delivery.id
+                LEFT JOIN koufu_sale.client_order_delivery_schedules AS ClientOrderDeliverySchedule
+                ON ClientOrderDeliverySchedule.client_order_id = ClientOrder.id
+                LEFT JOIN koufu_sale.quotations AS Quotation
+                ON Quotation.id = ClientOrder.quotation_id
+                LEFT JOIN koufu_sale.quotation_details AS QuotationDetail
+                ON QuotationDetail.quotation_id = ClientOrder.quotation_id
+                LEFT JOIN koufu_sale.quotation_item_details AS QuotationItemDetail
+                ON QuotationItemDetail.id = ClientOrder.client_order_item_details_id
+                LEFT JOIN koufu_sale.companies AS Company
+                ON Company.id = Quotation.company_id
+                LEFT JOIN koufu_sale.products AS Product
+                ON Product.id = QuotationDetail.product_id
+                LEFT JOIN koufu_sale.addresses AS Address
+                ON Address.foreign_key = Company.id
+                WHERE Delivery.dr_uuid = "'.$dr_uuid.'" group by Delivery.id');
+
+
+         $noPermissionPay = "";
+
+         $noPermissionReciv = "";
+         
+         $companyData =  $drData[0]['Company']['company_name'];
+
+         $this->set(compact('prepared','approved','drData','clientData','currencyData','companyData','units','invoiceData','paymentTermData','currencyData'));
+    
+
 
     }
 
@@ -1348,13 +1428,13 @@ class SalesInvoiceController extends AccountingAppController {
                     'order' => array('SalesInvoice.statement_no DESC'),
                     'conditions' => $conditions));
 
-            if(!empty($seriesNo)){
+            if (!empty($seriesNo)) {
 
                 $nextSalesNo = intval($seriesNo['SalesInvoice']['statement_no']);
 
                 $seriesSalesNo = str_pad(++$nextSalesNo,6,'0',STR_PAD_LEFT); 
 
-            }else{
+            } else{
 
                 $nextSalesNo = intval(0);
 
@@ -1393,6 +1473,7 @@ class SalesInvoiceController extends AccountingAppController {
             
             $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData',  'poNumber', 'companyData','indicator'));
             
+
             if ($hint == ' ') {
                 $this->render('index');
             }else{
@@ -1438,7 +1519,7 @@ class SalesInvoiceController extends AccountingAppController {
 
             $userData = $this->Session->read('Auth');
 
-            $invoiceData = $this->SalesInvoice->query('SELECT SalesInvoice.id ,SalesInvoice.status , SalesInvoice.sales_invoice_no, Company.id, Company.company_name , Delivery.dr_uuid, Delivery.company_id, Delivery.dr_uuid, SalesInvoice.dr_uuid 
+            $invoiceData = $this->SalesInvoice->query('SELECT SalesInvoice.id ,SalesInvoice.status , SalesInvoice.sales_invoice_no, Company.id, Company.company_name , Delivery.dr_uuid, Delivery.id, Delivery.company_id, Delivery.dr_uuid, SalesInvoice.dr_uuid 
                 FROM koufu_delivery.deliveries AS Delivery
                 LEFT JOIN koufu_accounting.sales_invoices AS SalesInvoice
                 ON Delivery.dr_uuid = SalesInvoice.dr_uuid 
@@ -1447,7 +1528,7 @@ class SalesInvoiceController extends AccountingAppController {
                 LEFT JOIN koufu_sale.companies AS Company
                 ON ClientOrder.company_id = Company.id 
                 WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR SalesInvoice.sales_invoice_no LIKE "%'.$hint.'%"
-                OR Company.company_name LIKE "%'.$hint.'%" AND SalesInvoice.status = 1');
+                OR Company.company_name LIKE "%'.$hint.'%" AND SalesInvoice.status = 1 GROUP by Delivery.id DESC'); 
 
             $this->set(compact('companyData','invoiceData','noPermissionReciv','noPermissionPay', 'deliveryNumHolder','indicator'));
 

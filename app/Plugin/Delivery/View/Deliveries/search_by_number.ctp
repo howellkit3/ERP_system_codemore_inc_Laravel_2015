@@ -52,6 +52,20 @@
                                                   'title'=>'Print Delivery Receipt'));  
 
                                                     endif; ?>   
+
+                                            <?php 
+                                            //get clients order
+                                            $client = $this->DeliveryFunction->getClientsOrder($list['Delivery']['clients_order_id']);
+
+                                             if (in_array($client['ClientOrder']['company_id'],array('1223','3','4','5','6','60','102')) && $list['Delivery']['dr_uuid'] != $old_value ) {
+
+                                               echo $this->Html->link('<span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-print fa-stack-1x fa-inverse"></i>&nbsp;&nbsp;&nbsp;<span class ="post"><font size = "1px"> APC </font></span>
+                                                </span>', array('controller' => 'deliveries', 'action' => 'multiple_dr',$list['Delivery']['dr_uuid']),array('class' =>' table-link  refresh ','escape' => false,
+                                                  'title'=>'Print Delivery Receipt'));  
+
+                                             } ?>
                                                </td>
 
                                           </tr> 

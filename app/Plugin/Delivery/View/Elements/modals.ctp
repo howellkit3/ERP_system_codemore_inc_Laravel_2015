@@ -116,6 +116,8 @@
                             </div>
                         </div>
 
+
+
                         <div class="form-group" id="existing_items">
                             <label class="col-lg-2 control-label"><span style="color:red">*</span>Schedule</label>
                             <div class="col-lg-9">
@@ -279,6 +281,20 @@
                                                 echo $this->Form->input('ClientOrderDeliverySchedule.quantity', array('class' => 'form-control item_type required',
                                                     'type' => 'hidden',
                                                     'value' => $clientsOrder['ClientOrderDeliverySchedule']['quantity']
+                                                    ));
+                                            ?>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group" id="existing_items">
+                            <label class="col-lg-2 control-label"><span style="color:red">*</span> APC DR</label>
+                            <div class="col-lg-9">
+                                  <?php 
+                                                echo $this->Form->input('DeliveryDetail.apc_dr', array('class' => 'form-control item_type required',
+                                                    'type' => 'text',
+                                                    'label' => false
+                                                    //  'value' => $clientsOrder['ClientOrderDeliverySchedule']['quantity']
                                                     ));
                                             ?>
                             </div>

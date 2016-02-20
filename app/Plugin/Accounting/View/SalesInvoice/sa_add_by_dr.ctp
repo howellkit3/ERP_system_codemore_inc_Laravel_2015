@@ -7,9 +7,9 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="main-box clearfix body-pad">
-              <?php echo $this->element('invoice_option'); ?>
+              <?php echo $this->element('statement_option'); ?>
             <header class="main-box-header clearfix">
-                <h2 class="pull-left"><b>Create Sales Invoice</b></h2>
+                <h2 class="pull-left"><b>Create Statement</b></h2>
                 
                 <div class="filter-block pull-right">
                     <div class="form-group pull-left">
@@ -64,7 +64,7 @@
 
             <a href="#processModal" class="modal_button" data-toggle="modal" data-id="<?php echo $deliveryDataList['Delivery']['id'] ?>" data-uuid="<?php echo $deliveryDataList['Delivery']['dr_uuid'] ?>">
             <button class="btn btn-success" href="print_sales_invoice">
-            PRINT S.I
+            	Create S.A
             </button>
             </a>
         </td>
@@ -215,7 +215,7 @@
             $container = $('#result-table');
 
             $.ajax({
-            url: serverPath + "accounting/sales_invoice/invoice_modal/"+deliveryId+"/"+deliveryUUID+"/si_num/is_multiple",
+            url: serverPath + "accounting/sales_invoice/invoice_modal/"+deliveryId+"/"+deliveryUUID+"/sa_num/is_multiple",
             type: "GET",
             dataType: "html",
            
