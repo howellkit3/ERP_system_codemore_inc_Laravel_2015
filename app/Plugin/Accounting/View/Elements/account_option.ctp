@@ -19,6 +19,16 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
               )); ?>
            
         </li>
+        <li class="">
+            <?php $page =($active_page == 'sales_invoice' && $active_action == 'pre_invoices') ? 'active' : '' ?>
+            <?php echo $this->Html->link("<span class='count'>Pre-Invoice</span>",
+             array('controller' => 'sales_invoice',
+              'action' => 'pre_invoices?'.rand(1000,9999).'='.date("is")),
+              array('escape' => false,
+                'class' => 'btn '.$page .' '.$noPermissionPay
+              )); ?>
+           
+        </li>
 
        <li class="">
             <?php $page =($active_page == 'sales_invoice' && $active_action == 'statement') ? 'active' : '' ?>

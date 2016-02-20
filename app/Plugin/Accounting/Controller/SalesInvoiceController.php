@@ -6,7 +6,7 @@ App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.ph
 class SalesInvoiceController extends AccountingAppController {
 
     public $uses = array('Accounting.SalesInvoice');
-    public $helpers = array('Accounting.PhpExcel');
+    public $helpers = array('Accounting.PhpExcel','Accounting.DateFormat');
 
     public function index(){
 
@@ -20,7 +20,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         $limit = 10;
 
-        $conditions = array('NOT' => array('SalesInvoice.status' => 2) );
+        $conditions = array('NOT' => array('SalesInvoice.status' => array(0,2)) );
 
         $this->paginate = array(
             'conditions' => $conditions,
@@ -181,8 +181,6 @@ class SalesInvoiceController extends AccountingAppController {
         // }
         $invoiceData = $this->SalesInvoice->find('first', array(
                                             'conditions' => $conditions ));
-
-
 
         $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $invoiceData['SalesInvoice']['created_by'])
@@ -354,7 +352,7 @@ class SalesInvoiceController extends AccountingAppController {
             $this->Session->setFlash(__('This Delivery No. already have a Sales Invoice No. '), 'error');
             $this->redirect( array(
                          'controller' => 'salesInvoice', 
-                         'action' => 'add'
+                         'action' => 'add','si_num'
                     ));
         }
 
@@ -362,10 +360,20 @@ class SalesInvoiceController extends AccountingAppController {
         $this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id'],$DRdata);
 
         $this->Session->setFlash(__(' Sales Invoice No. completed. '), 'success');
-        $this->redirect( array(
+        
+        if ($this->request->data['SalesInvoice']['status'] == '0') {
+               $this->redirect( array(
+                     'controller' => 'sales_invoice', 
+                     'action' => 'pre_invoices'
+                ));
+
+        } else {
+                   $this->redirect( array(
                      'controller' => 'sales_invoice', 
                      'action' => 'index'
                 ));
+        }
+     
 
     }
 
@@ -676,6 +684,8 @@ class SalesInvoiceController extends AccountingAppController {
 
          $noPermissionReciv = "";
          $companyData =  $drData[0]['Company']['company_name'];
+
+         $invoiceData = $this->SalesInvoice->read(null,$invoiceId );
 
         $this->set(compact('prepared','approved','drData','clientData','currencyData','companyData','units','invoiceData','paymentTermData','currencyData'));
            
@@ -1469,8 +1479,9 @@ class SalesInvoiceController extends AccountingAppController {
                 LEFT JOIN koufu_sale.companies AS Company
                 ON ClientOrder.company_id = Company.id 
                 WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR ClientOrder.po_number LIKE "%'.$hint.'%"
-                OR Company.company_name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%"   ');
+                OR Company.company_name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%" GROUP by Delivery.id DESC ');
             
+
             $this->set(compact('seriesSalesNo', 'noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData',  'poNumber', 'companyData','indicator'));
             
 
@@ -1528,7 +1539,7 @@ class SalesInvoiceController extends AccountingAppController {
                 LEFT JOIN koufu_sale.companies AS Company
                 ON ClientOrder.company_id = Company.id 
                 WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR SalesInvoice.sales_invoice_no LIKE "%'.$hint.'%"
-                OR Company.company_name LIKE "%'.$hint.'%" AND SalesInvoice.status = 1 GROUP by Delivery.id DESC'); 
+                OR Company.company_name LIKE "%'.$hint.'%" AND SalesInvoice.status = 1 Group by SalesInvoice.id DESC');
 
             $this->set(compact('companyData','invoiceData','noPermissionReciv','noPermissionPay', 'deliveryNumHolder','indicator'));
 
@@ -1541,6 +1552,10 @@ class SalesInvoiceController extends AccountingAppController {
             }
 
         }
+
+
+           
+
     }
 
     public function cancel($invoiceId = null){
@@ -1817,6 +1832,258 @@ class SalesInvoiceController extends AccountingAppController {
                 'action' => 'index'
             ));
         }
+    }
+
+
+    public function pre_invoices() {
+
+        $date = date('Y-m-d');
+
+        $userData = $this->Session->read('Auth');
+        
+        $this->loadModel('Sales.Company');
+
+        $this->loadModel('Sales.ClientOrder');
+
+        $this->loadModel('Delivery.Delivery');
+
+        $limit = 10;
+
+        $conditions = array('SalesInvoice.status' => 0);
+
+
+        $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
+
+
+        $query = $this->request->query;
+        
+        if (!empty($query['data']['date'])) {
+
+            $date = $query['data']['date'];
+
+                if (!empty($query['data']['date'])) {
+
+                    $dates = explode('-',$query['data']['date']);
+
+    
+
+            $date1 =  date('Y-m-d',strtotime($dates[0])).' 00:00:00';
+            $date2 = date('Y-m-d',strtotime($dates[1])).' 00:00:00';
+
+           $conditions = array_merge($conditions,array(
+                        'OR' => array(
+                            'date(SalesInvoice.created) BETWEEN ? AND ?' => array($date1,$date2),
+                            'date(SalesInvoice.invoice_date) BETWEEN ? AND ?' => array($date1,$date2),
+                            )   
+               ));
+
+                }
+
+        }
+
+        if (!empty($query['data']['action']) && $query['data']['action'] == 'export') {
+
+            $invoices = $this->SalesInvoice->find('all',array(
+
+                'conditions' => $conditions,
+                'order' => 'SalesInvoice.id DESC'
+            ));
+
+            $deliveries = array();
+            foreach ($invoices as $key => $list) {
+
+                        
+                        $dr = $this->Delivery->find('all',array(
+                            'conditions' => array(
+                                    'Delivery.dr_uuid' => $list['SalesInvoice']['dr_uuid']
+                            )
+                        ));
+
+                    $dr = $this->Delivery->query('SELECT *
+                    FROM deliveries AS Delivery
+                    LEFT JOIN koufu_sale.client_orders AS ClientOrder
+                    ON ClientOrder.uuid = Delivery.clients_order_id 
+                    LEFT JOIN koufu_delivery.delivery_details AS DeliveryDetail
+                    ON Delivery.dr_uuid = DeliveryDetail.delivery_uuid
+                    LEFT JOIN koufu_sale.quotation_item_details AS QuotationItemDetail
+                    ON QuotationItemDetail.id = ClientOrder.client_order_item_details_id
+                    LEFT JOIN koufu_sale.quotation_details AS QuotationDetail
+                    ON ClientOrder.quotation_id = QuotationDetail.quotation_id
+                    LEFT JOIN koufu_sale.products AS Product
+                    ON Product.id = QuotationDetail.product_id
+                    LEFT JOIN koufu_sale.companies AS Company
+                    ON Company.id = ClientOrder.company_id
+                    WHERE Delivery.dr_uuid = "'.$list['SalesInvoice']['dr_uuid'].'" 
+                    ');
+
+                    $deliveries[$key] = $list;
+                    $deliveries[$key]['Delivery'] = $dr;
+
+            }
+
+            // pr($deliveries);
+            // exit();
+
+            $this->set(compact('invoices','companies','deliveries'));
+            $this->render('SalesInvoice/xls/pre_invoices');
+
+            exit();
+
+        }
+
+
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array(
+                'SalesInvoice.id',
+                'SalesInvoice.sales_invoice_no',
+                'SalesInvoice.statement_no',  
+                'SalesInvoice.dr_uuid', 
+                'SalesInvoice.status',
+                'SalesInvoice.delivery_id',
+                'SalesInvoice.created',
+                'SalesInvoice.invoice_date'
+                ),
+            'order' => 'SalesInvoice.id DESC',
+        );
+
+        $invoiceData = $this->paginate('SalesInvoice');
+
+        $deliveryNumHolder = $this->Delivery->find('list',array('fields' => array('dr_uuid','clients_order_id')));
+
+        $clientDataHolder = $this->ClientOrder->find('list',array('fields' => array('uuid','company_id')));
+
+        foreach($deliveryNumHolder as $key => $deliveryList) {
+          
+           $keyHolder = ltrim($key, '0');
+           $deliveryNum[$keyHolder] = $deliveryList;
+           
+        }
+      
+      
+        if ($userData['User']['role_id'] == 9 ) {
+
+            $noPermissionReciv = 'disabled not-active';
+
+        } else {
+
+            $noPermissionReciv = ' ';
+
+        }
+
+        if ($userData['User']['role_id'] == 10) {
+            $noPermissionPay = 'disabled not-active';
+            $this->redirect( array(
+                 'controller' => 'salesInvoice', 
+                 'action' => 'payable'
+            ));
+
+        } else {
+
+            $noPermissionPay = ' ';
+
+        }
+
+        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay','companyName', 'deliveryNumHolder', 'clientDataHolder','date'));
+
+    }
+
+    public function edit_pre_invoice($id = null,$status = 0, $druuid = null,$sino = null,$deliveryId = null) {
+
+        $userData = $this->Session->read('Auth');
+        
+        $this->loadModel('Sales.Company');
+
+        $this->loadModel('Sales.ClientOrder');
+
+        $this->loadModel('Delivery.Delivery');
+
+        if (!empty($this->request->data)) {
+
+            if ($this->SalesInvoice->save($this->request->data)) {
+
+                $this->Session->setFlash('invoice Successfully updated','success');
+
+                $this->redirect(array(
+                    'controller' => 'sales_invoice',
+                    'action' => 'view',
+                    $id,0,
+                    $druuid,
+                    $sino,
+                    $deliveryId
+
+
+                ));
+            
+            } else {
+
+                $this->Session->setFlash('There\'s an error updating invoice');
+
+
+                $this->redirect(array(
+                    'controller' => 'sales_invoice',
+                    'action' => 'edit_pre_invoice',
+                    $id,0,
+                    $druuid,
+                    $sino,
+                    $deliveryId
+
+
+                ));
+            }
+
+
+        }
+
+
+        if (!empty($id)) {
+
+
+
+        $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
+
+
+        $deliveryNumHolder = $this->Delivery->find('first',array(
+             
+            'conditions' =>  array('Delivery.dr_uuid' => $druuid ),  
+            'fields' => array('dr_uuid','clients_order_id'
+            )));
+
+           $clientDataHolder = $this->ClientOrder->find('first',array('conditions' => array(
+            'ClientOrder.uuid' =>  $deliveryNumHolder['Delivery']['clients_order_id']   
+            )));
+
+            $invoice = $this->request->data = $this->SalesInvoice->read(null,$id);
+
+              if ($userData['User']['role_id'] == 9 ) {
+
+            $noPermissionReciv = 'disabled not-active';
+
+        } else {
+
+            $noPermissionReciv = ' ';
+
+        }
+
+        if ($userData['User']['role_id'] == 10) {
+            $noPermissionPay = 'disabled not-active';
+            $this->redirect( array(
+                 'controller' => 'salesInvoice', 
+                 'action' => 'payable'
+            ));
+
+        } else {
+
+            $noPermissionPay = ' ';
+
+        }
+
+        $this->set(compact('noPermissionPay','inovice','noPermissionReciv','companyName','clientDataHolder','invoice'));
+
+        }
+
+       
     }
 
 }

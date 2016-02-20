@@ -2631,3 +2631,7 @@ ADD COLUMN `tracking`  varchar(255) NULL AFTER `si_num`;
 ALTER TABLE `received_orders`
 ADD COLUMN `si_num`  varchar(255) NULL AFTER `dr_num`;
 
+/* aldrin added this 02 - 20 - 16  accounting */
+ALTER TABLE `sales_invoices`
+ADD COLUMN `invoice_date`  datetime NULL AFTER `created`;
+

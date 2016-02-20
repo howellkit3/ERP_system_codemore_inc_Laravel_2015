@@ -17,7 +17,9 @@
 
 <div class="filter-block pull-right">
 
-	<?php 
+	<?php
+
+	
 		echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> Export ', array(
         	'controller' => 'sales_invoice', 
         	'action' => 'print_invoice_multiple',
@@ -39,6 +41,24 @@
 
 	}
 	
+	?>
+
+	<?php
+		if ($invoiceData['SalesInvoice']['status'] == 0) {
+
+		
+		echo $this->Html->link('<i class="fa fa-pencil fa-lg"></i> Edit ', array(
+        	'controller' => 'sales_invoice', 
+        	'action' => 'edit_pre_invoice',
+        	$invoiceData['SalesInvoice']['id'],0,
+        	$invoiceData['SalesInvoice']['dr_uuid'],
+        	$invoiceData['SalesInvoice']['sales_invoice_no'],
+        	$invoiceData['SalesInvoice']['delivery_id']
+        	),
+        	array('class' =>'btn btn-info pull-right ','escape' => false));
+
+	}
+
 	?>
 	<br><br>
 </div>
@@ -75,7 +95,9 @@
 							<?php echo ucfirst($companyData)?>
 						</div>
 						<div class="col-lg-4">&emsp;&emsp;&nbsp;&nbsp;&nbsp;
-							DATE : <?php echo (new \DateTime())->format('m/d/Y'); ?>
+							DATE : <?php echo !empty($invoiceData['SalesInvoice']['invoice_date']) ?  date('m/d/Y',strtotime($invoiceData['SalesInvoice']['invoice_date'])) : (new \DateTime())->format('m/d/Y'); ?>
+
+		
 						</div>
 					</div>
 					<div class="form-group">
