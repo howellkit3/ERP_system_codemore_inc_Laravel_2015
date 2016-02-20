@@ -134,7 +134,7 @@
                 ->setCellValue('K33', $currency.' '. $totalAmount);  
               //  ->setCellValue('K33', 'd');      
     //prepare download
-    $filename = mt_rand(1,100000).'.xlsx'; //just some random filename
+    $filename = 'invoice-'.date('ymd').'-'.mt_rand(1,100000).'.xlsx'; //just some random filename
     header('Content-Type: application/vnd.ms-office');
     header('Content-Disposition: attachment;filename="'.$filename.'"');
     header('Cache-Control: max-age=0');

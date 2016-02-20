@@ -144,9 +144,9 @@
 
             $unitPrice = number_format($list['QuotationItemDetail']['unit_price'],4);
             $quantity = (float) $list['DeliveryDetail']['quantity'] ;
-            $totalQty = $quantity * $unitPrice;
-            $sheet->setCellValue('K'.$start, number_format($totalQty,2)); $total += $totalQty;
-            $sheet->setCellValue('K'.$start, $totalQty);
+            $totalQty = $quantity * $unitPrice; $total += $totalQty;
+            $sheet->setCellValue('K'.$start, number_format($totalQty,2)); 
+           // $sheet->setCellValue('K'.$start, $totalQty);
 
             $vat[] = $list['QuotationItemDetail']['vat_status'];
             $unitPriceID[] = $list['QuotationItemDetail']['unit_price_currency_id'];

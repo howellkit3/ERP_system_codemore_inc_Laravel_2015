@@ -26,14 +26,24 @@ foreach ($invoiceData as $invoiceDataList):
         
         <td class="text-center">
             <?php 
-                if ($invoiceDataList['SalesInvoice']['status'] == 1) {
-                    echo "<span class='label label-success'>Invoice</span>";
-                } else if($invoiceDataList['SalesInvoice']['status'] == 5){
-                    echo "<span class='label label-danger'>Terminated</span>";
-                }else{
-                    echo "<span class='label label-info'>Pre-Invoice</span>";
-                }
-            ?>
+                                                if ($invoiceDataList['SalesInvoice']['status'] == 1) {
+
+                                                    echo "<span class='label label-success'>Invoice</span>";
+
+                                                } else if($invoiceDataList['SalesInvoice']['status'] == 5){
+
+                                                    echo "<span class='label label-danger'>Terminated</span>";
+
+                                                } else if($invoiceDataList['SalesInvoice']['status'] == 3){
+
+                                                    echo "<span class='label label-danger'>Cancel</span>";
+
+
+                                                }else{
+
+                                                    echo "<span class='label label-info'>Pre-Invoice</span>";
+                                                }
+                                            ?>
         </td>
 
         <td>

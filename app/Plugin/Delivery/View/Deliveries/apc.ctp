@@ -13,9 +13,9 @@
 
 
 //address
-    $cell->setCellValue('A3',$toPrint[0]['Company']['Company']['company_name']);
+    //$cell->setCellValue('A3',$toPrint[0]['Company']['Company']['company_name']);
 
-    $cell->setCellValue('A4',$toPrint[0]['DeliveryDetail']['location']);
+    //$cell->setCellValue('A4',$toPrint[0]['DeliveryDetail']['location']);
     
     $cell->setCellValue('H4',date('y-M-d'));
 

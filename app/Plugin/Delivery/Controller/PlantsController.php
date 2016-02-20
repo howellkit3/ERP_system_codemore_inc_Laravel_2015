@@ -7,7 +7,7 @@ class PlantsController extends DeliveryAppController {
     public function index() {
     	
 
-        $limit = 5;
+        $limit = 10;
 
         $conditions = array();
 

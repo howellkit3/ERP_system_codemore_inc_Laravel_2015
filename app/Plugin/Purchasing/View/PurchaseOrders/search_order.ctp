@@ -29,10 +29,11 @@
             <td class="">
 
                 <?php echo ucfirst($purchaseOrderDataList['Request']['uuid']) ?>
-
+            
             </td>
 
             <td class="">
+                
                 <?php echo !empty($supplierData[$purchaseOrderDataList['PurchaseOrder']['supplier_id']]) ? ucfirst($supplierData[$purchaseOrderDataList['PurchaseOrder']['supplier_id']]) : $purchaseOrderDataList['PurchaseOrder']['supplier_id']; ?>
             </td>
 

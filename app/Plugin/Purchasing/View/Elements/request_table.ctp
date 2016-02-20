@@ -68,7 +68,9 @@
                         </span> ', array('controller' => 'requests', 'action' => 'view',$requestList['Request']['id']),array('class' =>' table-link','escape' => false,'title'=>'Review Request'));
                 ?>
 
-                    <?php  if(in_array($userData['User']['role_id'],array('1','2','7'))) { 
+            <?php  
+
+                if(in_array($userData['User']['role_id'],array('1','2','7','16'))) { 
                         
                         echo $this->Html->link('<span class="fa-stack">
                         <i class="fa fa-square fa-stack-2x"></i>
