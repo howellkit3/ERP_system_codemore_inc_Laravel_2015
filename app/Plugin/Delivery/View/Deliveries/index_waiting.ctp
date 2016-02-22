@@ -26,7 +26,7 @@
 
                                          <tr class="">
 
-                                              <td class="text-center">
+                                              <td class="text-center" data-id="<?php echo $scheduleDataList['ClientOrder']['id'] ?>">
                                                   <?php  echo !empty($jobTicketData[$scheduleDataList['ClientOrder']['id']]) ? $jobTicketData[$scheduleDataList['ClientOrder']['id']] : "No Job Ticket yet"; ?>  
                                               </td>
 

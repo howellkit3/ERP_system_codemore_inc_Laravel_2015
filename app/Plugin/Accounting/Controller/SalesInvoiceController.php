@@ -134,6 +134,9 @@ class SalesInvoiceController extends AccountingAppController {
 
     public function view($invoiceId = null,$saNo = null,$drno = null,$sino = null,$deliveryId = null){
 
+
+       // Configure::write('debug',2);
+
         $userData = $this->Session->read('Auth');
 
 
@@ -209,19 +212,25 @@ class SalesInvoiceController extends AccountingAppController {
 
 
 
-                if (!empty($invoiceData['SalesInvoice']['deliveries'])) {
+                if (!empty($invoiceData['SalesInvoice']['deliveries']) && $invoiceData['SalesInvoice']['deliveries'] != 'null') {
 
                     $deliveryId = json_decode($invoiceData['SalesInvoice']['deliveries']);
 
 
-
-                  
-                        $conditions = 'Delivery.dr_uuid IN ('.implode($deliveryId,',').') ';
+                
 
                 } else {
 
-                         $conditions = 'Delivery.dr_uuid = "'.$invoiceData['SalesInvoice']['dr_uuid'].'"';
+                    $conditions = 'Delivery.dr_uuid = "'.$invoiceData['SalesInvoice']['dr_uuid'].'"';    
                 }
+
+                // if ($invoiceData['SalesInvoice']['deliveries'] == 'null') {
+
+                //     $conditions = 'Delivery.dr_uuid = "'.$invoiceData['SalesInvoice']['dr_uuid'].'"';
+                // } else {
+
+                //         $conditions = 'Delivery.dr_uuid IN ('.implode($deliveryId,',').')';
+                // }
 
                 $drData = $this->Delivery->query('SELECT *
                     FROM deliveries AS Delivery
@@ -245,6 +254,12 @@ class SalesInvoiceController extends AccountingAppController {
                     ON Address.foreign_key = Company.id
                     WHERE '.$conditions.' group by Delivery.id');
         
+        if (!empty($_GET['test'])){
+
+            Configure::write('debug',2);
+            pr($conditions);
+            pr($drData); exit();
+        }
     
                   $noPermissionPay = "";
 
@@ -506,7 +521,8 @@ class SalesInvoiceController extends AccountingAppController {
 
         $seriesNo = $this->SalesInvoice->find('first', array(
                 'order' => array('SalesInvoice.sales_invoice_no DESC')));
-
+        Configure::write('debug',2);
+    
         if(!empty($seriesNo)){
 
             $nextSalesNo = intval($seriesNo['SalesInvoice']['sales_invoice_no']);
@@ -518,6 +534,28 @@ class SalesInvoiceController extends AccountingAppController {
             $seriesSalesNo = str_pad(++$nextSalesNo,6,'0',STR_PAD_LEFT);
 
         }
+
+
+
+        //  $conditions = array('NOT' => array('SalesInvoice.status' => array(2, 3)) );
+
+        //     $seriesNo = $this->SalesInvoice->find('first', array(
+        //         'order' => array('SalesInvoice.modified DESC'),
+        //         'conditions' => $conditions));
+
+        // if(!empty($seriesNo)){
+
+        //     $nextSalesNo = intval($seriesNo['SalesInvoice']['sales_invoice_no']);
+
+        //     $seriesSalesNo = str_pad(++$nextSalesNo,6,'0',STR_PAD_LEFT); 
+
+        // }else{
+
+        //     $nextSalesNo = intval(0);
+
+        //     $seriesSalesNo = str_pad(++$nextSalesNo,6,'0',STR_PAD_LEFT);
+
+        //     }
         
         $noPermissionPay = "";
 
@@ -761,7 +799,7 @@ class SalesInvoiceController extends AccountingAppController {
 
          $invoiceData = $this->SalesInvoice->read(null,$invoiceId );
 
-      if (!empty($invoiceData['SalesInvoice']['deliveries'])) {
+        if (!empty($invoiceData['SalesInvoice']['deliveries'])  && $invoiceData['SalesInvoice']['deliveries'] != 'null') {
 
                 $deliveryId = json_decode($invoiceData['SalesInvoice']['deliveries']);
 
@@ -1573,6 +1611,11 @@ class SalesInvoiceController extends AccountingAppController {
 
         }else{
 
+            $conditions = array();
+
+            $seriesNo = $this->SalesInvoice->find('first', array(
+                    'order' => array('SalesInvoice.modified DESC'),
+                    'conditions' => $conditions));
 
             if (!empty($seriesNo)) {
 

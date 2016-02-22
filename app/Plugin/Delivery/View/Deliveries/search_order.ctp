@@ -9,7 +9,7 @@
                               
                                     <tr class="">
 
-                                        <td class="text-center">
+                                        <td class="text-center" data-id="<?php echo $scheduleDataList['ClientOrderDeliverySchedule']['id'] ?>">
                                                   <?php  echo !empty($scheduleDataList['JobTicket']['uuid']) ? $scheduleDataList['JobTicket']['uuid'] : "No Job Ticket yet"; ?>  
                                         </td>
 

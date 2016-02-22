@@ -84,7 +84,7 @@
                             <?php echo $this->Form->end();  ?> 
 
 
-                    <?php  } else if ($indicator = 'apc_dr') { ?>
+                    <?php  } else if ($indicator == 'apc_dr') { ?>
 
 
                             <?php  echo $this->Form->create('InvoiceForm',array(

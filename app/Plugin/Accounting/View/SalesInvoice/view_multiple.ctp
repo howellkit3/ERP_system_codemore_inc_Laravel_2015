@@ -181,7 +181,7 @@
 								<td></td>
 									<td>
 									<?php 
-									if (!empty($invoiceData['SalesInvoice']['deliveries'])) {
+									if (!empty($invoiceData['SalesInvoice']['deliveries'])  && $invoiceData['SalesInvoice']['deliveries'] != 'null') {
 
 										$drNUm = json_decode($invoiceData['SalesInvoice']['deliveries']);
 

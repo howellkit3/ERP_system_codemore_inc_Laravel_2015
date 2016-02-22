@@ -223,6 +223,7 @@
                                     </div>
                                 </div>    
                                 <div class="clearfix"></div>
+                                <br>
                                <div class="form-group">
                                     <label class="col-lg-3 control-label"><span style="color:red">*</span> Delivery Number </label>
                                     <div class="col-lg-8">
