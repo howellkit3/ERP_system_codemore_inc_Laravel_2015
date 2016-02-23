@@ -185,13 +185,12 @@ class SalesInvoiceController extends AccountingAppController {
         $invoiceData = $this->SalesInvoice->find('first', array(
                                             'conditions' => $conditions ));
 
+        
         $prepared = $this->User->find('first', array('fields' => array('id', 'first_name','last_name'),
                                                             'conditions' => array('User.id' => $invoiceData['SalesInvoice']['created_by'])
                                                             )); 
         
         
-
-
         if(!empty($invoiceData['SalesInvoice']['dr_uuid'])){
            
             if (!empty($deliveryId)) {
@@ -210,14 +209,12 @@ class SalesInvoiceController extends AccountingAppController {
                 //                                 'conditions' => array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid']
                 //                                 )));
 
-
-
                 if (!empty($invoiceData['SalesInvoice']['deliveries']) && $invoiceData['SalesInvoice']['deliveries'] != 'null') {
 
                     $deliveryId = json_decode($invoiceData['SalesInvoice']['deliveries']);
 
 
-                
+                       $conditions = 'Delivery.dr_uuid IN ('.implode($deliveryId,',').')';
 
                 } else {
 
@@ -254,12 +251,12 @@ class SalesInvoiceController extends AccountingAppController {
                     ON Address.foreign_key = Company.id
                     WHERE '.$conditions.' group by Delivery.id');
         
-        if (!empty($_GET['test'])){
+                    if (!empty($_GET['test'])){
 
-            Configure::write('debug',2);
-            pr($conditions);
-            pr($drData); exit();
-        }
+                        Configure::write('debug',2);
+                        pr($conditions);
+                        pr($drData); exit();
+                    }
     
                   $noPermissionPay = "";
 
@@ -2132,7 +2129,8 @@ class SalesInvoiceController extends AccountingAppController {
                 'SalesInvoice.status',
                 'SalesInvoice.delivery_id',
                 'SalesInvoice.created',
-                'SalesInvoice.invoice_date'
+                'SalesInvoice.invoice_date',
+                'SalesInvoice.deliveries'
                 ),
             'order' => 'SalesInvoice.id DESC',
         );
@@ -2285,17 +2283,26 @@ class SalesInvoiceController extends AccountingAppController {
 
        // $this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id'],$DRdata);
 
-
         $date = date('Y-m-d H:i:s');
         
         $this->SalesInvoice->create();
+      
+        $deliveryIDs = explode(',', $this->request->data['SalesInvoice']['delivery_ids']);
 
+        $deliveries = array_unique(array_filter($deliveryIDs));
+
+        $del = array();
+
+        foreach ($deliveries as $key => $list) {
+            
+            $del[] = trim($list);    
+        }
         // if (!empty($invoiceData['InvoiceForm']['delivery_id'])) {
         //     $invoiceData['SalesInvoice']['delivery_id'] = $invoiceData['InvoiceForm']['delivery_id'];
         // }
         $invoiceData['SalesInvoice']['sales_invoice_no'] = $this->request->data['SalesInvoice']['sales_invoice'];
 
-        $invoiceData['SalesInvoice']['deliveries'] = json_encode($this->request->data['SalesInvoice']['dr_number']);
+        $invoiceData['SalesInvoice']['deliveries'] = json_encode(array_unique($del));
 
         $invoiceData['SalesInvoice']['delivery_id'] = null;
 
@@ -2308,7 +2315,7 @@ class SalesInvoiceController extends AccountingAppController {
         $invoiceData['SalesInvoice']['status'] = 0;
 
         $invoiceData['SalesInvoice']['is_multiple'] = 1;
-
+        
         $this->SalesInvoice->save($invoiceData);
 
 
@@ -2321,6 +2328,27 @@ class SalesInvoiceController extends AccountingAppController {
 
       
      
+        }
+    }
+
+    public function search_dr() {
+
+        $query = $this->request->query;
+
+        if (!empty($query)) {
+
+            $this->loadModel('Delivery.Delivery');
+
+            $deliveries = $this->Delivery->find('list',array(
+                'conditions' => array(
+                    'Delivery.dr_uuid like' => '%'.$query['uuid'].'%',
+                ),
+                'fields' => array('dr_uuid','dr_uuid')
+            )); 
+
+            $this->set(compact('deliveries'));
+
+            $this->render('SalesInvoice/ajax/dr_numbers');
         }
     }
 }

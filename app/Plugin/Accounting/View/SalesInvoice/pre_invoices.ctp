@@ -79,13 +79,34 @@
 
 				                        <td class="">
 
-				                            <?php echo str_pad($invoiceDataList['SalesInvoice']['dr_uuid'],5,'0',STR_PAD_LEFT);?>
+				                            <?php 
+				                            if (!empty($invoiceDataList['SalesInvoice']['deliveries'])) {
+				                            	
+				                            $drList = json_decode($invoiceDataList['SalesInvoice']['deliveries']);
+
+
+											foreach ($drList as $key => $value) {
+											  	echo $value.'<br>';
+											  }				                          //  echo str_pad($invoiceDataList['SalesInvoice']['dr_uuid'],5,'0',STR_PAD_LEFT);
+
+				                            } else {
+
+				                            echo str_pad($invoiceDataList['SalesInvoice']['dr_uuid'],5,'0',STR_PAD_LEFT);
+				                             }
+				                           ?>
 				                        </td>
 
 				                        <td class="">
 				                            <?php  
+
+				                              if (!empty($invoiceDataList['SalesInvoice']['deliveries'])) {
+
+				                              	 echo $companyName[$clientDataHolder[$deliveryNumHolder[$drList[0]]]];
+				                              } else {
+				                              	 echo $companyName[$clientDataHolder[$deliveryNumHolder[$invoiceDataList['SalesInvoice']['dr_uuid']]]];
+				                              }
 				                            // $company = $this->AccountingFunction->getCompany($invoiceDataList['Delivery']['clients_order_id'],$companyName);
-				                             echo $companyName[$clientDataHolder[$deliveryNumHolder[$invoiceDataList['SalesInvoice']['dr_uuid']]]];
+				                            // echo $companyName[$clientDataHolder[$deliveryNumHolder[$invoiceDataList['SalesInvoice']['dr_uuid']]]];
 				                            // echo "<br>";
 				                           // echo $companyName[ $invoiceDataList['Delivery']['company_id'] ];
 

@@ -464,7 +464,7 @@
 
             $('.select_cont').append($tags);
 
-            $values =  $values + (!$values ? '' : ', ') + $this.val();
+            $values =  $values + (!$values ? '' : ',') + $this.val();
 
             $('#SalesInvoiceDeliveryIds').val($values);
 

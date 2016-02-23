@@ -305,7 +305,7 @@
 
         var timeout;
 
-        $('.searchOrder').keypress(function() {
+        $('.searchOrder').keyup(function() {
 
 
             if(timeout) {
