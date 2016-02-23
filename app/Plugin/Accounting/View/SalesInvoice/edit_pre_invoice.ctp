@@ -60,7 +60,6 @@ $invoice['SalesInvoice']['delivery_id']
                                                         'class' => 'form-control col-lg-6',
                                                         'label' => false,
                                                         'options' => $companyName,
-                                                        'disabled' => 'disabled',
                                                         'default' => $clientDataHolder['ClientOrder']['company_id']
 
                                                     ));

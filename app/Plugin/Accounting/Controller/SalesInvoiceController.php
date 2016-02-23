@@ -843,11 +843,11 @@ class SalesInvoiceController extends AccountingAppController {
                 WHERE '. $conditions.' group by Delivery.id');
 
 
-         $noPermissionPay = "";
+        $noPermissionPay = "";
 
-         $noPermissionReciv = "";
-         $companyData =  $drData[0]['Company']['company_name'];
-
+        $noPermissionReciv = "";
+        
+        $companyData =  $drData[0]['Company']['company_name'];
 
         $this->set(compact('prepared','approved','drData','clientData','currencyData','companyData','units','invoiceData','paymentTermData','currencyData'));
            
@@ -2076,14 +2076,14 @@ class SalesInvoiceController extends AccountingAppController {
             ));
 
             $deliveries = array();
+
             foreach ($invoices as $key => $list) {
 
-                        
-                        $dr = $this->Delivery->find('all',array(
-                            'conditions' => array(
-                                    'Delivery.dr_uuid' => $list['SalesInvoice']['dr_uuid']
-                            )
-                        ));
+                    $dr = $this->Delivery->find('all',array(
+                        'conditions' => array(
+                                'Delivery.dr_uuid' => $list['SalesInvoice']['dr_uuid']
+                        )
+                    ));
 
                     $dr = $this->Delivery->query('SELECT *
                     FROM deliveries AS Delivery
@@ -2199,9 +2199,8 @@ class SalesInvoiceController extends AccountingAppController {
                     $druuid,
                     $sino,
                     $deliveryId
-
-
                 ));
+
             
             } else {
 
@@ -2227,30 +2226,37 @@ class SalesInvoiceController extends AccountingAppController {
         if (!empty($id)) {
 
 
+            $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
+            
 
-        $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
+           $invoice = $this->request->data = $this->SalesInvoice->read(null,$id);
 
+            if (!empty($invoice['SalesInvoice']['deliveries'])) {
 
-        $deliveryNumHolder = $this->Delivery->find('first',array(
+                $ids = json_decode($invoice['SalesInvoice']['deliveries']);
+
+                 $druuid = $ids[0];
+
+            }
+
+            $deliveryNumHolder = $this->Delivery->find('first',array(
              
             'conditions' =>  array('Delivery.dr_uuid' => $druuid ),  
             'fields' => array('dr_uuid','clients_order_id'
             )));
 
-           $clientDataHolder = $this->ClientOrder->find('first',array('conditions' => array(
-            'ClientOrder.uuid' =>  $deliveryNumHolder['Delivery']['clients_order_id']   
+            $clientDataHolder = $this->ClientOrder->find('first',array('conditions' => array(
+                'ClientOrder.uuid' =>  $deliveryNumHolder['Delivery']['clients_order_id']   
             )));
 
-            $invoice = $this->request->data = $this->SalesInvoice->read(null,$id);
 
-              if ($userData['User']['role_id'] == 9 ) {
+        if ($userData['User']['role_id'] == 9 ) {
 
             $noPermissionReciv = 'disabled not-active';
 
         } else {
 
             $noPermissionReciv = ' ';
-
         }
 
         if ($userData['User']['role_id'] == 10) {

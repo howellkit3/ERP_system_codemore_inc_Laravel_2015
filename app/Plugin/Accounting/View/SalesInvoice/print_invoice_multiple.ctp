@@ -232,6 +232,7 @@
    
        
         
+        $sheet->setCellValue('D27', $drData[0]['DeliveryDetail']['remarks']);
   
   // prepare download
     $filename = mt_rand(1,100000).'.xlsx'; //just some random filename

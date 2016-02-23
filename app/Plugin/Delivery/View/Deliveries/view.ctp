@@ -580,8 +580,6 @@ $totalremaining = 0;
                                 'class' => 'form-control'
                             )) ?>
                         </div>
-
-
                             <br>
                         <div class="modal-footer">
                             <a href="/delivery/">
