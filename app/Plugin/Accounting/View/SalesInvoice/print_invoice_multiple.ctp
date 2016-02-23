@@ -210,7 +210,27 @@
         $sheet->setCellValue('K32', $vat12);
       //  $sheet->setCellValue('J7', $drData[0]['Delivery']['created']); 
 
-        $sheet->setCellValue('D26', 'DR#'.$drNum);
+        $dr = 26;
+
+        if (!empty($invoiceData['SalesInvoice']['deliveries'])) {
+             
+             $drNum = json_decode($invoiceData['SalesInvoice']['deliveries']);
+
+             $dr_multiple = '';
+             
+             foreach ($drNum as $key => $value) {
+             
+                 $dr_multiple .= 'DR#'.$value.', ';
+            }
+            
+            $sheet->setCellValue('D'.$dr, $dr_multiple);
+
+
+        } else {
+            $sheet->setCellValue('D'.$dr, 'DR#'.$drNum); 
+        }
+   
+       
         
   
   // prepare download

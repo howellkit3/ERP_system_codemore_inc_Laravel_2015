@@ -119,6 +119,34 @@
 
 
                         <div class="form-group" id="existing_items">
+                            <label class="col-lg-2 control-label"><span style="color:red">*</span> APC DR</label>
+                            <div class="col-lg-9">
+                                  <?php 
+                                                echo $this->Form->input('DeliveryDetail.apc_dr', array('class' => 'form-control item_type',
+                                                    'type' => 'text',
+                                                    'label' => false
+                                                    //  'value' => $clientsOrder['ClientOrderDeliverySchedule']['quantity']
+                                                    ));
+                                            ?>
+                            </div>
+                        </div>
+
+                          <div class="form-group" id="existing_items">
+                            <label class="col-lg-2 control-label"><span style="color:red">*</span> Plant </label>
+                            <div class="col-lg-9">
+                                  <?php 
+                                                echo $this->Form->input('DeliveryDetail.plant_id', 
+                                                    array('class' => 'form-control item_type',
+                                                    'type' => 'select',
+                                                    'label' => false,
+                                                    'options' => $plants,
+                                                    'empty' => '--Select Plant--',
+                                                    //  'value' => $clientsOrder['ClientOrderDeliverySchedule']['quantity']
+                                                    ));
+                                            ?>
+                            </div>
+                        </div>
+                        <div class="form-group" id="existing_items">
                             <label class="col-lg-2 control-label"><span style="color:red">*</span>Schedule</label>
                             <div class="col-lg-9">
                                 <?php 
@@ -291,9 +319,25 @@
                             <label class="col-lg-2 control-label"><span style="color:red">*</span> APC DR</label>
                             <div class="col-lg-9">
                                   <?php 
-                                                echo $this->Form->input('DeliveryDetail.apc_dr', array('class' => 'form-control item_type required',
+                                                echo $this->Form->input('DeliveryDetail.apc_dr', array('class' => 'form-control item_type',
                                                     'type' => 'text',
                                                     'label' => false
+                                                    //  'value' => $clientsOrder['ClientOrderDeliverySchedule']['quantity']
+                                                    ));
+                                            ?>
+                            </div>
+                        </div>
+
+                          <div class="form-group" id="existing_items">
+                            <label class="col-lg-2 control-label"><span style="color:red">*</span> Plant </label>
+                            <div class="col-lg-9">
+                                  <?php 
+                                                echo $this->Form->input('DeliveryDetail.plant_id', 
+                                                    array('class' => 'form-control item_type',
+                                                    'type' => 'select',
+                                                    'label' => false,
+                                                    'options' => $plants,
+                                                    'empty' => '--Select Plant--',
                                                     //  'value' => $clientsOrder['ClientOrderDeliverySchedule']['quantity']
                                                     ));
                                             ?>

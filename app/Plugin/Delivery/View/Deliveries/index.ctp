@@ -139,8 +139,6 @@
                         </div> 
 
                         <div class="clearfix"></div>
-
-
                         <br>
                         <div class="form-group" >
                         <div class="table-responsive">

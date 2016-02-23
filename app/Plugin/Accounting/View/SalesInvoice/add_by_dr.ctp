@@ -19,7 +19,9 @@
 
                         <?php echo $this->Form->end(); ?>
                     
-                </div>
+                     </div>
+
+                     <a href="#addByDr" data-toggle="modal" > <button class="btn btn-success"> Create Invoice </button></a>
 
                 </div>
             </header>
@@ -194,6 +196,93 @@
     </div>
 
 
+       <div class="modal fade" id="addByDr" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Add DR to Invoice</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="result-table">
+                        <div class="modal-body">
+                            <?php echo $this->Form->create('SalesInvoice',array('url' => array('controller' => 'sales_invoice', 'action' => 'create_multiple_apc'))); ?>
+
+                               <div class="form-group">
+                                    <label class="col-lg-3 control-label"><span style="color:red">*</span> Invoice Number </label>
+                                    <div class="col-lg-8">
+                                        <?php 
+                                            echo $this->Form->input('sales_invoice', array(
+                                               'alt' => 'Clients Order',
+                                                'label' => false,
+                                                'class' => 'form-control col-lg-4 required',
+                                                'value' => $seriesSalesNo,
+                                                'readonly' => true
+                                                ));
+                                        ?>
+                                    </div>
+                                </div>    
+                                <div class="clearfix"></div>
+                               <div class="form-group">
+                                    <label class="col-lg-3 control-label"><span style="color:red">*</span> Delivery Number </label>
+                                    <div class="col-lg-8">
+                                        <?php 
+                                            echo $this->Form->input('dr_uuid', array(
+                                               //'alt' => 'Clients Order',
+                                                'label' => false,
+                                                'class' => 'form-control col-lg-4 required',
+                                               // 'value' => $seriesSalesNo
+                                                ));
+                                        ?>
+                                    </div>
+                                </div>                 
+                                 
+                            <div class="clearfix"></div>
+                            <br>
+                                <div class="result_fields">
+                                   
+                                       <div class="form-group">
+                                        <label class="col-lg-12 control-label"> DR NUMBERS : </label>
+                                        <div class="col-lg-12">
+                                            <ul>
+                                    <?php foreach ($allItems as $key => $value) { ?>
+                                    <li>
+                                            <input type="checkbox" value="<?php echo $value; ?>" name="data[SalesInvoice][dr_number][]">
+                                            <?php echo $value; ?>
+                                    </li>   
+                                   <?php } ?>
+                                    </ul>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                                <div class="clearfix"></div>
+
+                                
+                                <div class="modal-footer">
+
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle fa-lg"></i> Submit</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                                </div>
+
+                                <?php echo $this->Form->end(); ?>
+                        </div>
+
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+<style>
+    .result_fields li {
+  display: inline-block;
+  list-style: outside none none;
+  width: 16%;
+}
+</style>
 <script>
 
     jQuery(document).ready(function($){

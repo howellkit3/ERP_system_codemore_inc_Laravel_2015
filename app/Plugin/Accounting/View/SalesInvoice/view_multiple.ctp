@@ -181,7 +181,19 @@
 								<td></td>
 									<td>
 									<?php 
+									if (!empty($invoiceData['SalesInvoice']['deliveries'])) {
+
+										$drNUm = json_decode($invoiceData['SalesInvoice']['deliveries']);
+
+										foreach ($drNUm as $key => $value) {
+												echo "DR# ".str_pad($value,5,'0',STR_PAD_LEFT);
+												echo "<br>";
+										}
+
+									} else {
+
 										echo "DR# ".str_pad($drData[0]['Delivery']['dr_uuid'],5,'0',STR_PAD_LEFT);
+									}
 										
 									?></td>
 								<td></td>

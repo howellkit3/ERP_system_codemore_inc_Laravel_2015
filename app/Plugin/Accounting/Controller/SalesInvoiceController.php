@@ -200,11 +200,28 @@ class SalesInvoiceController extends AccountingAppController {
                     $this->Delivery->bindDelivery();  
             }
 
+
             if (!empty($invoiceData['SalesInvoice']['is_multiple']) && $invoiceData['SalesInvoice']['is_multiple'] == 1) {
 
                 // $drData = $this->Delivery->find('all', array(
                 //                                 'conditions' => array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid']
                 //                                 )));
+
+
+
+                if (!empty($invoiceData['SalesInvoice']['deliveries'])) {
+
+                    $deliveryId = json_decode($invoiceData['SalesInvoice']['deliveries']);
+
+
+
+                  
+                        $conditions = 'Delivery.dr_uuid IN ('.implode($deliveryId,',').') ';
+
+                } else {
+
+                         $conditions = 'Delivery.dr_uuid = "'.$invoiceData['SalesInvoice']['dr_uuid'].'"';
+                }
 
                 $drData = $this->Delivery->query('SELECT *
                     FROM deliveries AS Delivery
@@ -226,9 +243,9 @@ class SalesInvoiceController extends AccountingAppController {
                     ON Product.id = QuotationDetail.product_id
                     LEFT JOIN koufu_sale.addresses AS Address
                     ON Address.foreign_key = Company.id
-                    WHERE Delivery.dr_uuid = "'.$invoiceData['SalesInvoice']['dr_uuid'].'" group by Delivery.id');
+                    WHERE '.$conditions.' group by Delivery.id');
         
-   
+    
                   $noPermissionPay = "";
 
                  $noPermissionReciv = "";
@@ -377,7 +394,48 @@ class SalesInvoiceController extends AccountingAppController {
 
     }
 
- 
+    public function add_apc_pre_invoce() {
+
+        $userData = $this->Session->read('Auth');
+
+        $DRdata = $this->SalesInvoice->find('first', array(
+            'conditions' => array(
+                'SalesInvoice.dr_uuid' => $this->request->data['SalesInvoice']['apc_dr']),
+                'order' => array('created DESC')
+            ));
+
+        if (!empty($DRdata) && $DRdata['SalesInvoice']['status'] != 3) {
+
+            $this->Session->setFlash(__('This Delivery No. already have a Sales Invoice No. '), 'error');
+            $this->redirect( array(
+                         'controller' => 'salesInvoice', 
+                         'action' => 'add','si_num'
+                    ));
+        }
+
+        pr($this->request->data);
+
+        exit();
+
+         $this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id'],$DRdata,'apc_dr');
+
+        $this->Session->setFlash(__(' Sales Invoice No. completed. '), 'success');
+        
+        if ($this->request->data['SalesInvoice']['status'] == '0') {
+               $this->redirect( array(
+                     'controller' => 'sales_invoice', 
+                     'action' => 'pre_invoices'
+                ));
+
+        } else {
+                   $this->redirect( array(
+                     'controller' => 'sales_invoice', 
+                     'action' => 'index'
+                ));
+        }
+
+
+    }
 
     public function add($indicator = null){
 
@@ -430,6 +488,18 @@ class SalesInvoiceController extends AccountingAppController {
 
         $deliveryData = $this->paginate('Delivery');
 
+        $allSaleInvoice = $this->SalesInvoice->find('list',array(
+            'fields' => array('id','dr_uuid')
+        ));
+
+        $conditions = array('Delivery.dr_uuid NOT' => $allSaleInvoice,'Delivery.dr_uuid NOT LIKE' => '%x%');
+
+        $allItems = $this->Delivery->find('list',array(
+            'fields' => array('dr_uuid' , 'dr_uuid'),
+            'conditions' => $conditions,
+            'group' => 'Delivery.dr_uuid',
+            'order' => 'Delivery.dr_uuid ASC'
+        ));
 
       //  $poNumber = $this->ClientOrder->find('list', array('fields' => array('uuid', 'po_number')));
         $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
@@ -453,7 +523,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         $noPermissionReciv = "";
 
-        $this->set(compact('seriesSalesNo','search','indicator','noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData', 'companyData', 'poNumber'));
+        $this->set(compact('seriesNo','allItems','seriesSalesNo','search','indicator','noPermissionPay', 'noPermissionReciv', 'deliveryData', 'clientOrderData', 'companyData', 'poNumber'));
         
         if ($indicator == 'si_num') {
 
@@ -478,6 +548,39 @@ class SalesInvoiceController extends AccountingAppController {
 
             $output = $this->render('add_statement');
         }
+    }
+
+    public function add_by_apc() {
+
+        $this->loadModel('Delivery.DeliveryConnection');
+
+        $this->loadModel('Delivery.Delivery');
+
+        $search = '';
+
+        $this->Delivery->bindDeliveryById();
+
+        $conditions = array('DeliveryDetail.apc_dr NOT' => '');
+
+        $params =  array(   
+                'conditions' => $conditions,
+                'limit' => 10,
+                'order' => 'Delivery.id DESC',
+                'group' => 'DeliveryDetail.apc_dr DESC'
+        );
+
+        $this->paginate = $params;
+
+        $itemsDelivery = $this->paginate('Delivery');
+        
+        $noPermissionPay = "";
+
+        $noPermissionReciv = "";
+
+        $indicator = '';
+        
+
+        $this->set(compact('items','itemsDelivery','noPermissionReciv','noPermissionPay','indicator','search'));
     }
 
     public function find_data($id = null){
@@ -656,6 +759,21 @@ class SalesInvoiceController extends AccountingAppController {
                                                         'order' => array('Currency.name' => 'ASC')
                                                         ));
 
+         $invoiceData = $this->SalesInvoice->read(null,$invoiceId );
+
+      if (!empty($invoiceData['SalesInvoice']['deliveries'])) {
+
+                $deliveryId = json_decode($invoiceData['SalesInvoice']['deliveries']);
+
+              
+                    $conditions = 'Delivery.dr_uuid IN ('.implode($deliveryId,',').') ';
+
+            } else {
+
+                     $conditions = 'Delivery.dr_uuid = "'.$invoiceData['SalesInvoice']['dr_uuid'].'"';
+            }
+
+
 
         $drData = $this->Delivery->query('SELECT *
                 FROM deliveries AS Delivery
@@ -677,7 +795,7 @@ class SalesInvoiceController extends AccountingAppController {
                 ON Product.id = QuotationDetail.product_id
                 LEFT JOIN koufu_sale.addresses AS Address
                 ON Address.foreign_key = Company.id
-                WHERE Delivery.dr_uuid = "'.$dr_uuid.'" group by Delivery.id');
+                WHERE '. $conditions.' group by Delivery.id');
 
 
          $noPermissionPay = "";
@@ -685,7 +803,6 @@ class SalesInvoiceController extends AccountingAppController {
          $noPermissionReciv = "";
          $companyData =  $drData[0]['Company']['company_name'];
 
-         $invoiceData = $this->SalesInvoice->read(null,$invoiceId );
 
         $this->set(compact('prepared','approved','drData','clientData','currencyData','companyData','units','invoiceData','paymentTermData','currencyData'));
            
@@ -755,7 +872,7 @@ class SalesInvoiceController extends AccountingAppController {
                 LEFT JOIN koufu_sale.addresses AS Address
                 ON Address.foreign_key = Company.id
                 WHERE Delivery.dr_uuid = "'.$dr_uuid.'" group by Delivery.id');
-
+        
 
          $noPermissionPay = "";
 
@@ -1408,6 +1525,8 @@ class SalesInvoiceController extends AccountingAppController {
 
     public function invoice_modal($deliveryId = null, $deliveryUUID = null, $indicator = null,$isMultiple = false) {
 
+
+
         if($indicator == "si_num"){
 
             $conditions = array('NOT' => array('SalesInvoice.status' => array(2, 3)) );
@@ -1430,13 +1549,30 @@ class SalesInvoiceController extends AccountingAppController {
 
             }
  
-        }else{
+        } else if($indicator == 'apc_dr') {
 
-            $conditions = "";
+            $conditions = array('NOT' => array('SalesInvoice.status' => array(2, 3)) );
 
             $seriesNo = $this->SalesInvoice->find('first', array(
-                    'order' => array('SalesInvoice.statement_no DESC'),
+                    'order' => array('SalesInvoice.modified DESC'),
                     'conditions' => $conditions));
+
+            if(!empty($seriesNo)){
+
+                $nextSalesNo = intval($seriesNo['SalesInvoice']['sales_invoice_no']);
+
+                $seriesSalesNo = str_pad(++$nextSalesNo,6,'0',STR_PAD_LEFT); 
+
+            }else{
+
+                $nextSalesNo = intval(0);
+
+                $seriesSalesNo = str_pad(++$nextSalesNo,6,'0',STR_PAD_LEFT);
+
+            }
+
+        }else{
+
 
             if (!empty($seriesNo)) {
 
@@ -2086,4 +2222,52 @@ class SalesInvoiceController extends AccountingAppController {
        
     }
 
+
+    public function create_multiple_apc() {
+
+        if (!empty($this->request->data)) {
+
+
+        $userData = $this->Session->read('Auth.User');
+
+       // $this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id'],$DRdata);
+
+
+        $date = date('Y-m-d H:i:s');
+        
+        $this->SalesInvoice->create();
+
+        // if (!empty($invoiceData['InvoiceForm']['delivery_id'])) {
+        //     $invoiceData['SalesInvoice']['delivery_id'] = $invoiceData['InvoiceForm']['delivery_id'];
+        // }
+        $invoiceData['SalesInvoice']['sales_invoice_no'] = $this->request->data['SalesInvoice']['sales_invoice'];
+
+        $invoiceData['SalesInvoice']['deliveries'] = json_encode($this->request->data['SalesInvoice']['dr_number']);
+
+        $invoiceData['SalesInvoice']['delivery_id'] = null;
+
+        $invoiceData['SalesInvoice']['dr_uuid'] = $this->request->data['SalesInvoice']['dr_uuid'];
+            
+        $invoiceData['SalesInvoice']['created_by'] = $userData['id'];
+        $invoiceData['SalesInvoice']['modified_by'] = $userData['id'];
+        $invoiceData['SalesInvoice']['modified'] = $date;
+
+        $invoiceData['SalesInvoice']['status'] = 0;
+
+        $invoiceData['SalesInvoice']['is_multiple'] = 1;
+
+        $this->SalesInvoice->save($invoiceData);
+
+
+        $this->Session->setFlash(__(' Sales Invoice No. completed. '), 'success');
+        
+                $this->redirect( array(
+                     'controller' => 'sales_invoice', 
+                     'action' => 'pre_invoices'
+                ));
+
+      
+     
+        }
+    }
 }

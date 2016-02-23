@@ -2635,3 +2635,15 @@ ADD COLUMN `si_num`  varchar(255) NULL AFTER `dr_num`;
 ALTER TABLE `sales_invoices`
 ADD COLUMN `invoice_date`  datetime NULL AFTER `created`;
 
+ALTER TABLE `delivery_details`
+ADD COLUMN `apc_dr`  varchar(255) NULL AFTER `delivery_id`,
+ADD COLUMN `plant_id`  int(11) NULL AFTER `apc_dr`;
+
+ALTER TABLE `delivery_connection`
+ADD COLUMN `apc_dr`  int(11) NULL AFTER `dr_uuid`,
+ADD COLUMN `plant_id`  int(11) NULL AFTER `apc_dr`;
+
+
+ALTER TABLE `sales_invoices`
+ADD COLUMN `deliveries`  varchar(500) NULL AFTER `is_multiple`;
+

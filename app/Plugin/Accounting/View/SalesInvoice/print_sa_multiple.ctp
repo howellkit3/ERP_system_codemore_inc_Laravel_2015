@@ -101,7 +101,7 @@
           $amount = $list['DeliveryDetail']['quantity'] * $list['QuotationItemDetail']['unit_price'];
           
           $cell->setCellValue('J'.$start,number_format($amount,2));
-    
+         $start++;
     }
 
 

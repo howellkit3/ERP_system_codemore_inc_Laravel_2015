@@ -434,6 +434,7 @@ $totalremaining = 0;
                                                             'data-toggle' => 'modal',
                                                             'data-delivery-id' => $deliveryDataList['Delivery']['id'],
                                                             'data-uuid' => $deliveryDataList['Delivery']['dr_uuid'],
+                                                            'data-apc' => $deliveryDataList['DeliveryDetail']['apc_dr'],
                                                             'id' => 'DeliveryReview'
                                                         ));
                                         }
@@ -618,18 +619,19 @@ $totalremaining = 0;
         $appendCont = $('#apcPreview .result');
 
         $drID = $(this).attr('data-delivery-id');
+        
         $drUuID = $(this).attr('data-uuid');
 
-
+        $apcDr = $(this).attr('data-apc');
+        
         $plantId = $('#plant_id').val();
         //singe
         $url = serverPath + 'delivery/deliveries/multiple_apc';
 
-
-         $.ajax({
+        $.ajax({
         url: serverPath + "delivery/deliveries/check_apc_to_print",
         type: "POST",
-        data: {"dr_id": $drID , "dr_uuid": $drUuID , 'plant' : $plantId },
+        data: {"dr_id": $drID , "dr_uuid": $drUuID , 'plant' : $plantId, 'apc_dr' :  $apcDr },
         dataType: "json",
         success: function(data) {
 
@@ -661,7 +663,7 @@ $totalremaining = 0;
 
                 $('.print_dr').attr('data-sched-id',newData.Delivery.schedule_uuid);
 
-                $('.print_dr').attr('href',$url+'/'+newData.Delivery.dr_uuid+'/'+newData.Delivery.schedule_uuid+'/'+ $plantId);
+                $('.print_dr').attr('href',$url+'/'+newData.Delivery.dr_uuid+'/'+newData.Delivery.schedule_uuid+'/'+ $plantId+'/'+newData.DeliveryConnection.apc_dr);
            // }
               
             }
@@ -741,7 +743,8 @@ $totalremaining = 0;
 
             if (data.multiple == true) {
 
-                $('.print_dr').attr('href',$multiple_print+'/'+newData.Delivery.dr_uuid);
+                $('.print_dr').attr('href',$multiple_print+'/'+newData.Delivery.dr_uuid+'/'+newData.DeliveryDetail.apc_dr);
+
             } else {
 
                 $('.print_dr').attr('href',$single_print+'/'+newData.Delivery.dr_uuid+'/'+newData.Delivery.schedule_uuid+'/'+newData.ClientOrder.ClientOrder.id);

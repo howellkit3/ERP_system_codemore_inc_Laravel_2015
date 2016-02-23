@@ -135,7 +135,8 @@ class DeliveriesController extends DeliveryAppController {
                       'Delivery.dr_uuid' => $this->request->data['Delivery']['dr_uuid'])
                     ));
 
-        /* disable this so that they can have the same DR # */
+
+            /* disable this so that they can have the same DR # */
         
         if (!empty($DRdata) && $DRdata >= 4) {
 
@@ -150,6 +151,35 @@ class DeliveriesController extends DeliveryAppController {
             ));  
         } 
 
+
+        /* check if apc dr */
+
+
+        if (!empty($this->request->data['DeliveryDetail']['apc_dr'])) {
+
+            $apcDr = $this->DeliveryDetail->find('count', array(
+                    'conditions' => array(
+                      'DeliveryDetail.apc_dr' => $this->request->data['DeliveryDetail']['apc_dr'])
+                    ));
+
+              if (!empty($DRdata) && $DRdata >= 8) {
+                 $this->Session->setFlash(__('Their are already 8 items in that DR,Choose another or remove item on the DR'), 'error');
+          
+                    $this->redirect( array(
+                        'controller' => 'deliveries',   
+                        'action' => 'view',
+                        $deliveryScheduleId,
+                        $scheduleInfo['ClientOrderDeliverySchedule']['uuid'],
+                        $scheduleInfo['ClientOrder']['uuid']
+                    ));  
+              }
+
+
+
+        } 
+
+  
+       
         $this->request->data['Delivery']['schedule_uuid'] = $scheduleInfo['ClientOrderDeliverySchedule']['uuid'];
         $this->request->data['Delivery']['clients_order_id']  = $scheduleInfo['ClientOrder']['uuid'];
         $this->request->data['Delivery']['status']  = '1';
@@ -182,6 +212,10 @@ class DeliveriesController extends DeliveryAppController {
         $saveData['DeliveryConnection']['delivery_details_id'] = $this->DeliveryDetail->id;  
 
         $saveData['DeliveryConnection']['dr_uuid'] =  $latestDelivery['Delivery']['dr_uuid']; 
+
+        $saveData['DeliveryConnection']['apc_dr'] =  $this->request->data['DeliveryDetail']['apc_dr'];
+
+        $saveData['DeliveryConnection']['plant_id'] =  $this->request->data['DeliveryDetail']['plant_id']; 
 
         if($this->DeliveryConnection->saveDetail($saveData,$userData['User']['id'])) {
 
@@ -239,7 +273,6 @@ class DeliveriesController extends DeliveryAppController {
         $this->loadModel('Sales.Address');
 
         $this->loadModel('Delivery.Measure');
-
 
         $this->loadModel('Delivery.Plant');
 
@@ -335,6 +368,7 @@ class DeliveriesController extends DeliveryAppController {
              'order' => 'Plant.name ASC',
              'fields' => array('id','name')
             ));
+
         $this->set(compact('companyAddress','plants','noPermissionSales','driverList','helperList','truckList','clientUuid','deliveryScheduleId','clientsOrderUuid','scheduleInfo','deliveryData', 'quantityInfo','deliveryDataID','deliveryDetailsData', 'deliveryEdit','deliveryList','deliveryStatus', 'orderListHelper', 'clientsOrder', 'drData', 'deliveryDetailsData', 'DeliveryReceiptData', 'measureList', 'indicator'));
         
     }
@@ -433,6 +467,9 @@ class DeliveriesController extends DeliveryAppController {
 
             $saveData['DeliveryConnection']['dr_uuid'] =  $this->request->data['Delivery']['dr_uuid']; 
 
+            $saveData['DeliveryConnection']['apc_dr'] =  $this->request->data['DeliveryDetail']['apc_dr'];
+
+            $saveData['DeliveryConnection']['plant_id'] =  $this->request->data['DeliveryDetail']['plant_id']; 
 
             if( $this->DeliveryConnection->saveDetail($saveData,$userData['User']['id']) ) {
 
@@ -939,9 +976,8 @@ class DeliveriesController extends DeliveryAppController {
             LEFT JOIN koufu_sale.products AS Product
             ON Product.id = QuotationDetail.product_id
             WHERE JobTicket.uuid LIKE "%'.$hint.'%" OR ClientOrder.po_number LIKE "%'.$hint.'%"
-            OR Company.company_name LIKE "%'.$hint.'%" OR Product.name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%"');
-        
-
+            OR Company.company_name LIKE "%'.$hint.'%" OR Product.name LIKE "%'.$hint.'%" OR ClientOrder.uuid LIKE "%'.$hint.'%" GROUP by ClientOrderDeliverySchedule.id DESC');
+            
         // $deliveryData = $this->Delivery->find('list',array('fields' => array('schedule_uuid','status')));
 
         // $this->Delivery->bindDelivery();
@@ -1352,7 +1388,7 @@ class DeliveriesController extends DeliveryAppController {
     }
 
 
-    public function multiple_apc($dr_uuid = null,$schedule_uuid = null,$plantId = null) {
+    public function multiple_apc($dr_uuid = null,$schedule_uuid = null,$plantId = null,$apc_dr = null) {
 
         $this->loadModel('Delivery.DeliveryConnection');
 
@@ -1387,14 +1423,30 @@ class DeliveriesController extends DeliveryAppController {
         
         if (!empty($dr_uuid)) {
 
-        $drConditions =  array('DeliveryConnection.dr_uuid' => $dr_uuid,'Delivery.status !=' => 2);
+            $limit = 4;
 
-        $DRRePrint = $this->DeliveryConnection->find('all', array(
-                                'limit' => 4,
+            if (!empty($apc_dr)) {
+
+            $limit = 8;
+            
+            $drConditions = array('DeliveryConnection.apc_dr' => $apc_dr);
+            
+            } else {
+            
+                 $drConditions = array('DeliveryConnection.dr_uuid' => $dr_uuid);
+            
+            }   
+
+           $drConditions = array_merge($drConditions,array('Delivery.status !=' => 2));
+
+
+
+
+            $DRRePrint = $this->DeliveryConnection->find('all', array(
+                               'limit' => $limit,
                                 'conditions' => $drConditions,
                                    // 'group' => array('Delivery.id')
                              ));
-
 
         if (!empty( $DRRePrint)) {
           
@@ -2366,19 +2418,26 @@ class DeliveriesController extends DeliveryAppController {
             //     'conditions' => array('DeliveryConnection.dr_uuid' => $data['dr_uuid'])
             // ));functio
 
+            if (!empty( $data['apc_dr'] )) {
+
+                $conditions = 'DeliveryConnection.apc_dr =  "'.$data['apc_dr'].'" ';
+            } else {
+                 $conditions = 'DeliveryConnection.dr_uuid =  "'.$data['dr_uuid'].'" ';
+            }
+
             $delivery = $this->DeliveryConnection->query('SELECT *
                 FROM delivery_connection AS DeliveryConnection
                 LEFT JOIN deliveries AS Delivery
                 ON Delivery.id = DeliveryConnection.delivery_id 
-                WHERE DeliveryConnection.dr_uuid = "'.$data['dr_uuid'].'" 
+                WHERE '.$conditions.' 
                 AND Delivery.status != "2"
                 ');
 
 
             if (!empty($delivery)) {
-
-               
+                
                 $multiple = true;
+            
             } else {
                 
                 $multiple = false;
