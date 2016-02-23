@@ -19,7 +19,7 @@
 
 			</div>
 		</div>
-				<?php echo $this->Form->create('DeliveryReceipt',array('url'=>(array('controller' => 'products','action' => 'view'))));?>			
+		<?php echo $this->Form->create('DeliveryReceipt',array('url'=>(array('controller' => 'products','action' => 'view'))));?>			
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="main-box">
@@ -27,8 +27,7 @@
 
 							<h2 class="pull-left">Delivery Receipt Details</h2>
 
-							<?php 
-                        		echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'deliveries','action' => 'dr_record'),array('class' =>'btn btn-primary pull-right','escape' => false));
+							<?php  echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'deliveries','action' => 'dr_record'),array('class' =>'btn btn-primary pull-right','escape' => false));
                     		?>
 
 						</header>

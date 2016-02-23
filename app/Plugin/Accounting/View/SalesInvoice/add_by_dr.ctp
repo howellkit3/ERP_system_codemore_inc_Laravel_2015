@@ -239,23 +239,46 @@
                                 </div>                 
                                  
                             <div class="clearfix"></div>
-                            <br>
                                 <div class="result_fields">
-                                   
-                                       <div class="form-group">
-                                        <label class="col-lg-12 control-label"> DR NUMBERS : </label>
-                                        <div class="col-lg-12">
+
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label"> Search DR </label>
+                                    <div class="col-lg-8">
+                                        <?php 
+                                            echo $this->Form->input('dr_uuid_search', array(
+                                               //'alt' => 'Clients Order',
+                                                'label' => false,
+                                                'class' => 'form-control col-lg-4',
+
+                                               // 'value' => $seriesSalesNo
+                                                ));
+                                       
+                                            echo $this->Form->input('delivery_ids', array(
+                                               'type' => 'hidden',
+                                                'label' => false,
+                                                'class' => 'form-control col-lg-4',
+
+                                               // 'value' => $seriesSalesNo
+                                                ));
+                                        ?>
+                                    </div>
+                                </div> 
+                                    <div class="form-group">
+                                        <label class="col-lg-12 control-label"> Selected DR : <div class="select_cont"><ul></ul></div>
+                                        </label>
+
+                                    </hr>
+                                        <div class="col-lg-12" id="resultDrTable">
                                             <ul>
-                                    <?php foreach ($allItems as $key => $value) { ?>
-                                    <li>
-                                            <input type="checkbox" value="<?php echo $value; ?>" name="data[SalesInvoice][dr_number][]">
-                                            <?php echo $value; ?>
-                                    </li>   
-                                   <?php } ?>
-                                    </ul>
+                                                <?php foreach ($allItems as $key => $value) { ?>
+                                                <li>
+                                                        <input type="checkbox" value="<?php echo $value; ?>" name="data[SalesInvoice][dr_number][]">
+                                                        <?php echo $value; ?>
+                                                </li>   
+                                               <?php } ?>
+                                            </ul>
                                         </div>
                                     </div>
-                                   
                                 </div>
                                 <div class="clearfix"></div>
 
@@ -282,6 +305,25 @@
   display: inline-block;
   list-style: outside none none;
   width: 16%;
+}
+
+.tags {
+  background:#03a9f4;
+  border-radius: 6px;
+  color: #fff;
+  margin: 3px 4px;
+  text-align: center;
+}
+
+.tags .fa.fa-close {
+  float: right;
+  margin: 3px;
+  cursor: pointer;
+}
+
+.select_cont {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 13px;
 }
 </style>
 <script>
@@ -374,6 +416,74 @@
         }
 
         timeout = setTimeout(searchDR,600)
-    })
+    });
 
+    
+    function searchOrder(searchInput) {
+
+        $.ajax({
+                type: "GET",
+                url: serverPath + "accounting/sales_invoice/search_dr",
+                data : {"uuid" : searchInput },
+                dataType: "HTML",
+                success: function(data) {
+
+                    $('#resultDrTable').html(data);
+                }
+            });
+    }
+
+
+    var timeout;
+
+    $('#SalesInvoiceDrUuidSearch').keyup(function() {
+
+        if(timeout) {
+            clearTimeout(timeout);
+            timeout = null;
+        }
+        
+        timeout = setTimeout(searchOrder($(this).val(),7000));
+    });
+
+    $('body').on('click','#resultDrTable input',function(){
+         
+     
+        $this = $(this);
+        
+        $values = $('#SalesInvoiceDeliveryIds').val();
+
+
+        if ($this.is(':checked')) {
+
+            $tags = '<li>';
+            $tags += '<div class="tags" data-id="'+$this.val()+'">'
+            $tags += $this.val();
+            $tags += '<i class="fa fa-close"></i></div>';
+            $tags += '</li>';
+
+            $('.select_cont').append($tags);
+
+            $values =  $values + (!$values ? '' : ', ') + $this.val();
+
+            $('#SalesInvoiceDeliveryIds').val($values);
+
+         }
+
+
+
+    });
+
+      $('body').on('click','.tags .fa-close',function(){
+
+            $parent = $(this).parent();
+
+            $parent.parent().remove();
+
+            $list = $('#SalesInvoiceDeliveryIds').val();
+
+              $text =  $list.replace($parent.data('id'),'');
+
+             $('#SalesInvoiceDeliveryIds').val($text);
+      });
 </script>
