@@ -37,7 +37,7 @@
     $next_header = 5;
 
     $sheet = $objTpl->getActiveSheet();
-    $address = 'AP'.$header;
+    $address = 'AQ'.$header;
 
    //load all the deductions needed
     foreach ($deductions as $deduction_key => $list) : 
@@ -63,9 +63,7 @@
 
         }
 
-        $sheet->getStyle($address)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
-
+          $sheet->getStyle($address)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
           $sheet->getStyle($address)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FFFF99');
 
           $sheet->getStyle($nextRow)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FFFF99');
@@ -426,7 +424,11 @@
           $sheet->getStyle('AN'.$counter)->applyFromArray($styleArrayBorder); 
 
           //sss
-          $sheet->setCellValue('AO'.$counter, $emp['sss']);
+          $sss = 0;
+          if (is_numeric($emp['sss'])) {
+            $sss = $emp['sss'];
+          }
+          $sheet->setCellValue('AO'.$counter, number_format($sss,2));
           $sheet->getStyle('AO'.$counter)->applyFromArray($styleArrayBorder); 
 
           //withholding tax

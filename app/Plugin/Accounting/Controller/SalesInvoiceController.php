@@ -521,7 +521,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         $seriesNo = $this->SalesInvoice->find('first', array(
                 'order' => array('SalesInvoice.sales_invoice_no DESC')));
-        Configure::write('debug',2);
+       
     
         if(!empty($seriesNo)){
 
@@ -535,7 +535,15 @@ class SalesInvoiceController extends AccountingAppController {
 
         }
 
+        if (!empty($_GET['test']) == 1) {
+             Configure::write('debug',2);
 
+             pr( $seriesNo);
+
+            pr($seriesSalesNo);
+
+            exit();
+        }
 
         //  $conditions = array('NOT' => array('SalesInvoice.status' => array(2, 3)) );
 
@@ -589,6 +597,8 @@ class SalesInvoiceController extends AccountingAppController {
     }
 
     public function add_by_apc() {
+
+        Configure::write('debug',2);
 
         $this->loadModel('Delivery.DeliveryConnection');
 

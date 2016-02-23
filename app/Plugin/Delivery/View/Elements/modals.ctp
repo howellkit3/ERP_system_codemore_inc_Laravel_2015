@@ -119,7 +119,7 @@
 
 
                         <div class="form-group" id="existing_items">
-                            <label class="col-lg-2 control-label"><span style="color:red">*</span> APC DR</label>
+                            <label class="col-lg-2 control-label"> APC DR</label>
                             <div class="col-lg-9">
                                   <?php 
                                                 echo $this->Form->input('DeliveryDetail.apc_dr', array('class' => 'form-control item_type',
@@ -132,7 +132,7 @@
                         </div>
 
                           <div class="form-group" id="existing_items">
-                            <label class="col-lg-2 control-label"><span style="color:red">*</span> Plant </label>
+                            <label class="col-lg-2 control-label"> Plant </label>
                             <div class="col-lg-9">
                                   <?php 
                                                 echo $this->Form->input('DeliveryDetail.plant_id', 
@@ -316,7 +316,7 @@
 
 
                         <div class="form-group" id="existing_items">
-                            <label class="col-lg-2 control-label"><span style="color:red">*</span> APC DR</label>
+                            <label class="col-lg-2 control-label"> APC DR</label>
                             <div class="col-lg-9">
                                   <?php 
                                                 echo $this->Form->input('DeliveryDetail.apc_dr', array('class' => 'form-control item_type',
@@ -329,7 +329,7 @@
                         </div>
 
                           <div class="form-group" id="existing_items">
-                            <label class="col-lg-2 control-label"><span style="color:red">*</span> Plant </label>
+                            <label class="col-lg-2 control-label"> Plant </label>
                             <div class="col-lg-9">
                                   <?php 
                                                 echo $this->Form->input('DeliveryDetail.plant_id', 

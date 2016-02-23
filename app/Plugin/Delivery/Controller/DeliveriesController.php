@@ -2433,7 +2433,6 @@ class DeliveriesController extends DeliveryAppController {
                 AND Delivery.status != "2"
                 ');
 
-
             if (!empty($delivery)) {
                 
                 $multiple = true;

@@ -663,7 +663,7 @@ $totalremaining = 0;
 
                 $('.print_dr').attr('data-sched-id',newData.Delivery.schedule_uuid);
 
-                $('.print_dr').attr('href',$url+'/'+newData.Delivery.dr_uuid+'/'+newData.Delivery.schedule_uuid+'/'+ $plantId+'/'+newData.DeliveryConnection.apc_dr);
+                $('.print_dr').attr('href',$url+'/'+newData.Delivery.dr_uuid+'/'+newData.Delivery.schedule_uuid+'/'+ $plantId+'/'+newData.DeliveryDetail.apc_dr);
            // }
               
             }
@@ -741,9 +741,17 @@ $totalremaining = 0;
 
             $appendCont.html($html);
 
+
             if (data.multiple == true) {
 
-                $('.print_dr').attr('href',$multiple_print+'/'+newData.Delivery.dr_uuid+'/'+newData.DeliveryDetail.apc_dr);
+                try  {
+                    if (newData.DeliveryDetail.apc_dr != '') {
+                        $('.print_dr').attr('href',$multiple_print+'/'+newData.Delivery.dr_uuid+'/'+newData.DeliveryDetail.apc_dr); 
+                     }
+                } catch(err) {
+                     $('.print_dr').attr('href',$multiple_print+'/'+newData.Delivery.dr_uuid);
+                }
+               
 
             } else {
 
