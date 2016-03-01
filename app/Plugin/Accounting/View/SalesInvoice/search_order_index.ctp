@@ -15,13 +15,44 @@ foreach ($invoiceData as $invoiceDataList):
         </td> -->
 
         <td class="">
-            <?php echo $invoiceDataList['SalesInvoice']['dr_uuid'];?>
+            <?php //echo $invoiceDataList['SalesInvoice']['dr_uuid'];?>
+
+              <?php 
+                    if (!empty($invoiceDataList['SalesInvoice']['deliveries'])) {
+                        
+                    $drList = json_decode($invoiceDataList['SalesInvoice']['deliveries']);
+
+
+                    foreach ($drList as $key => $value) {
+                        echo $value.'<br>';
+                      }                                       //  echo str_pad($invoiceDataList['SalesInvoice']['dr_uuid'],5,'0',STR_PAD_LEFT);
+
+                    } else {
+
+                    echo str_pad($invoiceDataList['SalesInvoice']['dr_uuid'],5,'0',STR_PAD_LEFT);
+                    
+                    } 
+             ?>
         </td>
 
         <td class="">
             <?php  
 
-            echo $invoiceDataList['Company']['company_name'];?>
+            //echo $invoiceDataList['Company']['company_name']; 
+
+
+              if (!empty($invoiceDataList['SalesInvoice']['deliveries'])) {
+
+                 echo $companyData[$clientDataHolder[$deliveryNumHolder[$drList[0]]]];
+              } else {
+                 echo $companyData[$clientDataHolder[$deliveryNumHolder[$invoiceDataList['SalesInvoice']['dr_uuid']]]];
+              }
+
+            ?>
+
+
+
+
         </td> 
         
         <td class="text-center">

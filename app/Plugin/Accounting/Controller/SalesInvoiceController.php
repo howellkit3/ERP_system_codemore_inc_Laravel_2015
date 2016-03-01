@@ -31,7 +31,8 @@ class SalesInvoiceController extends AccountingAppController {
                 'SalesInvoice.statement_no',  
                 'SalesInvoice.dr_uuid', 
                 'SalesInvoice.status',
-                'SalesInvoice.delivery_id'
+                'SalesInvoice.delivery_id',
+                'SalesInvoice.deliveries'
                 ),
             'order' => 'SalesInvoice.id DESC',
         );
@@ -1654,6 +1655,20 @@ class SalesInvoiceController extends AccountingAppController {
 
     public function search_order($view = null, $hint = null, $type = null, $indicator = null){
 
+       $this->loadModel('Sales.Company');
+            
+       $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
+       
+
+        $this->loadModel('Delivery.Delivery');
+
+        $this->loadModel('Sales.ClientOrder');
+
+        $deliveryNumHolder = $this->Delivery->find('list',array('fields' => array('dr_uuid','clients_order_id')));
+
+        $clientDataHolder = $this->ClientOrder->find('list',array('fields' => array('uuid','company_id')));
+
+ 
         if($type == '1'){
 
             $this->loadModel('Delivery.Delivery');
@@ -1714,20 +1729,36 @@ class SalesInvoiceController extends AccountingAppController {
         
         }else{
 
+
             $userData = $this->Session->read('Auth');
 
-            $invoiceData = $this->SalesInvoice->query('SELECT SalesInvoice.id ,SalesInvoice.status , SalesInvoice.sales_invoice_no, Company.id, Company.company_name , Delivery.dr_uuid, Delivery.id, Delivery.company_id, Delivery.dr_uuid, SalesInvoice.dr_uuid 
-                FROM koufu_delivery.deliveries AS Delivery
-                LEFT JOIN koufu_accounting.sales_invoices AS SalesInvoice
-                ON Delivery.dr_uuid = SalesInvoice.dr_uuid 
-                LEFT JOIN koufu_sale.client_orders AS ClientOrder
-                ON Delivery.clients_order_id = ClientOrder.uuid 
-                LEFT JOIN koufu_sale.companies AS Company
-                ON ClientOrder.company_id = Company.id 
-                WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR SalesInvoice.sales_invoice_no LIKE "%'.$hint.'%"
-                OR Company.company_name LIKE "%'.$hint.'%" AND SalesInvoice.status = 1 Group by SalesInvoice.id DESC');
+            // $invoiceData = $this->SalesInvoice->query('SELECT SalesInvoice.id ,SalesInvoice.status , SalesInvoice.sales_invoice_no, Company.id, Company.company_name , Delivery.dr_uuid, Delivery.id, Delivery.company_id, Delivery.dr_uuid, SalesInvoice.dr_uuid 
+            //     FROM koufu_delivery.deliveries AS Delivery
+            //     LEFT JOIN koufu_accounting.sales_invoices AS SalesInvoice
+            //     ON Delivery.dr_uuid = SalesInvoice.dr_uuid 
+            //     LEFT JOIN koufu_sale.client_orders AS ClientOrder
+            //     ON Delivery.clients_order_id = ClientOrder.uuid 
+            //     LEFT JOIN koufu_sale.companies AS Company
+            //     ON ClientOrder.company_id = Company.id 
+            //     WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR SalesInvoice.sales_invoice_no LIKE "%'.$hint.'%"
+            //     OR Company.company_name LIKE "%'.$hint.'%" AND SalesInvoice.status = 1 Group by SalesInvoice.id DESC');
 
-            $this->set(compact('companyData','invoiceData','noPermissionReciv','noPermissionPay', 'deliveryNumHolder','indicator'));
+
+            $invoiceData = $this->SalesInvoice->query('Select *
+                FROM koufu_accounting.sales_invoices AS SalesInvoice
+                LEFT JOIN koufu_accounting.sales_invoice_connections AS SalesInvoiceConnection
+                ON SalesInvoiceConnection.sales_invoice_id = SalesInvoice.id
+                WHERE SalesInvoiceConnection.sales_invoice_no LIKE "%'.$hint.'%" 
+                OR SalesInvoice.sales_invoice_no LIKE  "%'.$hint.'%" AND SalesInvoice.status = 1 GROUP by SalesInvoice.id DESC'
+            );
+
+
+
+            // pr($invoiceData);
+            // exit();
+
+
+            $this->set(compact('companyData','invoiceData','noPermissionReciv','noPermissionPay', 'deliveryNumHolder','indicator','clientDataHolder'));
 
             if ($hint == ' ') {
 
@@ -2039,8 +2070,7 @@ class SalesInvoiceController extends AccountingAppController {
 
 
         $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
-
-
+        
         $query = $this->request->query;
         
         if (!empty($query['data']['date'])) {
@@ -2284,7 +2314,8 @@ class SalesInvoiceController extends AccountingAppController {
 
         if (!empty($this->request->data)) {
 
-
+        $this->loadModel('Accounting.SalesInvoiceConnection');
+        
         $userData = $this->Session->read('Auth.User');
 
        // $this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id'],$DRdata);
@@ -2303,6 +2334,8 @@ class SalesInvoiceController extends AccountingAppController {
             
             $del[] = trim($list);    
         }
+
+        $drMultiple = array_filter($del);
         // if (!empty($invoiceData['InvoiceForm']['delivery_id'])) {
         //     $invoiceData['SalesInvoice']['delivery_id'] = $invoiceData['InvoiceForm']['delivery_id'];
         // }
@@ -2315,14 +2348,31 @@ class SalesInvoiceController extends AccountingAppController {
         $invoiceData['SalesInvoice']['dr_uuid'] = $this->request->data['SalesInvoice']['dr_uuid'];
             
         $invoiceData['SalesInvoice']['created_by'] = $userData['id'];
+
         $invoiceData['SalesInvoice']['modified_by'] = $userData['id'];
+        
         $invoiceData['SalesInvoice']['modified'] = $date;
 
         $invoiceData['SalesInvoice']['status'] = 0;
 
         $invoiceData['SalesInvoice']['is_multiple'] = 1;
         
-        $this->SalesInvoice->save($invoiceData);
+        if ($this->SalesInvoice->save($invoiceData) ) {
+
+            $del[] = '';
+            
+            $lastId = $this->SalesInvoice->id;
+
+            foreach ($drMultiple as $key => $value) {
+               $del['id'] = '';
+               $del['sales_invoices_id'] = $lastId;
+               $del['sales_invoice_no'] =  $this->request->data['SalesInvoice']['sales_invoice'];
+               $del['dr_uuid'] = $value;
+
+               $this->SalesInvoiceConnection->save($del);
+                 
+            }
+        }
 
 
         $this->Session->setFlash(__(' Sales Invoice No. completed. '), 'success');
