@@ -1614,6 +1614,8 @@ class DeliveriesController extends DeliveryAppController {
 
         public function add_gatepass(){
             
+            Configure::write('debug',2);
+
             $userData = $this->Session->read('Auth');
             
             $this->loadModel('GatePass');
@@ -1630,9 +1632,6 @@ class DeliveriesController extends DeliveryAppController {
             $this->ClientOrder->bind(array('Quotation','ClientOrderDeliverySchedule','QuotationItemDetail','QuotationDetail','Product'));
 
             if (!empty($this->request->data)) {
-
-                //pr($userData['User']['id']); exit;
-
                 $gateId = $this->GatePassTruck->saveGatePassTruck($this->request->data,$userData['User']['id']);
                 
                 $gatepassId = $this->GatePass->saveGatepass($this->request->data,$userData['User']['id'], $gateId);
@@ -1640,7 +1639,6 @@ class DeliveriesController extends DeliveryAppController {
                 $this->GatePassAssistant->saveGatePassAssistant($this->request->data,$gateId,$userData['User']['id']);
                 
                 //$this->Session->setFlash(__('The Gate Pass successfully added.'), 'success');
-               
                 $gateData = $this->GatePass->find('all',array('conditions' => array('GatePass.id' => $gatepassId)));
                 
                 $assistData = $this->GatePassAssistant->find('all', array(
@@ -1680,7 +1678,29 @@ class DeliveriesController extends DeliveryAppController {
                 // $productList = array();
                 // $productQuantity = array();
                 // $productUnit = array();
-                
+                    
+                if (!empty( $this->request->data['GatePassTruck']['deliveries'])) {
+
+                     $gateData = array();
+
+                        $del = explode(',', $this->request->data['GatePassTruck']['deliveries'] );
+
+                        $dels = array_filter($del); 
+
+                        $index = 0;
+
+                        foreach ($dels as $key => $value) {
+                        
+                         $gateData[$index]['GatePass']['model'] = 'Deliveries';
+
+                         $gateData[$index]['GatePass']['ref_uuid'] = $value;
+                        
+                         $index++;
+                        
+                        }
+
+                }
+               
                 if(!empty($gateData)){
 
                     foreach ($gateData as $key => $value){
@@ -1717,6 +1737,33 @@ class DeliveriesController extends DeliveryAppController {
             }
     }
 
+
+    public function search_dr() {
+
+        $deliveries = '';
+
+        $query = $this->request->query;
+
+        if (!empty( $query )) {
+
+            $this->Delivery->bindDelivery();
+
+            $deliveries = $this->Delivery->find('all',array(
+                'conditions' => array(
+                        'Delivery.dr_uuid LIKE' => '%'.$query['dr'].'%',
+                        'DeliveryDetail.status NOT' => 4
+                    ),
+                'order' => 'Delivery.dr_uuid DESC',
+                'group' => 'Delivery.dr_uuid DESC'
+            ));
+
+        }
+
+        $this->set(compact('deliveries'));
+        $this->render('Deliveries/ajax/gatepass_dr');       
+        //exit();
+
+    }
      public function gate_pass($deliveryScheduleId = null, $quotationId = null,$companyId = null, $clientsOrderUuid = null){
 
         $this->loadModel('Truck');
@@ -1739,10 +1786,16 @@ class DeliveriesController extends DeliveryAppController {
 
         $end = date('Y-m-d', strtotime('+1 day'));
 
-        //$conditions = array('Delivery.created <=' => $end, 'Delivery.created >=' => $start , 'Delivery.company_id' => $companyId);
-        $conditions = array('Delivery.company_id' => $companyId);
+        //$conditions = array('Delivery.created <=' => $end, 'Delivery.created >=' => $start , 'Delivery.company_id' => $companyId);\
 
-        $dr_nos = $this->Delivery->find('all',array('conditions' =>  $conditions));
+        $conditions = array();
+
+        if (!empty($companyId)) {
+
+            $conditions = array('Delivery.company_id' => $companyId);
+        }
+
+        $drNos = $this->Delivery->find('all',array('conditions' =>  $conditions,'limit' => 1));
 
         $deliveryUserData = $this->User->find('all',array('conditions' =>  array('User.role_id' => 4
                                             )));
@@ -1782,8 +1835,8 @@ class DeliveriesController extends DeliveryAppController {
         }
         
         $noPermissionSales = ' ';
-        
-        $this->set(compact('deliveryUserFName','noPermissionSales','truckListUpper','helperListUpper','driverListUpper','deliveryScheduleId','quotationId','clientsOrderUuid','dr_nos', 'deliveryUserData', 'deliveryUserFNameUpper', 'deliveryUserLNameUpper','clientUuid'));
+
+        $this->set(compact('deliveryUserFName','noPermissionSales','truckListUpper','helperListUpper','driverListUpper','deliveryScheduleId','quotationId','clientsOrderUuid','drNos', 'deliveryUserData', 'deliveryUserFNameUpper', 'deliveryUserLNameUpper','clientUuid'));
     }
 
       public function view_dr($dr_id = null) {

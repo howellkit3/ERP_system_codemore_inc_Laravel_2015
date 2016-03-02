@@ -27,9 +27,42 @@
                         <div class="main-box-body clearfix">
                             <div class="main-box-body clearfix">
                                 <div class="form-horizontal">
-                                    <?php if(!empty($dr_nos)){ ?>
 
                                     <div class="form-group">
+                                        <label class="col-lg-2 control-label"><span style="color:red">*</span>Search DR</label>
+                                        <div class="col-lg-8">
+                                            <?php 
+                                                echo $this->Form->input('GatePassTruck.dr', array(
+                                                        'label' => false,
+                                                        'class' => 'form-control',
+                                                        'id' => 'searchDr'
+                                                    )); 
+                                         
+                                                echo $this->Form->input('GatePassTruck.deliveries', array(
+                                                        'label' => false,
+                                                        'type' => 'hidden'
+                                                    )); 
+                                            ?>
+                                        </div>
+                                    </div>
+
+                                    <div class="select_cont">
+
+                                    </div>
+                                    <br>
+                                    <div class="form-group form-height ">
+                                        <label class="col-lg-2 control-label"><span style="color:red">*</span>Select DR No.</label>
+                                        
+                                    </div>
+
+                                
+                                    <div class="dr-numbers">
+
+                                    </div>
+
+                                    <?php if(!empty($drNos)){ ?>
+
+                                   <!--  <div class="form-group">
                                         <label class="col-lg-2 control-label"><span style="color:red">*</span>Type of Gatepass</label>
                                         <div class="col-lg-8">
                                             <?php 
@@ -38,25 +71,30 @@
                                                     'value' => 0,
                                                     'type' => 'select',
                                                     'label' => false,
-                                                    'class' => 'form-control required gatefield gateType',
+                                                    'class' => 'form-control required',
                                                     'empty' => '---Type of Gatepass---',
                                                     'required' => 'required'
                                                     )); 
                                             ?>
                                         </div>
-                                    </div>
+                                    </div> -->
 
-                                    <div class="form-group form-height gatePickUp ">
+                                    <!-- <div class="form-group form-height gatePickUp ">
                                         <label class="col-lg-2 control-label"><span style="color:red">*</span>Select DR No.</label>
                                         
                                     </div>
 
-                                     <?php foreach ($dr_nos as $key => $value) { ;?>
-                                        <div class="form-group form-height gatePickUp">
+                                
+                                    <div class="dr-numbers">
+
+                                    </div> -->
+
+                                     <?php foreach ($drNos as $key => $value) { ;?>
+                                     <!--    <div class="form-group form-height gatePickUp">
                                             <label class="col-lg-2 control-label"> </label>
                                             <div class="col-lg-8">
                                                 <div class="checkbox-nice">
-                                                    <input type="checkbox" class="check-ref-uuid " id="checkbox-<?php echo $key ?>"">
+                                                    <input type="checkbox" class="check-ref-uuid " id="checkbox-<?php echo $key ?>">
                                                     <label for="checkbox-<?php echo $key ?>">
                                                         <?php echo $value['Delivery']['dr_uuid'] ;?>
                                                     </label>
@@ -80,7 +118,7 @@
 
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     <?php } ?>
 
                                     <?php if($keyholder >= 4){?>
@@ -239,9 +277,99 @@
     </div>
 </div>
 
+
 <script>
     
     jQuery(document).ready(function(){
+
+
+    function searchOrder(searchInput) {
+
+        $this = $('.searchOrder');
+
+        var searchInput = $('#searchDr').val();
+        
+        $.ajax({
+            type: "GET",
+            url: serverPath + "delivery/deliveries/search_dr/"+searchInput,
+            dataType: "html",
+            data : {'dr' : searchInput },
+            success: function(data) {
+                //alert(data);
+                if (data) {
+
+                    $('.dr-numbers').html(data);
+
+                } 
+                if (data.length < 5 ) {
+
+                    $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
+                     
+                }
+                
+            }
+        });
+    }
+
+    var timeout;
+
+    $('#searchDr').keypress(function() {
+
+
+        if(timeout) {
+            clearTimeout(timeout);
+            timeout = null;
+        }
+
+        timeout = setTimeout(searchOrder,600)
+    })
+
+
+    $('body').on('click','.dr-numbers .check-ref-uuid',function(){
+         
+        $this = $(this);
+        
+        $values = $('#GatePassTruckDeliveries').val();
+
+        if ($('.select_cont .tags').length < 4) {
+
+        
+
+        if ($this.is(':checked')) {
+
+            $tags = '<li>';
+            $tags += '<div class="tags" data-id="'+$this.val()+'">'
+            $tags += $this.val();
+            $tags += '<i class="fa fa-close"></i></div>';
+            $tags += '</li>';
+
+            $('.select_cont').append($tags);
+
+            $values =  $values + (!$values ? '' : ',') + $this.val();
+
+            $('#GatePassTruckDeliveries').val($values);
+
+         }
+     } else {
+
+        alert('Maximum Dr per gatepass,Create another or remove existing dr');
+     }
+
+    });
+
+       $('body').on('click','.tags .fa-close',function(){
+
+            $parent = $(this).parent();
+
+            $parent.parent().remove();
+
+            $list = $('#GatePassTruckDeliveries').val();
+
+              $text =  $list.replace($parent.data('id'),'');
+
+             $('#GatePassTruckDeliveries').val($text);
+      });
+
 
         // $('#GatePassGatePassForm').on('submit',function(e) {
 
@@ -313,7 +441,41 @@
 
 </script>
 <style type="text/css">
-    .form-height{
-        margin-top: -15px !important;
-    }
+.form-height{
+    margin-top: -15px !important;
+}
+.form-group.form-height.gatePickUp {
+    display: inline-block;
+    width: 20%;
+}
+.dr-numbers {
+  margin: 0 172px;
+  width: 829px;
+}
+
+.tags {
+  background:#03a9f4;
+  border-radius: 6px;
+  color: #fff;
+  margin: 3px 4px;
+  text-align: center;
+  padding: 0 5px;
+}
+
+.select_cont > li {
+  display: inline-block;
+  list-style: outside none none;
+}
+
+.tags .fa.fa-close {
+  float: right;
+  margin: 3px;
+  cursor: pointer;
+}
+
+.select_cont {
+  margin: 0 175px;
+}
+
+
 </style>

@@ -1,10 +1,6 @@
 <?php
                     
-    //prepare download
-    $filename = mt_rand(1,100000).'.xlsx'; //just some random filename
-    header('Content-Type: application/vnd.ms-office');
-    header('Content-Disposition: attachment;filename="'.$filename.'"');
-    header('Cache-Control: max-age=0');
+
 
     $ctr = 1;
     $ctrQuantity = 8;
@@ -24,6 +20,7 @@
 
 
         }
+;
 
         if(!empty($truckList[$truck]) || !empty($driverList[$driver])){
 
@@ -83,11 +80,17 @@
                                 ->setCellValue('F18', ucwords($userFnameList[$approver]) . ' ' .ucwords($userLnameList[$approver]))
                                 ->setCellValue('J8', $remarks);
       
-     
+
+
+    //prepare download
+    $filename = 'gatepass-'.date('ymd').mt_rand(1,100000).'.xlsx'; //just some random filename
+    header('Content-Type: application/vnd.ms-office');
+    header('Content-Disposition: attachment;filename="'.$filename.'"');
+    header('Cache-Control: max-age=0');  
      
     $objWriter = PHPExcel_IOFactory::createWriter($objTpl, 'Excel2007');  //downloadable file is in Excel 2003 format (.xls)
     $objWriter->save('php://output');  //send it to user, of course you can save it to disk also!
     
-    //header("location:".base_url()."../view/".$deliveryScheduleId."/".$quotationId."/".$clientsOrderUuid);
+   // header("location:".base_url()."../view/".$deliveryScheduleId."/".$quotationId."/".$clientsOrderUuid);
     exit; //done.. exiting!
 ?>
