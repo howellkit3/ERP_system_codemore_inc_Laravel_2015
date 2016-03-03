@@ -35,6 +35,21 @@ foreach ($invoiceData as $invoiceDataList):
              ?>
         </td>
 
+        <?php if($indicator == 'si') : ?>
+
+
+                                        <td>
+                                            <?php 
+
+                                                if (!empty($invoiceDataList['SalesInvoice']['apc_dr'])) {
+
+                                                    echo $invoiceDataList['SalesInvoice']['apc_dr'];
+                                                }
+
+                                            ?>
+                                        </td>
+    <?php endif; ?>
+
         <td class="">
             <?php  
 
@@ -54,6 +69,11 @@ foreach ($invoiceData as $invoiceDataList):
 
 
         </td> 
+
+        
+                                        <td>
+                                            <?php echo !empty($invoiceDataList['SalesInvoice']['invoice_date']) ?  date('m/d/Y',strtotime($invoiceDataList['SalesInvoice']['invoice_date'])) :  date('m/d/Y',strtotime($invoiceDataList['SalesInvoice']['created'])); ?>                                        </td>
+
         
         <td class="text-center">
             <?php 

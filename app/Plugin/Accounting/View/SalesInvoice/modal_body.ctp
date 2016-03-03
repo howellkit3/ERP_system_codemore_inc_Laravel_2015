@@ -1,4 +1,4 @@
-                    <div class="modal-body">
+                        <div class="modal-body">
 
                         <?php if($indicator == 'si_num'){?>
 
@@ -18,6 +18,23 @@
                                     <label class="col-lg-3 control-label"><span style="color:red">*</span>Customer</label>
                                     <div class="col-lg-8">
                                         <?php 
+                                            
+                                            if (!empty($apcDr)) {
+
+
+                                            echo $this->Form->input('SalesInvoice.customer', array(
+                                                'options' => array('Regular', 'APC'),
+                                                'alt' => 'Status',
+                                                'label' => false,
+                                                'class' => 'form-control col-lg-4 required customer',
+                                                'empty' => '--Select Customer--',
+                                                'default' => 1,
+                                                'readonly' => true
+                                                ));
+
+                                            } else {
+
+
                                             echo $this->Form->input('SalesInvoice.customer', array(
                                                 'options' => array('Regular', 'APC'),
                                                 'alt' => 'Status',
@@ -25,10 +42,49 @@
                                                 'class' => 'form-control col-lg-4 required customer',
                                                 'empty' => '--Select Customer--'
                                                 ));
+                                            }
                                         ?>
                                     </div>
                                 </div>
-                                
+                            
+                            <?php  if (!empty($apcDr)) : ?>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label"><span style="color:red">*</span>APC DR</label>
+                                    <div class="col-lg-8">
+                                        <?php 
+
+                                            //find delivery number
+                                            $apc = '';
+                                            
+                                            if (!empty($apcDr)) {
+
+                                                $apc = $apcDr['apc_dr'];
+                                               
+                                            } else {
+                                                 $apc = '';   
+                                            }
+
+                                            echo $this->Form->input('SalesInvoice.apc_dr', array(
+                                                //'options' => array('Regular', 'APC'),
+                                                'alt' => 'APC DR',
+                                                'label' => false,
+                                                'class' => 'form-control col-lg-4 required customer',
+                                                'value' => trim($apc)
+                                                ));
+                                        ?>
+                                    </div>
+                                </div>
+                            <?php 
+                                echo $this->Form->input('SalesInvoice.plant',array(
+                                        'type' => 'hidden',
+                                        'value' => !empty($apcDr['plant']) ? trim($apcDr['plant']) : '' 
+                                )); 
+                                 echo $this->Form->input('SalesInvoice.plant_id',array(
+                                        'type' => 'hidden',
+                                        'value' => !empty($deliveries['DeliveryDetail']['plant_id']) ? trim($deliveries['DeliveryDetail']['plant_id']) : '' 
+                                ));  ?>
+                           <?php endif; ?>     
+
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label"><span style="color:red">*</span>Status</label>
                                     <div class="col-lg-8">

@@ -201,4 +201,29 @@ class Delivery extends AppModel {
 		}
 	}
 
+	public function findApc($deliveries = array()){
+
+		//find delivery number
+        $apc = array();
+        
+        if (!empty($deliveries['DeliveryDetail']['remarks'])) {
+
+            if (strpos(strtolower($deliveries['DeliveryDetail']['remarks']), 'apc') !== FALSE) {
+
+                $apcDr = explode('-', $deliveries['DeliveryDetail']['remarks']);
+				$apc['apc_dr'] = $apcDr[0];
+                $apc['plant'] =  $apcDr[1];
+            
+            } else {
+
+                if (!empty($deliveries['DeliveryDetail']['apc_dr'])) {
+                    
+                    $apc = $deliveries['DeliveryDetail']['apc_dr'];
+                }
+            }
+        }
+
+        return $apc;
+	}
+
 }

@@ -56,22 +56,25 @@
 
 				                        <td class="">
 
-				                            <?php 
-                    if (!empty($invoiceDataList['SalesInvoice']['deliveries'])) {
-                        
-                    $drList = json_decode($invoiceDataList['SalesInvoice']['deliveries']);
+<?php
+
+	if (!empty($invoiceDataList['SalesInvoice']['deliveries'])) {
+
+		$drList = json_decode($invoiceDataList['SalesInvoice']['deliveries']);
 
 
-                    foreach ($drList as $key => $value) {
-                        echo $value.'<br>';
-                      }                                       //  echo str_pad($invoiceDataList['SalesInvoice']['dr_uuid'],5,'0',STR_PAD_LEFT);
+	foreach ($drList as $key => $value) {
+		
+		echo $value.'<br>';
+	
+	}                                       //  echo str_pad($invoiceDataList['SalesInvoice']['dr_uuid'],5,'0',STR_PAD_LEFT);
 
-                    } else {
+	} else {
 
-                    echo str_pad($invoiceDataList['SalesInvoice']['dr_uuid'],5,'0',STR_PAD_LEFT);
-                    
-                    } 
-             ?>
+		echo str_pad($invoiceDataList['SalesInvoice']['dr_uuid'],5,'0',STR_PAD_LEFT);
+
+	} 
+?>
 
 				                        </td>
 

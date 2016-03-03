@@ -596,7 +596,7 @@ class SalesInvoiceController extends AccountingAppController {
 
     public function add_by_apc() {
 
-        Configure::write('debug',2);
+        //Configure::write('debug',2);
 
         $this->loadModel('Delivery.DeliveryConnection');
 
@@ -1572,8 +1572,23 @@ class SalesInvoiceController extends AccountingAppController {
     public function invoice_modal($deliveryId = null, $deliveryUUID = null, $indicator = null,$isMultiple = false) {
 
 
+        $this->loadModel('Delivery.Delivery');
 
-        if($indicator == "si_num"){
+        $this->loadModel('Delivery.DeliveryDetail');
+
+        $deliveries = array();
+
+        if (!empty($deliveryId)) {
+
+            $this->Delivery->bindDeliveryById();
+
+            $deliveries = $this->Delivery->findById($deliveryId);
+        
+        }
+
+        $apcDr = $this->Delivery->findApc( $deliveries );
+        
+        if ($indicator == "si_num") {
 
             $conditions = array('NOT' => array('SalesInvoice.status' => array(2, 3)) );
 
@@ -1641,7 +1656,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         }
 
-        $this->set(compact('deliveryUUID', 'seriesSalesNo', 'indicator','isMultiple','deliveryId'));
+        $this->set(compact('deliveryUUID', 'seriesSalesNo', 'indicator','isMultiple','deliveryId','deliveries','apcDr'));
 
         if (!empty($deliveryId)) {
 
@@ -1706,7 +1721,7 @@ class SalesInvoiceController extends AccountingAppController {
 
             $userData = $this->Session->read('Auth');
 
-            $invoiceData = $this->SalesInvoice->query('SELECT SalesInvoice.id ,SalesInvoice.status , SalesInvoice.statement_no, Company.id, Company.company_name , Delivery.dr_uuid, Delivery.company_id, Delivery.dr_uuid, SalesInvoice.dr_uuid 
+            $invoiceData = $this->SalesInvoice->query('SELECT SalesInvoice.id ,SalesInvoice.status , SalesInvoice.statement_no, Company.id, Company.company_name , Delivery.dr_uuid, Delivery.company_id, Delivery.dr_uuid, SalesInvoice.dr_uuid ,SalesInvoice.created
                 FROM koufu_delivery.deliveries AS Delivery
                 LEFT JOIN koufu_accounting.sales_invoices AS SalesInvoice
                 ON Delivery.dr_uuid = SalesInvoice.dr_uuid 
@@ -1745,21 +1760,17 @@ class SalesInvoiceController extends AccountingAppController {
             //     OR Company.company_name LIKE "%'.$hint.'%" AND SalesInvoice.status = 1 Group by SalesInvoice.id DESC');
 
           //  pr('test2x');
-
-            $invoiceData = $this->SalesInvoice->query('Select *
-                FROM koufu_accounting.sales_invoices AS SalesInvoice
-                LEFT JOIN koufu_accounting.sales_invoice_connections AS SalesInvoiceConnection
-                ON SalesInvoiceConnection.sales_invoice_id = SalesInvoice.id
-                WHERE SalesInvoiceConnection.sales_invoice_no LIKE "%'.$hint.'%" 
-                OR SalesInvoice.sales_invoice_no LIKE "%'.$hint.'%"
-                OR SalesInvoice.dr_uuid LIKE "%'.$hint.'%" GROUP by SalesInvoice.id DESC'
-            );
-
-
-
-
-            // pr($invoiceData);
-            // exit();
+                $invoiceData = $this->SalesInvoice->query('SELECT SalesInvoice.id ,SalesInvoice.status , SalesInvoice.sales_invoice_no, Company.id, Company.company_name , Delivery.dr_uuid, Delivery.id, Delivery.company_id, Delivery.dr_uuid, SalesInvoice.dr_uuid, SalesInvoice.apc_dr ,SalesInvoice.created
+                    FROM koufu_delivery.deliveries AS Delivery
+                    LEFT JOIN koufu_accounting.sales_invoices AS SalesInvoice
+                    ON Delivery.dr_uuid = SalesInvoice.dr_uuid 
+                    LEFT JOIN koufu_sale.client_orders AS ClientOrder
+                    ON Delivery.clients_order_id = ClientOrder.uuid 
+                    LEFT JOIN koufu_sale.companies AS Company
+                    ON ClientOrder.company_id = Company.id 
+                    WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR SalesInvoice.sales_invoice_no LIKE "%'.$hint.'%"
+                    OR SalesInvoice.apc_dr LIKE "%'.$hint.'%" 
+                    OR Company.company_name LIKE "%'.$hint.'%" AND SalesInvoice.status = 1 Group by SalesInvoice.id DESC');
 
 
             $this->set(compact('companyData','invoiceData','noPermissionReciv','noPermissionPay', 'deliveryNumHolder','indicator','clientDataHolder'));
@@ -2068,12 +2079,15 @@ class SalesInvoiceController extends AccountingAppController {
 
         $this->loadModel('Delivery.Delivery');
 
+        $this->loadModel('Delivery.Plant');
+
         $limit = 10;
 
         $conditions = array('SalesInvoice.status' => 0);
 
-
         $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
+
+        $plants = $this->Plant->find('list',array('fields' => array('id','name')));
         
         $query = $this->request->query;
         
@@ -2087,8 +2101,9 @@ class SalesInvoiceController extends AccountingAppController {
 
     
 
-            $date1 =  date('Y-m-d',strtotime($dates[0])).' 00:00:00';
-            $date2 = date('Y-m-d',strtotime($dates[1])).' 00:00:00';
+           $date1 =  date('Y-m-d',strtotime($dates[0])).' 00:00:00';
+           
+           $date2 = date('Y-m-d',strtotime($dates[1])).' 00:00:00';
 
            $conditions = array_merge($conditions,array(
                         'OR' => array(
@@ -2151,6 +2166,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         }
 
+       // $this->SalesInvoice->bindDeliverybyId();
 
         $this->paginate = array(
             'conditions' => $conditions,
@@ -2164,12 +2180,15 @@ class SalesInvoiceController extends AccountingAppController {
                 'SalesInvoice.delivery_id',
                 'SalesInvoice.created',
                 'SalesInvoice.invoice_date',
-                'SalesInvoice.deliveries'
+                'SalesInvoice.deliveries',
+                'SalesInvoice.apc_dr',
+                'SalesInvoice.plant_id'
                 ),
             'order' => 'SalesInvoice.id DESC',
         );
 
         $invoiceData = $this->paginate('SalesInvoice');
+
 
         $deliveryNumHolder = $this->Delivery->find('list',array('fields' => array('dr_uuid','clients_order_id')));
 
@@ -2206,7 +2225,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         }
 
-        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay','companyName', 'deliveryNumHolder', 'clientDataHolder','date'));
+        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay','companyName', 'deliveryNumHolder', 'clientDataHolder','date',' plants'));
 
     }
 
@@ -2412,5 +2431,94 @@ class SalesInvoiceController extends AccountingAppController {
 
             $this->render('SalesInvoice/ajax/dr_numbers');
         }
+    }
+
+    public function update_all_apc() {
+
+
+        $SalesInvoices = $this->SalesInvoice->find('all',array(
+            'conditions' => array(
+                    'SalesInvoice.deliveries <>' => NULL,
+                    'SalesInvoice.deliveries <>' => 'null'
+                ),
+//            'limit' => 3,
+            'order' => 'SalesInvoice.id DESC'
+        ));
+
+
+        foreach ($SalesInvoices as $key => $invoice) {
+            
+            if (!empty($invoice['SalesInvoice']['deliveries'])) {
+
+                 $del = json_decode($invoice['SalesInvoice']['deliveries']);
+
+                 $this->loadModel('Delivery.DeliveryConnection');
+
+                 $this->loadModel('Delivery.Delivery');
+
+                 $this->Delivery->bindDeliveryById();
+
+                 if (!empty($del[0])) {
+
+                 $deliveries = $this->Delivery->find('first',array(
+
+                    'conditions' => array('Delivery.dr_uuid' => $del[0]) 
+                    ));
+
+                 $apc = array();
+       
+                if (!empty($deliveries["DeliveryDetail"]['remarks']) && strpos(strtolower($deliveries['DeliveryDetail']['remarks']),'apc') !== FALSE) {
+
+                    $apcDr = explode('-', $deliveries['DeliveryDetail']['remarks'] );
+
+                    $apc['apc_dr'] = !empty($apcDr[0]) ? $apcDr[0] : '' ;
+                    $apc['plant'] =  !empty($apcDr[1]) ? $apcDr[1] : '' ;
+                    
+
+                } else {
+
+                    if (!empty($deliveries['DeliveryDetail']['apc_dr'])) {
+
+                        $apc = $deliveries['DeliveryDetail']['apc_dr'];
+                    }
+                }   
+
+                    $save['id'] = $invoice['SalesInvoice']['id'];
+
+                if (!empty($apc)) {
+
+                    $save['apc_dr'] = $apc['apc_dr'];
+
+                    if (!empty($deliveries['DeliveryDetail']['plant_id'])) {
+                        $save['plant_id'] = $apc['plant'];
+                    } else {
+                        if (!empty($apc['plant'])) {
+                            
+                            $PlantModel = ClassRegistry::init('Delivery.Plant');
+         
+                            $plant = $PlantModel->find('first',array(
+                                'conditions' => array(
+                                        'Plant.name like' => '%'.$apc['plant'].'%'
+                                    )
+                            ));
+
+                            if (!empty($plant)) {
+
+                                $save['plant_id'] = $plant['Plant']['id'];
+                            }
+
+            
+                        }
+                       //  $save['plant_id'] = $apc['plant'];
+                    }
+
+                    $this->SalesInvoice->save($save);
+                }
+
+            }
+                   
+            }
+        }
+
     }
 }

@@ -2660,3 +2660,9 @@ CREATE TABLE `koufu_accounting`.`sales_invoice_connection`(
   `modified` DATETIME,
   PRIMARY KEY (`id`)
 );
+
+
+ALTER TABLE `sales_invoices`
+ADD COLUMN `apc_dr`  varchar(255) NULL AFTER `dr_uuid`;
+ALTER TABLE `sales_invoices`
+ADD COLUMN `plant_id`  int(11) NULL AFTER `apc_dr`;

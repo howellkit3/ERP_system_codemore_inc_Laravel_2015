@@ -63,6 +63,43 @@ class SalesInvoice extends AppModel {
 		//$this->contain($giveMeTheTableRelationship);
 	}
   	
+	public function bindDeliverybyId() {
+
+		$this->bindModel(array(
+			'hasMany' => array(
+				'Delivery' => array(
+					'className' => 'Delivery.Delivery',
+					'foreignKey' => false,
+					'conditions' => array('Delivery.dr_uuid = SalesInvoice.dr_uuid')
+				)
+			),
+			'belongsTo' => array(
+
+				'DeliveryConnection' => array(
+					'className' => 'Delivery.Delivery',
+					'foreignKey' => 'sales_invoice_id',
+					//'conditions' => 'DeliveryConnection.sales_invoice_id = SalesInvoice.id'
+				),
+				'DeliveryDetail' => array(
+					'className' => 'Delivery.DeliveryDetail',
+					'foreignKey' => false,
+					'conditions' => array('DeliveryDetail.delivery_uuid = SalesInvoice.dr_uuid')
+				),
+
+
+				// 'ClientOrder' => array(
+				// 	'className' => 'Sales.ClientOrder',
+				// 	'foreignKey' => false,
+				// 	'conditions' => array('ClientOrder.id = Delivery.clients_order_id')
+				// ),
+
+			)
+		)
+
+		);
+
+		$this->recursive = 1;
+	}
 
   	public function bindDelivery() {
 		$this->bindModel(array(
@@ -97,11 +134,33 @@ class SalesInvoice extends AppModel {
 		if (!empty($invoiceData['InvoiceForm']['delivery_id'])) {
 			$invoiceData[$this->name]['delivery_id'] = $invoiceData['InvoiceForm']['delivery_id'];
 		}
+
+		if (!empty($invoiceData['SalesInvoice']['plant_id'])) {
+			$invoiceData[$this->name]['plant_id'] = $invoiceData['SalesInvoice']['plant_id'];
+		} else {
+				
+			$PlantModel = ClassRegistry::init('Delivery.Plant');
+			
+			if (!empty($invoiceData['SalesInvoice']['plant'])) {
+				
+				$plant = $PlantModel->find('first',array(
+					'conditions' => array(
+							'Plant.name like' => '%'.$invoiceData['SalesInvoice']['plant'].'%'
+						)
+				));
+
+				if ($plant) {
+
+					$invoiceData[$this->name]['plant_id'] = $invoiceData['Plant']['id'];
+				}
+
+			}
+
+		}
 			
 		$invoiceData[$this->name]['created_by'] = $auth;
 		$invoiceData[$this->name]['modified_by'] = $auth;
 		$invoiceData[$this->name]['modified'] = $date;
-
 		//pr($invoiceData); exit;
 		$this->save($invoiceData);
 

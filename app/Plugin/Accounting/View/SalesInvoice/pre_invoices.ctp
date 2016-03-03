@@ -24,9 +24,6 @@
                     
                 	</div>
 
-
-
-
                   <br><br>
                </div>
                <div class="clearfix"></div>
@@ -58,6 +55,10 @@
 							<tr>
 								<th><a href="#"><span>Sales Invoice No.</span></a></th>
 								<th><a href="#"><span>Delivery No.</span></a></th>
+
+								<th><a href="#"><span>APC DR.</span></a></th>
+								<!--<th><a href="#"><span>Plant</span></a></th>-->
+								
 								<th><a href="#"><span>Company</span></a></th>
 								<th><a href="#"><span>Date</span></a></th>	
 								<th class="text-center"><a href="#"><span>Status</span></a></th>
@@ -96,6 +97,16 @@
 				                           ?>
 				                        </td>
 
+				                        <td>
+				                        	<?php 
+
+				                        		if (!empty($invoiceDataList['SalesInvoice']['apc_dr'])) {
+
+				                        			echo $invoiceDataList['SalesInvoice']['apc_dr'];
+				                        		}
+
+				                        	?>
+				                        </td>
 				                        <td class="">
 				                            <?php  
 
@@ -246,6 +257,8 @@ jQuery(document).ready(function($){
 });
 	function searchSI(searchInput) {
 
+		$('.searchAppend').html('<img class="loader" src="'+serverPath+'/img/loader.gif">');
+
 	    var searchInput = $('.searchSI').val();
 
 	    var view = "index";
@@ -264,7 +277,7 @@ jQuery(document).ready(function($){
 
 	    $.ajax({
 	            type: "GET",
-	            url: serverPath + "accounting/sales_invoice/search_order/"+view+"/"+searchInput+"/"+type,
+	            url: serverPath + "accounting/sales_invoice/search_order/"+view+"/"+searchInput+"/"+type+'/si',
 	            dataType: "html",
 	            success: function(data) {
 
@@ -292,7 +305,7 @@ jQuery(document).ready(function($){
 	        timeout = null;
 	    }
 
-	    timeout = setTimeout(searchSI,600)
+	    timeout = setTimeout(searchSI,1000)
 	})
 
 </script>
