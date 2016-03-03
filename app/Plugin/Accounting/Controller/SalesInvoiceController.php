@@ -1689,7 +1689,7 @@ class SalesInvoiceController extends AccountingAppController {
 
             $this->loadModel('Delivery.Delivery');
 
-            $deliveryData = $this->Delivery->query('SELECT ClientOrder.id ,ClientOrder.po_number , ClientOrder.uuid, Company.id, Company.company_name , Delivery.dr_uuid, Delivery.company_id, Delivery.dr_uuid, Delivery.clients_order_id , Delivery.status,  Delivery.id  
+            $deliveryData = $this->Delivery->query('SELECT ClientOrder.id ,ClientOrder.po_number , ClientOrder.uuid, Company.id, Company.company_name , Delivery.dr_uuid, Delivery.company_id, Delivery.dr_uuid, Delivery.clients_order_id , Delivery.status,  Delivery.id 
                 FROM koufu_delivery.deliveries AS Delivery
                 LEFT JOIN koufu_sale.client_orders AS ClientOrder
                 ON Delivery.clients_order_id = ClientOrder.uuid 
@@ -1721,7 +1721,7 @@ class SalesInvoiceController extends AccountingAppController {
 
             $userData = $this->Session->read('Auth');
 
-            $invoiceData = $this->SalesInvoice->query('SELECT SalesInvoice.id ,SalesInvoice.status , SalesInvoice.statement_no, Company.id, Company.company_name , Delivery.dr_uuid, Delivery.company_id, Delivery.dr_uuid, SalesInvoice.dr_uuid ,SalesInvoice.created
+            $invoiceData = $this->SalesInvoice->query('SELECT SalesInvoice.id ,SalesInvoice.status , SalesInvoice.statement_no, Company.id, Company.company_name , Delivery.dr_uuid, Delivery.company_id, Delivery.dr_uuid,SalesInvoice.deliveries ,SalesInvoice.dr_uuid ,SalesInvoice.created
                 FROM koufu_delivery.deliveries AS Delivery
                 LEFT JOIN koufu_accounting.sales_invoices AS SalesInvoice
                 ON Delivery.dr_uuid = SalesInvoice.dr_uuid 
@@ -1760,7 +1760,7 @@ class SalesInvoiceController extends AccountingAppController {
             //     OR Company.company_name LIKE "%'.$hint.'%" AND SalesInvoice.status = 1 Group by SalesInvoice.id DESC');
 
           //  pr('test2x');
-                $invoiceData = $this->SalesInvoice->query('SELECT SalesInvoice.id ,SalesInvoice.status , SalesInvoice.sales_invoice_no, Company.id, Company.company_name , Delivery.dr_uuid, Delivery.id, Delivery.company_id, Delivery.dr_uuid, SalesInvoice.dr_uuid, SalesInvoice.apc_dr ,SalesInvoice.created
+                $invoiceData = $this->SalesInvoice->query('SELECT SalesInvoice.id ,SalesInvoice.status , SalesInvoice.sales_invoice_no, Company.id, Company.company_name , Delivery.dr_uuid, Delivery.id, Delivery.company_id, Delivery.dr_uuid, SalesInvoice.dr_uuid, SalesInvoice.deliveries,SalesInvoice.apc_dr ,SalesInvoice.created
                     FROM koufu_delivery.deliveries AS Delivery
                     LEFT JOIN koufu_accounting.sales_invoices AS SalesInvoice
                     ON Delivery.dr_uuid = SalesInvoice.dr_uuid 
