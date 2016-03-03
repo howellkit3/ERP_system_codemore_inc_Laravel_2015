@@ -9,7 +9,7 @@ class ProductionDashboardsController extends ProductionAppController {
 	public function index() {
 
      //   $this->layout = 'test';
-
+    Configure::write('debug',2);
 		$this->loadModel('Production.TicketProcessSchedule');
 
         $this->loadModel('Production.ProcessDepartment');
@@ -71,7 +71,7 @@ class ProductionDashboardsController extends ProductionAppController {
         ". $conditions ." group by TicketProcessSchedule.id
         ");
 
-
+    
         if (!empty($_GET['test'])) { 
 
             pr($tickets);

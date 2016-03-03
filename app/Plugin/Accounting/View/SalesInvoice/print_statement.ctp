@@ -79,7 +79,7 @@
     $amount = $drData['DeliveryDetail']['quantity'] * $clientData['QuotationItemDetail']['unit_price'];
     $cell->setCellValue('J12',number_format($amount,2));
     $cell->setCellValue('I9', $paymentTermData[$clientData['ClientOrder']['payment_terms']]);
-    $cell->setCellValue('I7', date('M d, Y'));
+    $cell->setCellValue('I7', date('m/d/Y'));
 
     $cell->setCellValue('C12',  ucfirst($clientData['Product']['name']));
     $cell->getStyle('C12')->getAlignment()->setWrapText(true); 

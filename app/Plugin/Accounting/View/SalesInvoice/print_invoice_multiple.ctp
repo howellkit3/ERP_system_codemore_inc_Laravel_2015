@@ -135,11 +135,11 @@
         $delivery_date = $vat = $unitPriceID =array();
 
         
-        $invoicedate = !empty($invoiceData['SalesInvoice']['invoice_date'] ) ?  date('M d, Y', strtotime($invoiceData['SalesInvoice']['invoice_date'])) : '';  
+        $invoicedate = !empty($invoiceData['SalesInvoice']['invoice_date'] ) ?  date('m/d/Y', strtotime($invoiceData['SalesInvoice']['invoice_date'])) : '';  
              
         foreach ($drData as $key => $list) {
 
-            $sheet->setCellValue('J7', !empty($invoicedate) ? $invoicedate : date('M d, Y', strtotime($list['Delivery']['created'])));
+            $sheet->setCellValue('J7', !empty($invoicedate) ? $invoicedate : date('m/d/Y', strtotime($list['Delivery']['created'])));
             $sheet->setCellValue('B'.$start, $list['ClientOrder']['po_number']);
             $sheet->setCellValue('F'.$start, ucfirst($list['Product']['name']));
             $sheet->setCellValue('D'.$start, number_format($list['DeliveryDetail']['quantity']));
@@ -153,8 +153,7 @@
 
             $vat[] = $list['QuotationItemDetail']['vat_status'];
             $unitPriceID[] = $list['QuotationItemDetail']['unit_price_currency_id'];
-
-
+            
             $start++;
         }  
 
@@ -230,12 +229,13 @@
             $sheet->setCellValue('D'.$dr, 'DR#'.$drNum); 
         }
    
-       
         
-        $sheet->setCellValue('D27', $drData[0]['DeliveryDetail']['remarks']);
-  
+        if ($invoiceData['SalesInvoice']['status'] == 0) {
+             $sheet->setCellValue('D27', $drData[0]['DeliveryDetail']['remarks']);
+        }
+       
   // prepare download
-    $filename = mt_rand(1,100000).'.xlsx'; //just some random filename
+    $filename = 'invoice-'.date('ymd').mt_rand(1,100000).'.xlsx'; //just some random filename
     header('Content-Type: application/vnd.ms-office');
     header('Content-Disposition: attachment;filename="'.$filename.'"');
     header('Cache-Control: max-age=0');

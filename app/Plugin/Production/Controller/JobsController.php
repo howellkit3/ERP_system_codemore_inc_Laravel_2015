@@ -14,7 +14,8 @@ class JobsController extends ProductionAppController {
     }
 
     public function plans() {
-
+        Configure::write('debug',2);
+        
         $limit = 10;
 
         $this->loadModel('Ticket.JobTicket');
@@ -41,34 +42,60 @@ class JobsController extends ProductionAppController {
 
       //  $this->JobTicket->bindTicketJob(); 
 
-        $this->JobTicket->bind(array('ClientOrder', 'Product', 'ClientOrderDeliverySchedule','TicketProcessSchedule'));
+       // $this->JobTicket->bind(array('ClientOrder', 'Product', 'ClientOrderDeliverySchedule','TicketProcessSchedule'));
 
+        $this->JobTicket->bindSchedule();
 
         $query = $this->request->query;
 
-        if (!empty( $query['data']['date'])) {
+        // if (!empty( $query['data']['date'])) {
 
-            $dateSplit = explode('-',$query['data']['date']);
+        //     $dateSplit = explode('-',$query['data']['date']);
 
-            $date1 =  date('Y-m-d',strtotime($dateSplit[0]));
+        //     $date1 =  date('Y-m-d',strtotime($dateSplit[0]));
 
-            $date2 =  date('Y-m-d',strtotime($dateSplit[1]));
+        //     $date2 =  date('Y-m-d',strtotime($dateSplit[1]));
 
-            $conditions = array('date(JobTicket.created) BETWEEN ? AND ?' => array($date1,$date2));
+        //     $conditions = array('date(JobTicket.created) BETWEEN ? AND ?' => array($date1,$date2));
             
-            $dateSelected =  $query['data']['date'];    
+        //     $dateSelected =  $query['data']['date'];    
             
+        // } else {
+
+
+        //     $date = date('Y-m-01');
+
+        //     $date2 = date('Y-m-d');
+
+        //     $conditions =array('date(JobTicket.created) BETWEEN ? AND ?' => array($date,$date2));
+
+        //     $dateSelected = date('Y/m/d',strtotime($date)).' - '.date('Y/m/d',strtotime($date2));
+
+        // }
+
+
+        if (!empty($data['data']['date'])) {
+
+            $date = explode('-', $data['data']['date']);
+
+            $date1 = !empty($date[0]) ? date('Y-m-d',strtotime($date[0])) : '';
+
+            $date2 = !empty($date[1]) ? date('Y-m-d',strtotime($date[1])) : ''; 
+
+            $conditions =  "WHERE ClientOrderDeliverySchedule.schedule BETWEEN '".$date."' AND '".$date2."' ";
+
+            $dateSelected = $date1.' - '.$date2;
         } else {
 
-
-            $date = date('Y-m-01');
+             $date = date('Y-m-01');
 
             $date2 = date('Y-m-d');
 
             $conditions =array('date(JobTicket.created) BETWEEN ? AND ?' => array($date,$date2));
 
-            $dateSelected = date('Y/m/d',strtotime($date)).' - '.date('Y/m/d',strtotime($date2));
+            $dateSelected  = date('Y/m/d',strtotime($date)).' - '.date('Y/m/d',strtotime($date2));
 
+            $conditions =  " WHERE ClientOrderDeliverySchedule.schedule BETWEEN '".$date."' AND '".$date2."' ";
         }
 
         $clientOrderUUID = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('client_order_id','uuid')));
@@ -76,15 +103,29 @@ class JobsController extends ProductionAppController {
         $clientOrderQuantity = $this->ClientOrderDeliverySchedule->find('list',array('fields' => array('client_order_id','quantity')));
 
         $params =  array(
-                'conditions' => $conditions,
+                //'conditions' => $conditions,
                 'limit' => $limit,
                 //'group' => array('Attendance.date'),
                 'order' => 'JobTicket.id DESC',
         );
 
-        $this->paginate = $params;
+       $jobData =  $this->JobTicket->query(
+            "Select * FROM job_tickets as JobTicket 
+            LEFT JOIN koufu_sale.client_orders AS ClientOrder
+            ON ClientOrder.id = JobTicket.client_order_id
+            LEFT JOIN koufu_sale.client_order_delivery_schedules as ClientOrderDeliverySchedule
+            ON (ClientOrderDeliverySchedule.client_order_id = ClientOrder.id) 
+            LEFT JOIN koufu_sale.products as Product
+            ON (Product.id = JobTicket.product_id) 
+            LEFT JOIN koufu_sale.companies as Company
+            ON (Company.id = ClientOrder.company_id)
+            ".$conditions." GROUP BY Jobticket.id ORDER by ClientOrderDeliverySchedule.created DESC limit 10"
+        );
+
+       // $this->paginate = $params;
         
-        $jobData = $this->paginate('JobTicket');
+        //$jobData = $this->paginate('JobTicket');
+
 
         $jobData = $this->RecievedTicket->checkStatus( $jobData);
 
@@ -103,7 +144,7 @@ class JobsController extends ProductionAppController {
         //     $jobData[$key]['Process'] = $processData;
 
         // }
-        //pr($jobData);exit();
+       // pr($jobData);exit();
         $this->set(compact('jobData','companyData','machineData','processDepartmentData', 'clientOrderUUID', 'clientOrderQuantity','dateSelected','departmentProcess'));
         
     }

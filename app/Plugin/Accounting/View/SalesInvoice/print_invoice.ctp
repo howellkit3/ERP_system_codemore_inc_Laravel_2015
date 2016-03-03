@@ -118,7 +118,7 @@
                 ->setCellValue('C8', ucwords($Addresspart1))
                 ->setCellValue('C9', ucwords($Addresspart2))
                 ->setCellValue('C10', ucwords($Addresspart3))
-                ->setCellValue('J7', date('M d, Y', strtotime($drData['Delivery']['created'])))
+                ->setCellValue('J7',date('m/d/Y', strtotime($drData['Delivery']['created'])))
                 ->setCellValue('J8', $clientData['Company']['tin'])
                 ->setCellValue('J9', $paymentTermData[$clientData['ClientOrder']['payment_terms']])
                 ->setCellValue('B12', $clientData['ClientOrder']['po_number'])

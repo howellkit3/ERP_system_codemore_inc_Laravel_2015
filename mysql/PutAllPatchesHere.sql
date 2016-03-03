@@ -2647,3 +2647,16 @@ ADD COLUMN `plant_id`  int(11) NULL AFTER `apc_dr`;
 ALTER TABLE `sales_invoices`
 ADD COLUMN `deliveries`  varchar(500) NULL AFTER `is_multiple`;
 
+
+/* aldrin added this 3-1-16 koufu accounting*/
+CREATE TABLE `koufu_accounting`.`sales_invoice_connection`(  
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `sales_invoices_id` INT,
+  `sales_invoice_no` VARCHAR(255),
+  `dr_uuid` VARCHAR(255),
+  `created_by` INT,
+  `modified_by` INT,
+  `created` DATETIME,
+  `modified` DATETIME,
+  PRIMARY KEY (`id`)
+);

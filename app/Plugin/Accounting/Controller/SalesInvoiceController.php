@@ -192,7 +192,7 @@ class SalesInvoiceController extends AccountingAppController {
                                                             )); 
         
         
-        if(!empty($invoiceData['SalesInvoice']['dr_uuid'])){
+        if(!empty($invoiceData['SalesInvoice']['dr_uuid']) || !empty($invoiceData['SalesInvoice']['deliveries'])  ){
            
             if (!empty($deliveryId)) {
                    
@@ -518,7 +518,7 @@ class SalesInvoiceController extends AccountingAppController {
         $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
 
         $seriesNo = $this->SalesInvoice->find('first', array(
-                'order' => array('SalesInvoice.sales_invoice_no DESC')));
+                'order' => array('SalesInvoice.modified DESC')));
        
     
         if(!empty($seriesNo)){
@@ -1655,11 +1655,12 @@ class SalesInvoiceController extends AccountingAppController {
 
     public function search_order($view = null, $hint = null, $type = null, $indicator = null){
 
+    //Configure::write('debug',2);
+    
        $this->loadModel('Sales.Company');
             
        $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
        
-
         $this->loadModel('Delivery.Delivery');
 
         $this->loadModel('Sales.ClientOrder');
@@ -1743,14 +1744,17 @@ class SalesInvoiceController extends AccountingAppController {
             //     WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR SalesInvoice.sales_invoice_no LIKE "%'.$hint.'%"
             //     OR Company.company_name LIKE "%'.$hint.'%" AND SalesInvoice.status = 1 Group by SalesInvoice.id DESC');
 
+          //  pr('test2x');
 
             $invoiceData = $this->SalesInvoice->query('Select *
                 FROM koufu_accounting.sales_invoices AS SalesInvoice
                 LEFT JOIN koufu_accounting.sales_invoice_connections AS SalesInvoiceConnection
                 ON SalesInvoiceConnection.sales_invoice_id = SalesInvoice.id
                 WHERE SalesInvoiceConnection.sales_invoice_no LIKE "%'.$hint.'%" 
-                OR SalesInvoice.sales_invoice_no LIKE  "%'.$hint.'%" AND SalesInvoice.status = 1 GROUP by SalesInvoice.id DESC'
+                OR SalesInvoice.sales_invoice_no LIKE "%'.$hint.'%"
+                OR SalesInvoice.dr_uuid LIKE "%'.$hint.'%" GROUP by SalesInvoice.id DESC'
             );
+
 
 
 
@@ -2336,9 +2340,11 @@ class SalesInvoiceController extends AccountingAppController {
         }
 
         $drMultiple = array_filter($del);
+        
         // if (!empty($invoiceData['InvoiceForm']['delivery_id'])) {
         //     $invoiceData['SalesInvoice']['delivery_id'] = $invoiceData['InvoiceForm']['delivery_id'];
         // }
+        
         $invoiceData['SalesInvoice']['sales_invoice_no'] = $this->request->data['SalesInvoice']['sales_invoice'];
 
         $invoiceData['SalesInvoice']['deliveries'] = json_encode(array_unique($del));
@@ -2359,21 +2365,21 @@ class SalesInvoiceController extends AccountingAppController {
         
         if ($this->SalesInvoice->save($invoiceData) ) {
 
-            $del[] = '';
+            $del = array();
             
             $lastId = $this->SalesInvoice->id;
 
             foreach ($drMultiple as $key => $value) {
                $del['id'] = '';
-               $del['sales_invoices_id'] = $lastId;
+               $del['sales_invoice_id'] = $lastId;
                $del['sales_invoice_no'] =  $this->request->data['SalesInvoice']['sales_invoice'];
                $del['dr_uuid'] = $value;
-
+               $del['created_by'] = $userData['id'];
+               $del['modified_by'] = $userData['id'];
                $this->SalesInvoiceConnection->save($del);
                  
             }
         }
-
 
         $this->Session->setFlash(__(' Sales Invoice No. completed. '), 'success');
         
