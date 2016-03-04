@@ -2364,6 +2364,48 @@ class SalesInvoiceController extends AccountingAppController {
         //     $invoiceData['SalesInvoice']['delivery_id'] = $invoiceData['InvoiceForm']['delivery_id'];
         // }
         
+        if (!empty( $drMultiple )) {
+
+               $this->loadModel('Delivery.Delivery');
+
+               $this->Delivery->bindDeliveryById();
+               $deliveryDetail = $this->Delivery->findById($del[0]);
+               
+                if (!empty($deliveryDetail)) {
+
+                    $apcDr = $this->Delivery->findApc( $deliveryDetail );
+
+                    $invoiceData['SalesInvoice']['apc_dr'] = !empty($apcDr['apc_dr']) ? $apcDr['apc_dr'] : '';
+
+
+                      if (!empty($deliveries['DeliveryDetail']['plant_id'])) {
+                        $invoiceData['SalesInvoice']['plant_id'] = $apc['plant'];
+                        
+                        } else {
+                        
+                        if (!empty($apcDr['plant'])) {
+                            
+                            $PlantModel = ClassRegistry::init('Delivery.Plant');
+         
+                            $plant = $PlantModel->find('first',array(
+                                'conditions' => array(
+                                        'Plant.name like' => '%'.$apcDr['plant'].'%'
+                                    )
+                            ));
+
+                            if (!empty($plant)) {
+
+                                $invoiceData['SalesInvoice']['plant_id'] = $plant['Plant']['id'];
+                            }
+            
+                        }
+                       //  $save['plant_id'] = $apc['plant'];
+                    }
+             }
+
+        }
+
+
         $invoiceData['SalesInvoice']['sales_invoice_no'] = $this->request->data['SalesInvoice']['sales_invoice'];
 
         $invoiceData['SalesInvoice']['deliveries'] = json_encode(array_unique($del));
@@ -2381,7 +2423,7 @@ class SalesInvoiceController extends AccountingAppController {
         $invoiceData['SalesInvoice']['status'] = 0;
 
         $invoiceData['SalesInvoice']['is_multiple'] = 1;
-        
+
         if ($this->SalesInvoice->save($invoiceData) ) {
 
             $del = array();
