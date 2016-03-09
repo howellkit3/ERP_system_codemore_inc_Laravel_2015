@@ -215,11 +215,11 @@ class SalesInvoiceController extends AccountingAppController {
                     $deliveryId = json_decode($invoiceData['SalesInvoice']['deliveries']);
 
 
-                       $conditions = 'Delivery.dr_uuid IN ('.implode($deliveryId,',').')';
+                       $conditions = 'Delivery.dr_uuid IN ('.implode($deliveryId,',').') AND Delivery.status != "" ';
 
                 } else {
 
-                    $conditions = 'Delivery.dr_uuid = "'.$invoiceData['SalesInvoice']['dr_uuid'].'"';    
+                    $conditions = 'Delivery.dr_uuid = "'.$invoiceData['SalesInvoice']['dr_uuid'].'" AND Delivery.status != ""';    
                 }
 
                 // if ($invoiceData['SalesInvoice']['deliveries'] == 'null') {
@@ -250,15 +250,19 @@ class SalesInvoiceController extends AccountingAppController {
                     ON Product.id = QuotationDetail.product_id
                     LEFT JOIN koufu_sale.addresses AS Address
                     ON Address.foreign_key = Company.id
-                    WHERE '.$conditions.' group by Delivery.id');
+                    WHERE '.$conditions.' group by Delivery.id ORDER by Delivery.id DESC');
         
                     if (!empty($_GET['test'])){
 
+                        $drData = $this->ClientOrder->checkPo($drData);
                         Configure::write('debug',2);
                         pr($conditions);
-                        pr($drData); exit();
+                        pr($drData); 
+                        exit();
                     }
-    
+                    //check last PO
+                  //  $drData = $this->ClientOrder->checkPo($drData);
+
                   $noPermissionPay = "";
 
                  $noPermissionReciv = "";
@@ -792,6 +796,8 @@ class SalesInvoiceController extends AccountingAppController {
 
         $this->loadModel('Sales.PaymentTermHolder');
 
+        $this->loadModel('Sales.ClientOrder');
+
             
         $paymentTermData = Cache::read('paymentTerms');
         
@@ -812,11 +818,11 @@ class SalesInvoiceController extends AccountingAppController {
                 $deliveryId = json_decode($invoiceData['SalesInvoice']['deliveries']);
 
               
-                    $conditions = 'Delivery.dr_uuid IN ('.implode($deliveryId,',').') ';
+                    $conditions = 'Delivery.dr_uuid IN ('.implode($deliveryId,',').') AND Delivery.status != ""';
 
             } else {
 
-                     $conditions = 'Delivery.dr_uuid = "'.$invoiceData['SalesInvoice']['dr_uuid'].'"';
+                     $conditions = 'Delivery.dr_uuid = "'.$invoiceData['SalesInvoice']['dr_uuid'].'" AND Delivery.status != ""';
             }
 
 
@@ -841,8 +847,12 @@ class SalesInvoiceController extends AccountingAppController {
                 ON Product.id = QuotationDetail.product_id
                 LEFT JOIN koufu_sale.addresses AS Address
                 ON Address.foreign_key = Company.id
-                WHERE '. $conditions.' group by Delivery.id');
+                WHERE '. $conditions.' group by Delivery.id ORDER by Delivery.id DESC');
 
+    
+
+        //check last PO
+        //$drData = $this->ClientOrder->checkPo($drData);
 
         $noPermissionPay = "";
 
@@ -1730,7 +1740,7 @@ class SalesInvoiceController extends AccountingAppController {
                 LEFT JOIN koufu_sale.companies AS Company
                 ON ClientOrder.company_id = Company.id 
                 WHERE Delivery.dr_uuid LIKE "%'.$hint.'%" OR SalesInvoice.statement_no LIKE "%'.$hint.'%"
-                OR Company.company_name LIKE "%'.$hint.'%"  AND SalesInvoice.status = 2');
+                OR Company.company_name LIKE "%'.$hint.'%"  AND SalesInvoice.status = 2 GROUP by SalesInvoice.id DESC');
             
             $this->set(compact('companyData','invoiceData','noPermissionReciv','noPermissionPay', 'deliveryNumHolder','indicator'));
 
@@ -2366,11 +2376,21 @@ class SalesInvoiceController extends AccountingAppController {
         
         if (!empty( $drMultiple )) {
 
+            Configure::write('debug',2);
+
                $this->loadModel('Delivery.Delivery');
 
                $this->Delivery->bindDeliveryById();
-               $deliveryDetail = $this->Delivery->findById($del[0]);
-               
+
+               $deliveryDetail = $this->Delivery->find('first',array(
+
+                    'conditions' => array(
+                            'Delivery.dr_uuid' => $del[0]
+                    )
+
+                ));
+         
+
                 if (!empty($deliveryDetail)) {
 
                     $apcDr = $this->Delivery->findApc( $deliveryDetail );

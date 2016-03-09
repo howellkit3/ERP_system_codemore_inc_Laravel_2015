@@ -97,6 +97,8 @@ class PurchaseOrdersController extends PurchasingAppController {
 
 		$purchaseItemData = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $requestData['Request']['uuid'])));
 
+
+		
 		if (empty($purchaseItemData)) {
 
 			if(!empty($purchaseOrderData['PurchaseOrder']['filed_number'])){
@@ -156,8 +158,16 @@ class PurchaseOrdersController extends PurchasingAppController {
 
 	    $preparedData = $this->User->find('first', array(
 														'conditions' => array('User.id' => $purchaseOrderData['PurchaseOrder']['created_by']),
-														));
+															));
 		
+		if (!empty($_GET['test'])) {
+
+			Configure::write('debug',2);
+			pr($purchaseOrderData);
+			pr($purchaseItemData);
+			exit();
+		}
+
 		$this->set(compact('modelTable','purchaseOrderData','supplierData','purchaseOrderid','unitData','paymentTermData','purchaseItemData','preparedData', 'currencyData', 'faxContactData', 'telContactData', 'bycash'));
 
     }
