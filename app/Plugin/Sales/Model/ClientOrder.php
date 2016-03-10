@@ -207,4 +207,31 @@ class ClientOrder extends AppModel {
 		}
 	}
 
+	public function checkPo($drData = array()){
+
+		 foreach ($drData as $key => $list) {
+                            
+		        if (!empty($list['ClientOrder']['po_number'])) {
+
+
+		            $this->bindClientDelivery();
+
+		            $clientsOrder = $this->find('first',array(
+
+		                    'conditions' => array(
+		                                'ClientOrder.po_number' => $list['ClientOrder']['po_number']
+		                        ),
+		                    'order' => 'ClientOrder.id DESC'
+
+		            ));
+
+		            $list = $clientsOrder;
+
+		            $drData[$key] = array_merge($drData[$key],$list);
+		        }
+			}
+
+			return $drData;
+	}
+
 }

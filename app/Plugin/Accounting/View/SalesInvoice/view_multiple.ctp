@@ -155,10 +155,10 @@
 
 											if(!empty($list['DeliveryDetail']['quantity'])){
 
-											  	$totalQty = $list['DeliveryDetail']['quantity'] * $list['QuotationItemDetail']['unit_price'];
+											  	$totalQty = $list['DeliveryDetail']['quantity'] * number_format($list['QuotationItemDetail']['unit_price'],4);
 											}else{
 
-												$totalQty = $list['ClientOrderDeliverySchedule']['quantity'] * $list['QuotationItemDetail']['unit_price'];
+												$totalQty = $list['ClientOrderDeliverySchedule']['quantity'] * number_format($list['QuotationItemDetail']['unit_price'],4);
 											}
 
 											echo number_format($totalQty,2) ; $total += $totalQty;
@@ -195,7 +195,8 @@
 										echo "DR# ".str_pad($drData[0]['Delivery']['dr_uuid'],5,'0',STR_PAD_LEFT);
 									}
 										
-									?></td>
+									?>
+									</td>
 								<td></td>
 								<td></td>
 								<td></td>

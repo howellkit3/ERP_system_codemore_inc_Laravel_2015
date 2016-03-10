@@ -65,7 +65,7 @@
                         <td align = "left" width = "20%">:<?php echo empty($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]) ? $purchaseOrderData['PurchaseOrder']['supplier_id'] : ucfirst($supplierData[$purchaseOrderData['PurchaseOrder']['supplier_id']]); ?></td>
                         <td align = "left" width = "20%"></td>
                         <td align = "left" width = "20%">Date </td>
-                        <td align = "left" width = "20%">:<?php echo (new \DateTime())->format('M d, Y') ?>
+                        <td align = "left" width = "20%">:<?php echo date('M d, Y',strtotime($purchaseOrderData['PurchaseOrder']['created'])); //(new \DateTime())->format('M d, Y') ?>
                         </td>
                     </tr>
             </table>
