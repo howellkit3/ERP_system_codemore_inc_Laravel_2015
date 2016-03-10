@@ -210,6 +210,8 @@ class SalesInvoiceController extends AccountingAppController {
                 //                                 'conditions' => array('Delivery.dr_uuid' => $invoiceData['SalesInvoice']['dr_uuid']
                 //                                 )));
 
+
+               
                 if (!empty($invoiceData['SalesInvoice']['deliveries']) && $invoiceData['SalesInvoice']['deliveries'] != 'null') {
 
                     $deliveryId = json_decode($invoiceData['SalesInvoice']['deliveries']);
@@ -222,6 +224,11 @@ class SalesInvoiceController extends AccountingAppController {
                     $conditions = 'Delivery.dr_uuid = "'.$invoiceData['SalesInvoice']['dr_uuid'].'"';    
                 }
 
+                 if (!empty($invoiceData['SalesInvoice']['invoice_date'])) {
+
+                     $conditions .= ' AND DeliveryDetail.schedule BETWEEN "'.$invoiceData['SalesInvoice']['invoice_date'].'" AND "'.$invoiceData['SalesInvoice']['invoice_date'].'"';
+                }
+
                 // if ($invoiceData['SalesInvoice']['deliveries'] == 'null') {
 
                 //     $conditions = 'Delivery.dr_uuid = "'.$invoiceData['SalesInvoice']['dr_uuid'].'"';
@@ -229,6 +236,9 @@ class SalesInvoiceController extends AccountingAppController {
 
                 //         $conditions = 'Delivery.dr_uuid IN ('.implode($deliveryId,',').')';
                 // }
+
+
+             
 
                 $drData = $this->Delivery->query('SELECT *
                     FROM deliveries AS Delivery
