@@ -24,6 +24,20 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
            
         </li>
 
+        <li class="">
+            <?php $page =($active_page == 'deliveries' && $active_action == 'apc_index') ? 'active tab' : '' ?>
+            <?php echo $this->Html->link("<span class='count'>APC DR</span>", array('controller' => 'deliveries', 
+                                                                                            'action' => 'apc_index?'.rand(1000,9999).'='.date("is")
+                                                                                            ),
+                                                                                     array(
+                                                                                            'escape' => false,
+                                                                                            'class' => 'btn '.$page.' '.$noPermissionSales 
+                                                                                            )); 
+            ?>
+           
+        </li>
+
+
  <!--        <li class="">
             <?php $page =($active_page == 'deliveries' && $active_action == 'apc_index') ? 'active tab' : '' ?>
             <?php echo $this->Html->link("<span class='count'>APC</span>", array(

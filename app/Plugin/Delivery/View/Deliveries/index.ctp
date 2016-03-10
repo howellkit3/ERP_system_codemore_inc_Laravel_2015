@@ -1,7 +1,9 @@
+
 <?php //echo $this->Html->script('Deliveries.searchOrder');?>
 <?php echo $this->element('deliveries_options'); ?><br><br>
 
 <?php $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : 'tab-waiting';
+$date = !empty($date) ? $date : date('Y/m/01').' - '.date('Y/m/d');
 ?>
 
 <div class="row">
@@ -11,19 +13,77 @@
 
                 <h2 class="pull-left"><b>Delivery Monitoring</b></h2>
 
-                <div class="filter-block pull-right">
+                <div class="clearfix"></div>
 
 
-                <div class="form-group pull-left">
+                <?php echo $this->Form->create('Delivery',
+                    array('url' => array(
+                            'controller' => 'deliveries',
+                            'action' => 'export'
+                    ))
+                ); ?>
+                <div class="filter-block pull-left">
+                
+                    <div class="pull-left">
+                            <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        <input placeholder="Date Range" name="data[date]" data="1" type="text" value="<?php echo $date ?>" class="form-control myDateRange datepickerDateRange" id="datepickerDateRange" style="width:200px">
+                                    </div>
+
+                            <input type="hidden" value="go" name="data[action]" class="identifier">
+                    </div>                                    
+                <?php 
+
+                echo $this->Form->input('type',array(
+                            'type' => 'select',
+                            'options' => array(
+                                   '' => '-- Select Category --',
+                                   'dr' => 'DR',
+                                   'apc_dr' => 'APC DR'
+                            ),
+                            'class' => 'form-control',
+                            'div'  => 'pull-left',
+                            'label' => false,
+                            'style' => 'margin-left:5px'
+                ));
+                 
+                echo $this->Form->input('status',array(
+                            'type' => 'select',
+                            'options' => array(
+                                   '' => '-- Select Status --',
+                                   'delivered' => 'Delivered',
+                                   'deleted' => 'Deleted',
+                                   'incomplete' => 'Incomplete',
+                                   'replaced' => 'Replaced',
+                                   'terminated' => 'Terminated'
+                            ),
+                            'class' => 'form-control',
+                            'div'  => 'pull-left',
+                            'label' => false,
+                            'style' => 'margin-left:5px'
+                )); ?>
+
+
+
+                &nbsp&nbsp 
+               
+                  <button class="btn btn-success" id="searchDr">
+                        <i class="fa fa-file"></i>
+                        Export
+                 </button>
+                   <!-- <a href="#CustomerDr" class="" data-toggle="modal"><button class="btn btn-success"> <i class="fa fa-paper"></i> Create DR </button></a> -->
+                <?php echo $this->Form->end(); ?>
+
+             </div> 
+               <div class="filter-block pull-right">
+              <div class="form-group pull-left" style="margin-left:5px">
                 
                         <input placeholder="Search..." class="form-control searchOrder"  />
                         <i class="fa fa-search search-icon"></i>
                  </div>
+             </div>
 
-                   <a href="#CustomerDr" class="" data-toggle="modal"><button class="btn btn-success"> <i class="fa fa-paper"></i> Create DR </button></a>
- 
 
-             </div> 
                 
             </header>
 
@@ -193,7 +253,7 @@
 
 
 <script>
-
+    
     function searchOrder(searchInput) {
 
         $this = $('.searchOrder');
@@ -270,11 +330,15 @@
 
      var url =  serverPath + "delivery/deliveries/index_status/"+deliveryStatus;
 
+     var category = $('#DeliveryType').val();
+
+     var status = $('#DeliveryStatus').val();
+
        if (deliveryStatus == '-1') {
 
             url =  serverPath + "delivery/deliveries/search_by_number/"+deliveryStatus;
-
             $('.searchOrder').addClass('by_dr');
+        
         } else {
              $('.searchOrder').removeClass('by_dr');
         }
@@ -284,6 +348,7 @@
             type: "GET",
             url: url,
             dataType: "html",
+            data : { 'del_status' : deliveryStatus, 'category' : category, 'status' : status },
             success: function(data) {
                 
                 $('.loader').remove();
@@ -294,7 +359,6 @@
 
                 } 
 
-
                 $('#item_type_pagination').show();
             }
         });
@@ -303,10 +367,12 @@
 
     $( document ).ready(function($) {
 
+
+        $('#datepickerDateRange').daterangepicker();
+
         var timeout;
 
         $('.searchOrder').keyup(function() {
-
 
             if(timeout) {
                 clearTimeout(timeout);
@@ -416,6 +482,7 @@
 
         e.preventDefault();
     });
+
 
 
   });

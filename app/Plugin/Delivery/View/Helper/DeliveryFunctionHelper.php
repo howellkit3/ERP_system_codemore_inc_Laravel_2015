@@ -30,10 +30,12 @@ class DeliveryFunctionHelper extends AppHelper {
 
 		$clientsOrder = array();
 
+		$ClientsOrder->bindDelivery();
+
 		if (!empty($clientsOrderId)) {
 
 			$clientsOrder = $ClientsOrder->find('first',array(
-				'conditions' => array('uuid' => $clientsOrderId)
+				'conditions' => array('ClientOrder.uuid' => $clientsOrderId)
 			));	
 		}
 
