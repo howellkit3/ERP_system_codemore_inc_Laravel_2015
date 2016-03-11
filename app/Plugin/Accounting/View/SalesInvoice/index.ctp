@@ -41,7 +41,8 @@
 											'label' => false,
 											'class' => 'form-control companyID',
 											'div' => false,
-											'style' => 'margin-right:10px'
+											'style' => 'margin-right:10px',
+											'empty' => '--- Select Customer ---'
 										)
 								);
 							?>

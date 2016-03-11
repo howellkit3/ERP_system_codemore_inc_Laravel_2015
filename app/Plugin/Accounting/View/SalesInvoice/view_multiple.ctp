@@ -143,12 +143,15 @@
 						$vat = array();
 						$unitPriceID = array();
 						$total =0; 
-						foreach ($drData as $key => $list) : ?>
+						foreach ($drData as $key => $list) : 
+
+							$unitPrice = number_format($list['QuotationItemDetail']['unit_price'],4); 
+							?>
 							<tr>
 								<td><center><?php echo $list['ClientOrder']['po_number']?></center></td>
 								<td><center><?php echo ucfirst($list['Product']['name'])?></center></td>
 								<td><center><?php echo number_format($list['DeliveryDetail']['quantity'])?></center></td>
-								<td><center><?php echo number_format($list['QuotationItemDetail']['unit_price'],4)?></center></td>
+								<td><center><?php echo $unitPrice ?></center></td>
 								<td>
 									<center>
 										<?php 
@@ -233,41 +236,13 @@
 											// 	echo "-";
 											// }
 
-										// if (in_array('Vatable Sale', $vat)) {
-										// 	echo number_format((float)$total, 4, '.', '');
-										// } else {
-										// 	echo "-";
-										// }
-
-										$totalVat = 0;
-
-									    if (!in_array('Vatable Sale',$vat) && !in_array('Vatable Exempt',$vat))  {
-									        	
-									        	$vatSale = $total / 1.12;
-
-									            $totalVat = $vatSale * .12;
-									           
-									            $vat12 = number_format($totalVat,2);
-
-									         	echo number_format($vatSale, 2);
-									         
-									    }
-
-
-									    if (in_array('Vatable Sale', $vat)) {
-									        $vatSale = $total / 1.12; 
-									        $vat12 = number_format($vatSale,2);
-									        //number_format($total,2);
-									         // echo number_format((float)$vatSale, 4, '.', '');
-
-									        echo number_format($vatSale, 2);
-									   	}
-									  
-
+										if (in_array('Vatable Sale', $vat)) {
+											echo number_format((float)$total, 4, '.', '');
+										} else {
+											echo "-";
+										}
 
 										?>
-
-
 									</td>
 								</tr>
 								<tr>
@@ -276,7 +251,7 @@
 										<?php 
 											
 
-										if (in_array('Vat Exempt', $vat)) {
+										if (in_array('Vat Exempt', $vat) && !in_array('Zero Rated Sale', $vat)) {
 											echo number_format((float)$total, 4, '.', '');
 										} else {
 											echo "-";
@@ -302,25 +277,12 @@
 									<td>
 										<?php //pr($clientData); exit;
 
-											// if (in_array('Vatable Sale', $vat) && in_array(2, $unitPriceID)) {
-											// 	$totalVat = $total * .12;
-											// 	echo number_format($totalVat,2);
-											// }else{
-											// 	echo "-";
-											// }
-
-										  // if (in_array('Vatable Sale', $vat)) {
-									   //      $vatSale = $total / 1.12; 
-									   //      $vat12 = number_format($vatSale,2);
-									   //      //number_format($total,2);
-									   //       // echo number_format((float)$vatSale, 4, '.', '');
-									   // 		 }
-
-										if ($totalVat > 0) {
-
-									          echo number_format($totalVat,2);
-
-										}
+											if (in_array('Vatable Sale', $vat) && in_array(2, $unitPriceID) && !in_array('Zero Rated Sale', $vat)) {
+												$totalVat = $total * .12;
+												echo number_format($totalVat,2);
+											}else{
+												echo "-";
+											}
 										?>
 									</td>
 								</tr>

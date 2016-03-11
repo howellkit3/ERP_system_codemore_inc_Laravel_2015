@@ -9,7 +9,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
 
 <div class="nav-no-collapse navbar-left pull-left hidden-sm hidden-xs">
     <ul style="margin-left:0" class="nav navbar-nav pull-left">
-    <?php  if(in_array($userData['User']['role_id'],array('1','2','7','10','6','8','4','16','3'))) { ?>
+    <?php  if(in_array($userData['User']['role_id'],array('1','2','7','10','6','8','4','16','3','15'))) { ?>
 
         <li class="dropdown hidden-xs">
           <?php $page =($active_page == 'suppliers' && $active_action == 'index') ? 'active tab' : '' ?>
@@ -18,7 +18,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
         </li>
 
        <?php } ?> 
-   		  <?php  if(in_array($userData['User']['role_id'],array('1','2','7','10','6','8','4','16','3','12'))) { ?>
+   		  <?php  if(in_array($userData['User']['role_id'],array('1','2','7','10','6','8','4','16','3','12','15'))) { ?>
 
    		 <li class="dropdown hidden-xs active">
           <?php $page =($active_page == 'requests' && $active_action == 'request_list') ? 'active tab' : '' ?>
@@ -27,7 +27,7 @@ $active_action = !empty($this->params['action']) ? $this->params['action'] : '';
         </li>
         <?php } ?>
 
-         <?php  if(in_array($userData['User']['role_id'],array('1','2','7','10','6','8','4','16','3'))) { ?>
+         <?php  if(in_array($userData['User']['role_id'],array('1','2','7','10','6','8','4','16','3','15'))) { ?>
 
 
         <li class="dropdown hidden-xs active">

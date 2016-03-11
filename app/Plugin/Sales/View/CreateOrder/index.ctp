@@ -750,8 +750,8 @@
                	</div>
 
                	  <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary submit-order job-ticket"> Yes, Create Job Ticket</button>
-                            <button type="button" class="btn btn-sucess submit-order">No just create order</button>
+                            <button type="submit" class="btn btn-primary submit-order job-ticket"> Yes, create Job Ticket</button>
+                            <button type="button" class="btn btn-sucess submit-order">No, just create order</button>
                             
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
@@ -795,70 +795,6 @@ $(document).ready(function(){
 	//	e.preventDefault();
 
 	});
-
-
-  //   $('#QuotationIndexForm').submit(function(e){
-
-  //   	var action =  $('#QuotationIndexForm').attr('action');
-
-  //   	var valid = 0;
-
-  //   	 var $this = $(this);
-
-  //   	 e.preventDefault();
-
-  //       swal({
-  //           title: "Create Job Ticket",
-  //           text: "Click Yes to create job ticktet",
-  //           type: "warning",
-  //           showCancelButton: true,
-  //           timer: 2000,
-  //           confirmButtonColor: "#DD6B55",
-  //           confirmButtonText: "Yes, Create it!",
-  //           cancelButtonText: "No, I will it create it manually",
-  //           closeOnConfirm: false,
-  //           closeOnCancel: false 
-  //       },
-  //       function (isConfirm) {
-
-  //           if (isConfirm) {
-                     
-  //                swal("Successful!","Job Ticket created.", "success");
-
-  //                $url = action+'?job_ticket=1';
-
-  //                $('#QuotationIndexForm').attr('action');
-
-  //                //$('#QuotationIndexForm').submit();
-                   
-  //                  valid = 1; 
-
-  //                  return true;
-  //           } else {
-
-  //           	  swal("Successful!","Job Ticket not included", "success");
-           			
-  //                 $url = action+'?job_ticket=0';
-            		
-  //                  valid = 1;
-  //                //$('#QuotationIndexForm').submit();
-
-  //           	  return true;
-  //           }
-
-  //           if (valid == 0) {
-
-  //           	return false;
-  //           }
-
-  //       });
-		
-		// return false;
-  //       //return false;
-  //     //  e.preventDefault();
-  //   });
-
-
 
 
     $('body').on('change', '.OnceSelected', function(){

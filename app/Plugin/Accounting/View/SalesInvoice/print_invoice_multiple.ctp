@@ -172,6 +172,7 @@
 
            $totalVat = $vatSale * .12;
            $vat12 = number_format($totalVat,2);
+           $vatSale = number_format($vatSale,2);
     }
 
 
@@ -179,6 +180,7 @@
         $vatSale = $total / 1.12; 
         $vat12 = number_format($totalVat,2);
         //number_format($total,2);
+        $vatSale = number_format($vatSale,2);
     }
 
     $vatExem = '';

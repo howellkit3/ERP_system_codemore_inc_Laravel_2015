@@ -1128,8 +1128,9 @@ class EmployeesController  extends HumanResourceAppController {
 
 		if (isset($_GET['rand'])) {
 
+		Configure::write('debug',2);
 
-			$this->loadModel('HumanResource.ContactPerson');
+		$this->loadModel('HumanResource.ContactPerson');
 
 
 		$this->loadModel('HumanResource.Contact');
@@ -1157,13 +1158,9 @@ class EmployeesController  extends HumanResourceAppController {
 		// pr($employee);
 		// exit();
 
-
 			$pdf = new FPDI();
 
-	
-
 			$pageCount = $pdf->setSourceFile(WWW_ROOT."img/id/koufu_id.pdf");
-
 
 			// iterate through all pages
 				for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
@@ -1262,12 +1259,20 @@ class EmployeesController  extends HumanResourceAppController {
 					//$pdf->MultiCell( 35, 5, $position,2);
 					$position = !empty($employee['Position']['name']) ? $employee['Position']['name'] : '';
 					
-					$pdf->SetXY(10, 72.3);
-					 $pdf->SetFont('Arial','B',8);
-					$pdf->MultiCell(38, 1 , utf8_decode($position), '', 'C');
+					$pdf->SetXY(15, 72.3);
+					$pdf->SetFont('Arial','B',8);
+					
+					$position = utf8_decode($position);
+
+					if (strlen($position) > 23) {
+
+						$pdf->SetFont('Arial','B',6.5);
+					}
+
+					$pdf->MultiCell(40, 1.8 ,$position, '', 'C');
 
 					//department
-					// $pdf->SetXY(15, 64.6);
+					// $pdf->SetXY(15, 64.6
 					// //$position = !empty($employee['Position']['name']) ? $employee['Position']['name'] : '';
 					
 					// // $pdf->SetXY(15, 64.8);
@@ -1398,8 +1403,7 @@ class EmployeesController  extends HumanResourceAppController {
 
 			// Output the new PDF
 			$pdfData = $pdf->Output($employee['Employee']['code'].'.pdf', 'D');
-
-			//	$pdf->Output();
+			//$pdf->Output();
 
 
 			//return true;

@@ -44,7 +44,9 @@ for ($x = 0; $x <= 1; $x++) { ?>
 						<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date 
 						</td>
-						<td style="width:120px;" class="border-bot">:<?php echo (new \DateTime())->format('M d, Y') ?>
+						<td style="width:120px;" class="border-bot">:
+							<?php echo date('M d, Y',strtotime($purchaseOrderData['PurchaseOrder']['created'])); ?>
+							<?php //echo (new \DateTime())->format('M d, Y') ?>
 						</td>
 						
 					</tr>
@@ -279,7 +281,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 						<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date 
 						</td>
-						<td style="width:120px;" class="border-bot">:<?php echo (new \DateTime())->format('M d, Y') ?>
+						<td style="width:120px;" class="border-bot">:<?php echo date('M d, Y',strtotime($purchaseOrderData['PurchaseOrder']['created'])); ?>
 						</td>
 						
 					</tr>
@@ -509,7 +511,7 @@ for ($x = 0; $x <= 1; $x++) { ?>
 						<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date 
 						</td>
-						<td style="width:120px;" class="border-bot">:<?php echo (new \DateTime())->format('M d, Y') ?>
+						<td style="width:120px;" class="border-bot">:<?php echo date('M d, Y',strtotime($purchaseOrderData['PurchaseOrder']['created'])); ?>
 						</td>
 						
 					</tr>
