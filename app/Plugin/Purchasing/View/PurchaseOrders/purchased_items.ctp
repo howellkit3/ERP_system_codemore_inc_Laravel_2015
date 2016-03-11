@@ -8,9 +8,24 @@
         <div class="main-box clearfix body-pad">
              <header class="main-box-header clearfix">
                 <h2 class="pull-left"><b>Purchased Items</b></h2>
-                
+
                 <div class="filter-block pull-right">
+                    
+                       <?php 
+
+                                echo $this->Html->link(
+                                        '<button class="form-control btn btn-success">EXPORT</button>',array(
+                                            'controller' => 'purchase_orders','action' => 'purchase_item_data','class' => 'btn btn-success'),
+                                        array('escape' => false)
+                                );
+
+                            ?>
+                        </div>
+                <div class="filter-block pull-right">
+                    
                     <div class="form-group pull-left">
+
+                         
                         
                             <input placeholder="Search..." class="form-control searchItem"  />
                             <i class="fa fa-search search-icon"></i>
