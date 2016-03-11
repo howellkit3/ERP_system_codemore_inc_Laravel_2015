@@ -227,10 +227,10 @@ class SalesInvoiceController extends AccountingAppController {
                     $conditions = 'Delivery.dr_uuid = "'.$invoiceData['SalesInvoice']['dr_uuid'].'" AND Delivery.status != ""';    
                 }
 
-                 if (!empty($invoiceData['SalesInvoice']['invoice_date'])) {
+                // if (!empty($invoiceData['SalesInvoice']['invoice_date'])) {
 
-                     $conditions .= ' AND DeliveryDetail.schedule BETWEEN "'.$invoiceData['SalesInvoice']['invoice_date'].'" AND "'.$invoiceData['SalesInvoice']['invoice_date'].'"';
-                }
+                //      $conditions .= ' AND DeliveryDetail.schedule BETWEEN "'.$invoiceData['SalesInvoice']['invoice_date'].'" AND "'.$invoiceData['SalesInvoice']['invoice_date'].'"';
+                // }
 
                 // if ($invoiceData['SalesInvoice']['deliveries'] == 'null') {
 
