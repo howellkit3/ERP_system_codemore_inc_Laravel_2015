@@ -2278,13 +2278,22 @@ class SalesInvoiceController extends AccountingAppController {
 
         $limit = 10;
 
-        $conditions = array('SalesInvoice.status' => 0);
+
+        $query = $this->request->query;
+
+        $conditions = array();
+
+        if (!empty($query['type'])) {
+
+         $conditions = array_merge($conditions,array('SalesInvoice.status' => $query['type']));   
+
+        }
+
 
         $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
 
         $plants = $this->Plant->find('list',array('fields' => array('id','name')));
         
-        $query = $this->request->query;
         
         if (!empty($query['data']['date'])) {
 

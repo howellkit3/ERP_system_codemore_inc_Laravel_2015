@@ -18,8 +18,7 @@
 <div class="filter-block pull-right">
 
 	<?php
-
-	
+		
 		echo $this->Html->link('<i class="fa fa-share-square-o fa-lg"></i> Export ', array(
         	'controller' => 'sales_invoice', 
         	'action' => 'print_invoice_multiple',

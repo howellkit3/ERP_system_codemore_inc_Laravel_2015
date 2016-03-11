@@ -32,35 +32,61 @@
 
                 	<div class="form-group pull-left">
 					<?php echo $this->Form->create('SalesInvoice',array('url' => array('controller' => 'sales_invoice','action' => 'export_invoice' ),'type' => 'GET')); ?>
-						<div class="pull-left" style="margin-right:5px">
+							<div class="row">
+										<div class="col-lg-3">
+											<?php 
+
+													echo $this->Form->input(
+															'company_id',array(
+																'options' => $companyName,
+																'label' => false,
+																'class' => 'form-control companyID',
+																'div' => false,
+																'style' => 'margin-right:10px',
+																'empty' => '--- Select Customer ---'
+															)
+													);
+												?>
+									</div>
+
+							<div class="col-lg-3">
 						<?php 
 
-								echo $this->Form->input(
-										'company_id',array(
-											'options' => $companyName,
+								echo $this->Form->input('type',
+									array(
+											'options' => array(
+													'1' => 'Invoice',
+													'0' => 'Pre-Invoice'
+												),
 											'label' => false,
 											'class' => 'form-control companyID',
 											'div' => false,
 											'style' => 'margin-right:10px',
-											'empty' => '--- Select Customer ---'
+											'empty' => '--- Select Type ---'
 										)
 								);
 							?>
 						</div>
-							&nbsp
 
-               			<div class="pull-left">
-                			<div class="input-group">
+							<div class="col-lg-4">
+                					
+                					<div class="input-group">
 									    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-									    <input placeholder="Date Range" name="data[date]" data="1" type="text" value="<?php echo $date ?>" class="form-control myDateRange datepickerDateRange" id="datepickerDateRange" style="width:200px">
+									    <input placeholder="Date Range" name="data[date]" data="1" type="text" value="<?php echo $date ?>" class="form-control myDateRange datepickerDateRange" id="datepickerDateRange" >
 									</div>
 
 
 							<input type="hidden" value="go" name="data[action]" class="identifier">
                 		</div>
 
-                	
-                	<div class="pull-left action">
+							</div>
+
+               		
+
+                	<div class="clearfix"><div>
+
+                		<br>
+                	<div class="">
                 		&nbsp
 									<button class="btn btn-success" alt="go">GO</button>
 
