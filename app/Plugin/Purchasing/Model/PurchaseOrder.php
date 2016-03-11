@@ -1,4 +1,3 @@
-
 <?php
 App::uses('AppModel', 'Model');
 //namespace Sales\Model\Entity;
@@ -71,7 +70,7 @@ class PurchaseOrder extends AppModel {
 					'conditions' => array('Request.uuid = request_uuid')
 				),
 			
-		)));
+		)),false);
 
 		$this->contain($model);
 	}

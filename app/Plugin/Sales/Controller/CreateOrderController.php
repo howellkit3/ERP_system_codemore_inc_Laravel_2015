@@ -156,7 +156,7 @@
 	            	
 	            	if (!empty($query['job_ticket']) && $query['job_ticket'] == '0') {
 
-	            			$this->request->data['ClientOrder']['job_ticket'] == 0;
+	            			$this->request->data['ClientOrder']['job_ticket'] = 0;
 					}
 
 	            	$clientOrderId = $this->ClientOrder->saveClientOrder($this->request->data, $userData['User']['id']);

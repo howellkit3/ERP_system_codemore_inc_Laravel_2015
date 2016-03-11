@@ -61,6 +61,28 @@ class Request extends AppModel {
 		$this->recursive = 1;
 	}
 
+
+	public function bindRequestOrder() {
+		$this->bindModel(array(
+			'belongsTo' => array(
+				'PurchaseOrder' => array(
+					'className' => 'Purchasing.PurchaseOrder',
+					'foreignKey' => false,
+					'conditions' => array('PurchaseOrder.request_id = Request.id')
+				),
+				'RequestItem' => array(
+					'className' => 'Purchasing.RequestItem',
+					'foreignKey' =>  false,
+					'conditions' => array('RequestItem.request_uuid' => 'Request.uuid')
+				),
+			),
+		
+		));
+		
+		$this->recursive = 1;
+	}
+
+
 	public function saveRequest($requestData = null, $auth = null, $editIndicator = null){
 
 		$month = date("m"); 

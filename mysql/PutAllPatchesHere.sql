@@ -2671,3 +2671,7 @@ ADD COLUMN `plant_id`  int(11) NULL AFTER `apc_dr`;
 /* aldrin added this march 9 2016 */
 ALTER TABLE `client_orders`
 ADD COLUMN `job_ticket`  int(11) NULL DEFAULT 1 AFTER `status_id`;
+
+/* aldrin added this march 11 2016 */
+ALTER TABLE `koufu_sale`.`client_orders`   
+  ADD COLUMN `job_ticket` INT(11) NULL AFTER `modified`;

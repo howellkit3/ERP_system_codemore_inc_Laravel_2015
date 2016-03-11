@@ -41,10 +41,39 @@ class RequestItem extends AppModel {
 					'conditions' => array('RequestItem.model = PurchasingItem.model',
 								'RequestItem.foreign_key = PurchasingItem.foreign_key',
 								'RequestItem.request_uuid = PurchasingItem.request_uuid')
+				),'Request' => array(
+					'className' => 'Purchasing.Request',
+					'foreignKey' => false,
+					'conditions' => array('RequestItem.request_uuid = Request.uuid')
 				)
 				
 			),
 		));
+		$this->recursive = 1;
+	}
+
+	public function bindItemPurchase() {
+		$this->bindModel(array(
+			'hasOne' => array(
+				'PurchasingItem' => array(
+					'className' => 'Purchasing.PurchasingItem',
+					'foreignKey' => false,
+					'conditions' => array('RequestItem.model = PurchasingItem.model',
+								'RequestItem.foreign_key = PurchasingItem.foreign_key',
+								'RequestItem.request_uuid = PurchasingItem.request_uuid')
+				),'Request' => array(
+					'className' => 'Purchasing.Request',
+					'foreignKey' => false,
+					'conditions' => array('RequestItem.request_uuid = Request.uuid')
+				),
+				'PurchaseOrder' => array(
+					'className' => 'Purchasing.PurchaseOrder',
+					'foreignKey' => false,
+					'conditions' => array('PurchaseOrder.request_id = Request.id')
+				),
+				
+			),
+		),false);
 		$this->recursive = 1;
 	}
 
