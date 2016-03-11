@@ -2841,15 +2841,11 @@ class DeliveriesController extends DeliveryAppController {
                     
                 }
                
-
-                 $conditions = array_merge($conditions,$cond);
+                $conditions = array_merge($conditions,$cond);
 
               }
 
-
             //   pr($conditions);
-           
-
               $this->Delivery->bindDeliveryById();
 
               $deliveries = $this->Delivery->find('all',array(
@@ -2867,7 +2863,8 @@ class DeliveriesController extends DeliveryAppController {
                                 'DeliveryDetail.status',
                                 'DeliveryDetail.apc_dr',
                                 'DeliveryDetail.remarks',
-                                'DeliveryDetail.plant_id'
+                                'DeliveryDetail.plant_id',
+                                'DeliveryDetail.delivered_quantity'
                         )
 
                     ));

@@ -15,7 +15,7 @@
 
                                 echo $this->Html->link(
                                         '<button class="form-control btn btn-success">EXPORT</button>',array(
-                                            'controller' => 'purchase_orders','action' => 'purchase_item_data','class' => 'btn btn-success'),
+                                            'controller' => 'purchase_orders','action' => 'export'),
                                         array('escape' => false)
                                 );
 

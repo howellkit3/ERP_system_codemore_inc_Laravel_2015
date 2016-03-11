@@ -49,7 +49,7 @@
 						</div>
 							&nbsp
 
-               			<div class="pull-left">
+               			<div class="pull-left" style="width:250px">
                 			<div class="input-group">
 									    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 									    <input placeholder="Date Range" name="data[date]" data="1" type="text" value="<?php echo $date ?>" class="form-control myDateRange datepickerDateRange" id="datepickerDateRange" style="width:200px">
