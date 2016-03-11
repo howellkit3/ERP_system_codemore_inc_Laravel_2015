@@ -83,15 +83,13 @@
 
                		
 
-                	<div class="clearfix"><div>
+                	<div class="clearfix"></div>
 
                 		<br>
-                	<div class="">
+                	<div style="padding:0;margin:0;">
                 		&nbsp
-									<button class="btn btn-success" alt="go">GO</button>
-
-
-									<button class="btn btn-success" alt="export"><i class="fa fa-paper"> </i>Export</button>
+                		<!-- button class="btn btn-success" alt="go">GO</button> -->
+							<button class="btn btn-success" alt="export"><i class="fa fa-paper"> </i> Export</button>
 					</div>
 				<?php echo $this->Form->end(); ?>
 
