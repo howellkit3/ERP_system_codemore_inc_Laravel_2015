@@ -140,7 +140,9 @@
 			$this->loadModel('Sales.QuotationItemDetail');
 
 			//pr($this->request->data); exit;
-		
+			
+			$query = $this->request->query;
+
 			if ($this->request->is('post')) {
 
 	            if (!empty($this->request->data)) {
@@ -148,7 +150,14 @@
 
 	            	$data = $this->request->data;
 
+
+
 	            	$this->ClientOrder->bind(array('ClientOrderDeliverySchedule','ClientOrderItemDetail'));
+	            	
+	            	if (!empty($query['job_ticket']) && $query['job_ticket'] == '0') {
+
+	            			$this->request->data['ClientOrder']['job_ticket'] == 0;
+					}
 
 	            	$clientOrderId = $this->ClientOrder->saveClientOrder($this->request->data, $userData['User']['id']);
 	            	
@@ -164,13 +173,23 @@
 
 	            		$checkSpec = 0;
 	      		
-	            	}else{
+	            	} else {
 
 	            		$checkSpec = 1;
-	            		$this->JobTicket->saveTicket($this->request->data, $userData['User']['id'], $clientOrderId);
+
+
+	            		//pr($query);
+
+	            		if (!empty($query['job_ticket']) && $query['job_ticket'] == '1') {
+
+	            			//echo '1';
+
+	            			$this->JobTicket->saveTicket($this->request->data, $userData['User']['id'], $clientOrderId);
+	            		}
 	            		
 	            	}
 
+	            	//exit();
 
 
 

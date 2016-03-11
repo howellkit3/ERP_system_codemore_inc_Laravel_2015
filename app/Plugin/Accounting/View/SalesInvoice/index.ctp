@@ -31,13 +31,29 @@
                	<div class="clearfix"></div>
 
                 	<div class="form-group pull-left">
+					<?php echo $this->Form->create('SalesInvoice',array('url' => array('controller' => 'sales_invoice','action' => 'export_invoice' ),'type' => 'GET')); ?>
+						<div class="pull-left" style="margin-right:5px">
+						<?php 
 
-                		 <?php echo $this->Form->create('SalesInvoice',array('url' => array('controller' => 'sales_invoice','action' => 'invoice' ),'type' => 'GET')); ?>
+								echo $this->Form->input(
+										'company_id',array(
+											'options' => $companyName,
+											'label' => false,
+											'class' => 'form-control companyID',
+											'div' => false,
+											'style' => 'margin-right:10px'
+										)
+								);
+							?>
+						</div>
+							&nbsp
+
                			<div class="pull-left">
                 			<div class="input-group">
 									    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-									    <input placeholder="Date Range" name="data[date]" data="1" type="text" value="<?php echo $date ?>" class="form-control myDateRange datepickerDateRange" id="datepickerDateRange" >
+									    <input placeholder="Date Range" name="data[date]" data="1" type="text" value="<?php echo $date ?>" class="form-control myDateRange datepickerDateRange" id="datepickerDateRange" style="width:200px">
 									</div>
+
 
 							<input type="hidden" value="go" name="data[action]" class="identifier">
                 		</div>
@@ -260,6 +276,21 @@
 
 	var timeout;
 
+	jQuery(document).ready(function($){
+	$('#datepickerDateRange').daterangepicker();
+
+	$('.action button').click(function(){
+
+		if ($(this).attr('alt') == 'go') {
+			$('.identifier').val('go');
+		}
+		if ($(this).attr('alt') == 'export') {
+			$('.identifier').val('export');
+		}
+	})
+
+
+
 	$('.searchSI').keypress(function() {
 
 	    if(timeout) {
@@ -269,5 +300,5 @@
 
 	    timeout = setTimeout(searchSI,600)
 	})
-
+	});
 </script>

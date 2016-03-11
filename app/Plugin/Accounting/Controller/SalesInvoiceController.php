@@ -2251,6 +2251,267 @@ class SalesInvoiceController extends AccountingAppController {
 
     }
 
+     function isJson($string) {
+     json_decode($string);
+
+        if ((json_last_error() == JSON_ERROR_NONE) && count(json_decode($string)) > 0) {
+
+            return true;
+        }
+    }
+       public function export_invoice() {
+
+
+        Configure::write('debug',0);
+
+        $date = date('Y/m/1') . '-'. date('Y/m/d');
+
+        $userData = $this->Session->read('Auth');
+        
+        $this->loadModel('Sales.Company');
+
+        $this->loadModel('Sales.ClientOrder');
+
+        $this->loadModel('Delivery.Delivery');
+
+        $this->loadModel('Delivery.Plant');
+
+        $limit = 10;
+
+        $conditions = array('SalesInvoice.status' => 0);
+
+        $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
+
+        $plants = $this->Plant->find('list',array('fields' => array('id','name')));
+        
+        $query = $this->request->query;
+        
+        if (!empty($query['data']['date'])) {
+
+            $date = $query['data']['date'];
+
+                if (!empty($query['data']['date'])) {
+
+                    $dates = explode('-',$query['data']['date']);
+
+    
+
+           $date1 =  date('Y-m-d',strtotime($dates[0])).' 00:00:00';
+           
+           $date2 = date('Y-m-d',strtotime($dates[1])).' 00:00:00';
+
+           $conditions = array_merge($conditions,array(
+                        'OR' => array(
+                            'date(SalesInvoice.created) BETWEEN ? AND ?' => array($date1,$date2),
+                            'date(SalesInvoice.invoice_date) BETWEEN ? AND ?' => array($date1,$date2),
+                            )   
+               ));
+
+                }
+
+        }
+        
+        $customerID = 0;
+
+        if (!empty($query['data']['action']) && $query['data']['action'] == 'export') {
+
+
+            if (!empty($query['company_id'])) {
+
+                $customerID = $query['company_id'];
+
+                $this->loadModel('Delivery.Delivery');
+
+                if (in_array($query['company_id'],array('3','4','5','6','60','102','1223'))) {
+                    
+                    $company_conditions =  array(
+                                'Delivery.company_id' => array('3','4','5','6','60','102','1223'),
+
+                        );
+                } else {
+                     $company_conditions =  array(
+                                'Delivery.company_id' => $query['company_id']
+                        );
+
+                }
+
+                $dr = $this->Delivery->find('list',array(
+
+                        'conditions' =>$company_conditions,
+                        'group' => array('Delivery.id'),
+                        'fields' => array('Delivery.id','Delivery.dr_uuid')
+                ));
+
+                $drUUID = array_unique($dr);
+
+                $conditions = array_merge($conditions,array(
+                    'SalesInvoice.dr_uuid' =>  $drUUID
+                ));
+
+            }
+
+            $conditions = array_merge($conditions,array(
+                'OR' => array(
+                        'SalesInvoice.dr_uuid !=' => '',
+                        'SalesInvoice.deliveries !=' => '[]' 
+                )
+            ));
+
+          //  exit();
+           // $conditions = 
+
+            //$this->SalesInvoice->bindInvoice();
+
+            $invoices = $this->SalesInvoice->find('all',array(
+
+                'conditions' => $conditions,
+                'order' => 'SalesInvoice.id DESC'
+            ));
+
+
+            $deliveries = array();
+
+
+
+            foreach ($invoices as $key => $list) {
+
+                    $dr = $this->Delivery->find('all',array(
+                        'conditions' => array(
+                                'Delivery.dr_uuid' => $list['SalesInvoice']['dr_uuid']
+                        )
+                    ));
+
+                   if (in_array($query['company_id'],array('3','4','5','6','60','102','1223'))) {
+                    
+                    $company = array('3','4','5','6','60','102','1223');
+
+                  //  echo $this->isJson($list['SalesInvoice']['deliveries']);
+
+                    if (!empty($list['SalesInvoice']['deliveries']) && $this->isJson($list['SalesInvoice']['deliveries']) ) {
+                        
+                        $drUUID = json_decode($list['SalesInvoice']['deliveries']);
+
+                        $drUUIDlist = implode(',', $drUUID );
+
+                        $conditions = 'Delivery.company_id IN ('.implode($company,',').') AND Delivery.dr_uuid IN ('. $drUUIDlist.') ';
+                    
+                    } else {
+
+                        if (!empty($list['SalesInvoice']['dr_uuid'])) {
+                             $conditions = 'Delivery.company_id IN ('.implode($company,',').') AND Delivery.dr_uuid = "'.$list['SalesInvoice']['dr_uuid'].'" ';
+
+                        } else {
+                             $conditions = 'Delivery.company_id IN ('.implode($company,',').') AND Delivery.dr_uuid != ""';
+
+                        }   
+                        
+                    }   
+
+                    
+                } else {
+
+                    $conditions = 'Delivery.dr_uuid = "'.$list['SalesInvoice']['dr_uuid'].'" ';
+
+                }
+
+
+                    $dr = $this->Delivery->query('SELECT *
+                    FROM deliveries AS Delivery
+                    LEFT JOIN koufu_sale.client_orders AS ClientOrder
+                    ON ClientOrder.uuid = Delivery.clients_order_id 
+                    LEFT JOIN koufu_delivery.delivery_details AS DeliveryDetail
+                    ON Delivery.dr_uuid = DeliveryDetail.delivery_uuid
+                    LEFT JOIN koufu_sale.quotation_item_details AS QuotationItemDetail
+                    ON QuotationItemDetail.id = ClientOrder.client_order_item_details_id
+                    LEFT JOIN koufu_sale.quotation_details AS QuotationDetail
+                    ON ClientOrder.quotation_id = QuotationDetail.quotation_id
+                    LEFT JOIN koufu_sale.products AS Product
+                    ON Product.id = QuotationDetail.product_id
+                    LEFT JOIN koufu_sale.companies AS Company
+                    ON Company.id = ClientOrder.company_id
+                    WHERE '.$conditions.'
+                    ');
+
+                    $deliveries[$key] = $list;
+                    $deliveries[$key]['Delivery'] = $dr;
+
+                    // pr($conditions);
+                    // pr( $list);
+
+            }
+            //exit();
+
+            $this->set(compact('invoices','companies','deliveries','customerID','plants','companyName','date'));
+
+            $this->render('SalesInvoice/xls/export_invoices');
+        }
+
+       // $this->SalesInvoice->bindDeliverybyId();
+
+        $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array(
+                'SalesInvoice.id',
+                'SalesInvoice.sales_invoice_no',
+                'SalesInvoice.statement_no',  
+                'SalesInvoice.dr_uuid', 
+                'SalesInvoice.status',
+                'SalesInvoice.delivery_id',
+                'SalesInvoice.created',
+                'SalesInvoice.invoice_date',
+                'SalesInvoice.deliveries',
+                'SalesInvoice.apc_dr',
+                'SalesInvoice.plant_id'
+                ),
+            'order' => 'SalesInvoice.id DESC',
+        );
+
+        $invoiceData = $this->paginate('SalesInvoice');
+
+
+        $deliveryNumHolder = $this->Delivery->find('list',array('fields' => array('dr_uuid','clients_order_id')));
+
+        $clientDataHolder = $this->ClientOrder->find('list',array('fields' => array('uuid','company_id')));
+
+        foreach($deliveryNumHolder as $key => $deliveryList) {
+          
+           $keyHolder = ltrim($key, '0');
+           $deliveryNum[$keyHolder] = $deliveryList;
+           
+        }
+      
+      
+        if ($userData['User']['role_id'] == 9 ) {
+
+            $noPermissionReciv = 'disabled not-active';
+
+        } else {
+
+            $noPermissionReciv = ' ';
+
+        }
+
+        if ($userData['User']['role_id'] == 10) {
+            $noPermissionPay = 'disabled not-active';
+            $this->redirect( array(
+                 'controller' => 'salesInvoice', 
+                 'action' => 'payable'
+            ));
+
+        } else {
+
+            $noPermissionPay = ' ';
+
+        }
+
+
+        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay','companyName', 'deliveryNumHolder', 'clientDataHolder','date',' plants'));
+
+
+        $this->render('SalesInvoice/xls/export_invoices');
+    }
+
     public function edit_pre_invoice($id = null,$status = 0, $druuid = null,$sino = null,$deliveryId = null) {
 
         $userData = $this->Session->read('Auth');

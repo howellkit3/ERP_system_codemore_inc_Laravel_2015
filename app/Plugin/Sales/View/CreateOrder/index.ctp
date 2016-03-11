@@ -22,7 +22,7 @@
 
 			</div>
 		</div>
-		<?php echo $this->Form->create('Quotation',array('url'=>(array('controller' => 'create_order','action' => 'order_create'))));?>
+		<?php echo $this->Form->create('Quotation',array('url'=>(array('controller' => 'create_order','action' => 'order_create')),'id' => 'CreateOrderForm'));?>
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="main-box">
@@ -720,9 +720,14 @@
 									<div class="form-group">
 										<label class="col-lg-2 control-label"></label>
 										<div class="col-lg-8">
-											<button type="submit" class="btn btn-success pull-left">Submit Order</button>&emsp;
+											<!-- <button type="submit" class="btn btn-success pull-left">Submit Order</button> -->
+											<a href="#conFirmModal" data-toggle="modal" >
+												<button class="btn-success btn"> Submit Order </button>
+											</a>
+											&emsp;
 											<?php 
-						                        echo $this->Html->link('Cancel', array('controller' => 'quotations', 'action' => 'index'),array('class' =>'btn btn-primary','escape' => false));
+						                        
+						                    	echo $this->Html->link('Cancel', array('controller' => 'quotations', 'action' => 'index'),array('class' =>'btn btn-primary','escape' => false));
 						                    ?>
 										</div>
 									</div>
@@ -737,9 +742,123 @@
 	</div>
 </div>
 
+    <div class="modal fade" id="conFirmModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    	<div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                		Create Job Ticket ?
+               	</div>
+
+               	  <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary submit-order job-ticket"> Yes, Create Job Ticket</button>
+                            <button type="button" class="btn btn-sucess submit-order">No just create order</button>
+                            
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+            </div>
+        </div>
+    </div>
+
 
 <script>
 $(document).ready(function(){
+
+	$('.submit-order').click(function(e){
+
+
+		$("#form1").validate();
+
+		var error = $('label.error');
+
+		//defaul url
+		var url = serverPath + 'sales/create_order/order_create'
+
+		var form = $('#CreateOrderForm');
+
+		form.attr('action',url);	
+		
+		var action = form.attr('action');
+
+		if ($(this).hasClass('job-ticket')) {
+
+			form.attr('action',action+'?job_ticket=1');
+					
+		} else {
+
+			form.attr('action',action+'?job_ticket=0');
+		}
+
+	//	alert(form.attr('action'));
+		
+		form.submit();
+
+	//	e.preventDefault();
+
+	});
+
+
+  //   $('#QuotationIndexForm').submit(function(e){
+
+  //   	var action =  $('#QuotationIndexForm').attr('action');
+
+  //   	var valid = 0;
+
+  //   	 var $this = $(this);
+
+  //   	 e.preventDefault();
+
+  //       swal({
+  //           title: "Create Job Ticket",
+  //           text: "Click Yes to create job ticktet",
+  //           type: "warning",
+  //           showCancelButton: true,
+  //           timer: 2000,
+  //           confirmButtonColor: "#DD6B55",
+  //           confirmButtonText: "Yes, Create it!",
+  //           cancelButtonText: "No, I will it create it manually",
+  //           closeOnConfirm: false,
+  //           closeOnCancel: false 
+  //       },
+  //       function (isConfirm) {
+
+  //           if (isConfirm) {
+                     
+  //                swal("Successful!","Job Ticket created.", "success");
+
+  //                $url = action+'?job_ticket=1';
+
+  //                $('#QuotationIndexForm').attr('action');
+
+  //                //$('#QuotationIndexForm').submit();
+                   
+  //                  valid = 1; 
+
+  //                  return true;
+  //           } else {
+
+  //           	  swal("Successful!","Job Ticket not included", "success");
+           			
+  //                 $url = action+'?job_ticket=0';
+            		
+  //                  valid = 1;
+  //                //$('#QuotationIndexForm').submit();
+
+  //           	  return true;
+  //           }
+
+  //           if (valid == 0) {
+
+  //           	return false;
+  //           }
+
+  //       });
+		
+		// return false;
+  //       //return false;
+  //     //  e.preventDefault();
+  //   });
+
+
 
 
     $('body').on('change', '.OnceSelected', function(){

@@ -3,11 +3,14 @@
 <?php $this->Html->addCrumb('view specs', array('controller' => 'create_order', 'action' => 'view_specs',$productId)); ?>
 <?php  echo $this->Html->script('Sales.inquiry');?>
 <?php  echo $this->Html->script('Sales.quantityLimit');?>
+
+<?php if(!empty($productData['JobTicket'])) { ?>
 <div class="alert alert-success fade in">
 	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 	<i class="fa fa-check-circle fa-fw fa-lg"></i>
 	<strong>Well done!</strong> Job Ticket successfully created.
 </div>
+<?php } ?>
 <?php echo $this->element('sales_option');?><br><br>
 
 <?php echo $this->Html->script('Sales.editableProductSpecs'); ?>
@@ -20,10 +23,10 @@
 			<div class="col-lg-12">
 				<header class="main-box-header clearfix">
 					
-                    
 					<h1 class="pull-left">
 						Client order view Specification
 					</h1>
+
 					<div class="filter-block pull-right">
 						<?php  //pr($clientOrderData); exit;
 							echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Return to Sales ', array('controller' => 'sales_orders', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
@@ -31,12 +34,13 @@
 							if(!empty($productData['JobTicket'])){
 							
 								echo $this->Html->link('<i class="fa fa-location-arrow fa-lg"></i> Proceed to Job Ticket ', array('controller' => 'ticketing_systems', 'action' => 'view',$productData['Product']['uuid'], $productData['JobTicket']['id'], $productData['JobTicket']['client_order_id'],'plugin' => 'ticket'),array('class' =>'btn btn-primary pull-right','escape' => false));
+							} 
 
-							}else{
+							//else {
 
-								echo $this->Html->link('<i class="fa fa-location-arrow fa-lg"></i> Proceed to Job Ticket', array('controller' => 'create_order', 'action' => 'create_ticket', $productData['Product']['id'], $clientOrderId, $clientOrderData['ClientOrder']['po_number'], $productData['Product']['uuid'], 'plugin' => 'sales'),array('class' =>'btn btn-primary pull-right','escape' => false));
+							// 	echo $this->Html->link('<i class="fa fa-location-arrow fa-lg"></i> Proceed to Job Ticket', array('controller' => 'create_order', 'action' => 'create_ticket', $productData['Product']['id'], $clientOrderId, $clientOrderData['ClientOrder']['po_number'], $productData['Product']['uuid'], 'plugin' => 'sales'),array('class' =>'btn btn-primary pull-right','escape' => false));
 
-							}
+							// }
 							//echo $this->Html->link('<i class="fa fa-print fa-lg"></i> Print ', array('controller' => 'products','action' => 'print_specs',$productData['Product']['uuid']),array('class' =>'btn btn-primary pull-right','escape' => false,'target' => '_blank'));
 						?>
 					</div>
