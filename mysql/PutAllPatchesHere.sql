@@ -2666,3 +2666,8 @@ ALTER TABLE `sales_invoices`
 ADD COLUMN `apc_dr`  varchar(255) NULL AFTER `dr_uuid`;
 ALTER TABLE `sales_invoices`
 ADD COLUMN `plant_id`  int(11) NULL AFTER `apc_dr`;
+
+
+/* aldrin added this march 9 2016 */
+ALTER TABLE `client_orders`
+ADD COLUMN `job_ticket`  int(11) NULL DEFAULT 1 AFTER `status_id`;

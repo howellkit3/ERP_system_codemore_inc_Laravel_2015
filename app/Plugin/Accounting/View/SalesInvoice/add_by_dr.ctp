@@ -26,7 +26,7 @@
                 </div>
             </header>
 
-<div class="main-box-body clearfix" id="result-table-list">
+        <div class="main-box-body clearfix" id="result-table-list">
 
         <table class="table footable toggle-circle-filled" data-page-size="6" data-filter="#filter" data-filter-text-only="true">
         <thead>
@@ -224,7 +224,7 @@
                                 </div>    
                                 <div class="clearfix"></div>
                                 <br>
-                               <div class="form-group">
+                            <div class="form-group">
                                     <label class="col-lg-3 control-label"><span style="color:red">*</span> Delivery Number </label>
                                     <div class="col-lg-8">
                                         <?php 
@@ -236,7 +236,8 @@
                                                 ));
                                         ?>
                                     </div>
-                                </div>                 
+                            </div>
+                                             
                                  
                             <div class="clearfix"></div>
                                 <div class="result_fields">

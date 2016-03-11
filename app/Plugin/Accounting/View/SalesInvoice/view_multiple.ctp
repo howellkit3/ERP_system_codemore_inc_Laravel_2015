@@ -233,13 +233,41 @@
 											// 	echo "-";
 											// }
 
-										if (in_array('Vatable Sale', $vat)) {
-											echo number_format((float)$total, 4, '.', '');
-										} else {
-											echo "-";
-										}
+										// if (in_array('Vatable Sale', $vat)) {
+										// 	echo number_format((float)$total, 4, '.', '');
+										// } else {
+										// 	echo "-";
+										// }
+
+										$totalVat = 0;
+
+									    if (!in_array('Vatable Sale',$vat) && !in_array('Vatable Exempt',$vat))  {
+									        	
+									        	$vatSale = $total / 1.12;
+
+									            $totalVat = $vatSale * .12;
+									           
+									            $vat12 = number_format($totalVat,2);
+
+									         	echo number_format($vatSale, 2);
+									         
+									    }
+
+
+									    if (in_array('Vatable Sale', $vat)) {
+									        $vatSale = $total / 1.12; 
+									        $vat12 = number_format($vatSale,2);
+									        //number_format($total,2);
+									         // echo number_format((float)$vatSale, 4, '.', '');
+
+									        echo number_format($vatSale, 2);
+									   	}
+									  
+
 
 										?>
+
+
 									</td>
 								</tr>
 								<tr>
@@ -274,12 +302,25 @@
 									<td>
 										<?php //pr($clientData); exit;
 
-											if (in_array('Vatable Sale', $vat) && in_array(2, $unitPriceID)) {
-												$totalVat = $total * .12;
-												echo number_format($totalVat,2);
-											}else{
-												echo "-";
-											}
+											// if (in_array('Vatable Sale', $vat) && in_array(2, $unitPriceID)) {
+											// 	$totalVat = $total * .12;
+											// 	echo number_format($totalVat,2);
+											// }else{
+											// 	echo "-";
+											// }
+
+										  // if (in_array('Vatable Sale', $vat)) {
+									   //      $vatSale = $total / 1.12; 
+									   //      $vat12 = number_format($vatSale,2);
+									   //      //number_format($total,2);
+									   //       // echo number_format((float)$vatSale, 4, '.', '');
+									   // 		 }
+
+										if ($totalVat > 0) {
+
+									          echo number_format($totalVat,2);
+
+										}
 										?>
 									</td>
 								</tr>

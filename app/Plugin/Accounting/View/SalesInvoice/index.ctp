@@ -24,8 +24,35 @@
                     
                 	</div>
 
+
                   <br><br>
                </div>
+
+               	<div class="clearfix"></div>
+
+                	<div class="form-group pull-left">
+
+                		 <?php echo $this->Form->create('SalesInvoice',array('url' => array('controller' => 'sales_invoice','action' => 'invoice' ),'type' => 'GET')); ?>
+               			<div class="pull-left">
+                			<div class="input-group">
+									    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+									    <input placeholder="Date Range" name="data[date]" data="1" type="text" value="<?php echo $date ?>" class="form-control myDateRange datepickerDateRange" id="datepickerDateRange" >
+									</div>
+
+							<input type="hidden" value="go" name="data[action]" class="identifier">
+                		</div>
+
+                	
+                	<div class="pull-left action">
+                		&nbsp
+									<button class="btn btn-success" alt="go">GO</button>
+
+
+									<button class="btn btn-success" alt="export"><i class="fa fa-paper"> </i>Export</button>
+					</div>
+				<?php echo $this->Form->end(); ?>
+
+                	</div>
             </header>
              
 			<div class="main-box-body clearfix">
@@ -42,7 +69,7 @@
 							</tr>
 						</thead>
 						<?php 
-					        if(!empty($invoiceData)){ ?>
+					        if (!empty($invoiceData)) { ?>
 
 				            	<tbody aria-relevant="all" aria-live="polite" class="OrderFields" role="alert" >
 
@@ -56,25 +83,25 @@
 
 				                        <td class="">
 
-<?php
+										<?php
 
-	if (!empty($invoiceDataList['SalesInvoice']['deliveries'])) {
+											if (!empty($invoiceDataList['SalesInvoice']['deliveries'])) {
 
-		$drList = json_decode($invoiceDataList['SalesInvoice']['deliveries']);
+												$drList = json_decode($invoiceDataList['SalesInvoice']['deliveries']);
 
 
-	foreach ($drList as $key => $value) {
-		
-		echo $value.'<br>';
-	
-	}                                       //  echo str_pad($invoiceDataList['SalesInvoice']['dr_uuid'],5,'0',STR_PAD_LEFT);
+											foreach ($drList as $key => $value) {
+												
+												echo $value.'<br>';
+											
+											}                                       //  echo str_pad($invoiceDataList['SalesInvoice']['dr_uuid'],5,'0',STR_PAD_LEFT);
 
-	} else {
+											} else {
 
-		echo str_pad($invoiceDataList['SalesInvoice']['dr_uuid'],5,'0',STR_PAD_LEFT);
+												echo str_pad($invoiceDataList['SalesInvoice']['dr_uuid'],5,'0',STR_PAD_LEFT);
 
-	} 
-?>
+											} 
+										?>
 
 				                        </td>
 

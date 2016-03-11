@@ -39,7 +39,6 @@ class SalesInvoiceController extends AccountingAppController {
 
         $invoiceData = $this->paginate('SalesInvoice');
 
-
         $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
 
         $deliveryNumHolder = $this->Delivery->find('list',array('fields' => array('dr_uuid','clients_order_id')));
@@ -77,7 +76,9 @@ class SalesInvoiceController extends AccountingAppController {
 
         }
 
-        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay','companyName', 'deliveryNumHolder', 'clientDataHolder'));
+        $date = date('Y/m/01').' - '.date('Y/m/d');
+
+        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay','companyName', 'deliveryNumHolder', 'clientDataHolder','date'));
 
     }
 
@@ -129,7 +130,9 @@ class SalesInvoiceController extends AccountingAppController {
 
         $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
 
-        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay', 'companyName', 'deliveryNumHolder'));
+
+
+        $this->set(compact('invoiceData','noPermissionReciv','noPermissionPay', 'companyName', 'deliveryNumHolder','date'));
 
     }
 
@@ -441,7 +444,6 @@ class SalesInvoiceController extends AccountingAppController {
         }
 
         pr($this->request->data);
-
         exit();
 
          $this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id'],$DRdata,'apc_dr');
@@ -532,7 +534,7 @@ class SalesInvoiceController extends AccountingAppController {
         $companyData = $this->Company->find('list', array('fields' => array('id', 'company_name')));
 
         $seriesNo = $this->SalesInvoice->find('first', array(
-                'order' => array('SalesInvoice.modified DESC')));
+                'order' => array('SalesInvoice.created DESC')));
        
     
         if(!empty($seriesNo)){
@@ -550,9 +552,9 @@ class SalesInvoiceController extends AccountingAppController {
         if (!empty($_GET['test']) == 1) {
              Configure::write('debug',2);
 
-             pr( $seriesNo);
+             pr( $seriesSalesNo );
 
-            pr($seriesSalesNo);
+                pr($seriesSalesNo);
 
             exit();
         }
@@ -1613,7 +1615,7 @@ class SalesInvoiceController extends AccountingAppController {
             $conditions = array('NOT' => array('SalesInvoice.status' => array(2, 3)) );
 
             $seriesNo = $this->SalesInvoice->find('first', array(
-                    'order' => array('SalesInvoice.modified DESC'),
+                    'order' => array('SalesInvoice.created DESC'),
                     'conditions' => $conditions));
 
             if(!empty($seriesNo)){
@@ -1635,7 +1637,7 @@ class SalesInvoiceController extends AccountingAppController {
             $conditions = array('NOT' => array('SalesInvoice.status' => array(2, 3)) );
 
             $seriesNo = $this->SalesInvoice->find('first', array(
-                    'order' => array('SalesInvoice.modified DESC'),
+                    'order' => array('SalesInvoice.created DESC'),
                     'conditions' => $conditions));
 
             if(!empty($seriesNo)){
@@ -1657,7 +1659,7 @@ class SalesInvoiceController extends AccountingAppController {
             $conditions = array();
 
             $seriesNo = $this->SalesInvoice->find('first', array(
-                    'order' => array('SalesInvoice.modified DESC'),
+                    'order' => array('SalesInvoice.created DESC'),
                     'conditions' => $conditions));
 
             if (!empty($seriesNo)) {
