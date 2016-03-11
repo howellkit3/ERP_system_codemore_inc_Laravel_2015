@@ -237,7 +237,7 @@
 											// }
 
 										if (in_array('Vatable Sale', $vat)) {
-											echo number_format((float)$total, 4, '.', '');
+											echo number_format($total, 2, '.', ',');
 										} else {
 											echo "-";
 										}
@@ -252,7 +252,7 @@
 											
 
 										if (in_array('Vat Exempt', $vat) && !in_array('Zero Rated Sale', $vat)) {
-											echo number_format((float)$total, 4, '.', '');
+											echo number_format($total, 2, '.', '');
 										} else {
 											echo "-";
 										}
