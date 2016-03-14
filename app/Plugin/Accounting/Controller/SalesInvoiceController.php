@@ -39,7 +39,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         $invoiceData = $this->paginate('SalesInvoice');
 
-        $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
+        $companyName = $this->Company->getList(array('id','company_name'));
 
         $deliveryNumHolder = $this->Delivery->find('list',array('fields' => array('dr_uuid','clients_order_id')));
 
@@ -128,7 +128,7 @@ class SalesInvoiceController extends AccountingAppController {
             $noPermissionPay = ' ';
         }
 
-        $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
+      $companyName = $this->Company->getList(array('id','company_name'));
 
 
 
@@ -2091,7 +2091,7 @@ class SalesInvoiceController extends AccountingAppController {
 
     public function pre_invoices() {
 
-        $date = date('Y-m-d');
+        $date = date('Y/m/01').' - '.date('Y/m/d');
 
         $userData = $this->Session->read('Auth');
         
@@ -2107,7 +2107,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         $conditions = array('SalesInvoice.status' => 0);
 
-        $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
+       $companyName = $this->Company->getList(array('id','company_name'));
 
         $plants = $this->Plant->find('list',array('fields' => array('id','name')));
         
@@ -2138,7 +2138,7 @@ class SalesInvoiceController extends AccountingAppController {
 
         }
 
-        if (!empty($query['data']['action']) && $query['data']['action'] == 'export') {
+        if (!empty($query['data']['action'])) {
 
             $invoices = $this->SalesInvoice->find('all',array(
 
@@ -2290,7 +2290,7 @@ class SalesInvoiceController extends AccountingAppController {
         }
 
 
-        $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
+     $companyName = $this->Company->getList(array('id','company_name'));
 
         $plants = $this->Plant->find('list',array('fields' => array('id','name')));
         
@@ -2385,11 +2385,19 @@ class SalesInvoiceController extends AccountingAppController {
 
             foreach ($invoices as $key => $list) {
 
+                    $this->Delivery->bindDeliverybyId();
+
                     $dr = $this->Delivery->find('all',array(
                         'conditions' => array(
-                                'Delivery.dr_uuid' => $list['SalesInvoice']['dr_uuid']
+                                'Delivery.dr_uuid' => $list['SalesInvoice']['dr_uuid'],
+                                'Delivery.status !=' =>  2,
+                                'DeliveryDetail.status !=' => 4
                         )
                     ));
+
+
+                    pr( $dr );
+
 
                    if (in_array($query['company_id'],array('3','4','5','6','60','102','1223'))) {
                     
@@ -2401,10 +2409,29 @@ class SalesInvoiceController extends AccountingAppController {
                         
                         $drUUID = json_decode($list['SalesInvoice']['deliveries']);
 
-                        $drUUIDlist = implode(',', $drUUID );
+                        $drFilter = array();
 
-                        $conditions = 'Delivery.company_id IN ('.implode($company,',').') AND Delivery.dr_uuid IN ('. $drUUIDlist.') ';
-                    
+                        foreach ($drUUID as $key => $drList) {
+                            
+                            if (strpos(strtolower($drList),'x') !== 0) {
+                               $drFilter[] = $drList; 
+                            }
+
+                        }
+
+                        $drUUIDlist = implode(',', $drFilter );
+
+                        if (!empty( $drFilter)) {
+                            $conditions = 'Delivery.company_id IN ('.implode($company,',').') AND Delivery.dr_uuid IN ('. $drUUIDlist.') ';
+                        
+                        } else {
+
+                        $conditions = 'Delivery.company_id IN ('.implode($company,',').') AND Delivery.dr_uuid != ""';
+                           
+                        }
+                           //$conditions = 'Delivery.company_id IN ('.implode($company,',').') AND Delivery.dr_uuid IN ('. $drUUIDlist.') ';
+                       
+                      
                     } else {
 
                         if (!empty($list['SalesInvoice']['dr_uuid'])) {
@@ -2569,7 +2596,7 @@ class SalesInvoiceController extends AccountingAppController {
         if (!empty($id)) {
 
 
-            $companyName = $this->Company->find('list',array('fields' => array('id','company_name')));
+           $companyName = $this->Company->getList(array('id','company_name'));
             
 
            $invoice = $this->request->data = $this->SalesInvoice->read(null,$id);

@@ -393,7 +393,7 @@
 
 					                            ?> 
 
-					                            <?php echo $this->Form->input('PurchaseOrder.po_number', array(
+					                            <?php echo $this->Form->input('PurchaseOrder.series_number', array(
 					                                'type' => 'text',
 					                                'label' => false,
 					                                'type' => 'hidden',
@@ -1012,11 +1012,14 @@
 
 	 	var seriesNumber = code.substr(code.length - 4);
 
-	 	var code = year.toString() + month.toString() + seriesNumber.toString();
+	 	//var code = year.toString() + month.toString() + seriesNumber.toString();
+
+	 	//code = code++;
 
 		if($(this).is( ":checked" ) == true){
 			
-            var data = "PUO-" + code;
+            //var data = "PUO-" + code;
+            var data = code;
            	// data.substr(0,-3);
 			$('#generate-poNumber').val(data);
 			

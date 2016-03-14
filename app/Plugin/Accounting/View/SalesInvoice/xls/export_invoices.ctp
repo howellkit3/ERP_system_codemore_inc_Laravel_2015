@@ -64,6 +64,10 @@
 
 			 	$sheet->setCellValue('H'.$start, number_format($total_amount,2));
 
+			 	if (!empty($value['DeliveryDetail']['dr_uuid'])) {
+
+			 		$sheet->setCellValue('I'.$start,$value['DeliveryDetail']['dr_uuid'] );
+			 	}
 			 	
 			 	if (in_array($customerID,array('1223','3','4','5','6','60','102'))) {
 

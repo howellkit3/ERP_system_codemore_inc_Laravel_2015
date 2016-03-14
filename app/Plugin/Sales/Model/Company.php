@@ -265,7 +265,7 @@ class Company extends AppModel {
 
 	public function getList($fields = array(),$conditions = array()) {
 
-		$company = $this->find('list', array('conditions' => $conditions ,'order' => 'Company.id DESC','fields' => $fields));
+		$company = $this->find('list', array('conditions' => $conditions ,'order' => 'Company.company_name ASC','fields' => $fields));
 
 		return $company;
 	}
@@ -276,5 +276,6 @@ class Company extends AppModel {
 		return $company;
 	}
 	
+
 	
 }

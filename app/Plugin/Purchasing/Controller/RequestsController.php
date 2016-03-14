@@ -455,9 +455,21 @@ class RequestsController extends PurchasingAppController {
 
 		$byCashNum = strtotime(date('h:i:s'));
 
-		$purchaseOrderData = $this->PurchaseOrder->find('first', array('fields' => array('id', 'po_number'),
-															'order' => array('PurchaseOrder.created' => 'DESC')
-															));
+		$purchaseOrderData = $this->PurchaseOrder->find('first',array(
+				'fields' => array('id', 'po_number'),
+				'conditions' => array(
+						'PurchaseOrder.created >=' => date('Y-m-01').' 00:00:00',
+						'PurchaseOrder.created <=' => date('Y-m-t').' 00:00:00'
+				),
+				'order' => array('PurchaseOrder.created' => 'DESC')));
+
+		if (!empty($purchaseOrderData['PurchaseOrder']['po_number']) && substr($purchaseOrderData['PurchaseOrder']['po_number'],0,2)) {
+
+			$purchaseNumber = $purchaseOrderData['PurchaseOrder']['po_number'] + 1;
+		} else {
+			$purchaseNumber = $purchaseOrderData['PurchaseOrder']['po_number'] = date('ymd').'01';
+		}
+
 
 		$purchaseNumber = $purchaseOrderData['PurchaseOrder']['po_number'] + 1;
 
@@ -544,6 +556,33 @@ class RequestsController extends PurchasingAppController {
     	$this->loadModel('Purchasing.RequestItem');
 
     	if (!empty($this->request->data)) {
+    	
+    		if (empty($this->request->data['PurchaseOrder']['po_number'])) {
+    			
+    			$this->request->data['PurchaseOrder']['po_number'] = $this->PurchaseOrder->generatePO();
+    		
+    		}
+
+			//check PO number
+			$po = $this->PurchaseOrder->find('first',array(
+					'conditions' => array(
+							'PurchaseOrder.po_number' => $this->request->data['PurchaseOrder']['po_number']
+					)
+
+    		));
+
+
+			if (!empty($po)) {
+    				$this->Session->setFlash('Po number already exist, Please input another one','error');
+
+    				$requestID = $this->request->data['PurchaseOrder']['request_id'];
+
+    				$this->redirect(array(
+    						'controller' => 'requests',
+    						'action' => 'create_order',
+    						$requestID
+    				));
+    		}
 
     		$filledNum = $this->request->data['PurchaseOrder']['filed_number'];
 

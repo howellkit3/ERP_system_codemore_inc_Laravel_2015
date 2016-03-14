@@ -147,4 +147,27 @@ class PurchaseOrder extends AppModel {
 		));
 		$this->recursive = 1;
 	}
+
+	public function generatePO() {
+
+
+		$purchaseOrderData = $this->find('first',array(
+				'fields' => array('id', 'po_number'),
+				'conditions' => array(
+						'PurchaseOrder.created >=' => date('Y-m-01').' 00:00:00',
+						'PurchaseOrder.created <=' => date('Y-m-t').' 00:00:00'
+				),
+				'order' => array('PurchaseOrder.created' => 'DESC')));
+
+		if (!empty($purchaseOrderData['PurchaseOrder']['po_number']) && substr($purchaseOrderData['PurchaseOrder']['po_number'],0,2)) {
+
+			$purchaseNumber = $purchaseOrderData['PurchaseOrder']['po_number'] + 1;
+		} else {
+			$purchaseNumber = date('ymd').'01';
+		}
+
+		return $purchaseNumber;
+
+
+	}
 }
