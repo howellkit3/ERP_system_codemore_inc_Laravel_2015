@@ -167,7 +167,7 @@
     
 
 
-    if (!in_array('Vatable Sale',$vat) && !in_array('Vatable Exempt',$vat))  {
+    if (!in_array('Vatable Sale',$vat) && !in_array('Vatable Exempt',$vat) && !in_array('Zero Rated Sale', $vat))  {
          $vatSale = $total / 1.12;
 
            $totalVat = $vatSale * .12;
@@ -176,7 +176,7 @@
     }
 
 
-    if (in_array('Vatable Sale', $vat)) {
+    if (in_array('Vatable Sale', $vat) && !in_array('Zero Rated Sale', $vat)) {
         $vatSale = $total / 1.12; 
         $vat12 = number_format($totalVat,2);
         //number_format($total,2);
@@ -203,7 +203,7 @@
     }
 
 
-  if (in_array('Vatable Sale', $vat) && in_array(2, $unitPriceID)) {
+  if (in_array('Vatable Sale', $vat) && in_array(2, $unitPriceID) && !in_array('Zero Rated Sale', $vat)) {
    
         $totalVat = $total * .12;
         $fullVat = $total + $totalVat;
