@@ -73,122 +73,7 @@
 							</div>
 							
 
-
-							<div class="main-box-body clearfix">
-
-								<section class="cloneMe">
-									
-									<div class="main-box-body clearfix">
-										<div class="form-horizontal item-category">
-
-											<div class="form-group" >
-												<label class="col-lg-2 control-label"><span style="color:red">*</span> Item </label>
-												<div class="col-lg-7">
-													<?php 
-									                    echo $this->Form->input('ReceiveReceipt.nameToShow', 
-																		array( 
-															// 'options' => array($itemData),  
-															'class' => 'form-control item_name required', 
-									    					'label' => false,
-									    					'readonly' => true,
-									    					'placeholder' => 'Item',
-									    					));
-									                ?>
-
-									                <?php 
-									                    echo $this->Form->input('ReceiveReceipt.name', 
-																		array( 
-															 'type' => 'hidden',  
-															'class' => 'form-control item_name required', 
-									    					'label' => false,
-									    					'readonly' => 'readonly'
-									    					));
-									                ?>
-
-									                <?php 
-									                    echo $this->Form->input('ReceiveReceipt.foreign_key', 
-																		array( 
-															'class' => 'form-control item_id required', 
-															'type' => 'hidden',
-									    					'label' => false,
-									    					'readonly' => 'readonly'
-									    					));
-									                ?>
-
-									                <?php 
-									                    echo $this->Form->input('ReceiveReceipt.model', 
-																		array( 
-															'class' => 'form-control item_model required ', 
-															'type' => 'hidden',
-									    					'label' => false,
-									    					'readonly' => 'readonly'
-									    					));
-									                ?>
-
-									        	</div>
-
-												<div class="col-lg-3">
-
-													<a data-toggle="modal" href="#myModalItem" data-modal="1" class="modal-button btn btn-primary mrg-b-lg pull-left  "><i class="fa fa-search-plus fa-lg"></i> Select Item</a>
-													&emsp;
-													<!-- <button type="button" class="add-field1  table-link danger btn btn-success " onclick="cloneDatarequest('cloneMe', this)"><i class="fa fa-plus"></i></button>
-													
-													<button type="button" class="remove btn btn-danger " onclick="removeClone('cloneMe')"><i class="fa fa-minus" ></i></button> -->
-
-												</div>
-
-											</div>
-
-											<div class="form-group">
-												<label for="inputPassword1" class="col-lg-2 control-label">No. Packs of Boxes</label>
-												<div class="col-lg-3">
-													<?php 
-						                                echo $this->Form->input('ReceiveReceipt.pack_quantity', array('class' => 'form-control item_type',
-						                                    'label' => false,
-						                                    'class' => 'form-control quantitycode box',
-						                                    'id' => 'email'
-						                                    ));
-						                            ?>
-												</div>
-
-												<label for="inputPassword1" class="col-lg-2 control-label">Quantity per box</label>
-												<div class="col-lg-3">
-													<?php 
-														echo $this->Form->input('ReceiveReceipt.quantity_per_box', array(
-									                        'label' => false,
-									                        'class' => 'form-control quantitycode perbox',
-									                        'empty' => '---Select Unit---'
-									                         )); 
-									                ?>
-												</div>
-											</div>
-
-											<div class="form-group">
-												<label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
-												<div class="col-lg-4">
-													<?php 
-						                                echo $this->Form->input('ReceiveReceipt.quantity', array('class' => 'form-control item_type',
-						                                    'label' => false,
-						                                    'class' => 'form-control required quantity',
-						                                    'id' => 'email'
-						                                    ));
-						                            ?>
-												</div>
-
-												<div class="col-lg-4">
-													<?php 
-														echo $this->Form->input('ReceiveReceipt.quantity_unit_id', array(
-									                        'options' => array($unitData),  
-									                        'label' => false,
-									                        'class' => 'form-control required',
-									                        'empty' => '---Select Unit---'
-									                         )); 
-									                ?>
-												</div>
-											</div>
-
-
-											  <div class="form-group">
+								<div class="form-group">
                                     <label class="col-lg-2 control-label">Delivery Number</label>
                                     <div class="col-lg-8">
                                         <?php 
@@ -220,6 +105,146 @@
                                     </div>
                                 </div>  
 
+                                <div class="form-group">
+                                        <label class="col-lg-2 control-label"><span style="color:red">*</span>Tracking Number</label>
+                                        <div class="col-lg-8">
+                                            <?php 
+                                                echo $this->Form->input('DeliveredOrders.uuid',array( 
+                                                                        'class' => 'form-control  required', 
+                                                                        'label' => false,
+                                                                        'placeholder' => 'Tracking Number',
+                                                                        'id' => 'generate-poNumber' 
+                                                                        ));
+                                            ?>
+                                        </div>
+                                    </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label"></label>
+                                <div class="col-lg-8">
+                                    <div class="checkbox-nice">
+                                        <input id="checkbox-1" type="checkbox" class="generate-poNumber">
+                                        <label for="checkbox-1"> Generate Tracking Number </label>
+                                    </div>
+                                </div>
+                            </div>
+
+							<div class="main-box-body clearfix">
+
+								<section class="cloneMe">
+									
+									<div class="main-box-body clearfix">
+										<div class="form-horizontal item-category">
+
+											<div class="form-group" >
+												<label class="col-lg-2 control-label"><span style="color:red">*</span> Item </label>
+												<div class="col-lg-7">
+													<?php 
+									                    echo $this->Form->input('requestPurchasingItem.0.nameToShow', 
+																		array( 
+															// 'options' => array($itemData),  
+															'class' => 'form-control item_name required', 
+									    					'label' => false,
+									    					'readonly' => true,
+									    					'placeholder' => 'Item',
+									    					));
+									                ?>
+
+									                <?php 
+									                    echo $this->Form->input('requestPurchasingItem.0.name', 
+																		array( 
+															 'type' => 'hidden',  
+															'class' => 'form-control item_name required', 
+									    					'label' => false,
+									    					'readonly' => 'readonly'
+									    					));
+									                ?>
+
+									                <?php 
+									                    echo $this->Form->input('requestPurchasingItem.0.foreign_key', 
+																		array( 
+															'class' => 'form-control item_id required', 
+															'type' => 'hidden',
+									    					'label' => false,
+									    					'readonly' => 'readonly'
+									    					));
+									                ?>
+
+									                <?php 
+									                    echo $this->Form->input('requestPurchasingItem.0.model', 
+																		array( 
+															'class' => 'form-control item_model required ', 
+															'type' => 'hidden',
+									    					'label' => false,
+									    					'readonly' => 'readonly'
+									    					));
+									                ?>
+
+									        	</div>
+
+
+
+												<div class="col-lg-3">
+
+													<a data-toggle="modal" href="#myModalItem" data-modal="1" class="modal-button btn btn-primary mrg-b-lg pull-left  "><i class="fa fa-search-plus fa-lg"></i> Select Item</a>
+													&emsp;
+													<button type="button" class="add-field1  table-link danger btn btn-success " onclick="cloneDatarequest('cloneMe', this)"><i class="fa fa-plus"></i></button>
+													
+													<button type="button" class="remove btn btn-danger hidden" onclick="removeClone('cloneMe')"><i class="fa fa-minus" ></i></button>
+
+												</div>
+
+											</div>
+
+											<div class="form-group">
+												<label for="inputPassword1" class="col-lg-2 control-label">No. Packs of Boxes</label>
+												<div class="col-lg-3">
+													<?php 
+						                                echo $this->Form->input('requestPurchasingItem.0.pack_quantity', array('class' => 'form-control item_type',
+						                                    'label' => false,
+						                                    'class' => 'form-control quantitycode box',
+						                                    'id' => 'email'
+						                                    ));
+						                            ?>
+												</div>
+
+												<label for="inputPassword1" class="col-lg-2 control-label">Quantity per box</label>
+												<div class="col-lg-3">
+													<?php 
+														echo $this->Form->input('requestPurchasingItem.0.quantity_per_box', array(
+									                        'label' => false,
+									                        'class' => 'form-control quantitycode perbox',
+									                        'empty' => '---Select Unit---'
+									                         )); 
+									                ?>
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label for="inputPassword1" class="col-lg-2 control-label"><span style="color:red">*</span>Quantity</label>
+												<div class="col-lg-4">
+													<?php 
+						                                echo $this->Form->input('requestPurchasingItem.0.quantity', array('class' => 'form-control item_type',
+						                                    'label' => false,
+						                                    'class' => 'form-control required quantity',
+						                                    'id' => 'email'
+						                                    ));
+						                            ?>
+												</div>
+
+												<div class="col-lg-4">
+													<?php 
+														echo $this->Form->input('requestPurchasingItem.0.quantity_unit_id', array(
+									                        'options' => array($unitData),  
+									                        'label' => false,
+									                        'class' => 'form-control required',
+									                        'empty' => '---Select Unit---'
+									                         )); 
+									                ?>
+												</div>
+											</div>
+
+
                                <!--  <div class="form-group">
                                         <label class="col-lg-2 control-label">Tracking Number</label>
                                         <div class="col-lg-8">
@@ -234,53 +259,33 @@
                                         </div>
                                     </div> -->
 
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label"></label>
-                                        <div class="col-lg-8">
-                                            <div class="checkbox-nice">
-                                                <input id="checkbox-1" type="checkbox" class="generate-poNumber">
-                                                <label for="checkbox-1"> Generate Tracking Number </label>
-                                            </div>
-                                        </div>
-                                    </div>
-										</div>
+									</div>
 									    
 									</div>
 								</section>
+									
 								<div class="form-group">
-						<label for="inputPassword1" class="col-lg-2 control-label">Lot/Batch No.</label>
-						<div class="col-lg-8">
-							<?php 
-                                echo $this->Form->input('ReceiveReceipt.lot', array('class' => 'form-control item_type',
-                                    'label' => false,
-                                    'id' => 'email'
-                                    ));
-                            ?>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label for="inputPassword1" class="col-lg-2 control-label"> Remarks</label>
-						<div class="col-lg-8">
-							<?php 
-                                echo $this->Form->textarea('ReceiveReceipt.remarks', array('class' => 'form-control item_type',
-                                    'alt' => 'Request Inquiry',
-                                    'label' => false,
-                                    'rows' => '6'));
-                            ?>
-                             
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<div class="col-lg-offset-2 col-lg-10">
-							<button type="submit" class="btn btn-success">Submit</button>
-						
-							<?php 
-		                        echo $this->Html->link('Cancel ', array('controller' => 'customer_sales', 'action' => 'inquiry'),array('class' =>'btn btn-primary ','escape' => false));
-		                    ?>
-						</div>
-					</div>
+									<label for="inputPassword1" class="col-lg-2 control-label"> Remarks</label>
+									<div class="col-lg-8">
+										<?php 
+			                                echo $this->Form->textarea('ReceiveReceipt.remarks', array('class' => 'form-control item_type',
+			                                    'alt' => 'Request Inquiry',
+			                                    'label' => false,
+			                                    'rows' => '6'));
+			                            ?>
+			                             
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<div class="col-lg-offset-2 col-lg-10">
+										<button type="submit" class="btn btn-success">Submit</button>
+									
+										<?php 
+					                        echo $this->Html->link('Cancel ', array('controller' => 'customer_sales', 'action' => 'inquiry'),array('class' =>'btn btn-primary ','escape' => false));
+					                    ?>
+									</div>
+								</div>
 				</form>
 			</div>
 		</div>
@@ -515,7 +520,3 @@
     });
 
 </script>
-
-
-
-	

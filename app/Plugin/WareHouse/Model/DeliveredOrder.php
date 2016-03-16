@@ -57,6 +57,60 @@ class DeliveredOrder extends AppModel {
 	}
 
 
+	public function saveDeliveredOrderManual($auth, $receivedOrdersId, $purchaseId, $deliveredItemsData = null){
+
+		//pr($deliveredItemsData['ReceivedOrder']['idholder']); exit;
+
+		$month = date("m"); 
+	    $year = date("y");
+	    $hour = date("H");
+	    $minute = date("i");
+	    $seconds = date("s");
+	    $random = rand(1000, 10000);
+	        
+		$code =  $year. $month .$random;
+
+		$this->create();
+		//pr($purchaseId); exit;
+
+		$data['si_num'] = !empty($deliveredItemsData['ReceiveReceipt']['si_num']) ? $deliveredItemsData['ReceiveReceipt']['si_num'] : '' ;
+
+		if(!empty($deliveredItemsData['ReceiveReceipt']['purchase_orders_id'])){
+
+			$mystring = mb_substr($deliveredItemsData['ReceiveReceipt']['uuid'],4,9);
+			$data['uuid'] = $mystring;
+			
+
+		}
+		if (!empty($deliveredItemsData['DeliveredOrders']['uuid'])) {
+			$data['uuid'] = $deliveredItemsData['DeliveredOrders']['uuid'];
+
+		}
+		$data['purchase_order_uuid'] = $deliveredItemsData['ReceiveReceipt']['po_number'];
+		$data['modified_by'] = $auth;
+		$data['created_by'] = $auth;
+		$data['received_orders_id'] = $receivedOrdersId;
+
+		if($purchaseId != 0){
+
+			$data['purchase_orders_id'] = $deliveredItemsData['ReceiveReceipt']['idholder'];
+			$data['dr_num'] = $deliveredItemsData['ReceiveReceipt']['dr_num'];
+			$data['si_num'] = $deliveredItemsData['ReceiveReceipt']['si_num'];
+			$data['uuid'] = $deliveredItemsData['ReceiveReceipt']['uuid'];
+		}	
+		// pr($deliveredItemsData);
+		// pr($data); exit;
+		
+		$this->save($data);
+
+			return $this->id;
+
+		
+
+	}
+
+
+
 	public function bind($model = array('Group')){
 		
 		$this->bindModel(array(

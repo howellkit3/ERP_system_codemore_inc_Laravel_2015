@@ -83,14 +83,13 @@ class ReceivingsController extends WareHouseAppController {
 		
 		$receivedOrderData = $this->ReceivedOrder->find('first', array('conditions' => array('ReceivedOrder.purchase_order_id' => $purchaseOrderData['PurchaseOrder']['id'])));
 	
-
 		if(empty($requestData['PurchasingItem'])){
 
 			$itemHolder = "RequestItem";
 
 			$itemData = $this->RequestItem->find('all', array('conditions' => array('RequestItem.request_uuid' => $requestUUID)));
 
-		}else{
+		} else {
 
 			$itemHolder = "PurchasingItem";
 
@@ -101,7 +100,8 @@ class ReceivingsController extends WareHouseAppController {
 		$requestPurchasingItemArray = array();
 
 		$receivedItemData = $this->ReceivedItem->find('all', array('conditions' => array('ReceivedItem.received_orders_id' => $id)));
-		//pr($receivedItemData); exit;
+		
+		
 		foreach ($itemData as $key => $value) {	
 
 			if($value[$itemHolder]['model'] == 'GeneralItem'){
@@ -236,7 +236,6 @@ class ReceivingsController extends WareHouseAppController {
 
 				$itemDetails = $this->CorrugatedPaper->find('list', array('fields' => array('CorrugatedPaper.id', 'CorrugatedPaper.name')
 																	));  
-
 				$requestPurchasingItem[$key][$itemHolder]['name'] = $itemDetails[$value[$itemHolder]['foreign_key']]; 
 
 				$requestPurchasingItem[$key][$itemHolder]['foreign_key'] = $value[$itemHolder]['foreign_key'];
@@ -263,9 +262,9 @@ class ReceivingsController extends WareHouseAppController {
 
 				}  		 
 
-						$requestPurchasingItem[$key][$itemHolder]['good_quantity'] = array_sum($arrayGoodQuantity);
-						
-						$requestPurchasingItem[$key][$itemHolder]['reject_quantity'] = array_sum($arrayRejectQuantity);
+				$requestPurchasingItem[$key][$itemHolder]['good_quantity'] = array_sum($arrayGoodQuantity);
+				
+				$requestPurchasingItem[$key][$itemHolder]['reject_quantity'] = array_sum($arrayRejectQuantity);
  	
 	        } 
 
@@ -309,7 +308,6 @@ class ReceivingsController extends WareHouseAppController {
 
 				$this->ReceivedOrder->saveField('supplier_id', $this->request->data['PurchaseOrder']['supplier']);
 
-
 			}
 
 			$this->request->data['DeliveredOrders']['idholder'] = $this->request->data['PurchaseOrder']['idholder'];
@@ -331,8 +329,7 @@ class ReceivingsController extends WareHouseAppController {
 			$totalRemaining = $this->request->data['Receivings']['remainingquantity'] - $remaining;
 
 			if(!empty($this->request->data['Receivings']['receive_status']) || $totalRemaining <= 0){
-
-
+				
 				//$this->PurchaseOrder->saveField('receive_item_status', 1);
 				$this->PurchaseOrder->saveField('status', 11);
 
@@ -1369,7 +1366,10 @@ class ReceivingsController extends WareHouseAppController {
 															));
 
 		if ($this->request->is(array('post','put'))) {
+			
+			$data = $this->request->data;
 			//pr($this->request->data); exit;
+			
 			$userData = $this->Session->read('Auth');
 
 			$this->loadModel('Purchasing.ReceivedItem');
@@ -1384,11 +1384,11 @@ class ReceivingsController extends WareHouseAppController {
 
 			$itemId = $this->ReceivedOrder->saveReceivedOrders($this->request->data,$userData['User']['id'],$id);
 
-			//pr($this->request->data); exit;
+			$deliveryUUID = $this->DeliveredOrder->saveDeliveredOrderManual($userData['User']['id'], $itemId, $id, $this->request->data);
 
-			$deliveryUUID = $this->DeliveredOrder->saveDeliveredOrder($userData['User']['id'], $itemId, $id, $this->request->data['ReceiveReceipt']);
+			$tracking = !empty($data['DeliveredOrders']['uuid']) ? $data['DeliveredOrders']['uuid'] : '';
 
-			$this->ReceivedReceiptItem->saveReceivedReceiptItems($itemId, $this->request->data['ReceiveReceipt'], $deliveryUUID);
+			$this->ReceivedReceiptItem->saveReceivedMultipleItems($data,$itemId,$deliveryUUID,$tracking);
 
 			$this->Session->setFlash(__('Receipt has been Received'), 'success');
           
