@@ -159,11 +159,11 @@ class PurchaseOrder extends AppModel {
 				),
 				'order' => array('PurchaseOrder.created' => 'DESC')));
 
-		if (!empty($purchaseOrderData['PurchaseOrder']['po_number']) && substr($purchaseOrderData['PurchaseOrder']['po_number'],0,2)) {
+		if (!empty($purchaseOrderData['PurchaseOrder']['po_number']) && substr($purchaseOrderData['PurchaseOrder']['po_number'],0,4) >= date('ym')) {
 
 			$purchaseNumber = $purchaseOrderData['PurchaseOrder']['po_number'] + 1;
 		} else {
-			$purchaseNumber = date('ymd').'01';
+			$purchaseNumber = date('ym').'0001';
 		}
 
 		return $purchaseNumber;

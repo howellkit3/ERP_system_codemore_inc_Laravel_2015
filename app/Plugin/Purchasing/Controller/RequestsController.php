@@ -463,7 +463,7 @@ class RequestsController extends PurchasingAppController {
 				),
 				'order' => array('PurchaseOrder.created' => 'DESC')));
 
-		$yearNow = date('y');
+		$yearNow = date('ym');
 
 		if (!empty($_GET['now'])) {
 			Configure::write('debug',2);
@@ -474,11 +474,11 @@ class RequestsController extends PurchasingAppController {
 			exit();
 
 		}
-		if (!empty($purchaseOrderData['PurchaseOrder']['po_number']) && substr($purchaseOrderData['PurchaseOrder']['po_number'],0,2) >= $yearNow) {
+		if (!empty($purchaseOrderData['PurchaseOrder']['po_number']) && substr($purchaseOrderData['PurchaseOrder']['po_number'],0,4) >= $yearNow) {
 
 			$purchaseNumber = $purchaseOrderData['PurchaseOrder']['po_number'] + 1;
 		} else {
-			$purchaseNumber = $purchaseOrderData['PurchaseOrder']['po_number'] = date('ymd').'01';
+			$purchaseNumber = $purchaseOrderData['PurchaseOrder']['po_number'] = date('ym').'0001';
 		}
 
 

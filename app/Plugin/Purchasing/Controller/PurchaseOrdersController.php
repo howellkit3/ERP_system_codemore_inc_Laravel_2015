@@ -77,8 +77,10 @@ class PurchaseOrdersController extends PurchasingAppController {
 		$paymentTermData = Cache::read('paymentTerms');
 		
 		if (!$paymentTermData) {
+
             $paymentTermData = $this->PaymentTermHolder->getList(null,array('id','name'));
             Cache::write('paymentTerms', $paymentTermData);
+        
         }
 		
     	$supplierData = $this->Supplier->find('list', array(
@@ -96,7 +98,6 @@ class PurchaseOrdersController extends PurchasingAppController {
 		$requestData = $this->Request->find('first', array('conditions' => array('Request.id' => $purchaseOrderData['PurchaseOrder']['request_id'])));
 
 		$purchaseItemData = $this->PurchasingItem->find('all', array('conditions' => array('PurchasingItem.request_uuid' => $requestData['Request']['uuid'])));
-
 
 		
 		if (empty($purchaseItemData)) {
