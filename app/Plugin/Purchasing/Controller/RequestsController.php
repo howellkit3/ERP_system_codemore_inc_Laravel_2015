@@ -463,15 +463,26 @@ class RequestsController extends PurchasingAppController {
 				),
 				'order' => array('PurchaseOrder.created' => 'DESC')));
 
-		if (!empty($purchaseOrderData['PurchaseOrder']['po_number']) && substr($purchaseOrderData['PurchaseOrder']['po_number'],0,2)) {
+		$yearNow = date('ym');
+
+		if (!empty($_GET['now'])) {
+			Configure::write('debug',2);
+			
+			pr(substr($purchaseOrderData['PurchaseOrder']['po_number'],0,2));
+
+			pr($yearNow );
+			exit();
+
+		}
+		if (!empty($purchaseOrderData['PurchaseOrder']['po_number']) && substr($purchaseOrderData['PurchaseOrder']['po_number'],0,4) >= $yearNow) {
 
 			$purchaseNumber = $purchaseOrderData['PurchaseOrder']['po_number'] + 1;
 		} else {
-			$purchaseNumber = $purchaseOrderData['PurchaseOrder']['po_number'] = date('ymd').'01';
+			$purchaseNumber = $purchaseOrderData['PurchaseOrder']['po_number'] = date('ym').'0001';
 		}
 
 
-		$purchaseNumber = $purchaseOrderData['PurchaseOrder']['po_number'] + 1;
+		//$purchaseNumber = $purchaseOrderData['PurchaseOrder']['po_number'] + 1;
 
     	$requestData = $this->Request->find('first', array('conditions' => array('Request.id' => $requestId)));
 

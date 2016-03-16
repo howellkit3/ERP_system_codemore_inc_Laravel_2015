@@ -236,12 +236,14 @@ class ClientOrderDeliverySchedule extends AppModel {
 		    $seconds = date("s");
 		    $random = rand(1000, 10000);
 	        
-		$code =  $year. $month .$random;
+			$code =  $year. $month .$random;
+
+			$timestamp = strtotime(date('y-m-d h:i:s'));  
 
 			$this->create();
 			
 			if (!empty($clientOrderData[$this->name])) {
-				
+				$clientOrderDetails['uuid'] = !empty($clientOrderDetails['uuid']) ? $clientOrderDetails['uuid'] : $timestamp;
 				//$clientOrderDetails['delivery_type'] = 'Once';
 				$clientOrderDetails['created_by'] = $auth;
 				$clientOrderDetails['modified_by'] = $auth;

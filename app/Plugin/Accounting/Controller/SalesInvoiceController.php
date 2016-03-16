@@ -267,7 +267,7 @@ class SalesInvoiceController extends AccountingAppController {
         
                     if (!empty($_GET['test'])){
 
-                        $drData = $this->ClientOrder->checkPo($drData);
+                      // $drData = $this->ClientOrder->checkPo($drData);
                         Configure::write('debug',2);
                         pr($conditions);
                         pr($drData); 
@@ -442,9 +442,6 @@ class SalesInvoiceController extends AccountingAppController {
                          'action' => 'add','si_num'
                     ));
         }
-
-        pr($this->request->data);
-        exit();
 
          $this->SalesInvoice->addSalesInvoice($this->request->data, $userData['User']['id'],$DRdata,'apc_dr');
 
@@ -2683,7 +2680,7 @@ class SalesInvoiceController extends AccountingAppController {
         
         if (!empty( $drMultiple )) {
 
-            Configure::write('debug',2);
+           // Configure::write('debug',2);
 
                $this->loadModel('Delivery.Delivery');
 
@@ -2693,7 +2690,8 @@ class SalesInvoiceController extends AccountingAppController {
 
                     'conditions' => array(
                             'Delivery.dr_uuid' => $del[0]
-                    )
+                    ),
+                    'order' => 'DeliveryDetail.id DESC'
 
                 ));
          
@@ -2706,6 +2704,7 @@ class SalesInvoiceController extends AccountingAppController {
 
 
                       if (!empty($deliveries['DeliveryDetail']['plant_id'])) {
+
                         $invoiceData['SalesInvoice']['plant_id'] = $apc['plant'];
                         
                         } else {

@@ -306,7 +306,7 @@
 			$productData = $this->Product->findById($productId);
 
 
-
+			
 			
 			$specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
 			
