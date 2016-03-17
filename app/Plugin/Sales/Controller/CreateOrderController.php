@@ -196,7 +196,7 @@
 	            	//update quotation details
 	            	$quotationDetails = $this->request->data['QuotationItemDetail'];
 
-	            	$this->QuotationItemDetail->save($quotationDetails, array('validate'=>false, 'callbacks'=>false));
+	            	$this->QuotationItemDetail->save($quotationDetails, array('validate'=>false, 'callbacks'=>false),$userData);
 
 
 	            	//update productSpecification details

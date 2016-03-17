@@ -34,7 +34,10 @@
 							if(!empty($productData['JobTicket'])){
 							
 								echo $this->Html->link('<i class="fa fa-location-arrow fa-lg"></i> Proceed to Job Ticket ', array('controller' => 'ticketing_systems', 'action' => 'view',$productData['Product']['uuid'], $productData['JobTicket']['id'], $productData['JobTicket']['client_order_id'],'plugin' => 'ticket'),array('class' =>'btn btn-primary pull-right','escape' => false));
-							} 
+							} else {
+								echo $this->Html->link('<i class="fa fa-location-arrow fa-lg"></i> Create Job Ticket ', array('controller' => 'ticketing_systems', 'action' => 'view',$productData['Product']['uuid'], $productData['JobTicket']['id'], $productData['JobTicket']['client_order_id'],'plugin' => 'ticket'),array('class' =>'btn btn-primary pull-right','escape' => false));
+
+							}
 
 							//else {
 

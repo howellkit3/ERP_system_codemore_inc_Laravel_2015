@@ -1307,4 +1307,32 @@ class PurchaseOrdersController extends PurchasingAppController {
     $this->set(compact('requestItemData', 'modelTable', 'supplierData', 'currencyData'));
 
     }
+
+    public function supplier_export() {
+
+    	//Configure::write('debug',2);
+
+    	$this->loadModel('Purchasing.Supplier');
+
+    	$this->Supplier->bind(array('Email','Contact','SupplierContactPerson'));
+        
+        $conditions = array();    
+        
+        $limit = '';
+
+         $params = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'fields' => array('id', 'name', 'description','website','created','tin'),
+            'order' => 'Supplier.name ASC',
+            'group' => 'Supplier.id DESC'
+        );
+
+       $suppliers = $this->Supplier->find('all',$params);
+
+
+      $this->set(compact('suppliers'));
+
+       $this->render('Suppliers/xls/suppliers');
+    }
 }

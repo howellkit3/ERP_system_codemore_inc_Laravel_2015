@@ -22,8 +22,8 @@
 
                     <?php 
                     echo $this->Html->link('<i class="fa fa-file fa-lg"></i> Export',array(
-                            'controller' => 'suppliers',
-                            'action' => 'export'),
+                            'controller' => 'purchase_orders',
+                            'action' => 'supplier_export'),
                             array('class' => 'btn btn-success','escape' => false)
                     ); 
 
@@ -178,8 +178,7 @@ $('.searchSupplier').keyup(function() {
                 success: function(data) {
 
                     if(data){
-
-                        $('.appendtable').html(data);
+                        $('.appendtable').html(data).find('li.current').html('<a href="#">'+ $('li.current').text()+'</a>');
 
                     } 
                     
