@@ -232,6 +232,37 @@ class SuppliersController extends PurchasingAppController {
         }
     }
 
+    public function export() {
+
+        Configure::write('debug',0);
+
+     //   // $this->Supplier->bind(array('Email','Contact','SupplierContactPerson'));
+        
+     //    $conditions = array();    
+        
+     //    $limit = 1;
+
+     //     $params = array(
+     //        'conditions' => $conditions,
+     //        'limit' => $limit,
+     //        //'fields' => array('id', 'name', 'description','website','created','tin'),
+     //        // 'order' => 'Supplier.name ASC',
+     //        // 'group' => 'Supplier.id DESC'
+     //    );
+
+     // //   $suppliers = $this->Supplier->find('all',$params);
+
+
+     //    // pr($suppliers);
+     //    // exit();
+
+      // $this->set(compact('suppliers'));
+
+       $this->render('Suppliers/xls/suppliers');
+       
+
+    }
+
 
 
 }

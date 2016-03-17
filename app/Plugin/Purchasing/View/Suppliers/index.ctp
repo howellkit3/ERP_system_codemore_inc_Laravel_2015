@@ -19,9 +19,15 @@
                             <i class="fa fa-search search-icon"></i>
                         
                     </div>
-                    <?php
 
-                         echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add Supplier ', array('controller' => 'suppliers', 'action' => 'add'),array('class' =>'btn btn-primary','escape' => false));
+                    <?php 
+                    echo $this->Html->link('<i class="fa fa-file fa-lg"></i> Export',array(
+                            'controller' => 'suppliers',
+                            'action' => 'export'),
+                            array('class' => 'btn btn-success','escape' => false)
+                    ); 
+
+                    echo $this->Html->link('<i class="fa fa-plus-circle fa-lg"></i> Add Supplier ', array('controller' => 'suppliers', 'action' => 'add'),array('class' =>'btn btn-primary','escape' => false));
                        
                     ?>
                 </div>
