@@ -1465,4 +1465,39 @@ class TicketingSystemsController extends TicketAppController {
         ));  
     }
 
+
+    public function create_job_ticket($productId = null, $ClientOrderId = null ,$poNumber = null) {
+
+
+        $userData = $this->Session->read('Auth');
+
+        if (!empty($productId) && !empty($ClientOrderId) && !empty($poNumber)) {
+
+            $clientData['Product']['id'] = $productId;
+
+            $clientData['ClientOrder']['po_number'] = $poNumber;
+
+            $save = $this->JobTicket->saveTicket( $clientData ,$userData['User']['id'],$ClientOrderId);
+
+
+            if ($save) {
+
+                $this->JobTicket->bind(array('Product'));
+
+                if ($job = $this->JobTicket->findById( $save ) ) {
+              //  $productUuid = null,$ticketId = null,$clientOrderId = null
+
+                    $this->Session->setFlash('Job Ticket Successfully Created','success');
+                    $this->redirect(array(
+                        'controller' => 'ticketing_systems',
+                        'action' => 'view',
+                        $job['Product']['uuid'],
+                        $job['JobTicket']['id'],
+                        $job['JobTicket']['client_order_id']
+                    ));
+                }
+            }
+        }
+    }
+
 }
