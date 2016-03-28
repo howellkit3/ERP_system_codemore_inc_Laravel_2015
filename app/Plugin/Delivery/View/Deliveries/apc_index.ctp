@@ -1,5 +1,4 @@
 <?php echo $this->element('deliveries_options'); ?><br><br>
-
 <?php $active_tab = !empty($this->params['named']['tab']) ? $this->params['named']['tab'] : 'tab-waiting';
 ?>
 
