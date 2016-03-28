@@ -2661,7 +2661,6 @@ CREATE TABLE `koufu_accounting`.`sales_invoice_connection`(
   PRIMARY KEY (`id`)
 );
 
-
 ALTER TABLE `sales_invoices`
 ADD COLUMN `apc_dr`  varchar(255) NULL AFTER `dr_uuid`;
 ALTER TABLE `sales_invoices`
@@ -2675,3 +2674,24 @@ ADD COLUMN `job_ticket`  int(11) NULL DEFAULT 1 AFTER `status_id`;
 /* aldrin added this march 11 2016 */
 ALTER TABLE `koufu_sale`.`client_orders`   
   ADD COLUMN `job_ticket` INT(11) NULL AFTER `modified`;
+
+
+/* aldrin added this march 21 2016 */
+CREATE TABLE `apc_deliveries` (
+`id`  int NULL AUTO_INCREMENT ,
+`apc_dr`  varchar(255) NULL ,
+`company_id`  int(11) NULL ,
+`contact_id`  int(11) NULL ,
+`tel_num`  int(11) NULL ,
+`delivery_schedule_id`  int(11) NULL ,
+`created`  datetime NULL ,
+`modified`  datetime NULL ,
+`created_by`  int(11) NULL ,
+`modified_by`  int(11) NULL ,
+PRIMARY KEY (`id`));
+
+/* aldrin added this march 22 2016 */
+ALTER TABLE `apc_deliveries`
+ADD COLUMN `client_order_id` int(11) NULL AFTER `delivery_schedule_id`;
+ALTER TABLE `apc_deliveries`
+ADD COLUMN `plant_id` int(11) NULL AFTER `company_id`;

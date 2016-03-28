@@ -5,7 +5,7 @@ App::import('Vendor', 'DOMPDF', true, array(), 'dompdf'.DS.'dompdf_config.inc.ph
 
 class RequestsController extends PurchasingAppController {
 
-	public $helpers = array('Purchasing.Country');
+	public $helpers = array('Purchasing.Country','Purchasing.PhpExcel');
 
 	public $uses = array('Purchasing.Supplier');
 

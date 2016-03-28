@@ -41,6 +41,10 @@ class DeliveriesController extends DeliveryAppController {
      
         $this->loadModel('Sales.Company');
 
+        $this->loadModel('Delivery.ApcDelivery');
+
+        $this->loadModel('Sales.ClientOrder');
+
         $userData = $this->Session->read('Auth');
 
          if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
@@ -58,7 +62,22 @@ class DeliveriesController extends DeliveryAppController {
             'order' => 'Company.company_name ASC'
         ));
 
-        $this->set(compact('noPermissionSales','userData','companyData'));
+        //APC Deliveries
+        $limit = 10;
+
+        $conditions = array();
+        
+        $this->ApcDelivery->bind(array('ClientOrderDeliverySchedule','ClientOrder','Company'));
+
+        $this->ApcDelivery->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'group' => 'apc_dr',
+            'order' => 'ApcDelivery.created DESC',
+        );
+        $deliveries = $this->paginate('ApcDelivery');
+
+        $this->set(compact('noPermissionSales','userData','companyData','deliveries'));
 
     }
 
@@ -68,22 +87,61 @@ class DeliveriesController extends DeliveryAppController {
 
           $this->loadModel('Sales.Company');
 
-         if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
+          $this->loadModel('Delivery.Plant');
 
-            $noPermissionSales = 'disabled not-active';
+          if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
 
-        }else{
+                $noPermissionSales = 'disabled not-active';
 
-            $noPermissionSales = ' ';
-        }
+          } else {
+
+                $noPermissionSales = ' ';
+          }
 
          $companyData = $this->Company->find('list', array(
             'fields' => array('id','company_name'),
             'order' => 'Company.company_name ASC'
+         ));
+
+         $plants = $this->Plant->find('list',array(
+            'fields' => array('id','name')
         ));
 
+        if (!empty($this->request->data)) { 
+            
+            $this->loadModel('Delivery.ApcDelivery');
 
-        $this->set(compact('noPermissionSales','userData','companyData'));
+            //check apc dr
+            $apcDr = $this->ApcDelivery->find('count',array(
+                'conditions' => array('ApcDelivery.apc_dr' => $this->request->data['Delivery']['apc_dr'])
+            ));
+
+            if ( $apcDr > 8) {
+
+            $this->Session->setFlash('APC DR already has 8 item, Please input another one','error');
+            
+            return $this->redirect(array('controller' => 'deliveries','action' => 'create_apc_dr'));
+            
+            }
+              //  pr($this->request->data);
+            $data = $this->ApcDelivery->saveData($this->request->data);
+
+
+            if ($this->ApcDelivery->saveAll($data)) {
+                
+                $this->Session->setFlash('APC DR successfully saved','success');
+                
+                return $this->redirect(array('controller' => 'deliveries','action' => 'apc_index'));
+            
+            } else {
+
+                $this->Session->setFlash('There\'s an error saveing the data');
+
+            }
+
+        }
+
+        $this->set(compact('noPermissionSales','userData','companyData','plants'));
 
 
     } 
@@ -1913,6 +1971,28 @@ class DeliveriesController extends DeliveryAppController {
             
     }
 
+    public function view_apc_dr($id = null) {
+        
+        if (!empty($id)) {
+            
+            $this->loadModel('Delivery.ApcDelivery');
+            
+            $this->loadModel('Delivery.Plant');
+            
+            $this->ApcDelivery->bind(array('ClientOrderDeliverySchedule','ClientOrder','Company','Plant'));
+
+            $apcDr = $this->ApcDelivery->findById($id);            
+
+            $items = $this->ApcDelivery->find('all',array(
+                'conditions' => array('')    
+            ));
+
+            $noPermissionSales = ' ';
+
+            $this->set(compact('apcDr','noPermissionSales','plants'));
+        }    
+    }
+
      public function view_tr($tr_id = null) {
 
         $userData = $this->Session->read('Auth');
@@ -2652,10 +2732,6 @@ class DeliveriesController extends DeliveryAppController {
 
             $saveData = array();    
 
-
-            pr($data);
-            exit();
-
             foreach ($data['Item'] as $key => $value) {
                   
                     $scheduleInfo = $this->ClientOrderDeliverySchedule->find('first', array(
@@ -2878,5 +2954,83 @@ class DeliveriesController extends DeliveryAppController {
        exit(); 
     }
     
+
+    public function check_contact() {
+
+        $query = $this->request->query;
+
+        if (!empty($query)) {
+
+            $this->loadModel('Sales.Company');
+
+            $this->Company->bind(array('Email','Contact','ContactPerson'));
+
+            $company = $this->Company->find('first',array(
+                'conditions' => array('Company.id' => $query['company_id'])
+            ));
+
+            echo json_encode($company);
+
+        }
+
+        exit();
+    }
+
+    public function find_delivery_schedule() {
+
+        if (!empty($this->request->data)) {
+
+            // pr($this->request->data);
+            // exit();
+
+            $this->loadModel('Sales.ClientOrderDeliverySchedule');
+
+            $this->ClientOrderDeliverySchedule->bind(array('ClientOrder', 'QuotationDetail','Company', 'Product'));
+
+            $data = $this->request->data;
+
+            $conditions = array();
+
+            if (!empty($data['company_id'])) {
+
+                if (in_array($data['company_id'],array('3','4','5','6','60','102','1223'))) {
+
+                    $conditions = array_merge($conditions,array(
+                            'ClientOrder.company_id' => array('3','4','5','6','60','102','1223')
+                    ));
+
+                } else {
+                     
+                     $conditions = array_merge($conditions,array(
+                        'ClientOrder.company_id' => $data['company_id']
+                    ));
+
+                }
+               
+            }
+
+            if (!empty($data['from']) && !empty($data['to'])) {
+
+               // $conditions = array_merge($conditions,array('date(ClientOrderDeliverySchedule.schedule) BETWEEN ? AND ?' => array($data['from'],$data['to'])));
+            }
+
+           // pr($conditions);
+
+            $limit = '';
+
+            $clientOrder = $this->ClientOrderDeliverySchedule->find('all',array(
+                'conditions' => $conditions,
+                'limit' => $limit,
+                'order' => 'ClientOrderDeliverySchedule.schedule DESC'
+            ));
+
+      
+
+           $this->set(compact('clientOrder'));
+        }
+
+        $this->render('Deliveries/ajax/schedule');
+    }
+
 
 }

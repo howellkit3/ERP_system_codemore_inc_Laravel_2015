@@ -1,4 +1,8 @@
 jQuery(function($){
+
+
+
+
     $('.approvedQuotation').click(function () {
         //var data1 = 1;
         var data = $(this).attr('data');
