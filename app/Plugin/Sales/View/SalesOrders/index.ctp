@@ -15,10 +15,27 @@
                 <h2 class="pull-left"><b>Client Order List</b></h2>
 
                   <div class="form-group pull-right">
-                        <?php //echo $this->Form->create('Quotation',array('controller' => 'quotations','action' => 'search', 'type'=> 'get')); ?>
-                            <input placeholder="Search..." class="form-control searchClientOrder"  />
+                        <?php echo $this->Form->create('SaleOrder',array('controller' => 'sales_orders','action' => 'search', 'type'=> 'get')); ?>
+                            <div class="pull-left col-lg-5">
+                            <input placeholder="Search..." name="data[SaleOrder][search]"class="form-control searchClientOrder"  />
                             <i class="fa fa-search search-icon"></i>
-                         <?php //echo $this->Form->end(); ?>
+                            </div>
+                            <?php 
+                                echo $this->Form->input('type',array(
+                                        'type' => 'select',
+                                        'options' => array(
+                                            'po_number' => 'PO NUMBER',
+                                            'item' => 'Item',
+                                            'schedule_num' => 'CO Number'
+                                        ),
+                                        'empty' => '-- Search CO --',
+                                        'label' => false,
+                                        'class' => 'form-control',
+                                        'div' => 'pull-left'
+                                ));
+                            ?>
+                            <button class="btn btn-success" id="search"> <i class="fa fa-search"></i> Search </button>
+                         <?php echo $this->Form->end(); ?>
                     </div>
             </header>
         </div>
@@ -69,3 +86,8 @@
         </div>
     </div>
 </div>
+<style>
+.search-icon {
+  right: 20px !important;
+}
+</style>

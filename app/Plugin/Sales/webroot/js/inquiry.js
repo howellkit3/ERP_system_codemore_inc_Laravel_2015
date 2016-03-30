@@ -1,6 +1,6 @@
 jQuery(function($){
     
-    $('body').on('keyup','.searchClientOrder',function(){
+  /*  $('body').on('keyup','.searchClientOrder',function(){
 
         $this = $(this);
 
@@ -23,7 +23,30 @@ jQuery(function($){
 	        });
 	    };
 
-    });
+    }); */
+
+	$('#SaleOrderSearchForm').submit(function(e){
+
+
+        	$container = $('.result_client_table');
+
+			$container.html('<img src="'+serverPath+'/img/loader.gif"/>');
+
+	        $.ajax({
+
+	            url: serverPath + "sales/sales_orders/search/",
+	            type: "POST",
+	            dataType: "html",
+	            data : {'name' : $('.searchClientOrder').val() ,'type' : $('#SaleOrderType').val() },
+	            success: function(data) {
+	              	
+	              	$container.html(data); 
+	                
+	              }
+	        });
+		e.preventDefault();
+
+	});
 
 	$.ajax({
 

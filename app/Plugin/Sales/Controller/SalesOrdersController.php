@@ -66,7 +66,8 @@ class SalesOrdersController extends SalesAppController {
         $clientOrder = $this->ClientOrder->find('all',array(
                       'group' => array('ClientOrder.id'),
                       'conditions' => $conditions,
-                      'limit' => 10
+                      'limit' => 10,
+                      'order' => 'ClientOrder.id DESC',
                       )); 
 
 
@@ -128,6 +129,105 @@ class SalesOrdersController extends SalesAppController {
      }
 	}
 
+  public function search() {
+
+    $this->loadModel('Sales.Product');
+
+    $userData = $this->Session->read('Auth');
+    
+    $this->Quotation->bind(array('ClientOrder'));
+
+    //$clientOrder = $this->Quotation->ClientOrder->find('all', array('order' => 'ClientOrder.id DESC'));
+    $this->Quotation->ClientOrder->bind(array('QuotationItemDetail','QuotationDetail','Company','Product'));
+
+    $limit = 10;
+
+    $conditions = array('ClientOrder.status_id' => null);
+
+    $query = $this->request->data;
+
+    $this->loadModel('Sales.Product');
+    $this->Quotation->bind(array('ClientOrder'));
+    $this->Quotation->ClientOrder->bind(array('QuotationItemDetail','QuotationDetail','Company','Product'));
+
+    switch ($query['type']) {
+      case 'item':
+         if (!empty($query['name'])) {
+           $conditions = array('ClientOrder.status_id' => null, 'AND' => 
+                      array('Product.name LIKE' => '%' . $query['name'] . '%')
+                      );
+         } 
+      break;
+      case 'po_number':
+         if (!empty($query['name'])) {
+           $conditions = array('ClientOrder.status_id' => null, 'AND' => 
+                      array('ClientOrder.po_number LIKE' => '%' . $query['name'] . '%')
+                      );
+         } 
+      break;
+      case 'schedule_num':
+         if (!empty($query['name'])) {
+           $conditions = array('ClientOrder.status_id' => null, 'AND' => 
+                      array('ClientOrder.uuid LIKE' => '%' . $query['name'] . '%')
+                      );
+         } 
+      break;
+      default:
+      if (!empty($query['name'])) {
+          $conditions = array('ClientOrder.status_id' => null, 'OR' => array(
+                        array('ClientOrder.po_number LIKE' => '%' . $query['name'] . '%'),
+                        array('ClientOrder.uuid LIKE' => '%' . $query['name'] . '%'),
+                          array('Product.name LIKE' => '%' . $query['name'] . '%'),
+                          array('Company.company_name LIKE' => '%' . $query['name'] . '%')
+                          ));
+      } 
+      break;
+    }
+       
+
+    $clientOrder = $this->ClientOrder->find('all',array(
+                  'group' => array('ClientOrder.id'),
+                  'conditions' => $conditions,
+                  'limit' => 10,
+                  'order' => 'ClientOrder.id DESC',
+                  )); 
+
+
+
+    $this->loadModel('Sales.Company');
+
+    $this->Company->bind(array('Inquiry'));
+
+    $companyData = $this->Company->find('list',array(
+                          'fields' => array('id','company_name')
+                        ));
+
+    // $inquiryId = $this->Company->Inquiry->find('list',array(
+    //                           'fields' => array('company_id')
+    //                         ));
+
+    // $quoteName = $this->Quotation->find('list',array('id','name'));
+
+    //no permission sales/Receivable Staff/Accounting Head
+    if ($userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9 ) {
+
+        $noPermission = 'disabled not-active';
+
+    }else{
+      $noPermission = ' ';
+    }
+
+      $this->set(compact('clientOrder','quoteName','companyData','inquiryId','noPermission'));
+
+     if ($this->request->is('ajax')) {
+      
+      $this->render('SalesOrders/ajax/index');
+     
+     }
+
+
+
+  }
 	public function view($clientOrderId = null){
 
     $this->loadModel('Currency');
