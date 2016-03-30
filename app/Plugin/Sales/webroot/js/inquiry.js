@@ -1,5 +1,22 @@
 jQuery(function($){
     
+    $(window).load(function(){
+
+    	 $.ajax({
+
+	            url: serverPath + "sales/sales_orders/count/ClientOrder",
+	            type: "GET",
+	            dataType: "json",
+	            success: function(data) {
+	              	
+
+	               		$('#'+data.model+'Count').text(data.count);
+	                
+	                }
+	        });
+
+
+    });
   /*  $('body').on('keyup','.searchClientOrder',function(){
 
         $this = $(this);
@@ -28,13 +45,13 @@ jQuery(function($){
 	$('#SaleOrderSearchForm').submit(function(e){
 
 
-        	$container = $('.result_client_table');
+        	$container = $('#appendResult');
 
 			$container.html('<img src="'+serverPath+'/img/loader.gif"/>');
 
 	        $.ajax({
 
-	            url: serverPath + "sales/sales_orders/search/",
+	            url: serverPath + "sales/sales_orders/index/",
 	            type: "POST",
 	            dataType: "html",
 	            data : {'name' : $('.searchClientOrder').val() ,'type' : $('#SaleOrderType').val() },

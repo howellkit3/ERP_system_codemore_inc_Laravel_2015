@@ -1,4 +1,17 @@
-<?php
+
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th><a href="#"><span>Client Order No.</span></a></th>
+                                <th><a href="#"><span>PO No.</span></a></th>
+                                <th><a href="#"><span>Company</span></a></th>
+                                <th><a href="#"><span>Item</span></a></th>
+                                <th class="text-center"><a href="#"><span>Created</span></a></th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <?php
     if (count($clientOrder) > 0) : 
  foreach ($clientOrder as $clientOderData):  ?>
     <tr class="">
@@ -42,4 +55,15 @@
 ?> 
 <?php else : ?>
    <font color="red"><b>No result..</b></font>
-<?php endif; ?>
+<?php endif; ?>  
+
+                    </table>
+<hr>
+
+<div class="paging" id="item_type_pagination">
+<?php
+echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
+echo $this->Paginator->numbers(array('separator' => ''));
+echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+?>
+</div>

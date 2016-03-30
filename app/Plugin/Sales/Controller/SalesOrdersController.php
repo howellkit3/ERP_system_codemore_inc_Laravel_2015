@@ -18,7 +18,7 @@ class SalesOrdersController extends SalesAppController {
 
     }
 	    	    
-	public function index() {
+	public function index_2() {
 
     $this->loadModel('Sales.Product');
 
@@ -105,11 +105,11 @@ class SalesOrdersController extends SalesAppController {
      											'fields' => array('id','company_name')
      										));
 
-		$inquiryId = $this->Company->Inquiry->find('list',array(
-     													'fields' => array('company_id')
-     												));
+		// $inquiryId = $this->Company->Inquiry->find('list',array(
+  //    													'fields' => array('company_id')
+  //    												));
 
-		$quoteName = $this->Quotation->find('list',array('id','name'));
+		// $quoteName = $this->Quotation->find('list',array('id','name'));
 
     //no permission sales/Receivable Staff/Accounting Head
     if ($userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9 ) {
@@ -129,7 +129,7 @@ class SalesOrdersController extends SalesAppController {
      }
 	}
 
-  public function search() {
+  public function index() {
 
     $this->loadModel('Sales.Product');
 
@@ -149,6 +149,8 @@ class SalesOrdersController extends SalesAppController {
     $this->loadModel('Sales.Product');
     $this->Quotation->bind(array('ClientOrder'));
     $this->Quotation->ClientOrder->bind(array('QuotationItemDetail','QuotationDetail','Company','Product'));
+
+    if (!empty($query)) {
 
     switch ($query['type']) {
       case 'item':
@@ -185,13 +187,23 @@ class SalesOrdersController extends SalesAppController {
     }
        
 
-    $clientOrder = $this->ClientOrder->find('all',array(
-                  'group' => array('ClientOrder.id'),
-                  'conditions' => $conditions,
-                  'limit' => 10,
-                  'order' => 'ClientOrder.id DESC',
-                  )); 
+       }
 
+    // $clientOrder = $this->ClientOrder->find('all',array(
+    //               'group' => array('ClientOrder.id'),
+    //               'conditions' => $conditions,
+    //               'limit' => 10,
+    //               'order' => 'ClientOrder.id DESC',
+    //               )); 
+     $this->paginate = array(
+            'conditions' => $conditions,
+            'limit' => $limit,
+            'order' => 'ClientOrder.id DESC',
+            'group' => 'ClientOrder.id',
+            'url' => array('action' => 'index')
+        );
+
+        $clientOrder = $this->paginate('ClientOrder');
 
 
     $this->loadModel('Sales.Company');
@@ -202,11 +214,9 @@ class SalesOrdersController extends SalesAppController {
                           'fields' => array('id','company_name')
                         ));
 
-    // $inquiryId = $this->Company->Inquiry->find('list',array(
-    //                           'fields' => array('company_id')
-    //                         ));
+    $inquiryId = $this->Company->Inquiry->find('count');
 
-    // $quoteName = $this->Quotation->find('list',array('id','name'));
+    $quoteName = $this->Quotation->find('count');
 
     //no permission sales/Receivable Staff/Accounting Head
     if ($userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9 ) {
@@ -414,5 +424,17 @@ class SalesOrdersController extends SalesAppController {
         ));  
 
     }
-	
+  
+
+  public function count($model = 'ClientOrder') {
+    // if () {}
+      $return = array();
+
+      $this->loadModel('Sales.ClientOrder');
+      $return['count'] = $this->$model->find('count');
+      $return['model'] = $model;
+
+      echo json_encode($return);
+      exit();
+  }	
 }

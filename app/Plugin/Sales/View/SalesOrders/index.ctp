@@ -40,7 +40,7 @@
             </header>
         </div>
             <div class="main-box-body clearfix">
-                <div class="table-responsive">
+                <div class="table-responsive" id="appendResult">
 
                   
 
