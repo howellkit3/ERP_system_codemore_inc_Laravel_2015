@@ -18,8 +18,8 @@ class DeliveriesController extends DeliveryAppController {
         
         $this->loadModel('Sales.Company');
 
-        if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
-
+        if (in_array($userData['User']['role_id'], array(6,9))) {
+       
             $noPermissionSales = 'disabled not-active';
 
         } else {
@@ -47,7 +47,7 @@ class DeliveriesController extends DeliveryAppController {
 
         $userData = $this->Session->read('Auth');
 
-         if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
+        if (in_array($userData['User']['role_id'], array(6,9))) {
 
             $noPermissionSales = 'disabled not-active';
 
@@ -89,8 +89,8 @@ class DeliveriesController extends DeliveryAppController {
 
           $this->loadModel('Delivery.Plant');
 
-          if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
-
+         if (in_array($userData['User']['role_id'], array(6,9))) {
+       
                 $noPermissionSales = 'disabled not-active';
 
           } else {
@@ -1045,8 +1045,8 @@ class DeliveriesController extends DeliveryAppController {
 
         $this->loadModel('Sales.ClientOrderDeliverySchedule');
         
-        if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
-
+         if (in_array($userData['User']['role_id'], array(6,9))) {
+       
             $noPermissionSales = 'disabled not-active';
 
         }else{
@@ -2207,8 +2207,8 @@ class DeliveriesController extends DeliveryAppController {
             }
         }
 
-        if ($userData['User']['role_id'] == 3 || $userData['User']['role_id'] == 6 || $userData['User']['role_id'] == 9) {
-
+        if (in_array($userData['User']['role_id'], array(6,9))) {
+       
             $noPermissionSales = 'disabled not-active';
 
         }else{

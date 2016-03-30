@@ -16,6 +16,7 @@
 					<h1 class="pull-left">
 						Clients Order View
 					</h1>
+
 					<div class="filter-block pull-right">
 						<?php 
 	                       
@@ -24,13 +25,14 @@
 	                        	echo $this->Html->link('<i class="fa fa-eye fa-lg"></i> View Spec ', array('controller' => 'create_order', 'action' => 'view_specs',$quotationData['QuotationDetail']['product_id'],1,$clientOrderData['ClientOrder']['id']),array('class' =>'btn btn-primary pull-right','escape' => false));
 	                        } else {
 
-	                        	 echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'sales_orders', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+	                        	 // echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Go Back ', array('controller' => 'sales_orders', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 
-	                        	  echo $this->Html->link('<i class="fa fa-ticket"></i> Create Job Ticket ', array('controller' => 'sales_orders', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
+	                        	 //  echo $this->Html->link('<i class="fa fa-ticket"></i> Create Job Ticket ', array('controller' => 'sales_orders', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 
 	                        }
 	                    ?>
                     </div>
+                    
 				</header>
 			</div>
 		</div>

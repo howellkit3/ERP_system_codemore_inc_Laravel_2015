@@ -147,7 +147,9 @@
 
             $unitPrice = number_format($list['QuotationItemDetail']['unit_price'],4);
             $quantity = (float) $list['DeliveryDetail']['quantity'] ;
-            $totalQty = $quantity * $unitPrice; $total += $totalQty;
+
+
+            $totalQty = $quantity * floatval(str_replace(',', '',$unitPrice));; $total += $totalQty;
             $sheet->setCellValue('K'.$start, number_format($totalQty,2)); 
            // $sheet->setCellValue('K'.$start, $totalQty);
 

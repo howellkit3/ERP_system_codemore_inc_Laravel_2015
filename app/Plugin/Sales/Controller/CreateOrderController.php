@@ -286,12 +286,12 @@
 			$companyData = Cache::read('companyData');
 			
 			//if (!$companyData) {
-				$companyData = $this->Company->find('list', array(
-	     											'fields' => array( 
-	     												'id','company_name')
-	     										));
+			$companyData = $this->Company->find('list', array(
+     											'fields' => array( 
+     												'id','company_name')
+     										));
 
-	            Cache::write('companyData', $companyData);
+            Cache::write('companyData', $companyData);
 	       	// }
 
 	        $processData = $this->Process->find('list',
@@ -306,8 +306,7 @@
 			$productData = $this->Product->findById($productId);
 
 			//pr($productData); exit();
-			
-			
+
 			$specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
 			
 			//find if product has specs
@@ -315,11 +314,12 @@
 
 			$noPermission = ' '; 
 
-
 			$this->set(compact('noPermission','clientOrderData','companyData','processData','specs','productId','productData','clientOrderId','formatDataSpecs','unitData','subProcess'));
 
 			if($ifSpec == 0){
+
 				$this->render('view_specs_check');
+			
 			}
 		}
 
@@ -365,12 +365,12 @@
 			$companyData = Cache::read('companyData');
 			
 			//if (!$companyData) {
-				$companyData = $this->Company->find('list', array(
+			$companyData = $this->Company->find('list', array(
 	     											'fields' => array( 
 	     												'id','company_name')
 	     										));
 
-	            Cache::write('companyData', $companyData);
+	        Cache::write('companyData', $companyData);
 	       	// }
 
 			// $this->

@@ -189,21 +189,21 @@ class SalesOrdersController extends SalesAppController {
 
        }
 
-    // $clientOrder = $this->ClientOrder->find('all',array(
-    //               'group' => array('ClientOrder.id'),
-    //               'conditions' => $conditions,
-    //               'limit' => 10,
-    //               'order' => 'ClientOrder.id DESC',
-    //               )); 
-     $this->paginate = array(
-            'conditions' => $conditions,
-            'limit' => $limit,
-            'order' => 'ClientOrder.id DESC',
-            'group' => 'ClientOrder.id',
-            'url' => array('action' => 'index')
-        );
+    $clientOrder = $this->ClientOrder->find('all',array(
+                  'group' => array('ClientOrder.id'),
+                  'conditions' => $conditions,
+                  //'limit' => 10,
+                  'order' => 'ClientOrder.id DESC',
+                  )); 
+     // $this->paginate = array(
+     //        'conditions' => $conditions,
+     //        'limit' => $limit,
+     //        'order' => 'ClientOrder.id DESC',
+     //        'group' => 'ClientOrder.id',
+     //        'url' => array('action' => 'index')
+     //    );
 
-        $clientOrder = $this->paginate('ClientOrder');
+     //    $clientOrder = $this->paginate('ClientOrder');
 
 
     $this->loadModel('Sales.Company');

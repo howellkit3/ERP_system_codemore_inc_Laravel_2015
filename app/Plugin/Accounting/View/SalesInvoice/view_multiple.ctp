@@ -155,12 +155,27 @@
 									<center>
 										<?php 
 
+
+
 											if(!empty($list['DeliveryDetail']['quantity'])){
 
-											  	$totalQty = $list['DeliveryDetail']['quantity'] * number_format($list['QuotationItemDetail']['unit_price'],4);
+											  	$totalQty = $list['DeliveryDetail']['quantity'] * floatval(str_replace(',', '',$unitPrice));
+
 											}else{
 
-												$totalQty = $list['ClientOrderDeliverySchedule']['quantity'] * number_format($list['QuotationItemDetail']['unit_price'],4);
+												$totalQty = $list['ClientOrderDeliverySchedule']['quantity'] * floatval(str_replace(',', '',$unitPrice));
+											}
+
+
+											if (!empty($_GET['data'])) {
+												Configure::write('debug',2);
+
+												pr($list['DeliveryDetail']['quantity']);
+
+												pr($list['QuotationItemDetail']['unit_price']);
+
+												pr($totalQty);
+
 											}
 
 											echo number_format($totalQty,2) ; $total += $totalQty;

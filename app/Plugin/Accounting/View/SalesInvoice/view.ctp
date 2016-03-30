@@ -155,6 +155,12 @@
 												$totalQty = $clientData['ClientOrderDeliverySchedule'][0]['quantity'] * $clientData['QuotationItemDetail']['unit_price'];
 											}
 
+											if (!empty($_GET['data'])) {
+												Configure::write('debug',2);
+												pr($totalQty);
+
+											}
+
 											echo number_format($totalQty,2) ;
 										?>
 									</center>
