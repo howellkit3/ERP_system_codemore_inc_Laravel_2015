@@ -260,7 +260,16 @@
 
 			$this->loadModel('Sales.ProductSpecification');
 
+			$this->loadModel('Sales.Quotation');
+
+
+					$this->loadModel('Ticket.JobTicket');
+
+			$this->ClientOrder->bind(array('Quotation','QuotationItemDetail'));
+
 			$clientOrderData = $this->ClientOrder->find('first',array('conditions' => array('ClientOrder.id' => $clientOrderId)));
+
+
 
 			$subProcess = $this->SubProcess->find('list',
 											array('fields' => 
@@ -303,7 +312,33 @@
 
 	        $this->Product->bindProduct();
 
+
+
 			$productData = $this->Product->findById($productId);
+
+
+			$JobTicket = $this->JobTicket->find('first',array('conditions' => array(
+
+				'product_id' => $productId,
+				'client_order_id' => $clientOrderId
+			)));
+
+
+				if (!empty($_GET['test'])) {
+
+				
+				
+	      	  Configure::write('debug',2);
+				//$this->Product->bindProduct();
+			$productData = $this->Product->find('first',array(
+					'conditions' => array('Product.id' => $productId)
+				));
+				
+				pr($JobTicket );
+				pr($productData );
+
+			}
+
 
 			//pr($productData); exit();
 
@@ -314,7 +349,7 @@
 
 			$noPermission = ' '; 
 
-			$this->set(compact('noPermission','clientOrderData','companyData','processData','specs','productId','productData','clientOrderId','formatDataSpecs','unitData','subProcess'));
+			$this->set(compact('noPermission','clientOrderData','companyData','processData','specs','productId','productData','clientOrderId','formatDataSpecs','unitData','subProcess','JobTicket'));
 
 			if($ifSpec == 0){
 

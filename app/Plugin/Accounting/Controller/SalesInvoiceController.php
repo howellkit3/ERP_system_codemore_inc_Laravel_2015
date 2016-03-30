@@ -2275,7 +2275,6 @@ class SalesInvoiceController extends AccountingAppController {
 
         $limit = 10;
 
-
         $query = $this->request->query;
 
         $conditions = array();
@@ -2322,7 +2321,6 @@ class SalesInvoiceController extends AccountingAppController {
         $customerID = 0;
 
         if (!empty($query['data']['action']) && in_array($query['data']['action'], array('go','export'))) {
-
 
             if (!empty($query['company_id'])) {
 
@@ -2393,9 +2391,6 @@ class SalesInvoiceController extends AccountingAppController {
                     ));
 
 
-                    pr( $dr );
-
-
                    if (in_array($query['company_id'],array('3','4','5','6','60','102','1223'))) {
                     
                     $company = array('3','4','5','6','60','102','1223');
@@ -2464,13 +2459,21 @@ class SalesInvoiceController extends AccountingAppController {
                     LEFT JOIN koufu_sale.companies AS Company
                     ON Company.id = ClientOrder.company_id
                     WHERE '.$conditions.' 
-                    group by Delivery.id DESC
+                    group by Delivery.id DESC LIMIT 1
                     ');
 
                     $deliveries[$key] = $list;
                     $deliveries[$key]['Delivery'] = $dr;
 
             }
+
+            if (!empty($_GET['test'])) {
+                Configure::write('debug',2);
+                pr($dr);
+
+                exit();
+            }
+
 
             $this->set(compact('invoices','companies','deliveries','customerID','plants','companyName','date'));
 

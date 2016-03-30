@@ -31,9 +31,9 @@
 						<?php  //pr($clientOrderData); exit;
 							echo $this->Html->link('<i class="fa fa-arrow-circle-left fa-lg"></i> Return to Sales ', array('controller' => 'sales_orders', 'action' => 'index'),array('class' =>'btn btn-primary pull-right','escape' => false));
 
-							if(!empty($productData['JobTicket'])){
+							if(!empty($JobTicket)){
 							
-								echo $this->Html->link('<i class="fa fa-location-arrow fa-lg"></i> Proceed to Job Ticket ', array('controller' => 'ticketing_systems', 'action' => 'view',$productData['Product']['uuid'], $productData['JobTicket']['id'], $clientOrderId,'plugin' => 'ticket'),array('class' =>'btn btn-primary pull-right','escape' => false));
+								echo $this->Html->link('<i class="fa fa-location-arrow fa-lg"></i> Proceed to Job Ticket ', array('controller' => 'ticketing_systems', 'action' => 'view',$productData['Product']['uuid'], $JobTicket['JobTicket']['id'], $clientOrderId,'plugin' => 'ticket'),array('class' =>'btn btn-primary pull-right','escape' => false));
 							} else {
 
 								echo $this->Html->link('<i class="fa fa-location-arrow fa-lg"></i> Create Job Ticket ', array('controller' => 'ticketing_systems', 'action' => 'create_job_ticket',$productData['Product']['id'], $clientOrderId ,$clientOrderData['ClientOrder']['po_number'],'plugin' => 'ticket'),array('class' =>'btn btn-primary pull-right','escape' => false));

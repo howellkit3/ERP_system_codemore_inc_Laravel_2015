@@ -36,16 +36,16 @@ body { margin: 5px; }
 										echo !empty($companyData[$productData['Product']['company_id']]) ? ucfirst($companyData[$ticketData['Product']['company_id']]) : '' ;
 
 									?> </td>
-								<td class="text-right border-bottom-dashed"><label class="strong">Schedule No</label> 
+								<td class="text-right border-bottom-dashed"><label class="strong">Schedule No </label> 
 								<?php echo $ticketData['JobTicket']['uuid']; ?></td>
 							</tr>
 							<tr>
-								<td class="border-bottom-dashed"><label class="strong">Item</label> <?php echo $ticketData['Product']['name']; ?></td>
+								<td class="border-bottom-dashed"><label class="strong">Item </label> <?php echo $ticketData['Product']['name']; ?></td>
 								<td class="text-right border-bottom-dashed"><label>   </label> <?php echo $ticketData['JobTicket']['po_number']; ?> </td>
 							</tr>
 							
 							<tr>
-								<td ><label class="strong">Item Size</label> 
+								<td ><label class="strong">Item Size </label> 
 
 									<?php if(empty($specs['ProductSpecification']['size1']) && empty($specs['ProductSpecification']['size2']) && empty($specs['ProductSpecification']['size3'])){ ?>
 
@@ -58,7 +58,7 @@ body { margin: 5px; }
 									<?php echo !empty($specs['ProductSpecification']['size3']) ? ' x ' .  $specs['ProductSpecification']['size3'] : '' ?></td>
 
 									<?php }  ?>
-								<td class="text-right"><label class="strong">Del Date</label> <?php 
+								<td class="text-right"><label class="strong">Del Date </label> <?php 
 								echo !empty($delData['ClientOrderDeliverySchedule'][0]['schedule']) ? date('M d, Y', strtotime($delData['ClientOrderDeliverySchedule'][0]['schedule'])) : ''; ?>
 								</td>
 							</tr>

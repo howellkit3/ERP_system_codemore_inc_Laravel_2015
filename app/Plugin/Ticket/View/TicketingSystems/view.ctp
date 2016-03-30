@@ -87,7 +87,7 @@
 									?>
 								</div>
 								<div class="col-lg-4">
-									Schedule No. : <?php echo $ticketData['JobTicket']['uuid']; ?>
+									Schedule No. : <?php echo $delData['ClientOrder']['uuid']; ?> <?php //echo $ticketData['JobTicket']['uuid']; ?> 
 								</div>
 							</div>
 
