@@ -324,16 +324,19 @@
 			)));
 
 
+			$specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
+			
 				if (!empty($_GET['test'])) {
 
 				
 				
 	      	  Configure::write('debug',2);
 				//$this->Product->bindProduct();
-			$productData = $this->Product->find('first',array(
+				$productData = $this->Product->find('first',array(
 					'conditions' => array('Product.id' => $productId)
 				));
 				
+				pr($specs);
 				pr($JobTicket );
 				pr($productData );
 
@@ -342,8 +345,6 @@
 
 			//pr($productData); exit();
 
-			$specs = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $productData['Product']['id'])));
-			
 			//find if product has specs
 			$formatDataSpecs = $this->ProductSpecificationDetail->findData($productData['Product']['uuid']);
 

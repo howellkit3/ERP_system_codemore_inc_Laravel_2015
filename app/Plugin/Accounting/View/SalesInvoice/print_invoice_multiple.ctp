@@ -43,6 +43,11 @@
 	$currency = '';
     $unitPrice = $drData[0]['QuotationItemDetail']['unit_price'];
 
+
+    if (!empty(($drData[0]['QuotationItemDetail']['vat_price']))) {
+        $unitPrice = $drData[0]['QuotationItemDetail']['vat_price'];
+    }
+
 	if($drData[0]['QuotationItemDetail']['unit_price_currency_id'] == 2 && $drData[0]['QuotationItemDetail']['vat_status'] == "Vatable Sale"){
 
 		$totalVat = $totalQty * .12;

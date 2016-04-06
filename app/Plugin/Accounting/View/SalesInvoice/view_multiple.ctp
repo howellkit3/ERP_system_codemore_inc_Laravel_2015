@@ -251,7 +251,9 @@
 											// }
 
 										if (in_array('Vatable Sale', $vat)) {
-											echo number_format($total, 2, '.', ',');
+												$totalVat = $total * .12;
+												$totalVatSale = $total - $totalVat;
+											echo number_format($totalVatSale, 2, '.', ',');
 										} else {
 											echo "-";
 										}
@@ -291,7 +293,7 @@
 									<td>
 										<?php //pr($clientData); exit;
 
-											if (in_array('Vatable Sale', $vat) && in_array(2, $unitPriceID) && !in_array('Zero Rated Sale', $vat)) {
+											if (in_array('Vatable Sale', $vat) && !in_array('Zero Rated Sale', $vat)) {
 												$totalVat = $total * .12;
 												echo number_format($totalVat,2);
 											}else{

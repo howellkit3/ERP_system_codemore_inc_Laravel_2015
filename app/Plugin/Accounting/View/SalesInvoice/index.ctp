@@ -277,6 +277,9 @@
 	    }
 
 	    type = 0;
+	    $container = $('.searchAppend');
+	    
+	    $container.html('<img src="'+serverPath+'/img/loader.gif"/>');
 
 	    $.ajax({
 	            type: "GET",
@@ -286,12 +289,12 @@
 
 	                if(data){
 
-	                    $('.searchAppend').html(data);
+	                    $container.html(data);
 
 	                } 
 	                if (data.length < 5 ) {
 
-	                    $('.searchAppend').html('<font color="red"><b>No result..</b></font>');
+	                    $container.html('<font color="red"><b>No result..</b></font>');
 	                     
 	                }
 	                

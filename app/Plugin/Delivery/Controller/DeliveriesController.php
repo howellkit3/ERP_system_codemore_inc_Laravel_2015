@@ -416,6 +416,12 @@ class DeliveriesController extends DeliveryAppController {
 
             }
 
+              if (!empty($_GET['test'])) {
+      Configure::write('debug',2);
+      pr($clientsOrder);
+      exit();
+    }
+
        $this->Delivery->bindDelivery();
 
         $deliveryConditions = array('Delivery.schedule_uuid' => $clientsOrderUuid,
