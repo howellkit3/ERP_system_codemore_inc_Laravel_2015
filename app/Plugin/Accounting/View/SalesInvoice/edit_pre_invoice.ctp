@@ -138,7 +138,7 @@ $invoice['SalesInvoice']['delivery_id']
                                         'class' => 'form-control'
                                     )); ?>
                                 </center></td>
-                                <td><center><?php echo $unitPrice ?></center>
+                                <td><center><?php //echo $unitPrice ?></center>
                                     <?php echo $this->Form->input('QuotationItemDetail.'.$key.'.id',array(
                                             'type' => 'hidden',
                                             'value' => $list['QuotationItemDetail']['id']

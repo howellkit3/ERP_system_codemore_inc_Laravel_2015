@@ -276,8 +276,6 @@ class SalesInvoiceController extends AccountingAppController {
                     //check last PO
                   //  $drData = $this->ClientOrder->checkPo($drData);
 
-
-
                   $noPermissionPay = "";
 
                  $noPermissionReciv = "";
@@ -313,15 +311,8 @@ class SalesInvoiceController extends AccountingAppController {
 
                 $noPermissionReciv = "";
 
-                 if (!empty($_GET['test'])){
-
-                      // $drData = $this->ClientOrder->checkPo($drData);
-                        Configure::write('debug',2);
-                        pr($conditions);
-                        pr($clientData);
-                        pr($drData); 
-                        exit();
-                    }
+                // pr( $drData );
+                // exit();
 
 
             }
@@ -2582,6 +2573,7 @@ class SalesInvoiceController extends AccountingAppController {
 
                     $quotationItemDetail = array();
                     
+
                     foreach ($this->request->data['QuotationItemDetail'] as $key => $list_item_detail) {
                         if (!empty($list_item_detail['id'])) {
  
@@ -2664,6 +2656,18 @@ class SalesInvoiceController extends AccountingAppController {
         
              $conditions = 'Delivery.dr_uuid = "'.$druuid.'" AND Delivery.status != ""';    
            
+
+               if (!empty($invoice['SalesInvoice']['deliveries']) && $invoice['SalesInvoice']['deliveries'] != 'null') {
+
+                    $deliveryId = json_decode($invoice['SalesInvoice']['deliveries']);
+
+
+                       $conditions = 'Delivery.dr_uuid IN ('.implode($deliveryId,',').') AND Delivery.status != "" ';
+
+                } else {
+
+                    $conditions = 'Delivery.dr_uuid = "'.$invoiceData['SalesInvoice']['dr_uuid'].'" AND Delivery.status != ""';    
+                }
 
               $drData = $this->Delivery->query('SELECT *
                     FROM deliveries AS Delivery
