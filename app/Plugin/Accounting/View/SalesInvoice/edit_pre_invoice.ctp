@@ -129,7 +129,7 @@ $invoice['SalesInvoice']['delivery_id']
                                 <td><center><?php echo ucfirst($list['Product']['name'])?></center></td>
                                 <td><center><?php //echo number_format($list['DeliveryDetail']['quantity'])?>
                                     <?php echo $this->Form->input('DeliveryDetail.'.$key.'.id',array(
-                                            'type' => 'text',
+                                            'type' => 'hidden',
                                             'value' => $list['DeliveryDetail']['id']
                                     )); 
                                      echo $this->Form->input('DeliveryDetail.'.$key.'.quantity',array(
@@ -140,7 +140,7 @@ $invoice['SalesInvoice']['delivery_id']
                                 </center></td>
                                 <td><center><?php echo $unitPrice ?></center>
                                     <?php echo $this->Form->input('QuotationItemDetail.'.$key.'.id',array(
-                                            'type' => 'text',
+                                            'type' => 'hidden',
                                             'value' => $list['QuotationItemDetail']['id']
                                     )); ?>
                                      <?php echo $this->Form->input('QuotationItemDetail.'.$key.'.unit_price',array(
