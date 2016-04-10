@@ -2546,6 +2546,8 @@ class SalesInvoiceController extends AccountingAppController {
         $this->render('SalesInvoice/xls/export_invoices');
     }
 
+
+
     public function edit_pre_invoice($id = null,$status = 0, $druuid = null,$sino = null,$deliveryId = null) {
 
         $userData = $this->Session->read('Auth');
@@ -2556,10 +2558,41 @@ class SalesInvoiceController extends AccountingAppController {
 
         $this->loadModel('Delivery.Delivery');
 
-        if (!empty($this->request->data)) {
 
+        $this->loadModel('Sales.QuotationItemDetail');
+
+        $this->loadModel('Delivery.DeliveryDetail');
+
+        if (!empty($this->request->data)) {
+          
             if ($this->SalesInvoice->save($this->request->data)) {
 
+
+                //save price
+                if (!empty($this->request->data['QuotationItemDetail'])) {
+
+                    $quotationItemDetail = array();
+                    
+                    foreach ($this->request->data['QuotationItemDetail'] as $key => $list_item_detail) {
+                        if (!empty($list_item_detail['id'])) {
+ 
+                            $this->QuotationItemDetail->save($list_item_detail);
+                        }
+                        
+                    }
+                }
+                 //save Quantity
+                if (!empty($this->request->data['DeliveryDetail'])) {
+                    
+                    $deliveryDetail = array();
+    
+                    foreach ($this->request->data['DeliveryDetail'] as $key => $list_detail) {
+                           if (!empty($list_detail['id'])) {
+                             $this->QuotationItemDetail->save($list_detail);
+                           }
+                       
+                    }
+                }
                 $this->Session->setFlash('invoice Successfully updated','success');
 
                 $this->redirect(array(
@@ -2619,7 +2652,32 @@ class SalesInvoiceController extends AccountingAppController {
                 'ClientOrder.uuid' =>  $deliveryNumHolder['Delivery']['clients_order_id']   
             )));
 
+        
+             $conditions = 'Delivery.dr_uuid = "'.$druuid.'" AND Delivery.status != ""';    
+           
 
+              $drData = $this->Delivery->query('SELECT *
+                    FROM deliveries AS Delivery
+                    LEFT JOIN koufu_sale.client_orders AS ClientOrder
+                    ON ClientOrder.uuid = Delivery.clients_order_id
+                    LEFT JOIN delivery_details AS DeliveryDetail
+                    ON DeliveryDetail.delivery_id = Delivery.id
+                    LEFT JOIN koufu_sale.client_order_delivery_schedules AS ClientOrderDeliverySchedule
+                    ON ClientOrderDeliverySchedule.client_order_id = ClientOrder.id
+                    LEFT JOIN koufu_sale.quotations AS Quotation
+                    ON Quotation.id = ClientOrder.quotation_id
+                     LEFT JOIN koufu_sale.quotation_details AS QuotationDetail
+                    ON QuotationDetail.quotation_id = ClientOrder.quotation_id
+                    LEFT JOIN koufu_sale.quotation_item_details AS QuotationItemDetail
+                    ON QuotationItemDetail.id = ClientOrder.client_order_item_details_id
+                    LEFT JOIN koufu_sale.companies AS Company
+                    ON Company.id = Quotation.company_id
+                    LEFT JOIN koufu_sale.products AS Product
+                    ON Product.id = QuotationDetail.product_id
+                    LEFT JOIN koufu_sale.addresses AS Address
+                    ON Address.foreign_key = Company.id
+                    WHERE '.$conditions.' group by Delivery.id ORDER by Delivery.id DESC');
+        
         if ($userData['User']['role_id'] == 9 ) {
 
             $noPermissionReciv = 'disabled not-active';
@@ -2642,7 +2700,8 @@ class SalesInvoiceController extends AccountingAppController {
 
         }
 
-        $this->set(compact('noPermissionPay','inovice','noPermissionReciv','companyName','clientDataHolder','invoice'));
+
+        $this->set(compact('drData','noPermissionPay','inovice','noPermissionReciv','companyName','clientDataHolder','invoice'));
 
         }
 
