@@ -138,7 +138,7 @@
                                 <td><?php echo $key ?></td>
                                 <td class="text-center"><?php echo $itemdescription ?></td>
                                 <td class="text-center"><?php echo ($difference == 0 ? $value[$modelTable]['pieces'] . " " . $unitData[$value[$modelTable]['quantity_unit_id']] : $value[$modelTable]['pieces'] . " " . $unitData[$value[$modelTable]['quantity_unit_id']])?></td>
-                                <td class="text-center"><?php echo number_format($value[$modelTable]['unit_price'],2)?><?php //echo $unitData[$value[$modelTable]['unit_price_unit_id']]?></td>
+                                <td class="text-center"><?php echo number_format($value[$modelTable]['unit_price'],3)?><?php //echo $unitData[$value[$modelTable]['unit_price_unit_id']]?></td>
                                 <td class="text-center">
                                     <?php 
                                         $amount = $value[$modelTable]['quantity'] * $value[$modelTable]['unit_price'];

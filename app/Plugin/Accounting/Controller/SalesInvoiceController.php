@@ -276,6 +276,8 @@ class SalesInvoiceController extends AccountingAppController {
                     //check last PO
                   //  $drData = $this->ClientOrder->checkPo($drData);
 
+
+
                   $noPermissionPay = "";
 
                  $noPermissionReciv = "";
@@ -311,8 +313,15 @@ class SalesInvoiceController extends AccountingAppController {
 
                 $noPermissionReciv = "";
 
-                // pr( $drData );
-                // exit();
+                 if (!empty($_GET['test'])){
+
+                      // $drData = $this->ClientOrder->checkPo($drData);
+                        Configure::write('debug',2);
+                        pr($conditions);
+                        pr($clientData);
+                        pr($drData); 
+                        exit();
+                    }
 
 
             }

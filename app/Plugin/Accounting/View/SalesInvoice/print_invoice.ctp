@@ -7,6 +7,10 @@
 
     $unitPrice = (float) $clientData['QuotationItemDetail']['unit_price'];
 
+    if (!empty(($clientData['QuotationItemDetail']['vat_price']))) {
+        $unitPrice = $clientData['QuotationItemDetail']['vat_price'];
+    }
+
     $quantity = (float) $drData['DeliveryDetail']['quantity'] ;
  	
  	$totalQty = $quantity * $unitPrice;

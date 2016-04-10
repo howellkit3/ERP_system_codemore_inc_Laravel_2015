@@ -47,7 +47,8 @@
 	?>
 
 	
-	<?php 
+	<?php
+	 
 		if ($invoiceData['SalesInvoice']['status'] == 0) {
 
 		
@@ -142,17 +143,24 @@
 								<td><center><?php echo $clientData['ClientOrder']['po_number']?></center></td>
 								<td><center><?php echo ucfirst($clientData['Product']['name'])?></center></td>
 								<td><center><?php echo number_format($drData['DeliveryDetail']['quantity'])?></center></td>
-								<td><center><?php echo number_format($clientData['QuotationItemDetail']['unit_price'],4)?></center></td>
+								<td><center><?php 
+
+								$price = $clientData['QuotationItemDetail']['unit_price'];
+
+								if (!empty(($clientData['QuotationItemDetail']['vat_price']))) {
+									$price = $clientData['QuotationItemDetail']['vat_price'];
+								}
+								 echo number_format($price,4); ?></center></td>
 								<td>
 									<center>
 										<?php 
 
 											if(!empty($drData['DeliveryDetail']['quantity'])){
 
-											  	$totalQty = $drData['DeliveryDetail']['quantity'] * $clientData['QuotationItemDetail']['unit_price'];
+											  	$totalQty = $drData['DeliveryDetail']['quantity'] * $price;
 											}else{
 
-												$totalQty = $clientData['ClientOrderDeliverySchedule'][0]['quantity'] * $clientData['QuotationItemDetail']['unit_price'];
+												$totalQty = $clientData['ClientOrderDeliverySchedule'][0]['quantity'] * $price;
 											}
 
 											if (!empty($_GET['data'])) {
@@ -200,8 +208,8 @@
 									<td>
 										<?php 
 											if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2 && $clientData['QuotationItemDetail']['vat_status'] == "Vatable Sale"){
-												//$totalVat = ($totalQty * .12) + $totalQty;
-												$totalVat = $totalQty;
+												$totalVat =  $totalQty - ($totalQty * .12);
+												//$totalVat = $totalQty - ;
 												echo number_format($totalVat,2);
 												//echo number_format((float)$totalQty, 4, '.', '');
 											}else{
@@ -255,8 +263,10 @@
 									<td>
 										<?php 
 											if($clientData['QuotationItemDetail']['unit_price_currency_id'] == 2 && $clientData['QuotationItemDetail']['vat_status'] == "Vatable Sale"){
-												$totalVat = $totalQty * .12;
-												$fullVat = $totalQty + $totalVat;
+												//$totalVat = $totalQty * .12;
+												$totalVat =  $totalQty - ($totalQty * .12);
+												//$fullVat = $totalQty + $totalVat;
+												$fullVat = ($totalQty * .12) + $totalVat; 
 												echo $currencyData[$clientData['QuotationItemDetail']['unit_price_currency_id']] . " ";
 												echo number_format($fullVat,2);
 												

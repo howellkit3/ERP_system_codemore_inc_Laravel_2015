@@ -275,6 +275,12 @@ class SalesOrdersController extends SalesAppController {
 
 		$quotationData = $this->Quotation->findById($clientOrderData['ClientOrder']['quotation_id']);
 
+
+  if (!empty($_GET['test'])) {
+      Configure::write('debug',2);
+      pr($clientOrderData);
+      exit();
+    }
   //pr($clientOrderData); exit;
 
     $checkSpec = $this->ProductSpecification->find('first',array('conditions' => array('ProductSpecification.product_id' => $quotationData['QuotationDetail']['product_id'])));
@@ -308,7 +314,7 @@ class SalesOrdersController extends SalesAppController {
 
       $schedData = $this->ClientOrder->find('all', array('conditions' => array('ClientOrder.id' => $this->request->data['ClientOrderDeliverySchedule']['client_order_id'])));
 
-     $abc = $schedData[0]['QuotationItemDetail']['quantity']; 
+      $abc = $schedData[0]['QuotationItemDetail']['quantity']; 
 
       //pr($this->request->data['ClientOrderDeliverySchedule']); exit;
              
